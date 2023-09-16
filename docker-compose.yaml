@@ -16,6 +16,19 @@ services:
       - 8080:8080
       - 35729:35729
       - 5005:5005
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/:/frontend
+      - /frontend/node_modules
+    networks:
+      - spring-postgres
+    working_dir: /frontend
+    command: npm start
+    ports:
+      - 3000:3000
   db:
     image: postgres
     restart: always
