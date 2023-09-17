@@ -11,7 +11,7 @@ public class EcommerceApplication {
 
 	@RequestMapping(path="/", produces="application/json")
 	public String home() {
-		return "Mannnnnnnn: Hello world";
+		return "wwaaaaaa: Hello world";
 	}
 
 	public static void main(String[] args) {
