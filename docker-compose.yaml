@@ -91,6 +91,7 @@ services:
     command: sh run.sh
     ports:
       - 8080:8080
+      - 5005:5005
       - 35729:35729
 
   frontend:
