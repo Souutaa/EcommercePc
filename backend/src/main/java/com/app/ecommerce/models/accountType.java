@@ -33,12 +33,23 @@ public class accountType extends baseEntity {
     @JoinColumn(name = "fk_accountTypeID", referencedColumnName = "accountTypeID")
     private List<accountPermission> ACCOUNTPERMISSION;
 
+    @OneToMany(mappedBy = "ACCOUNTTYPE", cascade = CascadeType.ALL)
+    private List<accountGroup> ACCOUNTGROUP;
+
     public List<accountPermission> getACCOUNTPERMISSION() {
         return ACCOUNTPERMISSION;
     }
 
     public void setACCOUNTPERMISSION(List<accountPermission> aCCOUNTPERMISSION) {
         ACCOUNTPERMISSION = aCCOUNTPERMISSION;
+    }
+
+    public List<accountGroup> getACCOUNTGROUP() {
+        return ACCOUNTGROUP;
+    }
+
+    public void setACCOUNTGROUP(List<accountGroup> aCCOUNTGROUP) {
+        ACCOUNTGROUP = aCCOUNTGROUP;
     }
 
     // --------------------------------------------------------------

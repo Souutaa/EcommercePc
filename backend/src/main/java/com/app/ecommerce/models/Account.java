@@ -20,6 +20,7 @@ public class Account extends baseEntity {
     @Column(name = "Password", length = 20, nullable = false)
     private String Password;
 
+    // Mapping -----------------------------------------------------------
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_username", referencedColumnName = "username")
     private userDetail USERDETAIL;
@@ -27,6 +28,9 @@ public class Account extends baseEntity {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_Username", referencedColumnName = "Username")
     private List<userOrder> USERORDER;
+
+    @OneToMany(mappedBy = "ACCOUNT", cascade = CascadeType.ALL)
+    private List<accountGroup> ACCOUNTGROUP;
 
     public userDetail getUSERDETAIL() {
         return USERDETAIL;
@@ -44,6 +48,15 @@ public class Account extends baseEntity {
         USERORDER = uSERORDER;
     }
 
+    public List<accountGroup> getACCOUNTGROUP() {
+        return ACCOUNTGROUP;
+    }
+
+    public void setACCOUNTGROUP(List<accountGroup> aCCOUNTGROUP) {
+        ACCOUNTGROUP = aCCOUNTGROUP;
+    }
+
+    // ----------------------------------------------------------------------
     public String getUsername() {
         return Username;
     }

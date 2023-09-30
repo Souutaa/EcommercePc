@@ -27,25 +27,25 @@ public class accountGroup extends baseEntity {
     // ----------------------------------------------------------------------------
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_accountTypeID", referencedColumnName = "accountTypeID")
-    private List<accountType> ACCOUNTTYPE;
+    private accountType ACCOUNTTYPE;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_Username", referencedColumnName = "Username")
-    private List<Account> ACCOUNT;
+    private Account ACCOUNT;
 
-    public List<accountType> getACCOUNTTYPE() {
+    public accountType getACCOUNTTYPE() {
         return ACCOUNTTYPE;
     }
 
-    public void setACCOUNTTYPE(List<accountType> aCCOUNTTYPE) {
+    public void setACCOUNTTYPE(accountType aCCOUNTTYPE) {
         ACCOUNTTYPE = aCCOUNTTYPE;
     }
 
-    public List<Account> getACCOUNT() {
+    public Account getACCOUNT() {
         return ACCOUNT;
     }
 
-    public void setACCOUNT(List<Account> aCCOUNT) {
+    public void setACCOUNT(Account aCCOUNT) {
         ACCOUNT = aCCOUNT;
     }
 
