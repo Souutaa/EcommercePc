@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 public class EcommerceApplication {
 
-	// @RequestMapping(path = "/", produces = "application/json")
-	// public String home() {
-	// return "Test: Hello world";
-	// }
-
 	public static void main(String[] args) {
 		SpringApplication.run(EcommerceApplication.class, args);
 	}

@@ -41,7 +41,7 @@ services:
   #   expose:
   #     - 3306
   db:
-    image: postgres
+    image: postgres:latest
     restart: always
     environment:
       - POSTGRES_PASSWORD=postgres
@@ -49,11 +49,12 @@ services:
     volumes:
       - ./backend/pgdata:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - "5432:5432"
     networks:
       - spring-postgres
+
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     restart: always
     container_name: pgadmin4
     environment:
@@ -62,7 +63,7 @@ services:
       - PGADMIN_CONFIG_PROXY_X_HOST_COUNT= 1
       - PGADMIN_CONFIG_PROXY_X_PREFIX_COUNT= 1
     ports:
-      - '5050:80'
+      - "5050:80"
     depends_on:
       - db
     networks:
