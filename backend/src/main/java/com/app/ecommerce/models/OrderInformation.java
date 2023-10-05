@@ -1,19 +1,17 @@
 package com.app.ecommerce.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "orderinfomation")
-public class orderInfomation extends baseEntity {
+@Table(name = "order_information")
+public class OrderInformation extends BaseEntity {
 
-    @Column(name = "orderInfomationID", length = 11, nullable = false)
-    private int orderInfomationID;
+    @Id
+    @Column(name = "id", length = 11, nullable = false)
+    private int id;
 
-    @Column(name = "OrderID", length = 11, nullable = false)
-    private int OrderID;
+    // @Column(name = "order_id", length = 11, nullable = false)
+    // private int orderId;
 
     @Column(name = "username", length = 20, nullable = false)
     private String username;
@@ -30,27 +28,33 @@ public class orderInfomation extends baseEntity {
     @Column(name = "email", length = 60, nullable = false)
     private String email;
 
-    @Column(name = "phoneNumber", length = 20, nullable = false)
+    @Column(name = "phone_number", length = 20, nullable = false)
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "ORDERINFORMATION")
-    private userOrder USERORDER;
+    // @OneToOne(mappedBy = "ORDERINFORMATION")
+    // private userOrder USERORDER;
+    
+    // Mapping
+    @OneToOne(optional = false, fetch=FetchType.LAZY)
+    @MapsId
+    private AccountOrder userOrder;
 
-    public int getOrderInfomationID() {
-        return orderInfomationID;
+
+    public int getId() {
+        return id;
     }
 
-    public void setOrderInfomationID(int orderInfomationID) {
-        this.orderInfomationID = orderInfomationID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getOrderID() {
-        return OrderID;
-    }
+    // public int getOrderID() {
+    //     return orderId;
+    // }
 
-    public void setOrderID(int orderID) {
-        OrderID = orderID;
-    }
+    // public void setOrderID(int orderID) {
+    //     this.orderId = orderID;
+    // }
 
     public String getUsername() {
         return username;

@@ -3,177 +3,165 @@ package com.app.ecommerce.models;
 import java.sql.Date;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "product")
-public class Product extends baseEntity {
+public class Product extends BaseEntity {
 
-    @Column(name = "Product_Line", length = 50, nullable = false)
-    private String Product_Line;
+    @Id()
+    @Column(name = "product_line", length = 50, nullable = false)
+    private String productLine;
 
-    @Column(name = "Product_Name", length = 150, nullable = false)
-    private String Product_Name;
+    @Column(name = "product_name", length = 150, nullable = false)
+    private String productName;
 
-    @Column(name = "Thumbnail", length = 50, nullable = false)
-    private String Thumbnail;
+    @Column(name = "thumbnail", length = 50, nullable = false)
+    private String thumbnail;
 
-    @Column(name = "Price", length = 10, nullable = false)
-    private int Price;
+    @Column(name = "price", length = 10, nullable = false)
+    private int price;
 
-    @Column(name = "Discount", length = 3, nullable = false, columnDefinition = "integer default 0")
-    private int Discount;
+    @Column(name = "discount", length = 3, nullable = false, columnDefinition = "integer default 0")
+    private int discount;
 
-    @Column(name = "warranty_period", nullable = true)
-    private Date warranty_period;
+    // @Column(name = "brand_id", length = 10, nullable = false)
+    // private String brandId;
 
-    @Column(name = "Created_by", length = 20, nullable = false)
-    private String Created_by;
-
-    @Column(name = "BrandID", length = 10, nullable = false)
-    private String BrandID;
-
-    @Column(name = "Category", length = 10, nullable = false)
-    private int Category;
+    // @Column(name = "category_id", length = 10, nullable = false)
+    // private int categoryId;
 
     // Mapping -----------------------------------------------------------------
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_BrandID", referencedColumnName = "BrandID")
-    private Brand BRAND;
+    // @OneToOne(cascade = CascadeType.ALL)
+    // @JoinColumn(name = "fk_BrandID", referencedColumnName = "BrandID")
+    // private Brand BRAND;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_Category", referencedColumnName = "Category")
-    private List<Category> CATEGORY;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Brand brand;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_Product_Line", referencedColumnName = "Product_Line")
-    private List<productWarranty> PRODUCTWARRANTY;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_Product_Line", referencedColumnName = "Product_Line")
-    private List<productInfo> PRODUCTINFO;
+    @OneToMany()
+    private List<ProductImage> productImages;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_Product_Line", referencedColumnName = "Product_Line")
-    private List<productImage> PRODUCTIMAGE;
+    @OneToMany()
+    private List<ProductInfo> productInfos;
 
-    public List<productWarranty> getPRODUCTWARRANTY() {
-        return PRODUCTWARRANTY;
-    }
+    @OneToOne(optional=false, fetch=FetchType.LAZY)
+    private WarrantyPeriod warrantyPeriod;
 
-    public void setPRODUCTWARRANTY(List<productWarranty> pRODUCTWARRANTY) {
-        PRODUCTWARRANTY = pRODUCTWARRANTY;
-    }
+    // @OneToMany(cascade = CascadeType.ALL)
+    // @JoinColumn(name = "fk_Category", referencedColumnName = "Category")
+    // private List<Category> CATEGORY;
 
-    public List<productInfo> getPRODUCTINFO() {
-        return PRODUCTINFO;
-    }
+    // @OneToMany(cascade = CascadeType.ALL)
+    // @JoinColumn(name = "fk_Product_Line", referencedColumnName = "Product_Line")
+    // private List<productWarranty> PRODUCTWARRANTY;
 
-    public void setPRODUCTINFO(List<productInfo> pRODUCTINFO) {
-        PRODUCTINFO = pRODUCTINFO;
-    }
+    // @OneToMany(cascade = CascadeType.ALL)
+    // @JoinColumn(name = "fk_Product_Line", referencedColumnName = "Product_Line")
+    // private List<productInfo> PRODUCTINFO;
 
-    public List<productImage> getPRODUCTIMAGE() {
-        return PRODUCTIMAGE;
-    }
+    // @OneToMany(cascade = CascadeType.ALL)
+    // @JoinColumn(name = "fk_Product_Line", referencedColumnName = "Product_Line")
+    // private List<productImage> PRODUCTIMAGE;
 
-    public void setPRODUCTIMAGE(List<productImage> pRODUCTIMAGE) {
-        PRODUCTIMAGE = pRODUCTIMAGE;
-    }
+    // public List<productWarranty> getPRODUCTWARRANTY() {
+    //     return PRODUCTWARRANTY;
+    // }
 
-    public Brand getBRAND() {
-        return BRAND;
-    }
+    // public void setPRODUCTWARRANTY(List<productWarranty> pRODUCTWARRANTY) {
+    //     PRODUCTWARRANTY = pRODUCTWARRANTY;
+    // }
 
-    public void setBRAND(Brand bRAND) {
-        BRAND = bRAND;
-    }
+    // public List<productInfo> getPRODUCTINFO() {
+    //     return PRODUCTINFO;
+    // }
 
-    public List<Category> getCATEGORY() {
-        return CATEGORY;
-    }
+    // public void setPRODUCTINFO(List<productInfo> pRODUCTINFO) {
+    //     PRODUCTINFO = pRODUCTINFO;
+    // }
 
-    public void setCATEGORY(List<Category> cATEGORY) {
-        CATEGORY = cATEGORY;
-    }
+    // public List<productImage> getPRODUCTIMAGE() {
+    //     return PRODUCTIMAGE;
+    // }
+
+    // public void setPRODUCTIMAGE(List<productImage> pRODUCTIMAGE) {
+    //     PRODUCTIMAGE = pRODUCTIMAGE;
+    // }
+
+    // public Brand getBRAND() {
+    //     return BRAND;
+    // }
+
+    // public void setBRAND(Brand bRAND) {
+    //     BRAND = bRAND;
+    // }
+
+    // public List<Category> getCATEGORY() {
+    //     return CATEGORY;
+    // }
+
+    // public void setCATEGORY(List<Category> cATEGORY) {
+    //     CATEGORY = cATEGORY;
+    // }
 
     // ----------------------------------------------------------------------------
-    public String getProduct_Line() {
-        return Product_Line;
+    public String getProductLine() {
+        return productLine;
     }
 
-    public void setProduct_Line(String product_Line) {
-        Product_Line = product_Line;
+    public void setProductLine(String productLine) {
+        this.productLine = productLine;
     }
 
-    public String getProduct_Name() {
-        return Product_Name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProduct_Name(String product_Name) {
-        Product_Name = product_Name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getThumbnail() {
-        return Thumbnail;
+        return thumbnail;
     }
 
     public void setThumbnail(String thumbnail) {
-        Thumbnail = thumbnail;
+        this.thumbnail = thumbnail;
     }
 
     public int getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(int price) {
-        Price = price;
+        this.price = price;
     }
 
     public int getDiscount() {
-        return Discount;
+        return discount;
     }
 
     public void setDiscount(int discount) {
-        Discount = discount;
+        this.discount = discount;
     }
 
-    public Date getWarranty_period() {
-        return warranty_period;
-    }
+    // public String getBrandID() {
+    //     return brandId;
+    // }
 
-    public void setWarranty_period(Date warranty_period) {
-        this.warranty_period = warranty_period;
-    }
+    // public void setBrandID(String brandID) {
+    //     this.brandId = brandID;
+    // }
 
-    public String getCreated_by() {
-        return Created_by;
-    }
+    // public int getCategory() {
+    //     return categoryId;
+    // }
 
-    public void setCreated_by(String created_by) {
-        Created_by = created_by;
-    }
-
-    public String getBrandID() {
-        return BrandID;
-    }
-
-    public void setBrandID(String brandID) {
-        BrandID = brandID;
-    }
-
-    public int getCategory() {
-        return Category;
-    }
-
-    public void setCategory(int category) {
-        Category = category;
-    }
+    // public void setCategory(int categoryId) {
+    //     this.categoryId = categoryId;
+    // }
 
 }

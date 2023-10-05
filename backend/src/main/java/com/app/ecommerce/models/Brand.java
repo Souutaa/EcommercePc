@@ -1,31 +1,34 @@
 package com.app.ecommerce.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import java.util.List;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "brand")
-public class Brand extends baseEntity {
+public class Brand extends BaseEntity {
+    @Id
+    @Column(name = "id", length = 11, nullable = false)
+    private int id;
 
-    @Column(name = "BrandID", length = 10, nullable = false, unique = true)
-    private String BrandID;
-
-    @Column(name = "BrandName", length = 20, nullable = false)
-    private String BrandName;
+    @Column(name = "brand_name", length = 20, nullable = false)
+    private String brandName;
 
     // Mapping
-    @OneToOne(mappedBy = "BRAND")
-    private Product PRODUCT;
+    @OneToMany(mappedBy = "brand")
+    private List<Product> products;
 
-    public Product getPRODUCT() {
-        return PRODUCT;
-    }
+    // @OneToOne(mappedBy = "BRAND")
+    // private Product PRODUCT;
 
-    public void setPRODUCT(Product pRODUCT) {
-        PRODUCT = pRODUCT;
-    }
+    // public Product getPRODUCT() {
+    //     return PRODUCT;
+    // }
+
+    // public void setPRODUCT(Product pRODUCT) {
+    //     PRODUCT = pRODUCT;
+    // }
+
     //
     // @OneToMany(cascade = CascadeType.ALL)
     // @JoinColumn(name = "fk_BrandID", referencedColumnName = "BrandID")
@@ -38,21 +41,19 @@ public class Brand extends baseEntity {
     // public void setProduct(List<Product> product) {
     // this.product = product;
     // }
-
-    public String getBrandID() {
-        return BrandID;
+    public int getId() {
+        return id;
     }
 
-    public void setBrandID(String brandID) {
-        BrandID = brandID;
+    public void setId(int id) {
+        this.id = id;
     }
-
+    
     public String getBrandName() {
-        return BrandName;
+        return brandName;
     }
 
     public void setBrandName(String brandName) {
-        BrandName = brandName;
+        this.brandName = brandName;
     }
-
 }

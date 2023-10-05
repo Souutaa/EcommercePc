@@ -2,60 +2,61 @@ package com.app.ecommerce.models;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "permission")
-public class Permission extends baseEntity {
+public class Permission extends BaseEntity {
 
-    @Column(name = "PermissionID", length = 10, nullable = false)
-    private String PermissionID;
+    @Id
+    @Column(name = "id", length = 11, nullable = false)
+    private int id;
 
-    @Column(name = "PermissionName", length = 20, nullable = false)
-    private String PermissionName;
+    @Column(name = "name", length = 20, nullable = false)
+    private String name;
 
     @Column(name = "description", length = 50, nullable = true)
     private String description;
 
-    @Column(name = "Disable", length = 1, nullable = false, columnDefinition = "integer default 0")
-    private int Disable;
+    @Column(name = "disable", length = 1, nullable = false, columnDefinition = "integer default 0")
+    private int disable;
 
-    @Column(name = "PermissionGroupID", length = 11, nullable = false)
-    private int PermissionGroupID;
+    // @Column(name = "permission_group_Id", length = 11, nullable = false)
+    // private int permissionGroupID;
 
     // Mapping -------------------------------------------------------
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_PermissionID", referencedColumnName = "PermissionID")
-    private List<accountPermission> ACCOUNTPERMISSION;
 
-    public List<accountPermission> getACCOUNTPERMISSION() {
-        return ACCOUNTPERMISSION;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PermissionGroup permissionGroup;
 
-    public void setACCOUNTPERMISSION(List<accountPermission> aCCOUNTPERMISSION) {
-        ACCOUNTPERMISSION = aCCOUNTPERMISSION;
-    }
+    // @OneToMany(cascade = CascadeType.ALL)
+    // @JoinColumn(name = "fk_PermissionID", referencedColumnName = "PermissionID")
+    // private List<accountPermission> ACCOUNTPERMISSION;
+
+    // public List<accountPermission> getACCOUNTPERMISSION() {
+    //     return ACCOUNTPERMISSION;
+    // }
+
+    // public void setACCOUNTPERMISSION(List<accountPermission> aCCOUNTPERMISSION) {
+    //     ACCOUNTPERMISSION = aCCOUNTPERMISSION;
+    // }
 
     // -------------------------------------------------------------
-    public String getPermissionID() {
-        return PermissionID;
+
+    public int getId() {
+        return id;
     }
 
-    public void setPermissionID(String permissionID) {
-        PermissionID = permissionID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getPermissionName() {
-        return PermissionName;
+    public String getName() {
+        return name;
     }
 
-    public void setPermissionName(String permissionName) {
-        PermissionName = permissionName;
+    public void setName(String permissionName) {
+        name = permissionName;
     }
 
     public String getDescription() {
@@ -67,19 +68,19 @@ public class Permission extends baseEntity {
     }
 
     public int getDisable() {
-        return Disable;
+        return disable;
     }
 
     public void setDisable(int disable) {
-        Disable = disable;
+        this.disable = disable;
     }
 
-    public int getPermissionGroupID() {
-        return PermissionGroupID;
-    }
+    // public PermissionGroup getPermissionGroup() {
+    //     return permissionGroup;
+    // }
 
-    public void setPermissionGroupID(int permissionGroupID) {
-        PermissionGroupID = permissionGroupID;
-    }
+    // public void setPermissionGroup(PermissionGroup permissionGroup) {
+    //     this.permissionGroup = permissionGroup;
+    // }
 
 }
