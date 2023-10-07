@@ -8,9 +8,10 @@ import jakarta.persistence.*;
 @Table(name = "permission_group")
 public class PermissionGroup extends BaseEntity {
 
-    @Id
-    @Column(name = "id", length = 11, nullable = false)
-    private int id;
+    // @Id
+    // @Column(name = "id", length = 11, nullable = false)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    // private int id;
 
     @Column(name = "name", length = 50, nullable = false)
     private String name;
@@ -23,21 +24,17 @@ public class PermissionGroup extends BaseEntity {
 
     // Mapping
     // ------------------------------------------------------------------------------------
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_PermissionGroupID", referencedColumnName = "PermissionGroupID")
-    // private List<Permission> PERMISSION;
-
     @OneToMany(mappedBy = "permissionGroup")
     private List<Permission> permissions;
 
     // ----------------------------------------------------------------------------
-    public int getId() {
-        return id;
-    }
+    // public int getId() {
+    //     return id;
+    // }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    // public void setId(int id) {
+    //     this.id = id;
+    // }
 
     public String getName() {
         return name;

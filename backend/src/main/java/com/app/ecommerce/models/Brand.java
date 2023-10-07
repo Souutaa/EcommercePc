@@ -7,9 +7,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "brand")
 public class Brand extends BaseEntity {
-    @Id
-    @Column(name = "id", length = 11, nullable = false)
-    private int id;
+    // @Id
+    // @Column(name = "id", length = 11, nullable = false)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    // private int id;
 
     @Column(name = "brand_name", length = 20, nullable = false)
     private String brandName;
@@ -18,36 +19,21 @@ public class Brand extends BaseEntity {
     @OneToMany(mappedBy = "brand")
     private List<Product> products;
 
-    // @OneToOne(mappedBy = "BRAND")
-    // private Product PRODUCT;
-
-    // public Product getPRODUCT() {
-    //     return PRODUCT;
-    // }
-
-    // public void setPRODUCT(Product pRODUCT) {
-    //     PRODUCT = pRODUCT;
-    // }
-
-    //
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_BrandID", referencedColumnName = "BrandID")
-    // private List<Product> product;
-
-    // public List<Product> getProduct() {
-    // return product;
-    // }
-
-    // public void setProduct(List<Product> product) {
-    // this.product = product;
-    // }
-    public int getId() {
-        return id;
+    public List<Product> getProducts() {
+        return this.products;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setProducts(List<Product> Products) {
+        this.products = Products;
     }
+    
+    // public int getId() {
+    //     return id;
+    // }
+
+    // public void setId(int id) {
+    //     this.id = id;
+    // }
     
     public String getBrandName() {
         return brandName;

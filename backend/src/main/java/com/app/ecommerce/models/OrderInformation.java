@@ -6,9 +6,10 @@ import jakarta.persistence.*;
 @Table(name = "order_information")
 public class OrderInformation extends BaseEntity {
 
-    @Id
-    @Column(name = "id", length = 11, nullable = false)
-    private int id;
+    // @Id
+    // @Column(name = "id", length = 11, nullable = false)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    // private int id;
 
     // @Column(name = "order_id", length = 11, nullable = false)
     // private int orderId;
@@ -31,29 +32,25 @@ public class OrderInformation extends BaseEntity {
     @Column(name = "phone_number", length = 20, nullable = false)
     private String phoneNumber;
 
-    // @OneToOne(mappedBy = "ORDERINFORMATION")
-    // private userOrder USERORDER;
-    
     // Mapping
     @OneToOne(optional = false, fetch=FetchType.LAZY)
     @MapsId
-    private AccountOrder userOrder;
+    private AccountOrder accountOrder;
 
-
-    public int getId() {
-        return id;
+    public AccountOrder getAccountOrder() {
+        return this.accountOrder;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAccountOrder(AccountOrder accountOrder) {
+        this.accountOrder = accountOrder;
     }
 
-    // public int getOrderID() {
-    //     return orderId;
+    // public int getId() {
+    //     return id;
     // }
 
-    // public void setOrderID(int orderID) {
-    //     this.orderId = orderID;
+    // public void setId(int id) {
+    //     this.id = id;
     // }
 
     public String getUsername() {

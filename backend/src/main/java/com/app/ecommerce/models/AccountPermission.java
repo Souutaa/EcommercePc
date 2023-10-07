@@ -1,13 +1,16 @@
 package com.app.ecommerce.models;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "account_permission")
 public class AccountPermission extends BaseEntity {
-    @Id
-    @Column(name = "id", length = 11, nullable = false)
-    private int id;
+    // @Id
+    // @Column(name = "id", length = 11, nullable = false)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    // private int id;
 
     // ------------- Mapping -------------
     @ManyToOne(fetch=FetchType.LAZY)
@@ -16,34 +19,28 @@ public class AccountPermission extends BaseEntity {
     @ManyToOne(fetch=FetchType.LAZY)
     private AccountType accountType;
 
-    // @Column(name = "permission_id", length = 10, nullable = false)
-    // private String permissionId;
-
-    // @Column(name = "type_iD", length = 20, nullable = false)
-    // private String typeId;
-
-    public int getId() {
-        return id;
+    public AccountType getAccountType() {
+        return this.accountType;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 
-    // public String getPermissionId() {
-    //     return permissionId;
+    public Permission getPermission() {
+        return this.permission;
+    }
+
+    public void setPermission(Permission permission) {
+        this.permission = permission;
+    }
+
+    // public int getId() {
+    //     return id;
     // }
 
-    // public void setPermissionId(String permissionId) {
-    //     this.permissionId = permissionId;
-    // }
-
-    // public String getTypeId() {
-    //     return typeId;
-    // }
-
-    // public void setTypeId(String typeId) {
-    //     this.typeId = typeId;
+    // public void setId(int id) {
+    //     this.id = id;
     // }
 
 }

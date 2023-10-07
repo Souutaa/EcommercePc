@@ -8,16 +8,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "account_group")
 public class AccountGroup extends BaseEntity {
- @Id
-    @Column(name = "id", length = 11, nullable = false)
-    private int id;
-
-    // @Column(name = "username", length = 20, nullable = false)
-    // private String username;
-
-    // @Column(name = "accounttype_id", length = 20, nullable = false)
-    // private String accounttypeId;
-
+    // @Id
+    // @Column(name = "id", length = 11, nullable = false)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    // private int id;
+    
     // Mapping
     // ----------------------------------------------------------------------------
     @ManyToOne(fetch=FetchType.LAZY)
@@ -25,14 +20,6 @@ public class AccountGroup extends BaseEntity {
 
     @ManyToOne(fetch=FetchType.LAZY)
     AccountType accountType;
-
-    // @ManyToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_accountTypeID", referencedColumnName = "id", table = "AccountType")
-    // private AccountType ACCOUNTTYPE;
-
-    // @ManyToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_Username", referencedColumnName = "Username")
-    // private Account ACCOUNT;
 
     public AccountType getAccountType() {
         return accountType;
@@ -52,13 +39,13 @@ public class AccountGroup extends BaseEntity {
 
     // -----------------------------------------------------------------------------------
     
-    public int getId() {
-        return id;
-    }
+    // public int getId() {
+    //     return id;
+    // }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    // public void setId(int id) {
+    //     this.id = id;
+    // }
     
     // public String getUsername() {
     //     return username;

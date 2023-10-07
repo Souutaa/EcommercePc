@@ -10,55 +10,61 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "account")
 public class Account extends BaseEntity {
-    @Id
-    @Column(name = "username", length = 20, nullable = false)
+    // @Id
+    // @Column(name = "id", length = 11, nullable = false)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    // private int id;
+
+    @Column(name = "username", length = 20, nullable = false, unique = true)
     private String username;
 
-    @Column(name = "password", length = 20, nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     // Mapping -----------------------------------------------------------
-    // @JoinColumn(name = "fk_username", referencedColumnName = "username")
-    // @OneToOne(cascade = CascadeType.ALL)
-    // private userDetail;
-
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_Username", referencedColumnName = "Username")
-    // private List<userOrder> USERORDER;
-
-    // @OneToMany(mappedBy = "ACCOUNT", cascade = CascadeType.ALL)
-    // private List<AccountGroup> ACCOUNTGROUP;
     @OneToMany(mappedBy="account")
     private List<AccountGroup> accountGroups;
 
     @OneToMany(mappedBy = "account")
-    private List<AccountDetail> accountDetails; 
+    private List<AccountDetail> accountDetails;
 
-    // public userDetail getUSERDETAIL() {
-    //     return USERDETAIL;
-    // }
-
-    // public void setUSERDETAIL(userDetail userDetail) {
-    //     this.USERDETAIL = userDetail;
-    // }
-
-    // public List<userOrder> getUSERORDER() {
-    //     return USERORDER;
-    // }
-
-    // public void setUSERORDER(List<userOrder> uSERORDER) {
-    //     USERORDER = uSERORDER;
-    // }
+    @OneToMany(mappedBy = "account")
+    private List<AccountOrder> accountOrders;
 
     public List<AccountGroup> getAccountGroups() {
         return this.accountGroups;
     }
 
-    public void setACCOUNTGROUP(List<AccountGroup> accountGroups) {
+    public void setAccountGroups(List<AccountGroup> accountGroups) {
         this.accountGroups = accountGroups;
     }
 
+    public List<AccountDetail> getAccountDetails() {
+        return this.accountDetails;
+    }
+
+    public void setAccountDetails(List<AccountDetail> accountDetails) {
+        this.accountDetails = accountDetails;
+    }
+
+    public List<AccountOrder> getAccountOrders() {
+        return this.accountOrders;
+    }
+
+    public void setAccountOrders(List<AccountOrder> accountOrders) {
+        this.accountOrders = accountOrders;
+    }
+    
+
     // ----------------------------------------------------------------------
+
+    // public int getId() {
+    //     return id;
+    // }
+
+    // public void setId(int id) {
+    //     this.id = id;
+    // }
 
     public String getUsername() {
         return username;

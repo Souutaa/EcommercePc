@@ -8,9 +8,10 @@ import jakarta.persistence.*;
 @Table(name = "permission")
 public class Permission extends BaseEntity {
 
-    @Id
-    @Column(name = "id", length = 11, nullable = false)
-    private int id;
+    // @Id
+    // @Column(name = "id", length = 11, nullable = false)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    // private int id;
 
     @Column(name = "name", length = 20, nullable = false)
     private String name;
@@ -21,35 +22,28 @@ public class Permission extends BaseEntity {
     @Column(name = "disable", length = 1, nullable = false, columnDefinition = "integer default 0")
     private int disable;
 
-    // @Column(name = "permission_group_Id", length = 11, nullable = false)
-    // private int permissionGroupID;
-
     // Mapping -------------------------------------------------------
 
     @ManyToOne(fetch = FetchType.LAZY)
     private PermissionGroup permissionGroup;
 
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_PermissionID", referencedColumnName = "PermissionID")
-    // private List<accountPermission> ACCOUNTPERMISSION;
+    public PermissionGroup getPermissionGroup() {
+        return this.permissionGroup;
+    }
 
-    // public List<accountPermission> getACCOUNTPERMISSION() {
-    //     return ACCOUNTPERMISSION;
-    // }
-
-    // public void setACCOUNTPERMISSION(List<accountPermission> aCCOUNTPERMISSION) {
-    //     ACCOUNTPERMISSION = aCCOUNTPERMISSION;
-    // }
+    public void setPermissionGroup(PermissionGroup permissionGroup) {
+        this.permissionGroup = permissionGroup;
+    }
 
     // -------------------------------------------------------------
 
-    public int getId() {
-        return id;
-    }
+    // public int getId() {
+    //     return id;
+    // }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    // public void setId(int id) {
+    //     this.id = id;
+    // }
 
     public String getName() {
         return name;

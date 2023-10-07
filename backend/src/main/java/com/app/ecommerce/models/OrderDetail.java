@@ -1,14 +1,17 @@
 package com.app.ecommerce.models;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail extends BaseEntity {
 
-    @Id
-    @Column(name = "id", length = 11, nullable = false)
-    private int id;
+    // @Id
+    // @Column(name = "id", length = 11, nullable = false)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    // private int id;
 
     // @Column(name = "product_id", length = 50, nullable = false)
     // private String productId;
@@ -21,53 +24,34 @@ public class OrderDetail extends BaseEntity {
 
     // ---------- Mapping -----------
     @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;
+    private ProductWarranty productWarranty;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private AccountOrder userOrder;
+    private AccountOrder accountOrder;
 
-    // @OneToOne(mappedBy = "ORDERDETAIL")
-    // private productWarranty PRODUCTWARRANTY;
-
-    // public productWarranty getPRODUCTWARRANTY() {
-    //     return PRODUCTWARRANTY;
+    // public int getId() {
+    //     return id;
     // }
 
-    // public void setPRODUCTWARRANTY(productWarranty pRODUCTWARRANTY) {
-    //     PRODUCTWARRANTY = pRODUCTWARRANTY;
+    // public void setId(int id) {
+    //     this.id = id;
     // }
 
-    public int getId() {
-        return id;
+    public ProductWarranty getProductWarranty() {
+        return productWarranty;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductWarranty(ProductWarranty product) {
+        this.productWarranty = product;
     }
 
      public AccountOrder getOrder() {
-        return userOrder;
+        return accountOrder;
     }
 
-    public void setOrder(AccountOrder userOrder) {
-        this.userOrder = userOrder;
+    public void setOrder(AccountOrder accountOrder) {
+        this.accountOrder = accountOrder;
     }
-
-    // public String getProductId() {
-    //     return productId;
-    // }
-
-    // public void setProductId(String productId) {
-    //     this.productId = productId;
-    // }
 
     public int getPurchasePrice() {
         return purchasePrice;

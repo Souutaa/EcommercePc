@@ -7,9 +7,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "account_order")
 public class AccountOrder extends BaseEntity {
-    @Id
-    @Column(name = "id", length = 11, nullable = false)
-    private int id;
+    // @Id
+    // @Column(name = "id", length = 11, nullable = false)
+    // @GeneratedValue(strategy=GenerationType.IDENTITY)
+    // private int id;
 
     @Column(name = "username", length = 20, nullable = false)
     private String username;
@@ -22,38 +23,36 @@ public class AccountOrder extends BaseEntity {
     private int total;
 
     // Mapping
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_orderInfomationID", referencedColumnName = "orderInfomationID")
-    // private orderInfomation ORDERINFORMATION;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Account account;
 
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_OrderID", referencedColumnName = "OrderID")
-    // private List<orderDetail> ORDERDETAIL;
+    @OneToMany()
+    private List<OrderDetail> orderDetails;
 
-    // public orderInfomation getORDERINFORMATION() {
-    //     return ORDERINFORMATION;
-    // }
-
-    // public void setORDERINFORMATION(orderInfomation oRDERINFORMATION) {
-    //     ORDERINFORMATION = oRDERINFORMATION;
-    // }
-
-    // public List<orderDetail> getORDERDETAIL() {
-    //     return ORDERDETAIL;
-    // }
-
-    // public void setORDERDETAIL(List<orderDetail> oRDERDETAIL) {
-    //     ORDERDETAIL = oRDERDETAIL;
-    // }
-
-    //
-    public int getId() {
-        return id;
+    public List<OrderDetail> getOrderDetails() {
+        return this.orderDetails;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrderDetails(List<OrderDetail> OrderDetails) {
+        this.orderDetails = OrderDetails;
     }
+
+    public Account getAccount() {
+        return this.account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    // Getters - Setters
+    // public int getId() {
+    //     return id;
+    // }
+
+    // public void setId(int id) {
+    //     this.id = id;
+    // }
 
     public String getUsername() {
         return username;

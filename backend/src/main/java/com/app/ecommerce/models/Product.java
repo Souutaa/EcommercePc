@@ -9,8 +9,7 @@ import jakarta.persistence.*;
 @Table(name = "product")
 public class Product extends BaseEntity {
 
-    @Id()
-    @Column(name = "product_line", length = 50, nullable = false)
+    @Column(name = "product_line", length = 50, nullable = false, unique = true)
     private String productLine;
 
     @Column(name = "product_name", length = 150, nullable = false)
@@ -25,16 +24,7 @@ public class Product extends BaseEntity {
     @Column(name = "discount", length = 3, nullable = false, columnDefinition = "integer default 0")
     private int discount;
 
-    // @Column(name = "brand_id", length = 10, nullable = false)
-    // private String brandId;
-
-    // @Column(name = "category_id", length = 10, nullable = false)
-    // private int categoryId;
-
     // Mapping -----------------------------------------------------------------
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_BrandID", referencedColumnName = "BrandID")
-    // private Brand BRAND;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Brand brand;
@@ -48,64 +38,51 @@ public class Product extends BaseEntity {
     @OneToMany()
     private List<ProductInfo> productInfos;
 
+    @OneToMany()
+    private List<ProductWarranty> productWarranties;
+
+    public Brand getBrand() {
+        return this.brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public Category getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<ProductImage> getProductImages() {
+        return this.productImages;
+    }
+
+    public void setProductImages(List<ProductImage> ProductImages) {
+        this.productImages = ProductImages;
+    }
+
+    public List<ProductInfo> getProductInfos() {
+        return this.productInfos;
+    }
+
+    public void setProductInfos(List<ProductInfo> ProductInfos) {
+        this.productInfos = ProductInfos;
+    }
+
+    public List<ProductWarranty> getProductWarranties() {
+        return this.productWarranties;
+    }
+
+    public void setProductWarranties(List<ProductWarranty> ProductWarranties) {
+        this.productWarranties = ProductWarranties;
+    }
+
     @OneToOne(optional=false, fetch=FetchType.LAZY)
     private WarrantyPeriod warrantyPeriod;
-
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_Category", referencedColumnName = "Category")
-    // private List<Category> CATEGORY;
-
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_Product_Line", referencedColumnName = "Product_Line")
-    // private List<productWarranty> PRODUCTWARRANTY;
-
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_Product_Line", referencedColumnName = "Product_Line")
-    // private List<productInfo> PRODUCTINFO;
-
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_Product_Line", referencedColumnName = "Product_Line")
-    // private List<productImage> PRODUCTIMAGE;
-
-    // public List<productWarranty> getPRODUCTWARRANTY() {
-    //     return PRODUCTWARRANTY;
-    // }
-
-    // public void setPRODUCTWARRANTY(List<productWarranty> pRODUCTWARRANTY) {
-    //     PRODUCTWARRANTY = pRODUCTWARRANTY;
-    // }
-
-    // public List<productInfo> getPRODUCTINFO() {
-    //     return PRODUCTINFO;
-    // }
-
-    // public void setPRODUCTINFO(List<productInfo> pRODUCTINFO) {
-    //     PRODUCTINFO = pRODUCTINFO;
-    // }
-
-    // public List<productImage> getPRODUCTIMAGE() {
-    //     return PRODUCTIMAGE;
-    // }
-
-    // public void setPRODUCTIMAGE(List<productImage> pRODUCTIMAGE) {
-    //     PRODUCTIMAGE = pRODUCTIMAGE;
-    // }
-
-    // public Brand getBRAND() {
-    //     return BRAND;
-    // }
-
-    // public void setBRAND(Brand bRAND) {
-    //     BRAND = bRAND;
-    // }
-
-    // public List<Category> getCATEGORY() {
-    //     return CATEGORY;
-    // }
-
-    // public void setCATEGORY(List<Category> cATEGORY) {
-    //     CATEGORY = cATEGORY;
-    // }
 
     // ----------------------------------------------------------------------------
     public String getProductLine() {
@@ -147,21 +124,4 @@ public class Product extends BaseEntity {
     public void setDiscount(int discount) {
         this.discount = discount;
     }
-
-    // public String getBrandID() {
-    //     return brandId;
-    // }
-
-    // public void setBrandID(String brandID) {
-    //     this.brandId = brandID;
-    // }
-
-    // public int getCategory() {
-    //     return categoryId;
-    // }
-
-    // public void setCategory(int categoryId) {
-    //     this.categoryId = categoryId;
-    // }
-
 }

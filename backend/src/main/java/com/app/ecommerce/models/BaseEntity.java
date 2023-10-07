@@ -1,12 +1,17 @@
 package com.app.ecommerce.models;
 
-import java.sql.Date;
+import java.util.*;
 
 import jakarta.persistence.*;
 
 //baseEntity nền móng cho những model khác.
 @MappedSuperclass
 public abstract class BaseEntity {
+
+    @Id
+    @Column(name = "id", length = 11, nullable = false)
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
 
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE) // @Temporal use to get extremely date and time
@@ -42,5 +47,15 @@ public abstract class BaseEntity {
 
     public void setDeletedAt(Date deletedAt) {
         deleted_at = deletedAt;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        created_at = new java.util.Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        modified_at = new java.util.Date();
     }
 }

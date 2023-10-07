@@ -8,9 +8,8 @@ import jakarta.persistence.*;
 @Table(name = "product_warranty")
 public class ProductWarranty extends BaseEntity {
 
-    @Id
-    @Column(name = "product_id", length = 50, nullable = false)
-    private String productId;
+    @Column(name = "product_warranty_id", length = 50, nullable = false, unique = true)
+    private String productWarrantyId;
 
     @Column(name = "purchased_at", nullable = true)
     private Date purchasedAt;
@@ -18,29 +17,24 @@ public class ProductWarranty extends BaseEntity {
     @Column(name = "warranty_period", nullable = true)
     private Date warrantyPeriod;
 
-    @Column(name = "product_line", length = 50, nullable = false)
-    private String productLine;
-
     // Mapping
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_ProductId", referencedColumnName = "ProductId")
-    // private orderDetail ORDERDETAIL;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Product product;
 
-    // public orderDetail getORDERDETAIL() {
-    //     return ORDERDETAIL;
-    // }
-
-    // public void setORDERDETAIL(orderDetail oRDERDETAIL) {
-    //     ORDERDETAIL = oRDERDETAIL;
-    // }
-    //
-
-    public String getProductId() {
-        return productId;
+    public Product getProduct() {
+        return this.product;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public String getProductWarrantyId() {
+        return productWarrantyId;
+    }
+
+    public void setProductWarrantyId(String productWarrantyId) {
+        this.productWarrantyId = productWarrantyId;
     }
 
     public Date getPurchasedAt() {
@@ -57,14 +51,6 @@ public class ProductWarranty extends BaseEntity {
 
     public void setWarrantyPeriod(Date warrantyPeriod) {
         this.warrantyPeriod = warrantyPeriod;
-    }
-
-    public String getProductLine() {
-        return productLine;
-    }
-
-    public void setProductLine(String productLine) {
-        this.productLine = productLine;
     }
 
 }
