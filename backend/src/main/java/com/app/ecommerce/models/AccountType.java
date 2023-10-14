@@ -7,11 +7,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "account_type")
 public class AccountType extends BaseEntity {
-    // @Id
-    // @Column(name = "id", length = 11, nullable = false)
-    // @GeneratedValue(strategy=GenerationType.IDENTITY)
-    // private int id;
-    
     @Column(name = "type_name", length = 50, nullable = false)
     private String typeName;
 
@@ -22,14 +17,6 @@ public class AccountType extends BaseEntity {
     private int disabled;
 
     // --------------------------------------------------------------
-    // public int getId() {
-    //     return id;
-    // }
-
-    // public void setId(int id) {
-    //     this.id = id;
-    // }
-
     public String getTypeName() {
         return typeName;
     }

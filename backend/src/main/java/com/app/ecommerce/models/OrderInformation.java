@@ -6,14 +6,6 @@ import jakarta.persistence.*;
 @Table(name = "order_information")
 public class OrderInformation extends BaseEntity {
 
-    // @Id
-    // @Column(name = "id", length = 11, nullable = false)
-    // @GeneratedValue(strategy=GenerationType.IDENTITY)
-    // private int id;
-
-    // @Column(name = "order_id", length = 11, nullable = false)
-    // private int orderId;
-
     @Column(name = "username", length = 20, nullable = false)
     private String username;
 
@@ -44,14 +36,6 @@ public class OrderInformation extends BaseEntity {
     public void setAccountOrder(AccountOrder accountOrder) {
         this.accountOrder = accountOrder;
     }
-
-    // public int getId() {
-    //     return id;
-    // }
-
-    // public void setId(int id) {
-    //     this.id = id;
-    // }
 
     public String getUsername() {
         return username;

@@ -7,10 +7,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "account_detail")
 public class AccountDetail extends BaseEntity {
-    // @Id
-    // @Column(name = "id", length = 11, nullable = false)
-    // @GeneratedValue(strategy=GenerationType.IDENTITY)
-    // private int id;
 
     @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
@@ -48,17 +44,6 @@ public class AccountDetail extends BaseEntity {
     public void setAccount(Account Account) {
         this.account = Account;
     }
-
-    // @OneToOne(mappedBy = "USERDETAIL")
-    // private Account ACCOUNT;
-
-    // public int getId() {
-    //     return id;
-    // }
-
-    // public void setId(int id) {
-    //     this.id = id;
-    // }
 
     public String getFirstName() {
         return firstName;

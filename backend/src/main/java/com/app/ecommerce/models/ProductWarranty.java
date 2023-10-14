@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "product_warranty")
 public class ProductWarranty extends BaseEntity {
-
     @Column(name = "product_warranty_id", length = 50, nullable = false, unique = true)
     private String productWarrantyId;
 

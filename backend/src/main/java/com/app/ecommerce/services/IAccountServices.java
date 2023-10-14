@@ -1,6 +1,7 @@
 package com.app.ecommerce.services;
 
 import com.app.ecommerce.models.Account;
+import com.app.ecommerce.DTO.UpdateUserDTO;
 
 public interface IAccountServices {
     public Account saveAccount(Account account);

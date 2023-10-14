@@ -8,11 +8,6 @@ import jakarta.persistence.*;
 @Table(name = "permission")
 public class Permission extends BaseEntity {
 
-    // @Id
-    // @Column(name = "id", length = 11, nullable = false)
-    // @GeneratedValue(strategy=GenerationType.IDENTITY)
-    // private int id;
-
     @Column(name = "name", length = 20, nullable = false)
     private String name;
 
@@ -37,14 +32,6 @@ public class Permission extends BaseEntity {
 
     // -------------------------------------------------------------
 
-    // public int getId() {
-    //     return id;
-    // }
-
-    // public void setId(int id) {
-    //     this.id = id;
-    // }
-
     public String getName() {
         return name;
     }
@@ -68,13 +55,5 @@ public class Permission extends BaseEntity {
     public void setDisable(int disable) {
         this.disable = disable;
     }
-
-    // public PermissionGroup getPermissionGroup() {
-    //     return permissionGroup;
-    // }
-
-    // public void setPermissionGroup(PermissionGroup permissionGroup) {
-    //     this.permissionGroup = permissionGroup;
-    // }
 
 }

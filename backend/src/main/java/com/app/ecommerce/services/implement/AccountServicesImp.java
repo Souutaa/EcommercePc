@@ -12,6 +12,7 @@ import com.app.ecommerce.models.Account;
 import com.app.ecommerce.respositories.AccountRepo;
 import com.app.ecommerce.services.IAccountServices;
 import com.app.ecommerce.utils.Utils;
+import com.app.ecommerce.DTO.UpdateUserDTO;
 
 @Service
 public class AccountServicesImp implements IAccountServices {
@@ -36,15 +37,12 @@ public class AccountServicesImp implements IAccountServices {
 
     @Override
     public Account getAccountByUserName(String username) {
-        // TODO Auto-generated method stub
         Optional<Account> opt = repo.findByUsername(username);
-
         if(opt.isPresent()) {
             return opt.get();
         } else {
             throw new ResourceNotFoundException("User with username : "+username+" Not Found");
         }
-
-
     }
+
 }

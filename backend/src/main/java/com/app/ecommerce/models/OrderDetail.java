@@ -7,15 +7,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail extends BaseEntity {
-
-    // @Id
-    // @Column(name = "id", length = 11, nullable = false)
-    // @GeneratedValue(strategy=GenerationType.IDENTITY)
-    // private int id;
-
-    // @Column(name = "product_id", length = 50, nullable = false)
-    // private String productId;
-
     @Column(name = "purchase_price", length = 11, nullable = false)
     private int purchasePrice;
 
@@ -28,14 +19,6 @@ public class OrderDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private AccountOrder accountOrder;
-
-    // public int getId() {
-    //     return id;
-    // }
-
-    // public void setId(int id) {
-    //     this.id = id;
-    // }
 
     public ProductWarranty getProductWarranty() {
         return productWarranty;

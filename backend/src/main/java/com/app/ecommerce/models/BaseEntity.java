@@ -25,6 +25,14 @@ public abstract class BaseEntity {
     @Temporal(TemporalType.DATE)
     private Date deleted_at;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Date getCreatedAt() {
         return created_at;
     }

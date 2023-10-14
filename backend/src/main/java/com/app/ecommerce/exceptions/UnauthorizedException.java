@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import main.java.com.app.ecommerce.exceptions.BaseException;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends BaseException {
-    public ResourceNotFoundException(String message) {
+@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+public class UnauthorizedException extends BaseException {
+    public UnauthorizedException(String message) {
         super(message);
     }
 }
