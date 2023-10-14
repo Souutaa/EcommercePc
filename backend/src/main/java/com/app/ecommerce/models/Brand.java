@@ -1,58 +1,32 @@
 package com.app.ecommerce.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import java.util.List;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "brand")
-public class Brand extends baseEntity {
-
-    @Column(name = "BrandID", length = 10, nullable = false, unique = true)
-    private String BrandID;
-
-    @Column(name = "BrandName", length = 20, nullable = false)
-    private String BrandName;
+public class Brand extends BaseEntity {
+    @Column(name = "brand_name", length = 20, nullable = false)
+    private String brandName;
 
     // Mapping
-    @OneToOne(mappedBy = "BRAND")
-    private Product PRODUCT;
+    @OneToMany(mappedBy = "brand")
+    private List<Product> products;
 
-    public Product getPRODUCT() {
-        return PRODUCT;
+    public List<Product> getProducts() {
+        return this.products;
     }
 
-    public void setPRODUCT(Product pRODUCT) {
-        PRODUCT = pRODUCT;
+    public void setProducts(List<Product> Products) {
+        this.products = Products;
     }
-    //
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fk_BrandID", referencedColumnName = "BrandID")
-    // private List<Product> product;
-
-    // public List<Product> getProduct() {
-    // return product;
-    // }
-
-    // public void setProduct(List<Product> product) {
-    // this.product = product;
-    // }
-
-    public String getBrandID() {
-        return BrandID;
-    }
-
-    public void setBrandID(String brandID) {
-        BrandID = brandID;
-    }
-
+    
     public String getBrandName() {
-        return BrandName;
+        return brandName;
     }
 
     public void setBrandName(String brandName) {
-        BrandName = brandName;
+        this.brandName = brandName;
     }
-
 }

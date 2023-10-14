@@ -1,61 +1,41 @@
 package com.app.ecommerce.models;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "permission")
-public class Permission extends baseEntity {
+public class Permission extends BaseEntity {
 
-    @Column(name = "PermissionID", length = 10, nullable = false)
-    private String PermissionID;
-
-    @Column(name = "PermissionName", length = 20, nullable = false)
-    private String PermissionName;
+    @Column(name = "name", length = 20, nullable = false)
+    private String name;
 
     @Column(name = "description", length = 50, nullable = true)
     private String description;
 
-    @Column(name = "Disable", length = 1, nullable = false, columnDefinition = "integer default 0")
-    private int Disable;
-
-    @Column(name = "PermissionGroupID", length = 11, nullable = false)
-    private int PermissionGroupID;
+    @Column(name = "disable", length = 1, nullable = false, columnDefinition = "integer default 0")
+    private int disable;
 
     // Mapping -------------------------------------------------------
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_PermissionID", referencedColumnName = "PermissionID")
-    private List<accountPermission> ACCOUNTPERMISSION;
 
-    public List<accountPermission> getACCOUNTPERMISSION() {
-        return ACCOUNTPERMISSION;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PermissionGroup permissionGroup;
+
+    public PermissionGroup getPermissionGroup() {
+        return this.permissionGroup;
     }
 
-    public void setACCOUNTPERMISSION(List<accountPermission> aCCOUNTPERMISSION) {
-        ACCOUNTPERMISSION = aCCOUNTPERMISSION;
+    public void setPermissionGroup(PermissionGroup permissionGroup) {
+        this.permissionGroup = permissionGroup;
     }
 
     // -------------------------------------------------------------
-    public String getPermissionID() {
-        return PermissionID;
+
+    public String getName() {
+        return name;
     }
 
-    public void setPermissionID(String permissionID) {
-        PermissionID = permissionID;
-    }
-
-    public String getPermissionName() {
-        return PermissionName;
-    }
-
-    public void setPermissionName(String permissionName) {
-        PermissionName = permissionName;
+    public void setName(String permissionName) {
+        name = permissionName;
     }
 
     public String getDescription() {
@@ -67,19 +47,11 @@ public class Permission extends baseEntity {
     }
 
     public int getDisable() {
-        return Disable;
+        return disable;
     }
 
     public void setDisable(int disable) {
-        Disable = disable;
-    }
-
-    public int getPermissionGroupID() {
-        return PermissionGroupID;
-    }
-
-    public void setPermissionGroupID(int permissionGroupID) {
-        PermissionGroupID = permissionGroupID;
+        this.disable = disable;
     }
 
 }

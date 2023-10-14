@@ -1,19 +1,10 @@
 package com.app.ecommerce.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "orderinfomation")
-public class orderInfomation extends baseEntity {
-
-    @Column(name = "orderInfomationID", length = 11, nullable = false)
-    private int orderInfomationID;
-
-    @Column(name = "OrderID", length = 11, nullable = false)
-    private int OrderID;
+@Table(name = "order_information")
+public class OrderInformation extends BaseEntity {
 
     @Column(name = "username", length = 20, nullable = false)
     private String username;
@@ -30,26 +21,20 @@ public class orderInfomation extends baseEntity {
     @Column(name = "email", length = 60, nullable = false)
     private String email;
 
-    @Column(name = "phoneNumber", length = 20, nullable = false)
+    @Column(name = "phone_number", length = 20, nullable = false)
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "ORDERINFORMATION")
-    private userOrder USERORDER;
+    // Mapping
+    @OneToOne(optional = false, fetch=FetchType.LAZY)
+    @MapsId
+    private AccountOrder accountOrder;
 
-    public int getOrderInfomationID() {
-        return orderInfomationID;
+    public AccountOrder getAccountOrder() {
+        return this.accountOrder;
     }
 
-    public void setOrderInfomationID(int orderInfomationID) {
-        this.orderInfomationID = orderInfomationID;
-    }
-
-    public int getOrderID() {
-        return OrderID;
-    }
-
-    public void setOrderID(int orderID) {
-        OrderID = orderID;
+    public void setAccountOrder(AccountOrder accountOrder) {
+        this.accountOrder = accountOrder;
     }
 
     public String getUsername() {

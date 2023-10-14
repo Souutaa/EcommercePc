@@ -45,7 +45,7 @@ services:
     restart: always
     environment:
       - POSTGRES_PASSWORD=postgres
-    container_name: postgres
+    container_name: postgres-ecommerce
     volumes:
       - ./backend/pgdata:/var/lib/postgresql/data
     ports:
@@ -56,7 +56,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4:latest
     restart: always
-    container_name: pgadmin4
+    container_name: pgadmin4-ecommerce
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=pgadmin4
@@ -70,7 +70,7 @@ services:
       - spring-postgres
 
   backend:
-    container_name: backend
+    container_name: backend-ecommerce
     depends_on:
       - db
     build:
@@ -95,22 +95,22 @@ services:
       - 5005:5005
       - 35729:35729
 
-  frontend:
-    container_name: frontend
-    depends_on:
-      - backend
-    build:
-      context: ./frontend/
-      dockerfile: Dockerfile
-    volumes:
-      - ./frontend/:/frontend
-      - /frontend/node_modules
-    networks:
-      - spring-postgres
-    working_dir: /frontend
-    command: npm start
-    ports:
-      - 3000:3000
+  # frontend:
+  #   container_name: frontend-ecommerce
+  #   depends_on:
+  #     - backend
+  #   build:
+  #     context: ./frontend/
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./frontend/:/frontend
+  #     - /frontend/node_modules
+  #   networks:
+  #     - spring-postgres
+  #   working_dir: /frontend
+  #   command: npm start
+  #   ports:
+  #     - 3000:3000
 
 volumes:
   db: {}

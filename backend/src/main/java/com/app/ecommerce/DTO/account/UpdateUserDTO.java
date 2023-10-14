@@ -1,34 +1,24 @@
-package com.app.ecommerce.models;
+package com.app.ecommerce.DTO.account;
 
 import java.util.List;
-import jakarta.persistence.*;
+import com.app.ecommerce.models.AccountGroup;
+import com.app.ecommerce.models.AccountDetail;
+import com.app.ecommerce.models.AccountOrder;
 
-@Entity
-@Table(name = "account")
-public class Account extends BaseEntity {
-
-    @Column(name = "username", length = 20, nullable = false, unique = true)
+public class UpdateUserDTO {
     private String username;
-
-    @Column(name = "password", nullable = false)
-    private String password;
-
-    // Mapping -----------------------------------------------------------
-    @OneToMany(mappedBy="account")
+    private String oldPassword;
+    private String password;    
     private List<AccountGroup> accountGroups;
-
-    @OneToMany(mappedBy = "account")
     private List<AccountDetail> accountDetails;
-
-    @OneToMany(mappedBy = "account")
     private List<AccountOrder> accountOrders;
 
     public List<AccountGroup> getAccountGroups() {
         return this.accountGroups;
     }
 
-    public void setAccountGroups(List<AccountGroup> accountGroups) {
-        this.accountGroups = accountGroups;
+    public void setAccountGroups(AccountGroup accountGroup) {
+        this.accountGroups.add(accountGroup);
     }
 
     public List<AccountDetail> getAccountDetails() {
@@ -46,7 +36,7 @@ public class Account extends BaseEntity {
     public void setAccountOrders(List<AccountOrder> accountOrders) {
         this.accountOrders = accountOrders;
     }
-    // ----------------------------------------------------------------------
+    
     public String getUsername() {
         return username;
     }
@@ -63,4 +53,11 @@ public class Account extends BaseEntity {
         this.password = password;
     }
 
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
 }

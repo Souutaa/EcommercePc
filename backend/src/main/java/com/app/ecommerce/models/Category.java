@@ -1,31 +1,32 @@
 package com.app.ecommerce.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import java.util.List;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "category")
-public class Category extends baseEntity {
-    @Column(name = "CategoryID", length = 10, nullable = false, unique = true)
-    private int CategoryID;
+public class Category extends BaseEntity {
+    @Column(name = "name", length = 20, nullable = false)
+    private String name;
 
-    @Column(name = "CategoryName", length = 20, nullable = false)
-    private String CategoryName;
+    // Mapping
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
-    public int getCategoryID() {
-        return CategoryID;
+    public List<Product> getProducts() {
+        return this.products;
     }
 
-    public void setCategoryID(int categoryID) {
-        CategoryID = categoryID;
+    public void setProducts(List<Product> Products) {
+        this.products = Products;
     }
 
-    public String getCategoryName() {
-        return CategoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryName(String categoryName) {
-        CategoryName = categoryName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -1,14 +1,13 @@
 {
   "configurations": [
+
     {
       "type": "java",
-      "name": "Spring Boot-EcommerceApplication<ecommerce>",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "mainClass": "com.app.ecommerce.EcommerceApplication",
-      "projectName": "ecommerce",
-      "args": "",
-      "envFile": "${workspaceFolder}/.env"
+      "name": "Debug (Attach)",
+      "projectName": "MyProjectName",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005
     }
   ]
 }
