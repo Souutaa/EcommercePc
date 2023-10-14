@@ -2,8 +2,6 @@ package com.app.ecommerce.services.implement;
 
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +9,6 @@ import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
 import com.app.ecommerce.respositories.AccountRepo;
 import com.app.ecommerce.services.IAccountServices;
-import com.app.ecommerce.utils.Utils;
-import com.app.ecommerce.DTO.UpdateUserDTO;
 
 @Service
 public class AccountServicesImp implements IAccountServices {

@@ -1,9 +1,7 @@
 package com.app.ecommerce.controllers;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,19 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.ecommerce.DTO.UpdateUserDTO;
-import com.app.ecommerce.exceptions.ResourceNotFoundException;
+import com.app.ecommerce.DTO.account.UpdateUserDTO;
 import com.app.ecommerce.exceptions.UnauthorizedException;
 import com.app.ecommerce.models.Account;
 import com.app.ecommerce.services.IAccountServices;
 import com.app.ecommerce.utils.Utils;
 
-import main.java.com.app.ecommerce.DTO.account.CreateAccountDTO;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.app.ecommerce.DTO.account.CreateAccountDTO;
 
 @RestController // This means that this class is a Controller
 @RequestMapping(value = "/demo") // This means URL's start with /demo (after Application path)

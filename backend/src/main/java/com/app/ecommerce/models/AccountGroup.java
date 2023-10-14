@@ -1,8 +1,5 @@
 package com.app.ecommerce.models;
 
-import java.util.List;
-import java.util.concurrent.Flow.Publisher;
-
 import jakarta.persistence.*;
 
 @Entity

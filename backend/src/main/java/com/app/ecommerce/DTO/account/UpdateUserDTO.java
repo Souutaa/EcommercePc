@@ -1,4 +1,4 @@
-package com.app.ecommerce.DTO;
+package com.app.ecommerce.DTO.account;
 
 import java.util.List;
 import com.app.ecommerce.models.AccountGroup;

@@ -1,6 +1,5 @@
 package com.app.ecommerce.models;
 
-import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.*;

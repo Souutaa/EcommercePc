@@ -1,4 +1,4 @@
-package main.java.com.app.ecommerce.DTO.account;
+package com.app.ecommerce.DTO.account;
 
 public class CreateAccountDTO {
   String username;

@@ -1,7 +1,5 @@
 package com.app.ecommerce.models;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 
 @Entity

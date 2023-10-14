@@ -1,10 +1,6 @@
 package com.app.ecommerce.models;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
-
 import jakarta.persistence.*;
 
 @Entity
