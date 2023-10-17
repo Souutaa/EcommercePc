@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Demo from "./Layouts/Demo";
+import Home from "./Pages/HomePage/Home";
 
 function App() {
   return (
     <div className="App">
-      <Demo />
+      <Home />
       <BrowserRouter>
         <Routes>
           <Route path="" element={""} />
