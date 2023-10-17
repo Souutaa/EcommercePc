@@ -1,45 +1,4 @@
 services:
-  # db:
-  #   image: postgres:latest
-  #   restart: always
-  #   secrets:
-  #     - db-password
-  #   volumes:
-  #     - db-data:/var/lib/postgresql/data
-  #     - ./db-data/init.sql:/docker-entrypoint-initdb.d/ecomercePC.sql
-  #   networks:
-  #     - spring-postgres
-  #   environment:
-  #     POSTGRES_HOST_AUTH_METHOD: host all all all scram-sha-256
-  #     POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
-  #     POSTGRES_DB: ecommerce
-  #     POSTGRES_USER: admin
-  #     POSTGRES_PASSWORD: 123456
-  #     POSTGRES_ROOT_PASSWORD: 123456
-  #     #POSTGRES_PASSWORD_FILE=/run/secrets/db-password
-  #   ports:
-  #     - 5005:5432
-  #   expose:
-  #     - 5432
-  # db:
-  #   image: mysql:latest
-  #   container_name: db
-  #   command: ["--default-authentication-plugin=caching_sha2_password"]
-  #   restart: always
-  #   environment:
-  #     MYSQL_USER: "admin"
-  #     MYSQL_DATABASE: "ecom_pc"
-  #     MYSQL_PASSWORD: 123456
-  #     MYSQL_ROOT_PASSWORD: 123456
-  #   volumes:
-  #     - db:/var/lib/mysql
-  #     - ./db/init.sql:/docker-entrypoint-initdb.d/ecom_pc.sql
-  #   ports:
-  #     - 3308:3306
-  #   networks:
-  #     - spring-postgres
-  #   expose:
-  #     - 3306
   db:
     image: postgres:latest
     restart: always
