@@ -10,7 +10,7 @@ public abstract class BaseEntity {
 
     @Id
     @Column(name = "id", length = 11, nullable = false)
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "created_at")
