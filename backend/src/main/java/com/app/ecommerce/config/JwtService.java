@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
@@ -17,7 +18,8 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-  private static final String SECRET_KEY = "To58wINCozSXzgAlJ2hxQ1Lw9GvoH5EYnjCMqNKpi7cch6TeKtP4uhJrUOc4ay+f";
+  @Value("${jwt.secret}")
+  private static String SECRET_KEY;
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
@@ -25,11 +27,11 @@ public class JwtService {
 
   private Claims extractAllClaims(String token) {
     return Jwts
-      .parserBuilder()
-      .setSigningKey(getSignInKey())
-      .build()
-      .parseClaimsJws(token)
-      .getBody();
+        .parserBuilder()
+        .setSigningKey(getSignInKey())
+        .build()
+        .parseClaimsJws(token)
+        .getBody();
   }
 
   public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -55,17 +57,16 @@ public class JwtService {
   }
 
   public String generateToken(
-    Map<String, Object> extraClaims,
-    UserDetails userDetails
-  ) {
+      Map<String, Object> extraClaims,
+      UserDetails userDetails) {
     return Jwts
-      .builder()
-      .setClaims(extraClaims)
-      .setSubject(userDetails.getUsername())
-      .setIssuedAt(new Date(System.currentTimeMillis()))
-      .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60))
-      .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-      .compact();
+        .builder()
+        .setClaims(extraClaims)
+        .setSubject(userDetails.getUsername())
+        .setIssuedAt(new Date(System.currentTimeMillis()))
+        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+        .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+        .compact();
   }
 
   private Key getSignInKey() {

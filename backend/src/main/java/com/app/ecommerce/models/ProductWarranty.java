@@ -3,7 +3,17 @@ package com.app.ecommerce.models;
 import java.sql.Date;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@Data
+@EqualsAndHashCode(callSuper=false)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "product_warranty")
 public class ProductWarranty extends BaseEntity {
@@ -19,37 +29,5 @@ public class ProductWarranty extends BaseEntity {
     // Mapping
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
-
-    public Product getProduct() {
-        return this.product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public String getProductWarrantyId() {
-        return productWarrantyId;
-    }
-
-    public void setProductWarrantyId(String productWarrantyId) {
-        this.productWarrantyId = productWarrantyId;
-    }
-
-    public Date getPurchasedAt() {
-        return purchasedAt;
-    }
-
-    public void setPurchasedAt(Date purchasedAt) {
-        this.purchasedAt = purchasedAt;
-    }
-
-    public Date getWarrantyPeriod() {
-        return warrantyPeriod;
-    }
-
-    public void setWarrantyPeriod(Date warrantyPeriod) {
-        this.warrantyPeriod = warrantyPeriod;
-    }
 
 }

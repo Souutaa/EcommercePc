@@ -8,12 +8,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,11 +30,13 @@ public class Account extends BaseEntity implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @Column(name = "email", nullable = false)
+    @Email(message = "Email must be valid")
+    private String email;
 
-    @OneToMany(mappedBy="account")
-    private List<AccountGroup> accountGroups;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(32) default 'USER'")
+    private Role role;
 
     @OneToMany(mappedBy = "account")
     private List<AccountDetail> accountDetails;

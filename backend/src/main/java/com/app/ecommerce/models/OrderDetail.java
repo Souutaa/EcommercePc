@@ -1,7 +1,17 @@
 package com.app.ecommerce.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@Data
+@EqualsAndHashCode(callSuper=false)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail extends BaseEntity {
@@ -17,37 +27,5 @@ public class OrderDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private AccountOrder accountOrder;
-
-    public ProductWarranty getProductWarranty() {
-        return productWarranty;
-    }
-
-    public void setProductWarranty(ProductWarranty product) {
-        this.productWarranty = product;
-    }
-
-     public AccountOrder getOrder() {
-        return accountOrder;
-    }
-
-    public void setOrder(AccountOrder accountOrder) {
-        this.accountOrder = accountOrder;
-    }
-
-    public int getPurchasePrice() {
-        return purchasePrice;
-    }
-
-    public void setPurchasePrice(int purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
-    public int getPurchaseDiscount() {
-        return purchaseDiscount;
-    }
-
-    public void setPurchaseDiscount(int purchaseDiscount) {
-        this.purchaseDiscount = purchaseDiscount;
-    }
 
 }

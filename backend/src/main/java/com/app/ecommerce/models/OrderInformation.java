@@ -1,7 +1,16 @@
 package com.app.ecommerce.models;
 
 import jakarta.persistence.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+@Data
+@EqualsAndHashCode(callSuper=false)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "order_information")
 public class OrderInformation extends BaseEntity {
@@ -28,60 +37,4 @@ public class OrderInformation extends BaseEntity {
     @OneToOne(optional = false, fetch=FetchType.LAZY)
     @MapsId
     private AccountOrder accountOrder;
-
-    public AccountOrder getAccountOrder() {
-        return this.accountOrder;
-    }
-
-    public void setAccountOrder(AccountOrder accountOrder) {
-        this.accountOrder = accountOrder;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 }
