@@ -10,7 +10,7 @@ public abstract class BaseEntity {
 
     @Id
     @Column(name = "id", length = 11, nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
     @Column(name = "created_at")
@@ -20,7 +20,6 @@ public abstract class BaseEntity {
     @Column(name = "modified_at")
     @Temporal(TemporalType.DATE) // @Temporal use to get extremely date and time
     private Date modified_at;
-
     @Column(name = "deleted_at")
     @Temporal(TemporalType.DATE)
     private Date deleted_at;

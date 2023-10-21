@@ -1,21 +1,42 @@
 package com.app.ecommerce.models;
 
+import java.util.Collection;
 import java.util.List;
-import jakarta.persistence.*;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@EqualsAndHashCode(callSuper=false)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "account")
-public class Account extends BaseEntity {
-
+public class Account extends BaseEntity implements UserDetails {
+    
     @Column(name = "username", length = 20, nullable = false, unique = true)
     private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    // Mapping -----------------------------------------------------------
-    @OneToMany(mappedBy="account")
-    private List<AccountGroup> accountGroups;
+    @Column(name = "email", nullable = false)
+    @Email(message = "Email must be valid")
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(32) default 'USER'")
+    private Role role;
 
     @OneToMany(mappedBy = "account")
     private List<AccountDetail> accountDetails;
@@ -23,44 +44,38 @@ public class Account extends BaseEntity {
     @OneToMany(mappedBy = "account")
     private List<AccountOrder> accountOrders;
 
-    public List<AccountGroup> getAccountGroups() {
-        return this.accountGroups;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    public void setAccountGroups(List<AccountGroup> accountGroups) {
-        this.accountGroups = accountGroups;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public List<AccountDetail> getAccountDetails() {
-        return this.accountDetails;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setAccountDetails(List<AccountDetail> accountDetails) {
-        this.accountDetails = accountDetails;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public List<AccountOrder> getAccountOrders() {
-        return this.accountOrders;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
-    public void setAccountOrders(List<AccountOrder> accountOrders) {
-        this.accountOrders = accountOrders;
-    }
-    // ----------------------------------------------------------------------
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
+    @Override
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public String getUsername() {
+        return username;
     }
-
 }

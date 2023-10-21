@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
-import com.app.ecommerce.respositories.AccountRepo;
+import com.app.ecommerce.respositories.AccountRepository;
 import com.app.ecommerce.services.IAccountServices;
 
 @Service
 public class AccountServicesImp implements IAccountServices {
 
     @Autowired
-    private AccountRepo repo;
+    private AccountRepository repo;
 
     @Override
     public Account saveAccount(Account account) {

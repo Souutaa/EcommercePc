@@ -3,7 +3,17 @@ package com.app.ecommerce.models;
 import java.util.List;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@Data
+@EqualsAndHashCode(callSuper=false)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "product")
 public class Product extends BaseEntity {
@@ -22,9 +32,7 @@ public class Product extends BaseEntity {
 
     @Column(name = "discount", length = 3, nullable = false, columnDefinition = "integer default 0")
     private int discount;
-
-    // Mapping -----------------------------------------------------------------
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     private Brand brand;
 
@@ -40,87 +48,6 @@ public class Product extends BaseEntity {
     @OneToMany()
     private List<ProductWarranty> productWarranties;
 
-    public Brand getBrand() {
-        return this.brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
-    public Category getCategory() {
-        return this.category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public List<ProductImage> getProductImages() {
-        return this.productImages;
-    }
-
-    public void setProductImages(List<ProductImage> ProductImages) {
-        this.productImages = ProductImages;
-    }
-
-    public List<ProductInfo> getProductInfos() {
-        return this.productInfos;
-    }
-
-    public void setProductInfos(List<ProductInfo> ProductInfos) {
-        this.productInfos = ProductInfos;
-    }
-
-    public List<ProductWarranty> getProductWarranties() {
-        return this.productWarranties;
-    }
-
-    public void setProductWarranties(List<ProductWarranty> ProductWarranties) {
-        this.productWarranties = ProductWarranties;
-    }
-
     @OneToOne(optional=false, fetch=FetchType.LAZY)
     private WarrantyPeriod warrantyPeriod;
-
-    // ----------------------------------------------------------------------------
-    public String getProductLine() {
-        return productLine;
-    }
-
-    public void setProductLine(String productLine) {
-        this.productLine = productLine;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
 }
