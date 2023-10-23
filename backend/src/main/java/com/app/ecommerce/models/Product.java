@@ -2,6 +2,9 @@ package com.app.ecommerce.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,22 +35,29 @@ public class Product extends BaseEntity {
 
     @Column(name = "discount", length = 3, nullable = false, columnDefinition = "integer default 0")
     private int discount;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id", referencedColumnName = "id")
+    @JsonBackReference
     private Brand brand;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JsonBackReference
     private Category category;
 
     @OneToMany()
+    @JsonManagedReference
     private List<ProductImage> productImages;
 
     @OneToMany()
+    @JsonManagedReference
     private List<ProductInfo> productInfos;
 
     @OneToMany()
+    @JsonManagedReference
     private List<ProductWarranty> productWarranties;
 
-    @OneToOne(optional=false, fetch=FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private WarrantyPeriod warrantyPeriod;
 }

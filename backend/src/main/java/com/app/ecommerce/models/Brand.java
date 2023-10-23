@@ -2,6 +2,8 @@ package com.app.ecommerce.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +24,7 @@ public class Brand extends BaseEntity {
 
     // Mapping
     @OneToMany(mappedBy = "brand")
+    @JsonManagedReference
     private List<Product> products;
 
 }
