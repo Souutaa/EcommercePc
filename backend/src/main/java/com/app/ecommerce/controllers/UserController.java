@@ -29,19 +29,9 @@ public class UserController {
     @Autowired
     private IAccountDetailServices accountDetailServices;
 
-    @GetMapping(value = "/getUser/{username}")
-    public @ResponseBody ResponseEntity<Object> getAllAccount(@RequestParam String id, @PathVariable String username) {
-        try {
-            Account test = accountServices.getAccountById(Integer.parseInt(id));
-            return new ResponseEntity<>(test, HttpStatus.OK);
-        } catch (ResourceNotFoundException ex) {
-            throw new ResourceNotFoundException("user not found");
-        }
-    }
-
-    @GetMapping(value = "/{id}")
-    public @ResponseBody ResponseEntity<Object> getAccountDetail(@PathVariable String id) {
-        AccountDetail accountDetail = accountDetailServices.getAccountById(Integer.parseInt(id));
-        return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
+    @GetMapping(value = "/getUser")
+    public @ResponseBody ResponseEntity<Object> getAllAccount(@RequestParam String id) {
+        Account test = accountServices.getAccountById(Integer.parseInt(id));
+        return new ResponseEntity<>(test, HttpStatus.OK);
     }
 }
