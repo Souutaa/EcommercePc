@@ -2,6 +2,8 @@ package com.app.ecommerce.models;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +30,8 @@ public class ProductWarranty extends BaseEntity {
 
     // Mapping
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @JsonBackReference
     private Product product;
 
 }
