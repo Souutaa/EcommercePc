@@ -36,7 +36,7 @@ public class AccountDetail extends BaseEntity {
 
     @Column(name = "is_default", columnDefinition = "boolean default false")
     private boolean isDefault;
-    
+
     // Mapping ---------------
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
