@@ -1,5 +1,7 @@
 package com.app.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,9 +38,11 @@ public class AccountDetail extends BaseEntity {
 
     @Column(name = "is_default", columnDefinition = "boolean default false")
     private boolean isDefault;
-    
+
     // Mapping ---------------
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JsonBackReference
     private Account account;
 
 }

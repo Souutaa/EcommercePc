@@ -1,5 +1,7 @@
 package com.app.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,9 +25,13 @@ public class OrderDetail extends BaseEntity {
 
     // ---------- Mapping -----------
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_warranty_id", referencedColumnName = "id")
+    @JsonBackReference
     private ProductWarranty productWarranty;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_order_id", referencedColumnName = "id")
+    @JsonBackReference
     private AccountOrder accountOrder;
 
 }

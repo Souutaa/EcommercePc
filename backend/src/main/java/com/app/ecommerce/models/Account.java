@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -16,14 +18,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "account")
 public class Account extends BaseEntity implements UserDetails {
-    
+
     @Column(name = "username", length = 20, nullable = false, unique = true)
     private String username;
 
@@ -39,9 +41,11 @@ public class Account extends BaseEntity implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "account")
+    @JsonManagedReference
     private List<AccountDetail> accountDetails;
 
     @OneToMany(mappedBy = "account")
+    @JsonManagedReference
     private List<AccountOrder> accountOrders;
 
     @Override

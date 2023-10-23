@@ -2,6 +2,8 @@ package com.app.ecommerce.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class Category extends BaseEntity {
 
     // Mapping
     @OneToMany(mappedBy = "category")
+    @JsonManagedReference
     private List<Product> products;
 
 }
