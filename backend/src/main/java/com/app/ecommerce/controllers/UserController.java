@@ -12,16 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
+import com.app.ecommerce.models.AccountDetail;
+import com.app.ecommerce.services.IAccountDetailServices;
 import com.app.ecommerce.services.IAccountServices;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController // This means that this class is a Controller
-@RequestMapping(value = "/demo") // This means URL's start with /demo (after Application path)
+@RequestMapping(value = "/user") // This means URL's start with /demo (after Application path)
 @RequiredArgsConstructor
 public class UserController {
     @Autowired
     private IAccountServices accountServices;
+    @Autowired
+    private IAccountDetailServices accountDetailServices;
 
     @GetMapping(value = "/getUser/{username}")
     public @ResponseBody ResponseEntity<Object> getAllAccount(@RequestParam String id, @PathVariable String username) {
@@ -31,5 +35,11 @@ public class UserController {
         } catch (ResourceNotFoundException ex) {
             throw new ResourceNotFoundException("user not found");
         }
+    }
+
+    @GetMapping(value = "/{id}")
+    public @ResponseBody ResponseEntity<Object> getAccountDetail(@PathVariable String id) {
+        AccountDetail accountDetail = accountDetailServices.getAccountById(Integer.parseInt(id));
+        return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
     }
 }
