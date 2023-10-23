@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
@@ -16,10 +18,15 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Service
-public class JwtService {
+@PropertySource("classpath:application.properties")
+public class JwtService implements EnvironmentAware {
 
-  @Value("${jwt.secret}")
-  private static String SECRET_KEY;
+  private String SECRET_KEY;
+
+  @Override
+  public void setEnvironment(final Environment environment) {
+      SECRET_KEY = environment.getProperty("jwt.secret");
+  }
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
