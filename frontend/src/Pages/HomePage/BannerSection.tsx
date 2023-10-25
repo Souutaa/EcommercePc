@@ -5,10 +5,14 @@ import "@mantine/carousel/styles.css";
 import classes from "./Demo.module.css";
 
 function BannerSection() {
-  const images = ["./Carousel.jpg", "./Carousel.jpg", "./Carousel.jpg"];
-  const slides = images.map((url) => {
+  const images = [
+    "/img/Carousel.jpg",
+    "/img/Carousel.jpg",
+    "/img/Carousel.jpg",
+  ];
+  const slides = images.map((url, index) => {
     return (
-      <Carousel.Slide key={url}>
+      <Carousel.Slide key={index}>
         <img src={url} />
       </Carousel.Slide>
     );
@@ -19,23 +23,23 @@ function BannerSection() {
         <div className="banner">
           <div className="category">
             <div className="category-item">
-              <img className="category-img" src="./laptop.png"></img>
+              <img className="category-img" src="/img/laptop.png"></img>
               <span className="category-text">Máy tính sách tay</span>
             </div>
             <div className="category-item">
-              <img className="category-img" src="./laptop.png"></img>
+              <img className="category-img" src="/img/laptop.png"></img>
               <span className="category-text">Máy tính sách tay</span>
             </div>
             <div className="category-item">
-              <img className="category-img" src="./laptop.png"></img>
+              <img className="category-img" src="/img/laptop.png"></img>
               <span className="category-text">Máy tính sách tay</span>
             </div>
             <div className="category-item">
-              <img className="category-img" src="./laptop.png"></img>
+              <img className="category-img" src="/img/laptop.png"></img>
               <span className="category-text">Máy tính sách tay</span>
             </div>
             <div className="category-item">
-              <img className="category-img" src="./laptop.png"></img>
+              <img className="category-img" src="/img/laptop.png"></img>
               <span className="category-text">Máy tính sách tay</span>
             </div>
           </div>

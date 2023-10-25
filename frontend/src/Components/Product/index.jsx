@@ -4,7 +4,7 @@ function Product() {
     <>
       <div className="product-item">
         <div className="product-img">
-          <img src="/macbook1.png" alt="" className="img" />
+          <img src="/img/macbook1.png" alt="" className="img" />
         </div>
         <div className="product-info">
           <h4 className="product-name">MacBook Air M1 Chip</h4>
