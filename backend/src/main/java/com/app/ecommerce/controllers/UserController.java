@@ -5,11 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.accountDetail.CreateAccountDetailDTO;
+import com.app.ecommerce.DTO.auth.AuthenticationRequest;
+import com.app.ecommerce.DTO.auth.AuthenticationResponse;
 import com.app.ecommerce.models.Account;
 import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.services.IAccountDetailServices;
@@ -36,5 +41,11 @@ public class UserController {
     public @ResponseBody ResponseEntity<Object> getAccountDetail(@PathVariable String id) {
         AccountDetail accountDetail = accountDetailServices.getAccountById(Integer.parseInt(id));
         return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/createUserDetail", consumes = { "application/json" })
+    public ResponseEntity<AccountDetail> CreateAccountDetailDTO(
+            @RequestBody CreateAccountDetailDTO accountDetailDTO) {
+        return ResponseEntity.ok(accountDetailServices.saveAccount(accountDetailDTO));
     }
 }
