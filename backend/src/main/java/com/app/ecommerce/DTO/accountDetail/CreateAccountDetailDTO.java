@@ -24,5 +24,5 @@ public class CreateAccountDetailDTO {
 
     private String phoneNumber;
 
-    private Account account_id;
+    private String account_id;
 }

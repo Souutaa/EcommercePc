@@ -41,4 +41,10 @@ public class UserController {
         AccountDetail accountDetail = accountDetailServices.getAccountById(Integer.parseInt(id));
         return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/createUserDetail", consumes = { "application/json" })
+    public ResponseEntity<AccountDetail> CreateAccountDetailDTO(
+            @RequestBody CreateAccountDetailDTO accountDetailDTO) {
+        return ResponseEntity.ok(accountDetailServices.saveAccount(accountDetailDTO));
+    }
 }
