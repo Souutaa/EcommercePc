@@ -11,6 +11,7 @@ import com.app.ecommerce.DTO.accountDetail.CreateAccountDetailDTO;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.respositories.AccountDetailRepository;
+import com.app.ecommerce.respositories.AccountRepository;
 import com.app.ecommerce.services.IAccountDetailServices;
 
 @Service
@@ -19,13 +20,18 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
     @Autowired
     private AccountDetailRepository repo;
 
+    @Autowired
+    private AccountRepository accountRepo;
+
     @Override
     public AccountDetail saveAccount(CreateAccountDetailDTO request) {
         List<AccountDetail> accountDetailsList = new ArrayList<AccountDetail>();
         var accountDetail = AccountDetail.builder().city(request.getCity())
                 .detailedAddress(request.getDetailedAddress()).district(request.getDistrict())
                 .firstName(request.getFirstName()).lastName(request.getLastName())
-                .phoneNumber(request.getPhoneNumber()).account(request.getAccount_id()).build();
+                // TODO: move get user outside
+                .phoneNumber(request.getPhoneNumber()).account(accountRepo.findById(Integer.parseInt(request.getAccount_id())).get())
+                .build();
         accountDetailsList.add(accountDetail);
         return repo.save(accountDetail);
     }
