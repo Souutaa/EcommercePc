@@ -1,5 +1,7 @@
 package com.app.ecommerce.DTO.accountDetail;
 
+import com.app.ecommerce.models.Account;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +23,6 @@ public class CreateAccountDetailDTO {
     private String city;
 
     private String phoneNumber;
+
+    private Account account_id;
 }

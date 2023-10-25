@@ -1,10 +1,13 @@
 package com.app.ecommerce.services.implement;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.ecommerce.DTO.accountDetail.CreateAccountDetailDTO;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.respositories.AccountDetailRepository;
@@ -17,8 +20,14 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
     private AccountDetailRepository repo;
 
     @Override
-    public AccountDetail saveAccount(AccountDetail account) {
-        return repo.save(account);
+    public AccountDetail saveAccount(CreateAccountDetailDTO request) {
+        List<AccountDetail> accountDetailsList = new ArrayList<AccountDetail>();
+        var accountDetail = AccountDetail.builder().city(request.getCity())
+                .detailedAddress(request.getDetailedAddress()).district(request.getDistrict())
+                .firstName(request.getFirstName()).lastName(request.getLastName())
+                .phoneNumber(request.getPhoneNumber()).account(request.getAccount_id()).build();
+        accountDetailsList.add(accountDetail);
+        return repo.save(accountDetail);
     }
 
     @Override
