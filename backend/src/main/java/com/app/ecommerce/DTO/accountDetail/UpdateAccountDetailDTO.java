@@ -1,5 +1,6 @@
 package com.app.ecommerce.DTO.accountDetail;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,18 +10,20 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateAccountDetailDTO {
+public class UpdateAccountDetailDTO {
+    private String id;
+    @Nullable
     private String firstName;
-
+    @Nullable
     private String lastName;
-
+    @Nullable
     private String detailedAddress;
-
+    @Nullable
     private String district;
-
+    @Nullable
     private String city;
-
+    @Nullable
     private String phoneNumber;
-
-    private String account_id;
+    @Nullable
+    private boolean isDefault;
 }
