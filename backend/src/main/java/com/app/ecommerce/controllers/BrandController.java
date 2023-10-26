@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.brand.CreateBrandRequest;
 import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.services.IBrandServices;
 
@@ -40,7 +41,7 @@ public class BrandController {
 
     @PostMapping(value = "/createBrand")
     public ResponseEntity<Brand> createBrand(
-            @RequestBody Brand brand) {
+            @RequestBody CreateBrandRequest brand) {
         return ResponseEntity.ok(brandServices.saveBrand(brand));
     }
 }

@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.ecommerce.DTO.brand.CreateBrandRequest;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.respositories.BrandRepository;
@@ -22,12 +23,11 @@ public class BrandServicesImp implements IBrandServices {
     private BrandRepository repo;
 
     @Override
-    public Brand saveBrand(Brand request) {
-        List<Brand> listBrands = new ArrayList<Brand>();
+    public Brand saveBrand(CreateBrandRequest request) {
+        // List<Brand> listBrands = new ArrayList<Brand>();
         var brand = Brand.builder().brandName(request.getBrandName()).build();
-        listBrands.add(brand);
+        // listBrands.add(brand);
         return repo.save(brand);
-
     }
 
     @Override

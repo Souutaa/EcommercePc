@@ -18,8 +18,6 @@ import com.app.ecommerce.respositories.AccountDetailRepository;
 import com.app.ecommerce.respositories.AccountRepository;
 import com.app.ecommerce.services.IAccountDetailServices;
 
-import lombok.var;
-
 @Service
 public class AccountDetailServicesImp implements IAccountDetailServices {
 
@@ -54,7 +52,7 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
 
     @Override
     public AccountDetail saveAccountDetail(CreateAccountDetailDTO request) {
-        List<AccountDetail> accountDetailsList = new ArrayList<AccountDetail>();
+        // List<AccountDetail> accountDetailsList = new ArrayList<AccountDetail>();
         Optional<Account> accountFound = accountRepo.findById(Integer.parseInt(request.getAccount_id()));
         if (accountFound.isPresent()) {
             var accountDetail = AccountDetail.builder().city(request.getCity())
@@ -63,7 +61,7 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
                     .phoneNumber(request.getPhoneNumber())
                     .account(accountFound.get())
                     .build();
-            accountDetailsList.add(accountDetail);
+            // accountDetailsList.add(accountDetail);
             return repo.save(accountDetail);
         } else {
             throw new ResourceNotFoundException("Invoice with Id : " + accountFound + " Not Found");
