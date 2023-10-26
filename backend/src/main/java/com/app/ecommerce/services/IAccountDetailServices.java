@@ -19,7 +19,7 @@ public interface IAccountDetailServices {
 
     public void deleteAccountDetail(int id);
 
-    public void softDeleteAcouuAccountDetail(int id);
+    public void softDeleteAccountDetail(int id);
 
     public AccountDetail getAccountDetailById(int accountDetailId);
 }

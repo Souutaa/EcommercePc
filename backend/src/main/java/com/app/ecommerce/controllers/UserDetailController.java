@@ -69,7 +69,7 @@ public class UserDetailController {
     // softDelete
     @DeleteMapping(value = "/deleteUserDetail")
     public void deleteAccountDetail(@RequestParam String id) {
-        accountDetailServices.softDeleteAcouuAccountDetail(Integer.parseInt(id));
+        accountDetailServices.softDeleteAccountDetail(Integer.parseInt(id));
     }
 
     // @DeleteMapping(value = "/deleteUserDetail")
