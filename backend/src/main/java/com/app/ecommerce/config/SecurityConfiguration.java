@@ -25,9 +25,6 @@ public class SecurityConfiguration {
 
   // private final JwtAuthenticationFilter jwtAuthFilter;
   private final AuthenticationProvider authenticationProvider;
-  
-  @Autowired
-  private final AuthenticationEntryPointJwt authenticationEntryPointJwt;
 
   @Bean
   public JwtAuthenticationFilter jwtAuthFilter() {

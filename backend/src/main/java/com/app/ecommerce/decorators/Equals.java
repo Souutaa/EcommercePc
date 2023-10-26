@@ -5,14 +5,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import jakarta.validation.Payload;
+import com.app.ecommerce.decorators.validator.EqualsValidator;
+
+import jakarta.validation.Constraint;
 
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = EqualsValidator.class)
 public @interface Equals {
-  String message();
-
-  Class<?>[] groups() default {};
-
-  Class<? extends Payload>[] payload() default {};
+  String fieldName();
 }

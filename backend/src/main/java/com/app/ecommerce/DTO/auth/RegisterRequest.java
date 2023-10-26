@@ -30,6 +30,6 @@ public class RegisterRequest {
         " 1 special character and 1 numbers")
   private String password;
 
-  @Equals(message = "passwords must match")
+  @Equals(fieldName = "password")
   private String confirmPassword;
 }
