@@ -14,4 +14,7 @@ public interface AccountDetailRepository extends JpaRepository<AccountDetail, In
 
     @Query(value = "select * from account_detail where deleted_at is null", nativeQuery = true)
     List<AccountDetail> findAllAccountDetailActive();
+
+    @Query(value = "select * from account_detail where deleted_at is not null", nativeQuery = true)
+    List<AccountDetail> findAllAccountDetailNotActive();
 }
