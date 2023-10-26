@@ -38,6 +38,10 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
         return repo.findAllAccountDetailActive();
     }
 
+    public List<AccountDetail> getAccountDetailNotActive() {
+        return repo.findAllAccountDetailNotActive();
+    }
+
     @Override
     public AccountDetail getAccountDetailById(int accountId) {
         Optional<AccountDetail> opt = repo.findByAccountId(accountId);
