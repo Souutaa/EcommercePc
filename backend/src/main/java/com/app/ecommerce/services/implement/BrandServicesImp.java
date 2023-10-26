@@ -63,12 +63,12 @@ public class BrandServicesImp implements IBrandServices {
             brand.setBrandName(request.getBrandName().isEmpty() ? brand.getBrandName() : request.getBrandName());
             return repo.save(brand);
         } else {
-            throw new ResourceNotFoundException("Cannot found brand with id: " + brandFound + " Not Found");
+            throw new ResourceNotFoundException("Brand with id: " + id + " Not Found");
         }
     }
 
     @Override
-    public void softDeleteAccountDetail(int id) {
+    public void softDeleteBrand(int id) {
         Optional<Brand> brandFound = repo.findById(id);
         if (brandFound.isPresent()) {
             // Create date
@@ -80,7 +80,7 @@ public class BrandServicesImp implements IBrandServices {
             brand.setDeletedAt(timestamp);
             repo.save(brand);
         } else {
-            throw new ResourceNotFoundException("Not exits brand with Id  : " + brandFound + " Not Found");
+            throw new ResourceNotFoundException("Brand with Id  : " + id + " Not Found");
         }
     }
 
