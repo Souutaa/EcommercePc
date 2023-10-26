@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateAccountDetailDTO {
-    private String id;
     @Nullable
     private String firstName;
     @Nullable

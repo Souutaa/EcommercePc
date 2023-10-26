@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.brand.CreateBrandDTO;
 import com.app.ecommerce.DTO.brand.UpdateBrandDTO;
-import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.services.IBrandServices;
 
@@ -50,7 +49,7 @@ public class BrandController {
         return new ResponseEntity<Object>(listBrands, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getBrand")
+    @GetMapping(value = "/getBrandByName")
     public @ResponseBody ResponseEntity<Object> getAllBrand(@RequestParam String name) {
         Brand listBrand = brandServices.getBrandbyName(name);
         return new ResponseEntity<Object>(listBrand, HttpStatus.OK);
@@ -70,6 +69,6 @@ public class BrandController {
 
     @DeleteMapping(value = "/deleteBrand")
     public void deleteBrand(@RequestParam String id) {
-        brandServices.softDeleteAccountDetail(Integer.parseInt(id));
+        brandServices.softDeleteBrand(Integer.parseInt(id));
     }
 }
