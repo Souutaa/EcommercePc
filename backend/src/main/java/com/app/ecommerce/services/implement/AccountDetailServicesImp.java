@@ -1,7 +1,6 @@
 package com.app.ecommerce.services.implement;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +51,6 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
 
     @Override
     public AccountDetail saveAccountDetail(CreateAccountDetailDTO request) {
-        // List<AccountDetail> accountDetailsList = new ArrayList<AccountDetail>();
         Optional<Account> accountFound = accountRepo.findById(Integer.parseInt(request.getAccount_id()));
         if (accountFound.isPresent()) {
             var accountDetail = AccountDetail.builder().city(request.getCity())
@@ -61,7 +59,6 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
                     .phoneNumber(request.getPhoneNumber())
                     .account(accountFound.get())
                     .build();
-            // accountDetailsList.add(accountDetail);
             return repo.save(accountDetail);
         } else {
             throw new ResourceNotFoundException("Invoice with Id : " + accountFound + " Not Found");
@@ -113,7 +110,7 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
     }
 
     @Override
-    public void softDeleteAcouuAccountDetail(int id) {
+    public void softDeleteAccountDetail(int id) {
         Optional<AccountDetail> accountFound = repo.findById(id);
         if (accountFound.isPresent()) {
             // Create date
