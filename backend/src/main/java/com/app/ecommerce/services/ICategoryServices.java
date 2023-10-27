@@ -7,11 +7,7 @@ import com.app.ecommerce.DTO.category.UpdateCategoryDTO;
 import com.app.ecommerce.models.Category;
 
 public interface ICategoryServices {
-    public List<Category> getAllCategory();
-
-    public List<Category> getCategoryActive();
-
-    public List<Category> getCategoryNotActive();
+    public List<Category> getCategories(boolean active);
 
     public Category getCategorybyName(String name);
 

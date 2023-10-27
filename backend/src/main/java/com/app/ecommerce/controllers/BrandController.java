@@ -31,21 +31,12 @@ public class BrandController {
     @Autowired
     private IBrandServices brandServices;
 
+    // Get Brand based on active
+    // if active == true => getBrand actived
+    // if active == false => getAllBrand
     @GetMapping(value = "/allBrand")
-    public @ResponseBody ResponseEntity<Object> getAllBrand() {
-        List<Brand> listBrand = brandServices.getAllBrands();
-        return new ResponseEntity<Object>(listBrand, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/allBrand/active")
-    public @ResponseBody ResponseEntity<Object> getBrandActive() {
-        List<Brand> listBrands = brandServices.getBrandActive();
-        return new ResponseEntity<Object>(listBrands, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/allBrand/notActive")
-    public @ResponseBody ResponseEntity<Object> getBrandNotActive() {
-        List<Brand> listBrands = brandServices.getBrandNotActive();
+    public @ResponseBody ResponseEntity<Object> getBrands(@RequestParam Boolean active) {
+        List<Brand> listBrands = brandServices.getBrands(active);
         return new ResponseEntity<Object>(listBrands, HttpStatus.OK);
     }
 

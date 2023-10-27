@@ -31,21 +31,12 @@ public class CategoryController {
     @Autowired
     private ICategoryServices categoryServices;
 
+    // Get Category based on active
+    // if active == true => getCategory actived
+    // if active == false => getAllCategory
     @GetMapping(value = "/allCategory")
-    public @ResponseBody ResponseEntity<Object> getAllCategory() {
-        List<Category> listCategories = categoryServices.getAllCategory();
-        return new ResponseEntity<Object>(listCategories, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/allCategory/active")
-    public @ResponseBody ResponseEntity<Object> getCategoryActive() {
-        List<Category> listCategories = categoryServices.getCategoryActive();
-        return new ResponseEntity<Object>(listCategories, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/allCategory/notActive")
-    public @ResponseBody ResponseEntity<Object> getBrandNotActive() {
-        List<Category> listCategories = categoryServices.getCategoryNotActive();
+    public @ResponseBody ResponseEntity<Object> getAllCategory(@RequestParam boolean active) {
+        List<Category> listCategories = categoryServices.getCategories(active);
         return new ResponseEntity<Object>(listCategories, HttpStatus.OK);
     }
 
