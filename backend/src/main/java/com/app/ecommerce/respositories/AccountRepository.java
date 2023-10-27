@@ -8,4 +8,5 @@ import com.app.ecommerce.models.Account;
 
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     Optional<Account> findByUsername(String username);
+    
 }

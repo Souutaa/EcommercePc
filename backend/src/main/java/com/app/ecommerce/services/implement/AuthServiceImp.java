@@ -1,5 +1,6 @@
 package com.app.ecommerce.services.implement;
 
+import org.springframework.http.HttpStatusCode;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,11 +34,11 @@ public class AuthServiceImp implements IAuthService {
       .password(passwordEncoder.encode(request.getPassword()))
       .role(Role.USER)
       .build();
-    try {
-      repository.save(account);
-    } catch(Exception err) {
-      throw new ResourceNotFoundException("User not exist");
-    }
+    repository.save(account);
+    // try {
+    // } catch(Exception err) {
+    //   throw new ResourceNotFoundException(err.getMessage());
+    // }
     var jwtToken = jwtService.generateToken(account);
     return AuthenticationResponse.builder()
       .token(jwtToken)  

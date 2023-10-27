@@ -11,6 +11,7 @@ import com.app.ecommerce.DTO.auth.AuthenticationResponse;
 import com.app.ecommerce.DTO.auth.RegisterRequest;
 import com.app.ecommerce.services.IAuthService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -22,7 +23,7 @@ public class AuthController {
 
   @PostMapping("/register")
   public ResponseEntity<AuthenticationResponse> register(
-      @RequestBody RegisterRequest request) {
+      @Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(service.register(request));
       }
 
