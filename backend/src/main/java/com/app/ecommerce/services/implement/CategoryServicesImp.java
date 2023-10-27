@@ -25,18 +25,11 @@ public class CategoryServicesImp implements ICategoryServices {
     private CategoryRepository repo;
 
     @Override
-    public List<Category> getAllCategory() {
+    public List<Category> getCategories(boolean active) {
+        if (active == true) {
+            return repo.findAllCategoryActive();
+        }
         return repo.findAll();
-    }
-
-    @Override
-    public List<Category> getCategoryActive() {
-        return repo.findAllCategoryActive();
-    }
-
-    @Override
-    public List<Category> getCategoryNotActive() {
-        return repo.findAllCategoryNotActive();
     }
 
     @Override

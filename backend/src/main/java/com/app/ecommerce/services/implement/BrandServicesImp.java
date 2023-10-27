@@ -25,18 +25,11 @@ public class BrandServicesImp implements IBrandServices {
     private BrandRepository repo;
 
     @Override
-    public List<Brand> getAllBrands() {
+    public List<Brand> getBrands(boolean active) {
+        if (active == true) {
+            return repo.findAllBrandlActive();
+        }
         return repo.findAll();
-    }
-
-    @Override
-    public List<Brand> getBrandActive() {
-        return repo.findAllBrandlActive();
-    }
-
-    @Override
-    public List<Brand> getBrandNotActive() {
-        return repo.findAllBrandNotActive();
     }
 
     @Override

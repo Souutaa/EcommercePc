@@ -7,11 +7,8 @@ import com.app.ecommerce.DTO.brand.UpdateBrandDTO;
 import com.app.ecommerce.models.Brand;
 
 public interface IBrandServices {
-    public List<Brand> getAllBrands();
 
-    public List<Brand> getBrandActive();
-
-    public List<Brand> getBrandNotActive();
+    public List<Brand> getBrands(boolean active);
 
     public Brand getBrandbyName(String name);
 
