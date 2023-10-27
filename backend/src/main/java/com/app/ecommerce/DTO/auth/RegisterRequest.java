@@ -1,6 +1,6 @@
 package com.app.ecommerce.DTO.auth;
 
-import com.app.ecommerce.decorators.Equals;
+import com.app.ecommerce.decorators.StringsEqual;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -15,21 +15,20 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@StringsEqual(field1 = "password", field2 = "confirmPassword")
 public class RegisterRequest {
   @NotEmpty
-  private String username;
+  public String username;
 
   @Email
-  private String email;
+  public String email;
 
-  @Min(4)
   @NotEmpty
-  @Pattern(regexp = "/((?=.*\\d)|(?=.*\\W+))(?![.\\n" + //
-        "])(?=.*[A-Z])(?=.*[a-z]).*$/", 
+  @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$", 
       message = "password must contain at least on upper character," +
-        " 1 special character and 1 numbers")
-  private String password;
+        " 1 special character and 1 numbers and at least 8 characters long")
+  public String password;
 
-  @Equals(fieldName = "password")
-  private String confirmPassword;
+  public String confirmPassword;
+  
 }
