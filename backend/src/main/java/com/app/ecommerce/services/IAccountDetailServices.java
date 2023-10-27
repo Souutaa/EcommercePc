@@ -1,9 +1,25 @@
 package com.app.ecommerce.services;
 
+import java.util.List;
+
+import com.app.ecommerce.DTO.accountDetail.CreateAccountDetailDTO;
+import com.app.ecommerce.DTO.accountDetail.UpdateAccountDetailDTO;
 import com.app.ecommerce.models.AccountDetail;
 
 public interface IAccountDetailServices {
-    public AccountDetail saveAccount(AccountDetail account);
+    public List<AccountDetail> getAllAccountDetails();
 
-    public AccountDetail getAccountById(int accountId);
+    public List<AccountDetail> getAccountDetailActive();
+
+    public List<AccountDetail> getAccountDetailNotActive();
+
+    public AccountDetail saveAccountDetail(CreateAccountDetailDTO accountDetail);
+
+    public AccountDetail updateAccountDetail(String id, UpdateAccountDetailDTO accountDetail);
+
+    public void deleteAccountDetail(int id);
+
+    public void softDeleteAccountDetail(int id);
+
+    public AccountDetail getAccountDetailById(int accountDetailId);
 }
