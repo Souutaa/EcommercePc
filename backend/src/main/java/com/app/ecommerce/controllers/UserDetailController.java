@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.accountDetail.CreateAccountDetailDTO;
 import com.app.ecommerce.DTO.accountDetail.UpdateAccountDetailDTO;
+import com.app.ecommerce.exceptions.ResourceNotFoundException;
+import com.app.ecommerce.models.Account;
 import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.services.IAccountDetailServices;
 
@@ -31,21 +33,13 @@ public class UserDetailController {
     private IAccountDetailServices accountDetailServices;
 
     @GetMapping(value = "/allUserDetail")
-    public @ResponseBody ResponseEntity<Object> getAllAccountDetail() {
-        List<AccountDetail> accountDetail = accountDetailServices.getAllAccountDetails();
-        return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/allUserDetail/active")
-    public @ResponseBody ResponseEntity<Object> getAllAccountDetailActive() {
-        List<AccountDetail> accountDetail = accountDetailServices.getAccountDetailActive();
-        return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/allUserDetail/notActive")
-    public @ResponseBody ResponseEntity<Object> getAllAccountDetailNotActive() {
-        List<AccountDetail> accountDetail = accountDetailServices.getAccountDetailActive();
-        return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
+    public @ResponseBody ResponseEntity<Object> getAllAccountDetail(@RequestParam Boolean active) {
+        try {
+            List<AccountDetail> accountDetail = accountDetailServices.getAllAccountDetails(active);
+            return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
+        } catch (ResourceNotFoundException ex) {
+            throw new ResourceNotFoundException("Can't have any user in list");
+        }
     }
 
     @GetMapping(value = "/{id}")
@@ -66,14 +60,14 @@ public class UserDetailController {
         return ResponseEntity.ok(accountDetailServices.updateAccountDetail(id, updateAccountDetailDTO));
     }
 
+    @PatchMapping(value = "/activeUserDetail/{id}")
+    public ResponseEntity<AccountDetail> activeAccountDetail(@PathVariable String id) {
+        return ResponseEntity.ok(accountDetailServices.activeAccountDetail(id));
+    }
+
     // softDelete
     @DeleteMapping(value = "/deleteUserDetail")
     public void deleteAccountDetail(@RequestParam String id) {
         accountDetailServices.softDeleteAccountDetail(Integer.parseInt(id));
     }
-
-    // @DeleteMapping(value = "/deleteUserDetail")
-    // public void deleteAccountDetail(@RequestParam String id) {
-    // accountDetailServices.deleteAccountDetail(Integer.parseInt(id));
-    // }
 }

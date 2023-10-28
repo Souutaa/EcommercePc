@@ -7,19 +7,15 @@ import com.app.ecommerce.DTO.accountDetail.UpdateAccountDetailDTO;
 import com.app.ecommerce.models.AccountDetail;
 
 public interface IAccountDetailServices {
-    public List<AccountDetail> getAllAccountDetails();
+    public List<AccountDetail> getAllAccountDetails(boolean active);
 
-    public List<AccountDetail> getAccountDetailActive();
-
-    public List<AccountDetail> getAccountDetailNotActive();
+    public AccountDetail getAccountDetailById(int accountDetailId);
 
     public AccountDetail saveAccountDetail(CreateAccountDetailDTO accountDetail);
 
     public AccountDetail updateAccountDetail(String id, UpdateAccountDetailDTO accountDetail);
 
-    public void deleteAccountDetail(int id);
+    public AccountDetail activeAccountDetail(String id);
 
     public void softDeleteAccountDetail(int id);
-
-    public AccountDetail getAccountDetailById(int accountDetailId);
 }

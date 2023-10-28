@@ -27,16 +27,11 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
     private AccountRepository accountRepo;
 
     @Override
-    public List<AccountDetail> getAllAccountDetails() {
+    public List<AccountDetail> getAllAccountDetails(boolean active) {
+        if (active == true) {
+            return repo.findAllAccountDetailActive();
+        }
         return repo.findAll();
-    }
-
-    public List<AccountDetail> getAccountDetailActive() {
-        return repo.findAllAccountDetailActive();
-    }
-
-    public List<AccountDetail> getAccountDetailNotActive() {
-        return repo.findAllAccountDetailNotActive();
     }
 
     @Override
@@ -97,16 +92,15 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
         }
     }
 
-    @Override
-    public void deleteAccountDetail(int id) {
-        Optional<AccountDetail> accountFound = repo.findById(id);
+    public AccountDetail activeAccountDetail(String id) {
+        Optional<AccountDetail> accountFound = repo.findById(Integer.parseInt(id));
         if (accountFound.isPresent()) {
             var accountDetail = accountFound.get();
-            repo.delete(accountDetail);
+            accountDetail.setDeletedAt(null);
+            return repo.save(accountDetail);
         } else {
-            throw new ResourceNotFoundException("Not exits accountDetail with Id : " + accountFound + " Not Found");
+            throw new ResourceNotFoundException("Invoice with Id : " + accountFound + " Not Found");
         }
-
     }
 
     @Override
