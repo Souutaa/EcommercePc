@@ -42,9 +42,6 @@ public class UserController {
         }
     }
 
-    @Autowired
-    private JwtService jwtService;
-
     @GetMapping(value = "/getUser/{username}")
     public @ResponseBody ResponseEntity<Object> getAllAccount(@RequestParam String id, @PathVariable String username) {
         try {
