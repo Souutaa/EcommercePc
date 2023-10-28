@@ -61,6 +61,19 @@ public class CategoryServicesImp implements ICategoryServices {
     }
 
     @Override
+    public Category activeCategory(String id) {
+        Optional<Category> categoryFound = repo.findById(Integer.parseInt(id));
+        if (categoryFound.isPresent()) {
+            // Get value accoutFound
+            var category = categoryFound.get();
+            category.setDeletedAt(null);
+            return repo.save(category);
+        } else {
+            throw new ResourceNotFoundException("Category with Id  : " + id + " Not Found");
+        }
+    }
+
+    @Override
     public void softDeleteCategory(int id) {
         Optional<Category> categoryFound = repo.findById(id);
         if (categoryFound.isPresent()) {

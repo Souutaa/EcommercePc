@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.category.CreateCategoryDTO;
 import com.app.ecommerce.DTO.category.UpdateCategoryDTO;
+import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.Category;
 import com.app.ecommerce.services.ICategoryServices;
 
@@ -56,6 +57,11 @@ public class CategoryController {
     public ResponseEntity<Category> updateBrand(@PathVariable String id,
             @RequestBody UpdateCategoryDTO category) {
         return ResponseEntity.ok(categoryServices.updateCategory(id, category));
+    }
+
+    @PatchMapping(value = "/activeCategory/{id}")
+    public ResponseEntity<Category> activeCategory(@PathVariable String id) {
+        return ResponseEntity.ok(categoryServices.activeCategory(id));
     }
 
     @DeleteMapping(value = "/deleteCategory")

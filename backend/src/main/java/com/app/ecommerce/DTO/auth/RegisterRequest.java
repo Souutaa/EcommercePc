@@ -23,11 +23,11 @@ public class RegisterRequest {
   public String email;
 
   @NotEmpty
-  @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$", 
-      message = "password must contain at least on upper character," +
-        " 1 special character and 1 numbers and at least 8 characters long")
+  @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$", message = "password must contain at least on upper character,"
+      +
+      " 1 special character and 1 numbers and at least 8 characters long")
   public String password;
 
   public String confirmPassword;
-  
+
 }

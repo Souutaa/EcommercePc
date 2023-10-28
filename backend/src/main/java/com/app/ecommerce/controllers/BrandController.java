@@ -58,6 +58,11 @@ public class BrandController {
         return ResponseEntity.ok(brandServices.updateBrand(id, brand));
     }
 
+    @PatchMapping(value = "/activeBrand/{id}")
+    public ResponseEntity<Brand> activeBrand(@PathVariable String id) {
+        return ResponseEntity.ok(brandServices.activeBrand(id));
+    }
+
     @DeleteMapping(value = "/deleteBrand")
     public void deleteBrand(@RequestParam String id) {
         brandServices.softDeleteBrand(Integer.parseInt(id));

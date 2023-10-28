@@ -6,5 +6,6 @@ import com.app.ecommerce.DTO.auth.RegisterRequest;
 
 public interface IAuthServices {
   public AuthenticationResponse register(RegisterRequest request);
+
   public AuthenticationResponse authenticate(AuthenticationRequest request);
 }

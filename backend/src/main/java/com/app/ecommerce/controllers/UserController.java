@@ -1,9 +1,13 @@
 package com.app.ecommerce.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +28,16 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
     @Autowired
     private IAccountServices accountServices;
+
+    @GetMapping(value = "/allUser")
+    public @ResponseBody ResponseEntity<Object> getUsers(@RequestParam Boolean active) {
+        try {
+            List<Account> listUsers = accountServices.getAccounts(active);
+            return new ResponseEntity<Object>(listUsers, HttpStatus.OK);
+        } catch (ResourceNotFoundException ex) {
+            throw new ResourceNotFoundException("Can't have any user in list");
+        }
+    }
 
     @Autowired
     private JwtService jwtService;
@@ -48,5 +62,14 @@ public class UserController {
         } catch (ResourceNotFoundException ex) {
             throw new ResourceNotFoundException("user not found");
         }
+    }
+    @PatchMapping(value = "/activeUser/{id}")
+    public ResponseEntity<Account> activeUser(@PathVariable String id) {
+        return ResponseEntity.ok(accountServices.activeCategory(id));
+    }
+
+    @DeleteMapping(value = "/deleteUser")
+    public void deleteUser(@RequestParam String id) {
+        accountServices.softDeleteAccout(Integer.parseInt(id));
     }
 }

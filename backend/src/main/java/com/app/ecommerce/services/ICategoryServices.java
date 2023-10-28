@@ -15,5 +15,7 @@ public interface ICategoryServices {
 
     public Category updateCategory(String id, UpdateCategoryDTO request);
 
+    public Category activeCategory(String id);
+
     public void softDeleteCategory(int id);
 }

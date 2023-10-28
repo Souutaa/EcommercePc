@@ -27,34 +27,32 @@ public class AuthServicesImp implements IAuthServices {
 
   public AuthenticationResponse register(RegisterRequest request) {
     var account = Account.builder()
-      .username(request.getUsername())
-      .email(request.getEmail())
-      .password(passwordEncoder.encode(request.getPassword()))
-      .role(Role.USER)
-      .build();
+        .username(request.getUsername())
+        .email(request.getEmail())
+        .password(passwordEncoder.encode(request.getPassword()))
+        .role(Role.USER)
+        .build();
     repository.save(account);
     // try {
     // } catch(Exception err) {
-    //   throw new ResourceNotFoundException(err.getMessage());
+    // throw new ResourceNotFoundException(err.getMessage());
     // }
     var jwtToken = jwtService.generateToken(account);
     return AuthenticationResponse.builder()
-      .token(jwtToken)  
-      .build();
+        .token(jwtToken)
+        .build();
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
     authenticationManager.authenticate(
-      new UsernamePasswordAuthenticationToken(
-        request.getUsername(),
-        request.getPassword()
-      )
-    );
-    var user = repository.findByUsername(request.getUsername()).orElseThrow();  
+        new UsernamePasswordAuthenticationToken(
+            request.getUsername(),
+            request.getPassword()));
+    var user = repository.findByUsername(request.getUsername()).orElseThrow();
     var jwtToken = jwtService.generateToken(user);
     return AuthenticationResponse.builder()
-      .token(jwtToken)  
-      .build();
+        .token(jwtToken)
+        .build();
   }
 
 }
