@@ -7,28 +7,28 @@ function Footer() {
             <div className="info-left">
               <div className="introduction">
                 <div className="introduction-logo">
-                  <img src="/logoipsum-247.png" alt="" />
-                  <img src="/Techshop.png" alt="" />
+                  <img src="/img/logoipsum-247.png" alt="" />
+                  <img src="/img/Techshop.png" alt="" />
                 </div>
                 <span className="introduction-text">
-                  Lorem ipsum dolor sit amet consectetur. Id lobortis donec
-                  turpis lorem massa integer consectetur vulputate. Amet proin
-                  magna nulla ut. Platea imperdiet.
+                  Lorem ipsum dolor sit amet consectetur. Id lobortis
+                  donecturpis lorem massa integer consectetur vulputate. Amet
+                  proin magna nulla ut. Platea imperdiet.
                 </span>
               </div>
 
               <ul className="socials-left">
                 <li className="icon-left">
-                  <img src="/ic_facebbook.png"></img>
+                  <img src="/img/ic_facebbook.png"></img>
                 </li>
                 <li className="icon-left">
-                  <img src="/ic_instagram.png"></img>
+                  <img src="/img/ic_instagram.png"></img>
                 </li>
                 <li className="icon-left">
-                  <img src="/ic_linkedin.png"></img>
+                  <img src="/img/ic_linkedin.png"></img>
                 </li>
                 <li className="icon-left">
-                  <img src="/ic_twitter.png"></img>
+                  <img src="/img/ic_twitter.png"></img>
                 </li>
               </ul>
             </div>
