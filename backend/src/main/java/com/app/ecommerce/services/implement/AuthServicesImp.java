@@ -1,6 +1,5 @@
 package com.app.ecommerce.services.implement;
 
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,17 +9,16 @@ import com.app.ecommerce.DTO.auth.AuthenticationRequest;
 import com.app.ecommerce.DTO.auth.AuthenticationResponse;
 import com.app.ecommerce.DTO.auth.RegisterRequest;
 import com.app.ecommerce.config.JwtService;
-import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
 import com.app.ecommerce.models.Role;
 import com.app.ecommerce.respositories.AccountRepository;
-import com.app.ecommerce.services.IAuthService;
+import com.app.ecommerce.services.IAuthServices;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImp implements IAuthService {
+public class AuthServicesImp implements IAuthServices {
 
   private final AccountRepository repository;
   private final PasswordEncoder passwordEncoder;

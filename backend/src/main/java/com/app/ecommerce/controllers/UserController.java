@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
-import com.app.ecommerce.services.IAccountDetailServices;
 import com.app.ecommerce.services.IAccountServices;
 
 import lombok.RequiredArgsConstructor;
@@ -23,8 +22,6 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
     @Autowired
     private IAccountServices accountServices;
-    @Autowired
-    private IAccountDetailServices accountDetailServices;
 
     @GetMapping(value = "/getUser/{username}")
     public @ResponseBody ResponseEntity<Object> getAllAccount(@RequestParam String id, @PathVariable String username) {
