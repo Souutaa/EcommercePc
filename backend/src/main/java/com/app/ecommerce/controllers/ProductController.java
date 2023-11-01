@@ -1,5 +1,6 @@
 package com.app.ecommerce.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
@@ -29,6 +30,7 @@ import com.app.ecommerce.models.Product;
 import com.app.ecommerce.services.IProductServices;
 
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -87,4 +89,33 @@ public class ProductController {
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
         .body(resource);
   }
+
+  // @GetMapping(value = "/{productLine}/get-file", produces = {
+  // MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
+  // public ResponseEntity<Resource> getMultipleFiles(@PathParam("productLine")
+  // String productLine) throws IOException {
+  // String folderBasePath = "/app/src/main/resources/images/" + productLine +
+  // "/";
+  // File folder = new File(folderBasePath);
+  // File[] listOfFiles = folder.listFiles();
+
+  // for (File file : listOfFiles) {
+  // if (file.isFile()) {
+  // System.out.println(file.getName());
+  // }
+  // }
+  // // Path path = Paths.get(fileBasePath + "testProduct1.png");
+  // Resource resource = null;
+
+  // try {
+  // resource = new UrlResource(path.toUri());
+  // } catch (MalformedURLException e) {
+  // e.printStackTrace();
+  // }
+
+  // return ResponseEntity.ok()
+  // .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
+  // resource.getFilename() + "\"")
+  // .body(resource);
+  // }
 }

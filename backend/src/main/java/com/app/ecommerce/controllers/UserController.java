@@ -29,6 +29,9 @@ public class UserController {
     @Autowired
     private IAccountServices accountServices;
 
+    @Autowired
+    private JwtService jwtService;
+    
     @GetMapping(value = "/allUser")
     public @ResponseBody ResponseEntity<Object> getUsers(@RequestParam Boolean active) {
         try {
