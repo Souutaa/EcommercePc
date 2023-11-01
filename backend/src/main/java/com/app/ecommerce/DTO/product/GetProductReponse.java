@@ -1,5 +1,7 @@
 package com.app.ecommerce.DTO.product;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,9 +12,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateProductRequest {
+public class GetProductReponse {
   @NotEmpty
   private String productLine;
   @NotEmpty
   private String productName;
+  private String thumbnailUri;
+  private List<String> imageUris;
 }

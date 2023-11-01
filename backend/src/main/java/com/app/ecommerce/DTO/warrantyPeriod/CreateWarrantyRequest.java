@@ -1,4 +1,4 @@
-package com.app.ecommerce.DTO.product;
+package com.app.ecommerce.DTO.warrantyPeriod;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateProductRequest {
+public class CreateWarrantyRequest {
   @NotEmpty
-  private String productLine;
-  @NotEmpty
-  private String productName;
+  private String months;
 }
