@@ -1,5 +1,7 @@
 package com.app.ecommerce.services.implement;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.app.ecommerce.respositories.WarrantyPeriodRepository;
 import com.app.ecommerce.services.IWarrantyPeriodServices;
+import com.app.ecommerce.DTO.brand.UpdateBrandDTO;
+import com.app.ecommerce.DTO.warrantyPeriod.UpdateWarrantyRequest;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
+import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.WarrantyPeriod;
 
 import lombok.RequiredArgsConstructor;
@@ -32,5 +37,35 @@ public class WarrantyPeriodServices implements IWarrantyPeriodServices {
     }
     return opt.get();
   }
-  
+
+  @Override
+  public WarrantyPeriod updateWarrantyPeriod(int id, UpdateWarrantyRequest request) {
+    Optional<WarrantyPeriod> warrantyFound = warrantyPeriodRepository.findById(id);
+    if (warrantyFound.isPresent()) {
+      var warrantyPeriod = warrantyFound.get();
+      warrantyPeriod.setMonths(
+          request.getMonths().isEmpty() ? warrantyPeriod.getMonths() : Integer.parseInt(request.getMonths()));
+      return warrantyPeriodRepository.save(warrantyPeriod);
+    } else {
+      throw new ResourceNotFoundException("WarrantyPeriod with id: " + id + " Not Found");
+    }
+  }
+
+  @Override
+  public void softDeleteWarrantyPeriod(int id) {
+    Optional<WarrantyPeriod> warrantyFound = warrantyPeriodRepository.findById(id);
+    if (warrantyFound.isPresent()) {
+      // Create date
+      Date date = new Date();
+      Timestamp timestamp = new Timestamp(date.getTime());
+
+      // Get value accoutFound
+      var warrantyPeriod = warrantyFound.get();
+      warrantyPeriod.setDeletedAt(timestamp);
+      warrantyPeriodRepository.save(warrantyPeriod);
+    } else {
+      throw new ResourceNotFoundException("WarantyPeriod with Id  : " + id + " Not Found");
+    }
+  }
+
 }
