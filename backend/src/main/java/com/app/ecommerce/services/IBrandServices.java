@@ -16,5 +16,7 @@ public interface IBrandServices {
 
     public Brand updateBrand(String id, UpdateBrandDTO request);
 
+    public Brand activeBrand(String id);
+
     public void softDeleteBrand(int id);
 }

@@ -61,6 +61,19 @@ public class BrandServicesImp implements IBrandServices {
     }
 
     @Override
+    public Brand activeBrand(String id) {
+        Optional<Brand> brandFound = repo.findById(Integer.parseInt(id));
+        if (brandFound.isPresent()) {
+            // Get value accoutFound
+            var brand = brandFound.get();
+            brand.setDeletedAt(null);
+            return repo.save(brand);
+        } else {
+            throw new ResourceNotFoundException("Brand with Id  : " + id + " Not Found");
+        }
+    }
+
+    @Override
     public void softDeleteBrand(int id) {
         Optional<Brand> brandFound = repo.findById(id);
         if (brandFound.isPresent()) {
