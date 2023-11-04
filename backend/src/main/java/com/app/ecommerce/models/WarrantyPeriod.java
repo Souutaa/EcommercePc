@@ -1,5 +1,9 @@
 package com.app.ecommerce.models;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,4 +20,8 @@ import lombok.NoArgsConstructor;
 public class WarrantyPeriod extends BaseEntity {
     @Column(name = "months", length = 11, nullable = false)
     private int months;
+
+    @OneToMany(mappedBy = "warrantyPeriod", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Product> products;
 }

@@ -2,8 +2,6 @@ package com.app.ecommerce.controllers;
 
 import java.util.List;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +32,7 @@ public class UserController {
     @Autowired
     private JwtService jwtService;
     
-    @GetMapping(value = "/allUser")
+    @GetMapping(value = "/all")
     public @ResponseBody ResponseEntity<Object> getUsers(@RequestParam Boolean active) {
         try {
             List<Account> listUsers = accountServices.getAccounts(active);
@@ -44,7 +42,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/getUser/{username}")
+    @GetMapping(value = "/{username}/getUser")
     public @ResponseBody ResponseEntity<Object> getAllAccount(@RequestParam String id, @PathVariable String username) {
         try {
             Account test = accountServices.getAccountById(Integer.parseInt(id));
@@ -65,12 +63,12 @@ public class UserController {
             throw new ResourceNotFoundException("user not found");
         }
     }
-    @PatchMapping(value = "/activeUser/{id}")
+    @PatchMapping(value = "/{id}/active")
     public ResponseEntity<Account> activeUser(@PathVariable String id) {
         return ResponseEntity.ok(accountServices.activeCategory(id));
     }
 
-    @DeleteMapping(value = "/deleteUser")
+    @DeleteMapping(value = "/delete")
     public void deleteUser(@RequestParam String id) {
         accountServices.softDeleteAccout(Integer.parseInt(id));
     }

@@ -1,8 +1,6 @@
 package com.app.ecommerce.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.ecommerce.DTO.brand.UpdateBrandDTO;
 import com.app.ecommerce.DTO.warrantyPeriod.CreateWarrantyRequest;
 import com.app.ecommerce.DTO.warrantyPeriod.UpdateWarrantyRequest;
-import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.WarrantyPeriod;
 import com.app.ecommerce.services.IWarrantyPeriodServices;
 
@@ -43,14 +39,14 @@ public class WarrantyController {
     return ResponseEntity.ok(warrantyPeriodServices.create(Integer.parseInt(createProductRequest.getMonths())));
   }
 
-  @PatchMapping(value = "/updateWarrantyPeriod/{id}")
-  public ResponseEntity<WarrantyPeriod> updateBrand(@PathVariable String id,
+  @PatchMapping(value = "/{id}/update")
+  public ResponseEntity<WarrantyPeriod> updateWarrantyPeriod(@PathVariable String id,
       @RequestBody UpdateWarrantyRequest warrantyRequest) {
     return ResponseEntity.ok(warrantyPeriodServices.updateWarrantyPeriod(Integer.parseInt(id), warrantyRequest));
   }
 
-  @DeleteMapping(value = "/deleteWarrantyPeriod")
-  public void deleteBrand(@RequestParam String id) {
+  @DeleteMapping(value = "/delete")
+  public void deleteWarrantyPeriod(@RequestParam String id) {
     warrantyPeriodServices.softDeleteWarrantyPeriod(Integer.parseInt(id));
   }
 }

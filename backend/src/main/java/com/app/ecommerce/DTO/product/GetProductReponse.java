@@ -2,7 +2,11 @@ package com.app.ecommerce.DTO.product;
 
 import java.util.List;
 
-import jakarta.validation.constraints.NotEmpty;
+import com.app.ecommerce.models.Brand;
+import com.app.ecommerce.models.Category;
+import com.app.ecommerce.models.Product;
+import com.app.ecommerce.models.WarrantyPeriod;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,10 +17,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetProductReponse {
-  @NotEmpty
-  private String productLine;
-  @NotEmpty
-  private String productName;
+  private Product product;
+  private int brandId;
+  private int categoryId;
+  private int warrantyPeriodId;
   private String thumbnailUri;
   private List<String> imageUris;
 }

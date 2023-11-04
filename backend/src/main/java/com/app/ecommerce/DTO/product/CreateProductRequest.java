@@ -15,4 +15,9 @@ public class CreateProductRequest {
   private String productLine;
   @NotEmpty
   private String productName;
+  private float price;
+  private float discount;
+  private int brandId;
+  private int categoryId;
+  private int warrantyPeriodId;
 }

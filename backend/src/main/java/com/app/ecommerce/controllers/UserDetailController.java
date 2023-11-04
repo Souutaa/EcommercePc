@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.ecommerce.DTO.accountDetail.CreateAccountDetailDTO;
 import com.app.ecommerce.DTO.accountDetail.UpdateAccountDetailDTO;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
-import com.app.ecommerce.models.Account;
 import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.services.IAccountDetailServices;
 
@@ -32,7 +31,7 @@ public class UserDetailController {
     @Autowired
     private IAccountDetailServices accountDetailServices;
 
-    @GetMapping(value = "/allUserDetail")
+    @GetMapping(value = "/all")
     public @ResponseBody ResponseEntity<Object> getAllAccountDetail(@RequestParam Boolean active) {
         try {
             List<AccountDetail> accountDetail = accountDetailServices.getAllAccountDetails(active);
@@ -48,25 +47,25 @@ public class UserDetailController {
         return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/createUserDetail")
+    @PostMapping(value = "/create")
     public ResponseEntity<AccountDetail> CreateAccountDetailDTO(
             @RequestBody CreateAccountDetailDTO createAccountDetailDTO) {
         return ResponseEntity.ok(accountDetailServices.saveAccountDetail(createAccountDetailDTO));
     }
 
-    @PatchMapping(value = "/updateUserDetail/{id}")
+    @PatchMapping(value = "/{id}/update")
     public ResponseEntity<AccountDetail> UpdateAccountDetailDTO(
             @PathVariable String id, @RequestBody UpdateAccountDetailDTO updateAccountDetailDTO) {
         return ResponseEntity.ok(accountDetailServices.updateAccountDetail(id, updateAccountDetailDTO));
     }
 
-    @PatchMapping(value = "/activeUserDetail/{id}")
+    @PatchMapping(value = "/{id}/active")
     public ResponseEntity<AccountDetail> activeAccountDetail(@PathVariable String id) {
         return ResponseEntity.ok(accountDetailServices.activeAccountDetail(id));
     }
 
     // softDelete
-    @DeleteMapping(value = "/deleteUserDetail")
+    @DeleteMapping(value = "/delete")
     public void deleteAccountDetail(@RequestParam String id) {
         accountDetailServices.softDeleteAccountDetail(Integer.parseInt(id));
     }

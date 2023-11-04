@@ -5,8 +5,13 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import io.micrometer.common.lang.Nullable;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,38 +34,31 @@ public class Product extends BaseEntity {
     private String productName;
 
     @Column(name = "price", length = 10)
-    private int price;
+    private float price;
 
-    @Column(name = "discount", length = 3, columnDefinition = "integer default 0")
-    private int discount;
+    @Column(name = "discount", length = 3, columnDefinition = "float default 0")
+    private float discount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     @JsonBackReference
     private Brand brand;
 
-    @Nullable
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @JsonBackReference
     private Category category;
 
-    @Nullable
-    @OneToMany()
-    @JsonManagedReference
-    private List<ProductImage> productImages;
-
-    @Nullable
     @OneToMany()
     @JsonManagedReference
     private List<ProductInfo> productInfos;
 
-    @Nullable
     @OneToMany()
     @JsonManagedReference
     private List<ProductWarranty> productWarranties;
 
-    @Nullable
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "warranty_period_id", referencedColumnName = "id")
+    @JsonBackReference
     private WarrantyPeriod warrantyPeriod;
 }
