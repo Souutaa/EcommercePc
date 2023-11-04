@@ -10,5 +10,7 @@ public interface IWarrantyPeriodServices {
 
   public WarrantyPeriod updateWarrantyPeriod(int id, UpdateWarrantyRequest request);
 
+  public WarrantyPeriod activeWarrantyPeriod(int id);
+
   public void softDeleteWarrantyPeriod(int id);
 }

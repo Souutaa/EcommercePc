@@ -45,6 +45,11 @@ public class WarrantyController {
     return ResponseEntity.ok(warrantyPeriodServices.updateWarrantyPeriod(Integer.parseInt(id), warrantyRequest));
   }
 
+  @PatchMapping(value = "/{id}/active")
+  public ResponseEntity<WarrantyPeriod> activeBrand(@PathVariable int id) {
+    return ResponseEntity.ok(warrantyPeriodServices.activeWarrantyPeriod(id));
+  }
+
   @DeleteMapping(value = "/delete")
   public void deleteWarrantyPeriod(@RequestParam String id) {
     warrantyPeriodServices.softDeleteWarrantyPeriod(Integer.parseInt(id));

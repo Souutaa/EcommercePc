@@ -49,6 +49,18 @@ public class WarrantyPeriodServices implements IWarrantyPeriodServices {
     }
   }
 
+  public WarrantyPeriod activeWarrantyPeriod(int id) {
+    Optional<WarrantyPeriod> warrantyFound = warrantyPeriodRepository.findById(id);
+    if (warrantyFound.isPresent()) {
+      // Get value accoutFound
+      var warrantyPeriod = warrantyFound.get();
+      warrantyPeriod.setDeletedAt(null);
+      return warrantyPeriodRepository.save(warrantyPeriod);
+    } else {
+      throw new ResourceNotFoundException("WarrantyPeriod  : " + id + " Not Found");
+    }
+  }
+
   @Override
   public void softDeleteWarrantyPeriod(int id) {
     Optional<WarrantyPeriod> warrantyFound = warrantyPeriodRepository.findById(id);
