@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -19,15 +20,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.app.ecommerce.DTO.product.AddProductInfoRequest;
 import com.app.ecommerce.DTO.product.CreateProductRequest;
 import com.app.ecommerce.DTO.product.GetProductReponse;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
 import com.app.ecommerce.models.Product;
+import com.app.ecommerce.services.IProductInfoServices;
 import com.app.ecommerce.services.IProductServices;
 
 import jakarta.validation.Valid;
@@ -40,6 +44,9 @@ public class ProductController {
 
   @Autowired
   private IProductServices productServices;
+
+   @Autowired
+  private IProductInfoServices productInfoServices;
 
   @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<Product> createProductLine(
@@ -63,7 +70,7 @@ public class ProductController {
     Product product = this.productServices.getProduct(productLine);
     List<String> productImages = this.productServices.getProductImages(productLine);
     String productThumbnail = this.productServices.getProductThumbnail(productLine);
-
+    List<String> productInfos = this.productInfoServices.getProductInfos(product.getId());
     return ResponseEntity.ok(GetProductReponse.builder()
       .product(product)
       .brandId(product.getBrand().getId())
@@ -71,6 +78,7 @@ public class ProductController {
       .warrantyPeriodId(product.getWarrantyPeriod().getId())
       .thumbnailUri(productThumbnail)
       .imageUris(productImages)
+      .productInfos(productInfos)
       .build());
   }
 

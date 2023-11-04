@@ -50,11 +50,11 @@ public class Product extends BaseEntity {
     private Category category;
 
     @OneToMany()
-    @JsonManagedReference
+    @JsonBackReference
     private List<ProductInfo> productInfos;
 
     @OneToMany()
-    @JsonManagedReference
+    @JsonBackReference
     private List<ProductWarranty> productWarranties;
 
     @ManyToOne(fetch = FetchType.LAZY)

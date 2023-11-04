@@ -46,6 +46,7 @@ public class ProductServicesImp implements IProductServices {
   @Autowired
   private WarrantyPeriodRepository warrantyPeriodRepository;
 
+
   @Override
   public Product create(CreateProductRequest request, MultipartFile thumbnail, MultipartFile[] productImages)
       throws IOException {
@@ -85,8 +86,10 @@ public class ProductServicesImp implements IProductServices {
     if (!productOpt.isPresent()) {
       throw new ResourceNotFoundException(productLine + "not found");
     }
-    return productOpt.get();
+    Product fetchedProduct = productOpt.get();
+    return fetchedProduct;
   }
+
 
   @Override
   public List<String> getProductImages(String productLine) {
@@ -176,5 +179,7 @@ public class ProductServicesImp implements IProductServices {
     fetchedProduct.setDeletedAt(null);
     return this.productRepository.save(fetchedProduct);
   }
+
+  
 
 }

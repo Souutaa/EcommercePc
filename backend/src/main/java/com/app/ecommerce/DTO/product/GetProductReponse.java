@@ -23,4 +23,5 @@ public class GetProductReponse {
   private int warrantyPeriodId;
   private String thumbnailUri;
   private List<String> imageUris;
+  private List<String> productInfos;
 }

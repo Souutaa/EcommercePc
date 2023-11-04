@@ -17,5 +17,5 @@ public interface IProductServices {
   public String getProductThumbnail(String productLine);
   public Product softDelete(String productLine);  
   public Product undoSoftDelete(String productLine);
-
+  
 }
