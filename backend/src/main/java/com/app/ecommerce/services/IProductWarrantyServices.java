@@ -10,5 +10,5 @@ public interface IProductWarrantyServices {
   public List<ProductWarranty> getAllProductWarrantiesByProductId(Integer productId);
   public ProductWarranty activeWarranty(String productLine) throws NumberFormatException, SQLException;
   public Integer getProductStock(int productId);
-
+  public ProductWarranty deactiveWarranty(int productWarrantyId);
 }
