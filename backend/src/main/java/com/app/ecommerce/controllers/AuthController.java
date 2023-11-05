@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.ecommerce.DTO.auth.AuthenticationRequest;
 import com.app.ecommerce.DTO.auth.AuthenticationResponse;
 import com.app.ecommerce.DTO.auth.RegisterRequest;
-import com.app.ecommerce.services.IAuthService;
+import com.app.ecommerce.services.IAuthServices;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthController {
 
-  private final IAuthService service;
+  private final IAuthServices service;
 
   @PostMapping("/register")
   public ResponseEntity<AuthenticationResponse> register(
@@ -28,7 +28,7 @@ public class AuthController {
       }
 
   @PostMapping("/authenticate")
-  public ResponseEntity<AuthenticationResponse> register(
+  public ResponseEntity<AuthenticationResponse> login(
       @RequestBody AuthenticationRequest request) {
       return ResponseEntity.ok(service.authenticate(request));
   }

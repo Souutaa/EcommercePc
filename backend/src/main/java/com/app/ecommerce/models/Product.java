@@ -5,7 +5,13 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,14 +33,11 @@ public class Product extends BaseEntity {
     @Column(name = "product_name", length = 150, nullable = false)
     private String productName;
 
-    @Column(name = "thumbnail", length = 50, nullable = false)
-    private String thumbnail;
+    @Column(name = "price", length = 10)
+    private float price;
 
-    @Column(name = "price", length = 10, nullable = false)
-    private int price;
-
-    @Column(name = "discount", length = 3, nullable = false, columnDefinition = "integer default 0")
-    private int discount;
+    @Column(name = "discount", length = 3, columnDefinition = "float default 0")
+    private float discount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
@@ -47,17 +50,15 @@ public class Product extends BaseEntity {
     private Category category;
 
     @OneToMany()
-    @JsonManagedReference
-    private List<ProductImage> productImages;
-
-    @OneToMany()
-    @JsonManagedReference
+    @JsonBackReference
     private List<ProductInfo> productInfos;
 
     @OneToMany()
-    @JsonManagedReference
+    @JsonBackReference
     private List<ProductWarranty> productWarranties;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "warranty_period_id", referencedColumnName = "id")
+    @JsonBackReference
     private WarrantyPeriod warrantyPeriod;
 }

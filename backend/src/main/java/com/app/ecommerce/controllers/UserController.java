@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
 import com.app.ecommerce.services.IAccountServices;
@@ -27,7 +29,10 @@ public class UserController {
     @Autowired
     private IAccountServices accountServices;
 
-    @GetMapping(value = "/allUser")
+    @Autowired
+    private JwtService jwtService;
+    
+    @GetMapping(value = "/all")
     public @ResponseBody ResponseEntity<Object> getUsers(@RequestParam Boolean active) {
         try {
             List<Account> listUsers = accountServices.getAccounts(active);
@@ -37,7 +42,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/getUser/{username}")
+    @GetMapping(value = "/{username}/getUser")
     public @ResponseBody ResponseEntity<Object> getAllAccount(@RequestParam String id, @PathVariable String username) {
         try {
             Account test = accountServices.getAccountById(Integer.parseInt(id));
@@ -47,12 +52,23 @@ public class UserController {
         }
     }
 
-    @PatchMapping(value = "/activeUser/{id}")
+    @GetMapping(value = "/getInfo")
+    public @ResponseBody ResponseEntity<Object> getLoggedIntUser(@RequestHeader("Authorization") String authorization) {
+        try {
+            String token = authorization.split(" ")[1].trim();
+            String username = this.jwtService.extractUsername(token);
+            Account fetchedAccount = accountServices.getAccountByUserName(username);
+            return new ResponseEntity<>(fetchedAccount, HttpStatus.OK);
+        } catch (ResourceNotFoundException ex) {
+            throw new ResourceNotFoundException("user not found");
+        }
+    }
+    @PatchMapping(value = "/{id}/active")
     public ResponseEntity<Account> activeUser(@PathVariable String id) {
         return ResponseEntity.ok(accountServices.activeCategory(id));
     }
 
-    @DeleteMapping(value = "/deleteUser")
+    @DeleteMapping(value = "/delete")
     public void deleteUser(@RequestParam String id) {
         accountServices.softDeleteAccout(Integer.parseInt(id));
     }

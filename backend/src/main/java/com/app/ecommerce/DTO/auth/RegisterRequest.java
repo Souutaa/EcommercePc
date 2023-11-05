@@ -19,7 +19,7 @@ public class RegisterRequest {
   @NotEmpty
   public String username;
 
-  @Email
+  @Email()
   public String email;
 
   @NotEmpty

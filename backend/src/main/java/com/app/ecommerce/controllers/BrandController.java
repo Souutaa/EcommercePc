@@ -34,36 +34,36 @@ public class BrandController {
     // Get Brand based on active
     // if active == true => getBrand actived
     // if active == false => getAllBrand
-    @GetMapping(value = "/allBrand")
+    @GetMapping(value = "/all")
     public @ResponseBody ResponseEntity<Object> getBrands(@RequestParam Boolean active) {
         List<Brand> listBrands = brandServices.getBrands(active);
         return new ResponseEntity<Object>(listBrands, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getBrandByName")
+    @GetMapping(value = "/getByName")
     public @ResponseBody ResponseEntity<Object> getAllBrand(@RequestParam String name) {
         Brand listBrand = brandServices.getBrandbyName(name);
         return new ResponseEntity<Object>(listBrand, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/createBrand")
+    @PostMapping(value = "/create")
     public ResponseEntity<Brand> createBrand(
             @RequestBody CreateBrandDTO brand) {
         return ResponseEntity.ok(brandServices.saveBrand(brand));
     }
 
-    @PatchMapping(value = "/updateBrand/{id}")
+    @PatchMapping(value = "/{id}/update")
     public ResponseEntity<Brand> updateBrand(@PathVariable String id,
             @RequestBody UpdateBrandDTO brand) {
         return ResponseEntity.ok(brandServices.updateBrand(id, brand));
     }
 
-    @PatchMapping(value = "/activeBrand/{id}")
+    @PatchMapping(value = "/{id}/active")
     public ResponseEntity<Brand> activeBrand(@PathVariable String id) {
         return ResponseEntity.ok(brandServices.activeBrand(id));
     }
 
-    @DeleteMapping(value = "/deleteBrand")
+    @DeleteMapping(value = "/delete")
     public void deleteBrand(@RequestParam String id) {
         brandServices.softDeleteBrand(Integer.parseInt(id));
     }

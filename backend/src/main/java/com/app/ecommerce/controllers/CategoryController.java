@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.category.CreateCategoryDTO;
 import com.app.ecommerce.DTO.category.UpdateCategoryDTO;
-import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.Category;
 import com.app.ecommerce.services.ICategoryServices;
 
@@ -35,31 +34,31 @@ public class CategoryController {
     // Get Category based on active
     // if active == true => getCategory actived
     // if active == false => getAllCategory
-    @GetMapping(value = "/allCategory")
+    @GetMapping(value = "/all")
     public @ResponseBody ResponseEntity<Object> getAllCategory(@RequestParam boolean active) {
         List<Category> listCategories = categoryServices.getCategories(active);
         return new ResponseEntity<Object>(listCategories, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getCategoryByName")
+    @GetMapping(value = "/getByName")
     public @ResponseBody ResponseEntity<Object> getAllBrand(@RequestParam String name) {
         Category listCategories = categoryServices.getCategorybyName(name);
         return new ResponseEntity<Object>(listCategories, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/createCategory")
+    @PostMapping(value = "/create")
     public ResponseEntity<Category> createBrand(
             @RequestBody CreateCategoryDTO category) {
         return ResponseEntity.ok(categoryServices.saveCategory(category));
     }
 
-    @PatchMapping(value = "/updateCategory/{id}")
+    @PatchMapping(value = "/{id}/update")
     public ResponseEntity<Category> updateBrand(@PathVariable String id,
             @RequestBody UpdateCategoryDTO category) {
         return ResponseEntity.ok(categoryServices.updateCategory(id, category));
     }
 
-    @PatchMapping(value = "/activeCategory/{id}")
+    @PatchMapping(value = "/{id}/activeCategory")
     public ResponseEntity<Category> activeCategory(@PathVariable String id) {
         return ResponseEntity.ok(categoryServices.activeCategory(id));
     }
