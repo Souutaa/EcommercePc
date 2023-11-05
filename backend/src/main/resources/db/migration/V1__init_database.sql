@@ -7,7 +7,6 @@ create table category (id integer not null, created_at date, deleted_at date, mo
 create table order_detail (id integer not null, created_at date, deleted_at date, modified_at date, purchase_discount integer default 0 not null, purchase_price integer not null, account_order_id integer, product_warranty_id integer, primary key (id));
 create table order_information (created_at date, deleted_at date, modified_at date, address varchar(100) not null, email varchar(60) not null, fullname varchar(100) not null, note varchar(100) not null, phone_number varchar(20) not null, username varchar(20) not null, account_order_id integer not null, primary key (account_order_id));
 create table product (id integer not null, created_at date, deleted_at date, modified_at date, discount float default 0, price float4, product_line varchar(50) not null, product_name varchar(150) not null, brand_id integer, category_id integer, warranty_period_id integer, primary key (id));
-create table product_image (id integer not null, created_at date, deleted_at date, modified_at date, path varchar(50) not null, primary key (id));
 create table product_info (id integer not null, created_at date, deleted_at date, modified_at date, product_information varchar(255) not null, product_id integer, primary key (id));
 create table product_product_infos (product_id integer not null, product_infos_id integer not null);
 create table product_product_warranties (product_id integer not null, product_warranties_id integer not null);

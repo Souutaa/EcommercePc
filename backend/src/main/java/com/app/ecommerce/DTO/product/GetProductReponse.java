@@ -2,10 +2,7 @@ package com.app.ecommerce.DTO.product;
 
 import java.util.List;
 
-import com.app.ecommerce.models.Brand;
-import com.app.ecommerce.models.Category;
 import com.app.ecommerce.models.Product;
-import com.app.ecommerce.models.WarrantyPeriod;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

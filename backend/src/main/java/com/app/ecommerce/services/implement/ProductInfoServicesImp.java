@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
   @Autowired
   private ProductInfoRepository productInfoRepository;
 
+  // BUG: Meaningless return, change required
   @Override
   public Product addProductInfos(String productLine, String[] productInfos) {
     Optional<Product> product = this.productRepository.findByProductLine(productLine);

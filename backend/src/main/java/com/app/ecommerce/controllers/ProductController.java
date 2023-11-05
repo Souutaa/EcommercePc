@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.app.ecommerce.DTO.product.AddProductInfoRequest;
 import com.app.ecommerce.DTO.product.CreateProductRequest;
 import com.app.ecommerce.DTO.product.GetProductReponse;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
+import com.app.ecommerce.DTO.productInfo.AddProductInfoRequest;
 import com.app.ecommerce.models.Product;
 import com.app.ecommerce.services.IProductInfoServices;
 import com.app.ecommerce.services.IProductServices;

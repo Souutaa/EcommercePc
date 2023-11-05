@@ -1,4 +1,4 @@
-package com.app.ecommerce.DTO.product;
+package com.app.ecommerce.DTO.productWarranty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,10 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class AddProductInfoRequest {
+@AllArgsConstructor
+@Builder
+public class UnactivatedWarrantyProduct {
+  private Integer id;
   private String productLine;
-  private String[] infos;
+  private Integer months;
 }
