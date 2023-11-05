@@ -15,8 +15,6 @@ import com.app.ecommerce.models.Product;
 import com.app.ecommerce.models.ProductWarranty;
 import com.app.ecommerce.respositories.ProductRepository;
 import com.app.ecommerce.respositories.ProductWarrantyRepository;
-import com.app.ecommerce.respositories.RemainProductWarranty;
-import com.app.ecommerce.respositories.WarrantyPeriodRepository;
 import com.app.ecommerce.services.IProductWarrantyServices;
 
 @Service
@@ -26,9 +24,6 @@ public class ProductWarrantyServicesImp implements IProductWarrantyServices {
 
   @Autowired
   private ProductWarrantyRepository productWarrantyRepository;
-
-  @Autowired
-  private WarrantyPeriodRepository warrantyPeriodRepository;
 
   @Override
   public List<ProductWarranty> addProductWarranties(String productLine, List<String> productWarranties) {
@@ -62,5 +57,13 @@ public class ProductWarrantyServicesImp implements IProductWarrantyServices {
   @Override
   public Integer getProductStock(int productId) {
     return this.productWarrantyRepository.findAllByProductId(productId).get().size();
+  }
+
+  @Override
+  public ProductWarranty deactiveWarranty(int productWarrantyId) {
+    ProductWarranty productWarranty = this.productWarrantyRepository.findById(productWarrantyId).get();
+    productWarranty.setPurchasedAt(null);    
+    productWarranty.setProductWarrantyId(null);
+    return this.productWarrantyRepository.save(productWarranty);
   }
 }
