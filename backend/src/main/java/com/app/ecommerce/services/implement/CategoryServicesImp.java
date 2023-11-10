@@ -44,7 +44,7 @@ public class CategoryServicesImp implements ICategoryServices {
 
     @Override
     public Category saveCategory(CreateCategoryDTO request) {
-        var category = Category.builder().name(request.getNameCategory()).build();
+        var category = Category.builder().name(request.getCategoryName()).build();
         return repo.save(category);
     }
 
