@@ -24,7 +24,7 @@ public class AccountOrder extends BaseEntity {
     private String username;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", length = 11, columnDefinition = "varchar(32) default 'PENDING'")
+    @Column(name = "status", length = 11, columnDefinition = "varchar(32) default 'PENDING'", nullable = false)
     private OrderStatus status;
 
     @Column(name = "total", length = 20, nullable = false)

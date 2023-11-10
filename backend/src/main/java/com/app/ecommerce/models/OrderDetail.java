@@ -18,15 +18,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "order_detail")
 public class OrderDetail extends BaseEntity {
     @Column(name = "purchase_price", length = 11, nullable = false)
-    private int purchasePrice;
+    private float purchasePrice;
 
-    @Column(name = "purchase_discount", length = 11, nullable = false, columnDefinition = "integer default 0")
-    private int purchaseDiscount;
+    @Column(name = "purchase_discount", length = 11, nullable = false, columnDefinition = "float default 0")
+    private float purchaseDiscount;
 
     // ---------- Mapping -----------
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_warranty_id", referencedColumnName = "id")
-    @JsonBackReference
+    // @JsonBackReference
     private ProductWarranty productWarranty;
 
     @ManyToOne(fetch = FetchType.LAZY)
