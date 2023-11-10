@@ -29,6 +29,7 @@ import Content from "./Content";
 import ProductMore from "./ProductMore";
 import ProductDetail from "./ProductDetail";
 import ProductCart from "./ProductCart";
+import ProductCheckout from "./ProductCheckout";
 
 const Home = () => {
   return (
@@ -38,7 +39,8 @@ const Home = () => {
       <Content /> */}
       {/* <ProductMore /> */}
       {/* <ProductDetail /> */}
-      <ProductCart />
+      {/* <ProductCart /> */}
+      <ProductCheckout />
     </AppShell.Section>
 
     // </AppShell>
