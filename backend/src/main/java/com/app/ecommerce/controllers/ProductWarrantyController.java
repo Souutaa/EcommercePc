@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.productWarranty.AddProductWarrantyRequest;
 import com.app.ecommerce.models.ProductWarranty;
-import com.app.ecommerce.respositories.RemainProductWarranty;
 import com.app.ecommerce.services.IProductWarrantyServices;
 
 import lombok.RequiredArgsConstructor;

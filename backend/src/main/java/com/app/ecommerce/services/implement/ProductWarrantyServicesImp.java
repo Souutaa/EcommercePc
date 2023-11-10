@@ -49,9 +49,10 @@ public class ProductWarrantyServicesImp implements IProductWarrantyServices {
     ProductWarranty productWarranty = this.productWarrantyRepository.selectFirstProductWarranty(productLine);
     Product product = this.productRepository.findByProductLine(productLine).get();
     Timestamp timestamp = new Timestamp(new Date().getTime());
-    Date newDate = DateUtils.addMonths(new Date(), product.getWarrantyPeriod().getMonths());
-    this.productWarrantyRepository.activeWarrantyProduct(timestamp, newDate, productWarranty.getId());
-    return null;
+    Date newDate = DateUtils.addMonths(timestamp, product.getWarrantyPeriod().getMonths());
+    productWarranty.setPurchasedAt(timestamp);
+    productWarranty.setWarrantyPeriod(newDate);
+    return this.productWarrantyRepository.save(productWarranty);
   }
 
   @Override
@@ -63,7 +64,7 @@ public class ProductWarrantyServicesImp implements IProductWarrantyServices {
   public ProductWarranty deactiveWarranty(int productWarrantyId) {
     ProductWarranty productWarranty = this.productWarrantyRepository.findById(productWarrantyId).get();
     productWarranty.setPurchasedAt(null);    
-    productWarranty.setProductWarrantyId(null);
+    productWarranty.setWarrantyPeriod(null);
     return this.productWarrantyRepository.save(productWarranty);
   }
 }
