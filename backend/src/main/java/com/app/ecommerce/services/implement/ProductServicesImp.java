@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.ws.rs.NotFoundException;
 
@@ -46,7 +47,6 @@ public class ProductServicesImp implements IProductServices {
   @Autowired
   private WarrantyPeriodRepository warrantyPeriodRepository;
 
-
   @Override
   public Product create(CreateProductRequest request, MultipartFile thumbnail, MultipartFile[] productImages)
       throws IOException {
@@ -60,12 +60,10 @@ public class ProductServicesImp implements IProductServices {
 
     String imageBasePath = "/app/src/main/resources/images/" + request.getProductLine() + "/";
     Utils.clearFolderContents(imageBasePath);
-    int index = 0;
     for (MultipartFile image : productImages) {
       String imageName = StringUtils.cleanPath(image.getOriginalFilename());
       String imageExtension = StringUtils.getFilenameExtension(imageName);
-      Utils.copyFiles(image, imageBasePath + request.getProductLine() + "_" + index + "." + imageExtension);
-      index++;
+      Utils.copyFiles(image, imageBasePath + request.getProductLine() + "_" + UUID.randomUUID() + "." + imageExtension);
     }
 
     Product newProduct = Product.builder()
@@ -89,7 +87,6 @@ public class ProductServicesImp implements IProductServices {
     Product fetchedProduct = productOpt.get();
     return fetchedProduct;
   }
-
 
   @Override
   public List<String> getProductImages(String productLine) {
@@ -124,12 +121,31 @@ public class ProductServicesImp implements IProductServices {
     throw new NotFoundException("File not found");
   }
 
+  public void removeImage(String imagePath) {
+    File fileToRemove = new File(imagePath);
+    if (fileToRemove.delete()) {
+      System.out.println("Deleted the file: " + fileToRemove.getName());
+    } else {
+      System.out.println("Failed to delete the file.");
+    }
+  }
+
   @Override
   public Product update(UpdateProductLineRequest request, MultipartFile thumbnail, MultipartFile[] productImages)
       throws IOException {
     Product product = this.getProduct(request.getProductLine());
 
-    if (!thumbnail.isEmpty()) {
+    List<String> currentProductImages = this.getProductImages(product.getProductLine());
+    if (currentProductImages.size() != request.getImageUris().size()) {
+      String imageBasePath = "/app/src/main/resources/";
+      for (String string : currentProductImages) {
+        if (request.getImageUris().indexOf(string) == -1) {
+          removeImage(imageBasePath + string);
+        }
+      }
+    }
+
+    if (thumbnail != null && !thumbnail.isEmpty()) {
       String fileBasePath = "/app/src/main/resources/thumbnails/" + request.getProductLine() + "/";
       String fileName = StringUtils.cleanPath(thumbnail.getOriginalFilename());
       String fileExtension = StringUtils.getFilenameExtension(fileName);
@@ -137,15 +153,13 @@ public class ProductServicesImp implements IProductServices {
       Utils.copyFiles(thumbnail, fileBasePath + request.getProductLine() + "." + fileExtension);
     }
 
-    if (productImages.length > 0) {
+    if (productImages != null && productImages.length > 0) {
       String imageBasePath = "/app/src/main/resources/images/" + request.getProductLine() + "/";
-      Utils.clearFolderContents(imageBasePath);
-      int index = 0;
       for (MultipartFile image : productImages) {
         String imageName = StringUtils.cleanPath(image.getOriginalFilename());
         String imageExtension = StringUtils.getFilenameExtension(imageName);
-        Utils.copyFiles(image, imageBasePath + request.getProductLine() + "_" + index + "." + imageExtension);
-        index++;
+        Utils.copyFiles(image,
+            imageBasePath + request.getProductLine() + "_" + UUID.randomUUID() + "." + imageExtension);
       }
     }
 
@@ -179,7 +193,5 @@ public class ProductServicesImp implements IProductServices {
     fetchedProduct.setDeletedAt(null);
     return this.productRepository.save(fetchedProduct);
   }
-
-  
 
 }

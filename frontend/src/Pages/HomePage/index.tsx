@@ -35,12 +35,12 @@ const Home = () => {
   return (
     // <AppShell>
     <AppShell.Section>
-      {/* <BannerSection />
-      <Content /> */}
+      <BannerSection />
+      <Content />
       {/* <ProductMore /> */}
       {/* <ProductDetail /> */}
       {/* <ProductCart /> */}
-      <ProductCheckout />
+      {/* <ProductCheckout /> */}
     </AppShell.Section>
 
     // </AppShell>
