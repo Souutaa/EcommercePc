@@ -1,5 +1,3 @@
-import "./style.css";
-import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 
 import TabProduct from "../../Components/TabProduct/TabProduct";

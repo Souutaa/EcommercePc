@@ -1,9 +1,8 @@
-import React from "react";
+import { MantineProvider, createTheme } from "@mantine/core";
+import "@mantine/core/styles.css";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "@mantine/core/styles.css";
-import { MantineProvider, createTheme } from "@mantine/core";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
