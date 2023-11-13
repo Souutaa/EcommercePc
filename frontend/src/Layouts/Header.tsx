@@ -1,8 +1,4 @@
-import {
-  Avatar,
-  Autocomplete,
-} from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { Avatar } from "@mantine/core";
 import "../Pages/HomePage/style.css";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
