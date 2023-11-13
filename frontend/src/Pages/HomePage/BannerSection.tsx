@@ -3,6 +3,7 @@ import "./style.css";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import classes from "./Demo.module.css";
+import SideBar from "../../Components/SideBar/sidebar";
 
 function BannerSection() {
   const images = [
@@ -22,26 +23,7 @@ function BannerSection() {
       <div className="container">
         <div className="banner">
           <div className="category">
-            <div className="category-item">
-              <img className="category-img" src="/img/laptop.png"></img>
-              <span className="category-text">Máy tính sách tay</span>
-            </div>
-            <div className="category-item">
-              <img className="category-img" src="/img/laptop.png"></img>
-              <span className="category-text">Máy tính sách tay</span>
-            </div>
-            <div className="category-item">
-              <img className="category-img" src="/img/laptop.png"></img>
-              <span className="category-text">Máy tính sách tay</span>
-            </div>
-            <div className="category-item">
-              <img className="category-img" src="/img/laptop.png"></img>
-              <span className="category-text">Máy tính sách tay</span>
-            </div>
-            <div className="category-item">
-              <img className="category-img" src="/img/laptop.png"></img>
-              <span className="category-text">Máy tính sách tay</span>
-            </div>
+            <SideBar></SideBar>
           </div>
           <div className="carousel">
             <Carousel withIndicators>{slides}</Carousel>

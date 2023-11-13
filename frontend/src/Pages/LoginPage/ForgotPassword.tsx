@@ -1,5 +1,7 @@
 import { Button } from "@mantine/core";
 import { Input } from "@mantine/core";
+import { Link } from "react-router-dom";
+import { PATHS } from "../../Contants/path";
 function ForgotPassword() {
   return (
     <>
@@ -15,9 +17,11 @@ function ForgotPassword() {
             </Input.Wrapper>
           </div>
 
-          <div className="form-group margin-bottom">
-            <Button>Nhận mã xác nhận</Button>
-          </div>
+          <Link style={{ textDecoration: "none" }} to={PATHS.LOGIN.FPVERIFI}>
+            <div className="form-group margin-bottom">
+              <Button>Nhận mã xác nhận</Button>
+            </div>
+          </Link>
         </div>
       </form>
     </>

@@ -1,4 +1,6 @@
 import { Button, PinInput } from "@mantine/core";
+import { Link } from "react-router-dom";
+import { PATHS } from "../../Contants/path";
 function ForgotPasswordVerification() {
   return (
     <>
@@ -9,9 +11,11 @@ function ForgotPasswordVerification() {
             <PinInput length={6} size="xl" placeholder="_"></PinInput>
           </div>
 
-          <div className="form-group margin-bottom">
-            <Button>Đổi mật khẩu</Button>
-          </div>
+          <Link to={PATHS.LOGIN.CHANGE} style={{ textDecoration: "none" }}>
+            <div className="form-group margin-bottom">
+              <Button>Đổi mật khẩu</Button>
+            </div>
+          </Link>
         </div>
       </form>
     </>

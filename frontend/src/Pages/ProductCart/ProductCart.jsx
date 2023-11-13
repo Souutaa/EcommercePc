@@ -2,7 +2,12 @@ import Navbar from "../../Layouts/NavBar";
 import ProductCarts from "../../Components/Product/ProductCart";
 import { Input, Checkbox } from "@mantine/core";
 import ProductList from "../../Components/Product/ProductList";
-import Total from "../../Components/Total";
+import Total from "../../Components/Total/Total";
+import Btn from "../../Components/Button";
+import { Link } from "react-router-dom";
+import { PATHS } from "../../Contants/path";
+import CartText from "../../Components/CartText/CartText";
+
 function ProductCart() {
   return (
     <>
@@ -10,18 +15,7 @@ function ProductCart() {
       <div className="container">
         <div className="productcart">
           <div className="productcart-left">
-            <div className="productcart-text">
-              <span style={{ width: "112px", textAlign: "left" }}>
-                Hình ảnh
-              </span>
-              <span style={{ width: "381px", textAlign: "left" }}>
-                Tên sản phẩm
-              </span>
-              <span style={{ width: "200px", textAlign: "left" }}>Giá bán</span>
-              <span style={{ width: "131px", textAlign: "left" }}>
-                Số lượng
-              </span>
-            </div>
+            <CartText />
             <ProductCarts />
             <ProductCarts />
             <ProductCarts />
@@ -33,7 +27,13 @@ function ProductCart() {
                 className="productcart-input"
                 placeholder="Mã giảm giá"
               />
-              <button className="productcart-button">Thêm</button>
+              <Btn
+                maintine="a"
+                customStyle={{ marginTop: "16px" }}
+                color="#E5E7EB"
+              >
+                Thêm
+              </Btn>
             </div>
             <div className="productcart-body">
               <Total />
@@ -43,9 +43,13 @@ function ProductCart() {
                   label="Tôi đã đọc và đồng ý với điều khoản và điều kiện của website"
                 />
               </div>
-              <div className="productcart-payment">
-                <button className="button-payment"> Thanh toán</button>
-              </div>
+              <Link style={{ width: "100%" }} to={PATHS.PAYMENT}>
+                <div className="productcart-payment">
+                  <Btn maintine="a" customStyle={{ width: "100%" }}>
+                    Thanh toán
+                  </Btn>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

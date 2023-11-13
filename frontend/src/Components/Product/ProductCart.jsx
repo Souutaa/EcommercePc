@@ -1,7 +1,21 @@
-import { useState, useCallback } from "react";
-import { Button } from "@mantine/core";
-import { useEventListener } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
+import { Button, Text } from "@mantine/core";
+import { modals } from "@mantine/modals";
+import { MantineProvider } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
+import Btn from "../Button";
+
 function ProductCarts() {
+  const openDeleteModal = () =>
+    modals.openConfirmModal({
+      title: "Bạn có muốn xóa",
+      centered: true,
+      children: <Text size="sm"></Text>,
+      labels: { confirm: "Có", cancel: "Khum" },
+      confirmProps: { color: "red" },
+      onCancel: () => console.log("Cancel"),
+      onConfirm: () => console.log("Confirmed"),
+    });
   return (
     <>
       <div className="productcart-item">
@@ -23,7 +37,16 @@ function ProductCarts() {
         <div className="productcart-width">
           <div className="productcart-quality">1</div>
         </div>
-        <img src="/img/delete.png" alt="" className="productcart-delete" />
+        <MantineProvider>
+          <ModalsProvider>
+            <img
+              onClick={openDeleteModal}
+              src="/img/delete.png"
+              alt=""
+              className="productcart-delete"
+            />
+          </ModalsProvider>
+        </MantineProvider>
       </div>
     </>
   );

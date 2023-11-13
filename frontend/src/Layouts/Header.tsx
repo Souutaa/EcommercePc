@@ -1,17 +1,10 @@
-import {
-  AppShell,
-  Group,
-  Grid,
-  Burger,
-  TextInput,
-  Button,
-  Avatar,
-  Autocomplete,
-} from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { Avatar } from "@mantine/core";
 import "../Pages/HomePage/style.css";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import Btn from "../Components/Button";
+import { PATHS } from "../Contants/path";
+import InputSearch from "../Components/Input/input-search";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -28,26 +21,19 @@ const Header = () => {
             <img src="/img/logoipsum-247.png" alt="" />
             <img src="/img/Techshop.png" alt="" />
           </Link>
-          <div className="search">
-            <Autocomplete
-              className="input-size"
-              size="sm"
-              leftSection={<IconSearch className="icon-search" />}
-              radius="md"
-              placeholder="Search"
-              data={["MSI", "Macbook", "Asus"]}
-            />
-          </div>
+          <InputSearch />
           <Link to="/login">
-            <Button>Đăng Nhập</Button>
+            <Btn maintine="a">Đăng Nhập</Btn>
           </Link>
 
           <div className="user-login">
-            <div className="cartegory">
-              <button className="button-cartegory">
-                <Avatar src="/img/Button.png" />
-              </button>
-            </div>
+            <Link to={PATHS.CART}>
+              <div className="cart">
+                <button className="button-cart">
+                  <Avatar src="/img/Button.png" />
+                </button>
+              </div>
+            </Link>
             <div className="logo-user" onClick={toggleDropdown}>
               <Avatar src="/img/Avatar.png" alt="it's me" />
             </div>

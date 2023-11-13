@@ -47,9 +47,14 @@ function SignUP() {
 
             <div className="form-group">
               <Button>Đăng nhập</Button>
-              <label className="form-group-forgot" htmlFor="">
-                Quên mật khẩu?
-              </label>
+              <Link
+                style={{ textDecoration: "none" }}
+                to={PATHS.LOGIN.FPASSWORD}
+              >
+                <label className="form-group-forgot" htmlFor="">
+                  Quên mật khẩu?
+                </label>
+              </Link>
             </div>
             <div className="form-group">
               <div className="line">
