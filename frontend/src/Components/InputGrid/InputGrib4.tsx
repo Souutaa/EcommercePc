@@ -1,6 +1,6 @@
 import { NativeSelect, Input } from "@mantine/core";
 
-function CheckoutGrid() {
+function InputGrib4() {
   return (
     <>
       <div className="productcheckout-grid">
@@ -37,4 +37,4 @@ function CheckoutGrid() {
   );
 }
 
-export default CheckoutGrid;
+export default InputGrib4;

@@ -1,6 +1,6 @@
 import { Input, Radio, Group, Divider, Button } from "@mantine/core";
 import Navbar from "../../Layouts/NavBar";
-import CheckoutGrid from "../../Components/CheckoutGrid/CheckoutGrid";
+import CheckoutGrid from "../../Components/InputGrid/InputGrib4";
 import Total from "../../Components/Total/Total";
 import Btn from "../../Components/Button";
 import { Link } from "react-router-dom";
@@ -59,7 +59,7 @@ function ProductCheckout() {
                   </Btn>
                 </Link>
                 <Link
-                  to={PATHS.ODERED}
+                  to={PATHS.ORDERED}
                   style={{ width: "100%", textDecoration: "none" }}
                 >
                   <Btn fullWidth maintine="a">

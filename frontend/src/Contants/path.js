@@ -3,7 +3,7 @@ const LOGIN_PATH = "/login";
 export const PATHS = {
   LOGIN: {
     INDEX: LOGIN_PATH,
-    SIGNIN: LOGIN_PATH + "/signin",
+    SIGNUP: LOGIN_PATH + "/SIGNUP",
     FPASSWORD: LOGIN_PATH + "/forgotpassword",
     FPVERIFI: LOGIN_PATH + "/forgotpassword/verifi",
     CHANGE: LOGIN_PATH + "/forgotpassword/verifi/change",
@@ -14,5 +14,7 @@ export const PATHS = {
   CART: "/CART",
   PAYMENT: "/PAYMENT",
   SEARCH: "/SEACRH",
-  ODERED: "/ORDERED",
+  ORDERED: "/ORDERED",
+  ORDER: "/ODER",
+  INFOUSER: "/INFOUSER",
 };

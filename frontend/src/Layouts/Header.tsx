@@ -5,6 +5,9 @@ import React, { useState } from "react";
 import Btn from "../Components/Button";
 import { PATHS } from "../Contants/path";
 import InputSearch from "../Components/Input/input-search";
+import Seaparator from "../Components/Seaparator/Seaparator";
+import UserInfor from "../Components/UserInfor/UserInfor";
+import UserOder from "../Components/UserOrder/UserOrder";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -39,11 +42,10 @@ const Header = () => {
             </div>
             {isDropdownOpen && (
               <div className="dropdown-menu">
-                <div className="user-info">
-                  <div className="user-name">Nguyễn Lương</div>
-                  <span className="user-email">lowtee.vn@gmail.com</span>
-                </div>
-                <div className="seaparator"></div>
+                <UserInfor />
+                <Seaparator />
+                <UserOder />
+                <Seaparator />
                 <div className="user-logout">Sign Out</div>
               </div>
             )}

@@ -1,11 +1,10 @@
 import "./style.css";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
-import Product from "../../Components/Product";
-import Btn from "../../Components/Button";
-import { PATHS } from "../../Contants/path";
-import { Link } from "react-router-dom";
+
 import TabProduct from "../../Components/TabProduct/TabProduct";
+import ButtonMore from "../../Components/Button/button-more";
+import ProductList from "../../Components/Product/ProductList";
 
 function Content() {
   return (
@@ -14,69 +13,17 @@ function Content() {
         <div className="products">
           <TabProduct />
           <div className="title">Macbook</div>
-          <div className="product-list">
-            <Product />
-            <Product />
-            <Product />
-            <Product />
-          </div>
-          <Link to={PATHS.MORE}>
-            <Btn
-              maintine="a"
-              customStyle={{ margin: "16px 0" }}
-              color="#E5E7EB"
-            >
-              Xem thêm
-            </Btn>
-          </Link>
+          <ProductList />
+          <ButtonMore />
           <div className="title">Acer</div>
-          <div className="product-list">
-            <Product />
-            <Product />
-            <Product />
-            <Product />
-          </div>
-          <Link to={PATHS.MORE}>
-            <Btn
-              maintine="a"
-              customStyle={{ margin: "16px 0" }}
-              color="#E5E7EB"
-            >
-              Xem thêm
-            </Btn>
-          </Link>
+          <ProductList />
+          <ButtonMore />
           <div className="title">Asus</div>
-          <div className="product-list">
-            <Product />
-            <Product />
-            <Product />
-            <Product />
-          </div>
-          <Link to={PATHS.MORE}>
-            <Btn
-              maintine="a"
-              customStyle={{ margin: "16px 0" }}
-              color="#E5E7EB"
-            >
-              Xem thêm
-            </Btn>
-          </Link>
+          <ProductList />
+          <ButtonMore />
           <div className="title">MSI</div>
-          <div className="product-list">
-            <Product />
-            <Product />
-            <Product />
-            <Product />
-          </div>
-          <Link to={PATHS.MORE}>
-            <Btn
-              maintine="a"
-              customStyle={{ margin: "16px 0" }}
-              color="#E5E7EB"
-            >
-              Xem thêm
-            </Btn>
-          </Link>
+          <ProductList />
+          <ButtonMore />
         </div>
       </div>
     </>

@@ -8,11 +8,11 @@ function ButtonAdd() {
         <Notifications />
         <Btn
           maintine="a"
-          //   onClick={() =>
-          //     notifications.show({
-          //       message: "Đã thêm sản phẩm vào giỏ hàng",
-          //     })
-          //   }
+          onClick={() =>
+            notifications.show({
+              message: "Đã thêm sản phẩm vào giỏ hàng",
+            })
+          }
         >
           Thêm vào giỏ
         </Btn>

@@ -16,6 +16,9 @@ import ForgotPasswordVerification from "./Pages/LoginPage/ForgotPasswordVerifica
 import ChangePassword from "./Pages/LoginPage/ChangePassword";
 import ProductSearch from "./Pages/ProductSearch/ProductSearch";
 import ProductOdered from "./Pages/ProductOdered/ProductOdered";
+import OderUser from "./Components/OrderUser/OrderUser";
+import InfoUser from "./Pages/InfoUser/InfoUser";
+import SignUp from "./Pages/LoginPage/SignUp";
 
 function App() {
   return (
@@ -25,8 +28,8 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path={PATHS.LOGIN.INDEX} element={<LoginPage />}>
-              <Route index element={<SignUP />} />
-              <Route path={PATHS.LOGIN.SIGNIN} element={<SignIn />} />
+              <Route index element={<SignIn />} />
+              <Route path={PATHS.LOGIN.SIGNUP} element={<SignUp />} />
               <Route
                 path={PATHS.LOGIN.FPASSWORD}
                 element={<ForgotPassword />}
@@ -46,7 +49,9 @@ function App() {
             <Route path={PATHS.CART} element={<ProductCart />} />
             <Route path={PATHS.PAYMENT} element={<ProductCheckout />} />
             <Route path={PATHS.SEARCH} element={<ProductSearch />} />
-            <Route path={PATHS.ODERED} element={<ProductOdered />} />
+            <Route path={PATHS.ORDERED} element={<ProductOdered />} />
+            <Route path={PATHS.ORDER} element={<OderUser />} />
+            <Route path={PATHS.INFOUSER} element={<InfoUser />} />
           </Route>
         </Routes>
       </BrowserRouter>
