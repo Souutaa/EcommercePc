@@ -170,6 +170,14 @@
     		<artifactId>simple-java-mail</artifactId>
     		<version>8.3.1</version>
 		</dependency>
+
+		<!--Excel-->
+		<dependency>
+    		<groupId>org.apache.poi</groupId>
+    		<artifactId>poi-ooxml</artifactId>
+    		<version>4.1.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
