@@ -15,10 +15,12 @@ import com.app.ecommerce.models.OrderStatus;
 import com.app.ecommerce.models.ProductWarranty;
 import com.app.ecommerce.respositories.AccountOrderRepository;
 import com.app.ecommerce.services.IAccountOrderServices;
+import com.app.ecommerce.services.IEmailServices;
 import com.app.ecommerce.services.IOrderDetailServices;
 import com.app.ecommerce.services.IOrderInformationServices;
 import com.app.ecommerce.services.IProductWarrantyServices;
 
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 
 @Service
@@ -30,6 +32,8 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
   @Autowired
   private IProductWarrantyServices productWarrantyServices;
 
+  @Autowired
+  private IEmailServices emailServices;
 
   @Autowired
   private IOrderDetailServices orderDetailServices;
@@ -39,7 +43,7 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
 
   @Override
   public AccountOrder createOrder(CreateOrderRequest request, String username)
-      throws NumberFormatException, SQLException {
+      throws NumberFormatException, SQLException, MessagingException {
     AccountOrder newOrder = AccountOrder.builder().username(username).total(request.getTotal())
         .status(OrderStatus.PENDING)
         .orderDetails(orderDetailServices.createOrderDetail(request.getCartItems()))
@@ -55,6 +59,7 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
         .username(username)
         .build();
     this.orderInformationServices.createOrderInformation(orderInformation);
+    emailServices.sendOrderUser(request, username);
     return createdOrder;
   }
 
