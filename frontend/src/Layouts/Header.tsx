@@ -2,7 +2,6 @@ import { Avatar, Autocomplete, Menu } from "@mantine/core";
 import { Button, Text, rem } from "@mantine/core";
 import "../Pages/HomePage/style.css";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
 import Btn from "../Components/Button";
 import {
   IconSettings,
@@ -13,15 +12,17 @@ import {
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
 import InputSearch from "../Components/Input/input-search";
+import { PATHS } from "../Constants/path";
+import "../Pages/HomePage/style.css";
+import { useAuthContext } from "../Context/AuthContext";
 import Seaparator from "../Components/Seaparator/Seaparator";
 import UserInfor from "../Components/UserInfor/UserInfor";
 import UserOder from "../Components/UserOrder/UserOrder";
-import { PATHS } from "../Constants/path";
 
 const Header = () => {
   const [opened, setOpened] = useState(false);
   // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const authContext = useAuthContext();
   // const toggleDropdown = () => {
   //   setIsDropdownOpen(!isDropdownOpen);
 
@@ -34,10 +35,12 @@ const Header = () => {
             <img src="/img/Techshop.png" alt="" />
           </Link>
           <InputSearch />
-          <Link to="/login">
-            <Btn maintine="a">Đăng Nhập</Btn>
-          </Link>
-
+          
+          {!authContext.auth.isAuthenticated ? (
+            <Link to="/login">
+              <Btn maintine="a">Đăng Nhập</Btn>
+            </Link>
+          ) : (
           <div className="user-login">
             <Link to={PATHS.CART}>
               <div className="cart">
@@ -114,17 +117,8 @@ const Header = () => {
                 <Avatar src="/img/Avatar.png" alt="it's me" />
               </div>
             </Menu>
-
-            {/* {isDropdownOpen && (
-              <div className="dropdown-menu">
-                <UserInfor />
-                <Seaparator />
-                <UserOder />
-                <Seaparator />
-                <div className="user-logout">Sign Out</div>
-              </div>
-            )} */}
           </div>
+          )}
         </div>
       </div>
     </div>

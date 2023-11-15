@@ -19,7 +19,7 @@ function ChangePassword() {
             </label>
             <PasswordInput placeholder="Nhập lại mật khẩu mới" />
           </div>
-          <Link to={PATHS.HOMELOGIN} style={{ textDecoration: "none" }}>
+          <Link to={PATHS.LOGIN.INDEX} style={{ textDecoration: "none" }}>
             <div className="form-group margin-bottom">
               <Button>Đi tới trang chủ</Button>
             </div>
