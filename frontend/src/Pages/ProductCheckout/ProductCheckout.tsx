@@ -4,9 +4,9 @@ import CheckoutGrid from "../../Components/InputGrid/InputGrib4";
 import Total from "../../Components/Total/Total";
 import Btn from "../../Components/Button";
 import { Link } from "react-router-dom";
-import { PATHS } from "../../Contants/path";
 import CheckoutContent from "../../Components/CheckoutContent/CheckoutContent";
 import CheckoutText from "../../Components/CheckoutText/CheckoutText";
+import { PATHS } from "../../Constants/path";
 
 function ProductCheckout() {
   return (

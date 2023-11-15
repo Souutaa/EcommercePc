@@ -4,7 +4,7 @@ import "./App.css";
 import Home from "./Pages/HomePage";
 import MainLayout from "./Layouts/Index";
 import LoginPage from "./Pages/LoginPage";
-import { PATHS } from "./Contants/path";
+import { PATHS } from "./Constants/path";
 import SignUP from "./Pages/LoginPage/SignUp";
 import SignIn from "./Pages/LoginPage/SignIn";
 import ProductMore from "./Pages/ProductMore/ProductMore";
@@ -51,7 +51,7 @@ function App() {
             <Route path={PATHS.SEARCH} element={<ProductSearch />} />
             <Route path={PATHS.ORDERED} element={<ProductOdered />} />
             <Route path={PATHS.ORDER} element={<OderUser />} />
-            <Route path={PATHS.INFOUSER} element={<InfoUser />} />
+            <Route path={PATHS.USERINFO} element={<InfoUser />} />
           </Route>
         </Routes>
       </BrowserRouter>

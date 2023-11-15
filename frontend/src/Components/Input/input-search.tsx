@@ -1,8 +1,9 @@
 import { Autocomplete } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
-import { PATHS } from "../../Contants/path";
+
 import Btn from "../Button";
+import { PATHS } from "../../Constants/path";
 
 function InputSearch() {
   return (

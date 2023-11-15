@@ -1,6 +1,6 @@
 import { PasswordInput, Button } from "@mantine/core";
 import { Link } from "react-router-dom";
-import { PATHS } from "../../Contants/path";
+import { PATHS } from "../../Constants/path";
 function ChangePassword() {
   return (
     <>

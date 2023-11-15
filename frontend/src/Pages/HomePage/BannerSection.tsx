@@ -1,7 +1,7 @@
 import { Carousel } from "@mantine/carousel";
-import "./style.css";
-import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
+import "@mantine/core/styles.css";
+import "./style.css";
 import classes from "./Demo.module.css";
 import SideBar from "../../Components/SideBar/sidebar";
 
@@ -14,7 +14,7 @@ function BannerSection() {
   const slides = images.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
-        <img src={url} />
+        <img alt="" src={url} />
       </Carousel.Slide>
     );
   });

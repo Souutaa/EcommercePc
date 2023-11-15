@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import Btn from "../Button";
-import { PATHS } from "../../Contants/path";
+import { PATHS } from "../../Constants/path";
 import ButtonAdd from "../Button/button-add-to-cart";
 
 function Product() {

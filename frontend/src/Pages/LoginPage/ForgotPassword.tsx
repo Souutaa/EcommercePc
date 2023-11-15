@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
 import { Input } from "@mantine/core";
 import { Link } from "react-router-dom";
-import { PATHS } from "../../Contants/path";
+import { PATHS } from "../../Constants/path";
 function ForgotPassword() {
   return (
     <>

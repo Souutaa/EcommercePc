@@ -19,16 +19,16 @@ function Footer() {
 
               <ul className="socials-left">
                 <li className="icon-left">
-                  <img src="/img/ic_facebbook.png"></img>
+                  <img alt="" src="/img/ic_facebbook.png"></img>
                 </li>
                 <li className="icon-left">
-                  <img src="/img/ic_instagram.png"></img>
+                  <img alt="" src="/img/ic_instagram.png"></img>
                 </li>
                 <li className="icon-left">
-                  <img src="/img/ic_linkedin.png"></img>
+                  <img alt="" src="/img/ic_linkedin.png"></img>
                 </li>
                 <li className="icon-left">
-                  <img src="/img/ic_twitter.png"></img>
+                  <img alt="" src="/img/ic_twitter.png"></img>
                 </li>
               </ul>
             </div>

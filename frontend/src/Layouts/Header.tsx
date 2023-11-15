@@ -1,13 +1,17 @@
-import { Avatar } from "@mantine/core";
+import {
+  Avatar,
+  Autocomplete,
+} from "@mantine/core";
+import { IconSearch } from "@tabler/icons-react";
 import "../Pages/HomePage/style.css";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import Btn from "../Components/Button";
-import { PATHS } from "../Contants/path";
 import InputSearch from "../Components/Input/input-search";
 import Seaparator from "../Components/Seaparator/Seaparator";
 import UserInfor from "../Components/UserInfor/UserInfor";
 import UserOder from "../Components/UserOrder/UserOrder";
+import { PATHS } from "../Constants/path";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -32,7 +36,7 @@ const Header = () => {
           <div className="user-login">
             <Link to={PATHS.CART}>
               <div className="cart">
-                <button className="button-cart">
+                <button title="cart-btn" type="button" className="button-cart">
                   <Avatar src="/img/Button.png" />
                 </button>
               </div>
