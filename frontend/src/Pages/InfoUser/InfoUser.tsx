@@ -1,4 +1,4 @@
-import { Avatar, Button, Input } from "@mantine/core";
+import { Avatar, Button, Divider, Input } from "@mantine/core";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import Navbar from "../../Layouts/NavBar";
 import UserOder from "../../Components/UserOrder/UserOrder";
@@ -27,7 +27,7 @@ function InfoUser() {
             <h5 className="infouser-text">
               Quản lý thông tin hồ sơ để bảo mật tài khoản
             </h5>
-            <Seaparator />
+            <Divider></Divider>
             <form action="">
               <div className="infouser-input">
                 <InputGrid2 />
