@@ -12,6 +12,7 @@ import {
 } from "@tabler/icons-react";
 import InputSearch from "../Components/Input/input-search";
 import { PATHS } from "../Constants/path";
+import "../Pages/HomePage/style.css";
 import { useAuthContext } from "../Context/AuthContext";
 import { useState } from "react";
 const Header = () => {
