@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,4 +21,9 @@ public class Utils {
         StandardCopyOption.REPLACE_EXISTING);
   }
 
+  public static String generateOTP() {
+    int randomPin = (int) (Math.random() * 9000) + 1000;
+    String otp = String.valueOf(randomPin);
+    return otp; // returning value of otp
+  }
 }
