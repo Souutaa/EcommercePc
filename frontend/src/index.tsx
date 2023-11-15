@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import React from "react";
+import AuthProvider from "./Context/AuthContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,9 +16,11 @@ const theme = createTheme({
 
 root.render(
   <React.StrictMode>
-    <MantineProvider>
-      <App />
-    </MantineProvider>
+    <AuthProvider>
+      <MantineProvider>
+        <App />
+      </MantineProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
 

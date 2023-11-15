@@ -8,7 +8,6 @@ export const PATHS = {
     FPVERIFI: LOGIN_PATH + "/forgot-password/verify",
     CHANGE: LOGIN_PATH + "/forgot-password/verify/change",
   },
-  HOMELOGIN: "/login",
   MORE: "/more",
   PRODUCT: "/product",
   CART: "/cart",

@@ -1,26 +1,33 @@
-import React from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Home from "./Pages/HomePage";
-import MainLayout from "./Layouts/Index";
-import LoginPage from "./Pages/LoginPage";
+import OderUser from "./Components/OrderUser/OrderUser";
 import { PATHS } from "./Constants/path";
-import SignUP from "./Pages/LoginPage/SignUp";
-import SignIn from "./Pages/LoginPage/SignIn";
-import ProductMore from "./Pages/ProductMore/ProductMore";
-import ProductDetail from "./Pages/ProductDetail/ProductDetail";
-import ProductCart from "./Pages/ProductCart/ProductCart";
-import ProductCheckout from "./Pages/ProductCheckout/ProductCheckout";
+import { useAuthContext } from "./Context/AuthContext";
+import MainLayout from "./Layouts/Index";
+import Home from "./Pages/HomePage";
+import InfoUser from "./Pages/InfoUser/InfoUser";
+import LoginPage from "./Pages/LoginPage";
+import ChangePassword from "./Pages/LoginPage/ChangePassword";
 import ForgotPassword from "./Pages/LoginPage/ForgotPassword";
 import ForgotPasswordVerification from "./Pages/LoginPage/ForgotPasswordVerification";
-import ChangePassword from "./Pages/LoginPage/ChangePassword";
-import ProductSearch from "./Pages/ProductSearch/ProductSearch";
-import ProductOdered from "./Pages/ProductOdered/ProductOdered";
-import OderUser from "./Components/OrderUser/OrderUser";
-import InfoUser from "./Pages/InfoUser/InfoUser";
+import SignIn from "./Pages/LoginPage/SignIn";
 import SignUp from "./Pages/LoginPage/SignUp";
+import ProductCart from "./Pages/ProductCart/ProductCart";
+import ProductCheckout from "./Pages/ProductCheckout/ProductCheckout";
+import ProductDetail from "./Pages/ProductDetail/ProductDetail";
+import ProductMore from "./Pages/ProductMore/ProductMore";
+import ProductOdered from "./Pages/ProductOdered/ProductOdered";
+import ProductSearch from "./Pages/ProductSearch/ProductSearch";
 
 function App() {
+
+  const authContext = useAuthContext();
+
+  useEffect(() => {
+    authContext.checkSession();
+  }, [authContext]);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -43,7 +50,6 @@ function App() {
                 element={<ChangePassword />}
               ></Route>
             </Route>
-            <Route path={PATHS.HOMELOGIN} element={<SignUP />} />
             <Route path={PATHS.MORE} element={<ProductMore />} />
             <Route path={PATHS.PRODUCT} element={<ProductDetail />} />
             <Route path={PATHS.CART} element={<ProductCart />} />
