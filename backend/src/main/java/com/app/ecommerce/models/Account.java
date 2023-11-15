@@ -36,6 +36,9 @@ public class Account extends BaseEntity implements UserDetails {
     @Email(message = "Email must be valid")
     private String email;
 
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(32) default 'USER'")
     private Role role;
