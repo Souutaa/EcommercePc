@@ -1,4 +1,6 @@
 import { PasswordInput, Button } from "@mantine/core";
+import { Link } from "react-router-dom";
+import { PATHS } from "../../Constants/path";
 function ChangePassword() {
   return (
     <>
@@ -17,9 +19,11 @@ function ChangePassword() {
             </label>
             <PasswordInput placeholder="Nhập lại mật khẩu mới" />
           </div>
-          <div className="form-group margin-bottom">
-            <Button>Đi tới trang chủ</Button>
-          </div>
+          <Link to={PATHS.HOMELOGIN} style={{ textDecoration: "none" }}>
+            <div className="form-group margin-bottom">
+              <Button>Đi tới trang chủ</Button>
+            </div>
+          </Link>
         </div>
       </form>
     </>
