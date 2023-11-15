@@ -1,5 +1,7 @@
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
+import "@mantine/core/styles.css";
+import "./style.css";
 import classes from "./Demo.module.css";
 import SideBar from "../../Components/SideBar/sidebar";
 

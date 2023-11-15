@@ -1,5 +1,7 @@
 import "@mantine/carousel/styles.css";
-
+import "@mantine/core/styles.css";
+import Product from "../../Components/Product";
+import "./style.css";
 import TabProduct from "../../Components/TabProduct/TabProduct";
 import ButtonMore from "../../Components/Button/button-more";
 import ProductList from "../../Components/Product/ProductList";
