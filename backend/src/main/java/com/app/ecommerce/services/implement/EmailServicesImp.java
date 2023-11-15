@@ -136,6 +136,7 @@ public class EmailServicesImp implements IEmailServices {
         message.setContent(multipart);
 
         Transport.send(message);
+
     }
 
 }

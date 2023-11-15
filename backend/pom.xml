@@ -170,7 +170,6 @@
     		<artifactId>simple-java-mail</artifactId>
     		<version>8.3.1</version>
 		</dependency>
-
 		<!--Excel-->
 		<dependency>
     		<groupId>org.apache.poi</groupId>

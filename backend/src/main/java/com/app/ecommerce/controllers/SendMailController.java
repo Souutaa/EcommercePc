@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.app.ecommerce.DTO.order.CreateOrderRequest;
 import com.app.ecommerce.DTO.sendmail.sendmailDTO;
 import com.app.ecommerce.models.Account;
@@ -35,6 +34,7 @@ public class SendMailController {
             @RequestBody sendmailDTO sendmail)
             throws UnsupportedEncodingException, MessagingException {
         // String siteURL = Utilities.getSiteURL(request);
+
         return ResponseEntity.ok(emailServices.sendOTPbyEmail(id, sendmail));
     }
 
@@ -44,5 +44,7 @@ public class SendMailController {
             throws UnsupportedEncodingException, MessagingException {
         // String siteURL = Utilities.getSiteURL(request);
         emailServices.sendOrderUser(request, "trinhq011@gmail.com");
+
+        //return ResponseEntity.ok(emailServices.sendSimpleMailMessage(id, sendmail));
     }
 }
