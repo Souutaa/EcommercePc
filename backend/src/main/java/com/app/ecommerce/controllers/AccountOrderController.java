@@ -1,9 +1,15 @@
 package com.app.ecommerce.controllers;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +22,13 @@ import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.models.AccountOrder;
 import com.app.ecommerce.models.OrderStatus;
+import com.app.ecommerce.respositories.AccountOrderRepository;
 import com.app.ecommerce.services.IAccountOrderServices;
+import com.app.ecommerce.services.IExportExcelServices;
+import com.app.ecommerce.services.implement.ExportExcelServicesImp;
 
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -32,10 +43,16 @@ public class AccountOrderController {
   @Autowired
   private JwtService jwtService;
 
+  @Autowired
+  private IExportExcelServices excelServices;
+
+  @Autowired
+  private AccountOrderRepository repo;
+
   @PostMapping("/create")
   public ResponseEntity<AccountOrder> create(
       @Valid @RequestBody CreateOrderRequest request, @RequestHeader("Authorization") String authorization)
-      throws NumberFormatException, SQLException {
+      throws NumberFormatException, SQLException, MessagingException {
     String token = authorization.split(" ")[1].trim();
     String username = this.jwtService.extractUsername(token);
     return ResponseEntity.ok(orderServices.createOrder(request, username));
@@ -48,5 +65,23 @@ public class AccountOrderController {
       return ResponseEntity.ok(orderServices.cancelOrder(request.getOrderId()));
     }
     return ResponseEntity.ok(orderServices.updateOrderStatus(request));
+  }
+
+  @GetMapping("/export/excel")
+  public void exportToExcel(HttpServletResponse response) throws IOException {
+    response.setContentType("application/octet-stream");
+    // java.util.Date date = new java.util.Date();
+    // DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+    // String currentDateTime = dateFormatter.format(date);
+
+    String headerKey = "Content-Disposition";
+    // String headerValue = "attachment; filename=users_" + currentDateTime +
+    // ".xlsx";
+    String headerValue = "attachment; filename=users_" + ".xlsx";
+    response.setHeader(headerKey, headerValue);
+
+    List<AccountOrder> accountOrders = repo.findAll();
+    ExportExcelServicesImp test = new ExportExcelServicesImp(accountOrders);
+    test.export(response);
   }
 }

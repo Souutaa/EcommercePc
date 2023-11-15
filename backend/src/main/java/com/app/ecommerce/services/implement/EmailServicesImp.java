@@ -10,9 +10,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.app.ecommerce.DTO.order.CreateOrderRequest;
+import com.app.ecommerce.DTO.sendmail.sendMailInfoOrder;
 import com.app.ecommerce.DTO.sendmail.sendmailDTO;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
+import com.app.ecommerce.models.AccountOrder;
+import com.app.ecommerce.respositories.AccountOrderRepository;
 import com.app.ecommerce.respositories.AccountRepository;
 import com.app.ecommerce.services.IEmailServices;
 import com.app.ecommerce.utils.Utils;
@@ -43,6 +47,9 @@ public class EmailServicesImp implements IEmailServices {
     @Autowired
     private AccountRepository repo;
 
+    @Autowired
+    private AccountOrderRepository repoAccountOrder;
+
     EmailServicesImp(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -67,28 +74,7 @@ public class EmailServicesImp implements IEmailServices {
     }
 
     @Override
-    public void sendHtmlEmail() throws AddressException, javax.mail.MessagingException, MessagingException {
-        MimeMessage message = new MimeMessage(sessionFormSendMail());
-        message.setFrom(senderEmail);
-        message.setRecipients(
-                RecipientType.TO, "dragonnood123@gmail.com");
-        message.setSubject("Mail Subject");
-
-        String msg = "This is my first email using JavaMailer";
-
-        MimeBodyPart mimeBodyPart = new MimeBodyPart();
-        mimeBodyPart.setContent(msg, "text/html; charset=utf-8");
-
-        Multipart multipart = new MimeMultipart();
-        multipart.addBodyPart(mimeBodyPart);
-
-        message.setContent(multipart);
-
-        Transport.send(message);
-    }
-
-    @Override
-    public Account sendSimpleMailMessage(String id, sendmailDTO sendmail) throws MessagingException {
+    public Account sendOTPbyEmail(String id, sendmailDTO sendmail) throws MessagingException {
         Optional<Account> userFound = repo.findById(Integer.parseInt(id));
         if (userFound.isPresent()) {
             var otp = Utils.generateOTP();
@@ -124,27 +110,32 @@ public class EmailServicesImp implements IEmailServices {
     }
 
     @Override
-    public void sendMineMessageWithAttachments(String name, String to, String token) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplementedmethod'sendMineMessageWithAttachments'");
-    }
+    public void sendOrderUser(CreateOrderRequest request, String username) throws MessagingException {
+        int total = request.getTotal();
+        String fullname = request.getFullName();
+        String address = request.getDetailedAddress();
+        String email = request.getEmail();
+        int count = request.getCartItems().size();
+        MimeMessage message = new MimeMessage(sessionFormSendMail());
+        message.setFrom(senderEmail);
+        message.setRecipients(
+                RecipientType.TO, email);
+        message.setSubject("EcommercePC send to" + username + "</span>"
+                + ": Your order information");
+        String msg = "<p>Fullname:  <span style=\"color:blue;font-weight:bold;\"> " + fullname + "</span></p>" +
+                "<p>Your Address:" + address + "</p>" +
+                "<p>The number of products:" + count + "</p>" +
+                "<p>Total:" + total + "</p>";
 
-    @Override
-    public void sendMineMessageWithEmbeddedImages(String name, String to, String token) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplementedmethod'sendMineMessageWithEmbeddedImages'");
-    }
+        MimeBodyPart mimeBodyPart = new MimeBodyPart();
+        mimeBodyPart.setContent(msg, "text/html; charset=utf-8");
 
-    @Override
-    public void sendMineMessageWithEmbeddedFiles(String name, String to, String token) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplementedmethod'sendMineMessageWithEmbeddedFiles'");
-    }
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(mimeBodyPart);
 
-    @Override
-    public void sendHtmlEmailWithEmbeddedFiles(String name, String to, String token) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplementedmethod'sendHtmlEmailWithEmbeddedFiles'");
+        message.setContent(multipart);
+
+        Transport.send(message);
     }
 
 }
