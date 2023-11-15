@@ -1,10 +1,6 @@
-import { IconCheck } from "@tabler/icons-react";
-import { Button, rem } from "@mantine/core";
-import Btn from ".";
+import { Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
+import { IconCheck } from "@tabler/icons-react";
 import "react-toastify/dist/ReactToastify.css";
 function ButtonAdd() {
   return (
