@@ -55,7 +55,7 @@ public class ProductController {
     return ResponseEntity.ok(this.productServices.create(request, thumbnail, images));
   }
 
-  @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PatchMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<Product> updateProductLine(
     @RequestPart(name = "thumbnail", required = false) MultipartFile thumbnail,
     @RequestPart(name = "images", required = false) MultipartFile[] images,

@@ -4,7 +4,7 @@ import "./App.css";
 import Home from "./Pages/HomePage";
 import MainLayout from "./Layouts/Index";
 import LoginPage from "./Pages/LoginPage";
-import { PATHS } from "./Contants/path";
+import { PATHS } from "./Constants/path";
 import SignUP from "./Pages/LoginPage/SignUp";
 import SignIn from "./Pages/LoginPage/SignIn";
 

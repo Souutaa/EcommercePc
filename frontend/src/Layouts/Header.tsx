@@ -1,10 +1,4 @@
 import {
-  AppShell,
-  Group,
-  Grid,
-  Burger,
-  TextInput,
-  Button,
   Avatar,
   Autocomplete,
 } from "@mantine/core";
@@ -38,9 +32,9 @@ const Header = () => {
               data={["MSI", "Macbook", "Asus"]}
             />
           </div>
-          <Link to="/login">
+          {/* <Link to="/login">
             <Button>Đăng Nhập</Button>
-          </Link>
+          </Link> */}
 
           <div className="user-login">
             <div className="cartegory">

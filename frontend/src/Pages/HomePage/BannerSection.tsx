@@ -1,8 +1,7 @@
 import { Carousel } from "@mantine/carousel";
-import "./style.css";
-import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
-import classes from "./Demo.module.css";
+import "@mantine/core/styles.css";
+import "./style.css";
 
 function BannerSection() {
   const images = [

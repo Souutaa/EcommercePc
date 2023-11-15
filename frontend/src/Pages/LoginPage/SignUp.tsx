@@ -4,7 +4,7 @@ import { Input, PasswordInput } from "@mantine/core";
 import "@mantine/carousel/styles.css";
 import { url } from "inspector";
 import { Link } from "react-router-dom";
-import { PATHS } from "../../Contants/path";
+import { PATHS } from "../../Constants/path";
 
 function SignUP() {
   const images = [

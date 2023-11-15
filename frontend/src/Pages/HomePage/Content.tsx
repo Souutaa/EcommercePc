@@ -1,8 +1,7 @@
-import "./style.css";
-import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
-import { Button } from "@mantine/core";
+import "@mantine/core/styles.css";
 import Product from "../../Components/Product";
+import "./style.css";
 
 function Content() {
   return (
