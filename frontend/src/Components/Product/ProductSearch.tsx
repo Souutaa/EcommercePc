@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { PATHS } from "../../Contants/path";
 import Btn from "../Button";
+import { PATHS } from "../../Constants/path";
 
 function ProductSearchs() {
   return (

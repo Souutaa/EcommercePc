@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PATHS } from "../../Contants/path";
+import { PATHS } from "../../Constants/path";
 function UserOder() {
   return (
     <div className="user-info">
@@ -12,7 +12,7 @@ function UserOder() {
       </Link>
       <Link
         className="user-info-name"
-        to={PATHS.INFOUSER}
+        to={PATHS.USERINFO}
         style={{ textDecoration: "none" }}
       >
         Thông tin cá nhân

@@ -3,7 +3,7 @@ import { Button } from "@mantine/core";
 import { Input, PasswordInput } from "@mantine/core";
 import "@mantine/carousel/styles.css";
 import { Link } from "react-router-dom";
-import { PATHS } from "../../Contants/path";
+import { PATHS } from "../../Constants/path";
 
 function SignIn() {
   const images = [
@@ -14,7 +14,7 @@ function SignIn() {
   const slides = images.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
-        <img src={url} />
+        <img alt="" src={url} />
       </Carousel.Slide>
     );
   });

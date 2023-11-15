@@ -51,7 +51,7 @@ function App() {
             <Route path={PATHS.SEARCH} element={<ProductSearch />} />
             <Route path={PATHS.ORDERED} element={<ProductOdered />} />
             <Route path={PATHS.ORDER} element={<OderUser />} />
-            <Route path={PATHS.INFOUSER} element={<InfoUser />} />
+            <Route path={PATHS.USERINFO} element={<InfoUser />} />
           </Route>
         </Routes>
       </BrowserRouter>

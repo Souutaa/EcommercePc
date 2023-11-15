@@ -1,6 +1,6 @@
 import Btn from "../../Components/Button";
-import { PATHS } from "../../Contants/path";
 import { Link } from "react-router-dom";
+import { PATHS } from "../../Constants/path";
 function ButtonMore() {
   return (
     <>

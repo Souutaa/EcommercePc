@@ -12,7 +12,7 @@ function BannerSection() {
   const slides = images.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
-        <img src={url} />
+        <img alt="" src={url} />
       </Carousel.Slide>
     );
   });
