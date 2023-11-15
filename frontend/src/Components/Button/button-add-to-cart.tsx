@@ -4,6 +4,8 @@ import Btn from ".";
 import { notifications } from "@mantine/notifications";
 
 import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function ButtonAdd() {
   return (
     <>
