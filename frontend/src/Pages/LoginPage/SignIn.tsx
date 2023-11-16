@@ -2,15 +2,23 @@ import { Carousel } from "@mantine/carousel";
 import { Button } from "@mantine/core";
 import { Input, PasswordInput } from "@mantine/core";
 import "@mantine/carousel/styles.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
+import { useState } from "react";
+import { useAuthContext } from "../../Context/AuthContext";
+
+const images = [
+  "/img/Carousel1.png",
+  "/img/Carousel1.png",
+  "/img/Carousel1.png",
+];
 
 function SignIn() {
-  const images = [
-    "/img/Carousel1.png",
-    "/img/Carousel1.png",
-    "/img/Carousel1.png",
-  ];
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const authContext = useAuthContext();
+
   const slides = images.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
@@ -18,6 +26,7 @@ function SignIn() {
       </Carousel.Slide>
     );
   });
+
   return (
     <>
       <div className="modal">
@@ -33,7 +42,12 @@ function SignIn() {
                 Tài khoản
               </label>
               <Input.Wrapper>
-                <Input placeholder="abc@gmail.com" />
+                <Input
+                  placeholder="abc@gmail.com"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
               </Input.Wrapper>
             </div>
 
@@ -41,11 +55,23 @@ function SignIn() {
               <label className="form-text " htmlFor="">
                 Mật khẩu
               </label>
-              <PasswordInput placeholder="Nhập mật khẩu" />
+              <PasswordInput
+                placeholder="Nhập mật khẩu"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
             </div>
 
             <div className="form-group">
-              <Button>Đăng nhập</Button>
+              <Button
+                onClick={() => {
+                  authContext.login({ username, password });
+                  navigate("/");
+                }}
+              >
+                Đăng nhập
+              </Button>
               <Link
                 style={{ textDecoration: "none" }}
                 to={PATHS.LOGIN.FPASSWORD}

@@ -34,7 +34,6 @@ public class SendMailController {
             @RequestBody sendmailDTO sendmail)
             throws UnsupportedEncodingException, MessagingException {
         // String siteURL = Utilities.getSiteURL(request);
-
         return ResponseEntity.ok(emailServices.sendOTPbyEmail(id, sendmail));
     }
 
@@ -44,7 +43,5 @@ public class SendMailController {
             throws UnsupportedEncodingException, MessagingException {
         // String siteURL = Utilities.getSiteURL(request);
         emailServices.sendOrderUser(request, "trinhq011@gmail.com");
-
-        //return ResponseEntity.ok(emailServices.sendSimpleMailMessage(id, sendmail));
     }
 }

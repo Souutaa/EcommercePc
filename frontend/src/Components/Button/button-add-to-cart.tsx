@@ -1,23 +1,25 @@
-import { MantineProvider } from "@mantine/core";
-import { Notifications, notifications } from "@mantine/notifications";
-import Btn from ".";
+import { Button } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { IconCheck } from "@tabler/icons-react";
+import "react-toastify/dist/ReactToastify.css";
 function ButtonAdd() {
   return (
     <>
-      <MantineProvider>
-        <Notifications />
-        <Btn
-          maintine="a"
-          onClick={() =>
-            notifications.show({
-              message: "Đã thêm sản phẩm vào giỏ hàng",
-            })
-          }
-        >
-          Thêm vào giỏ
-        </Btn>
-        <Notifications />
-      </MantineProvider>
+      <Button
+        onClick={() =>
+          notifications.show({
+            withCloseButton: true,
+            autoClose: 5000,
+            message: "Đã thêm sản phẩm vào giỏ hàng",
+            color: "teal",
+            icon: <IconCheck />,
+            className: "my-notification-class",
+            loading: false,
+          })
+        }
+      >
+        Thêm vào giỏ
+      </Button>
     </>
   );
 }

@@ -14,16 +14,15 @@ function Content() {
           <TabProduct />
           <div className="title">Macbook</div>
           <ProductList />
-          <ButtonMore />
+
           <div className="title">Acer</div>
           <ProductList />
-          <ButtonMore />
+
           <div className="title">Asus</div>
           <ProductList />
-          <ButtonMore />
+
           <div className="title">MSI</div>
           <ProductList />
-          <ButtonMore />
         </div>
       </div>
     </>

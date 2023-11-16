@@ -2,7 +2,7 @@ import { Avatar, Pagination, SegmentedControl } from "@mantine/core";
 import Navbar from "../../Layouts/NavBar";
 import UserInfor from "../UserInfor/UserInfor";
 import UserOder from "../UserOrder/UserOrder";
-import OderUserStatus from "../OderUserStatus/OderUserStatus";
+import OderUserStatus from "../OrderUserStatus/OderUserStatus";
 
 function OderUser() {
   return (

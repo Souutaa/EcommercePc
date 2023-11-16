@@ -1,4 +1,6 @@
 import Product from ".";
+import ButtonAdd from "../Button/button-add-to-cart";
+import ButtonMore from "../Button/button-more";
 function ProductList() {
   return (
     <>
@@ -8,6 +10,7 @@ function ProductList() {
         <Product />
         <Product />
       </div>
+      <ButtonMore />
     </>
   );
 }
