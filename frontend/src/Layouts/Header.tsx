@@ -12,11 +12,7 @@ import {
 } from "@tabler/icons-react";
 import InputSearch from "../Components/Input/input-search";
 import { PATHS } from "../Constants/path";
-import "../Pages/HomePage/style.css";
 import { useAuthContext } from "../Context/AuthContext";
-import Seaparator from "../Components/Seaparator/Seaparator";
-import UserInfor from "../Components/UserInfor/UserInfor";
-import UserOder from "../Components/UserOrder/UserOrder";
 import { useState } from "react";
 const Header = () => {
   const [opened, setOpened] = useState(false);
