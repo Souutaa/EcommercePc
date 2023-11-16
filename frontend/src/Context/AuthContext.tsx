@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
 import * as jwt from "jwt-decode";
-import { redirect } from "react-router-dom";
 
 export interface Auth {
   sub: string | null;
