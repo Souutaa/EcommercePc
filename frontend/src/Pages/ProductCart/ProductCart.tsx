@@ -17,8 +17,6 @@ function ProductCart() {
           <div className="productcart-left">
             <CartText />
             <ProductCarts />
-            <ProductCarts />
-            <ProductCarts />
           </div>
           <div className="productcart-right">
             <div className="productcart-sale">

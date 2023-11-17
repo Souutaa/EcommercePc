@@ -6,9 +6,6 @@ function ProductList() {
     <>
       <div className="product-list-detail">
         <Product />
-        <Product />
-        <Product />
-        <Product />
       </div>
       <ButtonMore />
     </>

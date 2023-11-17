@@ -1,17 +1,29 @@
+import { useShopingContext } from "../../Context/ShoppingContext";
+
 function CheckoutContent() {
+  const {
+    cartItems,
+    totalPrice,
+    increaseQty,
+    decreaseQty,
+    removeCartItem,
+    clearCart,
+  } = useShopingContext();
   return (
     <>
-      <div className="productcheckout-content">
-        <div className="productcheckout-info">
-          <div className="productcheckout-name">
-            Laptop Gaming Acer Nitro 5 Eagle AN515-57-54MV
-          </div>
-          <span className="productcheckout-color">Màu sắc: Black</span>
-        </div>
+      {cartItems.map((item) => {
+        return (
+          <div key={item.id} className="productcheckout-content">
+            <div className="productcheckout-info">
+              <div className="productcheckout-name">{item.productName}</div>
+              <span className="productcheckout-color">Màu sắc: Black</span>
+            </div>
 
-        <div className="productcheckout-quality">1</div>
-        <div className="productcheckout-price">24.190.000₫</div>
-      </div>
+            <div className="productcheckout-quality">{item.quantity}</div>
+            <div className="productcheckout-price">{item.price}</div>
+          </div>
+        );
+      })}
     </>
   );
 }
