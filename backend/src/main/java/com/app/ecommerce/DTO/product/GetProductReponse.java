@@ -2,6 +2,7 @@ package com.app.ecommerce.DTO.product;
 
 import java.util.List;
 
+import com.app.ecommerce.DTO.productInfo.ProductInfoDTO;
 import com.app.ecommerce.models.Product;
 
 import lombok.AllArgsConstructor;
@@ -20,5 +21,5 @@ public class GetProductReponse {
   private int warrantyPeriodId;
   private String thumbnailUri;
   private List<String> imageUris;
-  private List<String> productInfos;
+  private List<ProductInfoDTO> productInfos;
 }
