@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
 import { Link } from "react-router-dom";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 function ProductOdered() {
   return (
