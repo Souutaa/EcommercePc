@@ -1,6 +1,6 @@
 import ProductList from "../../Components/Product/ProductList";
 import { Pagination } from "@mantine/core";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import FilterSection from "../../Components/FilterSection/FilterSection";
 function ProductMore() {
   return (

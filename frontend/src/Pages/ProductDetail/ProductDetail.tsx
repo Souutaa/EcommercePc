@@ -4,7 +4,7 @@ import ProductList from "../../Components/Product/ProductList";
 import ProductInfo from "../../Components/Product/ProductInfo";
 import ProductColor from "../../Components/Product/ProductColor";
 import Btn from "../../Components/Button";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 function ProductDetail() {
   const images = [
