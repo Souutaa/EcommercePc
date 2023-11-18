@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.ecommerce.DTO.product.CreateProductRequest;
+import com.app.ecommerce.DTO.product.ProductCardResponse;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Product;
@@ -86,6 +87,18 @@ public class ProductServicesImp implements IProductServices {
     }
     Product fetchedProduct = productOpt.get();
     return fetchedProduct;
+  }
+
+  @Override
+  public List<ProductCardResponse> getProducts() {
+    List<Product> products = productRepository.findAll();
+    List<ProductCardResponse> productsReponse = new ArrayList<ProductCardResponse>();
+    for (Product product : products) {
+      productsReponse.add(ProductCardResponse.builder().id(product.getId()).productLine(product.getProductLine())
+          .productName(product.getProductName()).price(product.getPrice()).discount(product.getDiscount())
+          .thumbnailUri(this.getProductThumbnail(product.getProductLine())).build());
+    }
+    return productsReponse;
   }
 
   @Override
