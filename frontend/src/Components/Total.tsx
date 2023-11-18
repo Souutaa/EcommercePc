@@ -1,10 +1,21 @@
+import { useShopingContext } from "../Context/ShoppingContext";
+
 function Total() {
+  const {
+    cartItems,
+    totalPrice,
+    increaseQty,
+    decreaseQty,
+    removeCartItem,
+    clearCart,
+  } = useShopingContext();
   return (
     <>
+      return (
       <div className="productcart-detail">
         <div className="productcart-total">
           <span className="productcart-texts">Tổng</span>
-          <span className="productcart-number">62.170.000₫</span>
+          <span className="productcart-number">{totalPrice}</span>
         </div>
         <div className="productcart-sale-all">
           <span className="productcart-texts">Giảm giá</span>
@@ -15,6 +26,7 @@ function Total() {
           <span className="productcart-number-total">60.000.000₫</span>
         </div>
       </div>
+      );
     </>
   );
 }

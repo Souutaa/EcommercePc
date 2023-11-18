@@ -72,8 +72,6 @@ function ProductCheckout() {
           <div className="productcheckout-right">
             <CheckoutText />
             <CheckoutContent />
-            <CheckoutContent />
-            <CheckoutContent />
 
             <div className="productcheckout-padding">
               <Total />

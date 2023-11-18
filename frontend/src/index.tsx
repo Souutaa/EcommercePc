@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import React from "react";
 import AuthProvider from "./Context/AuthContext";
 import { Notifications } from "@mantine/notifications";
+import { ShoppingContextProvider } from "./Context/ShoppingContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -18,16 +19,18 @@ const theme = createTheme({
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <MantineProvider>
-        <Notifications
-          style={{
-            position: "absolute",
-            top: "700px",
-            right: "50px",
-          }}
-        />
-        <App />
-      </MantineProvider>
+      <ShoppingContextProvider>
+        <MantineProvider>
+          <Notifications
+            style={{
+              position: "absolute",
+              top: "700px",
+              right: "50px",
+            }}
+          />
+          <App />
+        </MantineProvider>
+      </ShoppingContextProvider>
     </AuthProvider>
   </React.StrictMode>
 );
