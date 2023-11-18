@@ -7,12 +7,13 @@ import { Link } from "react-router-dom";
 import CheckoutContent from "../../Components/CheckoutContent/CheckoutContent";
 import CheckoutText from "../../Components/CheckoutText/CheckoutText";
 import { PATHS } from "../../Constants/path";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 function ProductCheckout() {
   return (
     <>
       <div className="container">
-        <Navbar />
+        <Breadcrumbs />
         <div className="productcheckout-title">
           <h1> Thông tin thanh toán</h1>
         </div>

@@ -7,12 +7,13 @@ import Btn from "../../Components/Button";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
 import CartText from "../../Components/CartText/CartText";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 function ProductCart() {
   return (
     <>
-      <Navbar />
       <div className="container">
+        <Breadcrumbs />
         <div className="productcart">
           <div className="productcart-left">
             <CartText />
