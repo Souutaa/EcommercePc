@@ -9,8 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.app.ecommerce.DTO.OrderInformation.UpdateOrderInformation;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
-import com.app.ecommerce.models.Account;
-import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.OrderInformation;
 import com.app.ecommerce.respositories.OrderInformationRepository;
 import com.app.ecommerce.services.IOrderInformationServices;
@@ -51,5 +49,4 @@ public class OrderInformationImp implements IOrderInformationServices {
       throw new ResourceNotFoundException("OrderInformation with id: " + id + " Not Found");
     }
   }
-
 }

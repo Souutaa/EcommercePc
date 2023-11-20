@@ -21,8 +21,6 @@ public interface IProductServices {
 
   public List<ProductCardResponse> getProducts();
 
-  // public List<GetProductAll> getProductsAndThumbnail(Product product);
-
   public List<String> getProductImages(String productLine);
 
   public String getProductThumbnail(String productLine);
