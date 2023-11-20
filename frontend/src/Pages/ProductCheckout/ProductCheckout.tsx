@@ -1,5 +1,4 @@
-import { Input, Radio, Group, Divider, Button } from "@mantine/core";
-import Navbar from "../../Layouts/NavBar";
+import { Input, Radio, Group, Divider } from "@mantine/core";
 import CheckoutGrid from "../../Components/InputGrid/InputGrib4";
 import Total from "../../Components/Total/Total";
 import Btn from "../../Components/Button";
