@@ -7,8 +7,12 @@ import { Link } from "react-router-dom";
 import CheckoutContent from "../../Components/CheckoutContent/CheckoutContent";
 import CheckoutText from "../../Components/CheckoutText/CheckoutText";
 import { PATHS } from "../../Constants/path";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function ProductCheckout() {
+  
+
   return (
     <>
       <div className="container">

@@ -1,6 +1,7 @@
 package com.app.ecommerce.services.implement;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -8,12 +9,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.ecommerce.DTO.brand.BrandProductResponse;
 import com.app.ecommerce.DTO.brand.CreateBrandDTO;
 import com.app.ecommerce.DTO.brand.UpdateBrandDTO;
+import com.app.ecommerce.DTO.product.ProductCardOfBrandResponse;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Brand;
+import com.app.ecommerce.models.Product;
 import com.app.ecommerce.respositories.BrandRepository;
 import com.app.ecommerce.services.IBrandServices;
+import com.app.ecommerce.services.IProductServices;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +29,9 @@ public class BrandServicesImp implements IBrandServices {
     @Autowired
     private BrandRepository repo;
 
+    @Autowired
+    private IProductServices productServices;
+
     @Override
     public List<Brand> getBrands(boolean active) {
         if (active == true) {
@@ -33,12 +41,64 @@ public class BrandServicesImp implements IBrandServices {
     }
 
     @Override
+    public List<BrandProductResponse> getProductsOfBrand() {
+        List<Brand> brands = repo.findAllBrandlActive();
+        List<BrandProductResponse> productCardOfBrandResponses = new ArrayList<BrandProductResponse>();
+        for (Brand brand : brands) {
+            List<ProductCardOfBrandResponse> brandProducts = new ArrayList<ProductCardOfBrandResponse>();
+            for (Product product : brand.getProducts()) {
+                brandProducts
+                        .add(ProductCardOfBrandResponse
+                                .builder()
+                                .thumbnailUri(productServices.getProductThumbnail(product.getProductLine()))
+                                .id(product.getId())
+                                .productLine(product.getProductLine())
+                                .productName(product.getProductName())
+                                .price(product.getPrice())
+                                .discount(product.getDiscount())
+                                .brandName(brand.getBrandName())
+                                .build());
+            }
+            productCardOfBrandResponses.add(
+                    BrandProductResponse.builder().products(brandProducts).brandName(brand.getBrandName())
+                            .id(brand.getId()).build());
+        }
+        return productCardOfBrandResponses;
+    }
+
+    @Override
     public Brand getBrandbyName(String name) {
         Optional<Brand> opt = repo.findBrandByName(name);
         if (opt.isPresent()) {
             return opt.get();
         } else {
             throw new ResourceNotFoundException("Cannot found brand with name: " + name + " Not Found");
+        }
+    }
+
+    public BrandProductResponse getBrandProductResponseById(int id) {
+        Optional<Brand> opt = repo.findById(id);
+        BrandProductResponse bResponse = new BrandProductResponse();
+        List<ProductCardOfBrandResponse> brandProducts = new ArrayList<ProductCardOfBrandResponse>();
+        if (opt.isPresent()) {
+            var brand = opt.get();
+            for (Product product : brand.getProducts()) {
+                brandProducts.add(ProductCardOfBrandResponse.builder()
+                        .thumbnailUri(productServices.getProductThumbnail(product.getProductLine()))
+                        .id(product.getId())
+                        .productLine(product.getProductLine())
+                        .productName(product.getProductName())
+                        .price(product.getPrice())
+                        .discount(product.getDiscount())
+                        .brandName(brand.getBrandName())
+                        .build());
+            }
+            bResponse.setBrandName(brand.getBrandName());
+            bResponse.setId(id);
+            bResponse.setProducts(brandProducts);
+            return bResponse;
+        } else {
+            throw new ResourceNotFoundException("Cannot found brand with name: " + id + " Not Found");
         }
     }
 
