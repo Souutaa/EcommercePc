@@ -50,8 +50,11 @@ function App() {
               ></Route>
             </Route>
             <Route path={PATHS.MORE} element={<ProductMore />} />
-            <Route path={PATHS.PRODUCT} element={<ProductDetail />} />
-            <Route path={PATHS.CART} element={<ProductCart />}></Route>
+            <Route
+              path={PATHS.PRODUCT + "/:productLine"}
+              element={<ProductDetail />}
+            />
+            <Route path={PATHS.CART} element={<ProductCart />} />
             <Route path={PATHS.PAYMENT} element={<ProductCheckout />} />
             <Route path={PATHS.SEARCH} element={<ProductSearch />} />
             <Route path={PATHS.ORDERED} element={<ProductOdered />} />

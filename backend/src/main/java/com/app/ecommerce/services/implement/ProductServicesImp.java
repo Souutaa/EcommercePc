@@ -19,9 +19,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.ecommerce.DTO.product.CreateProductRequest;
+import com.app.ecommerce.DTO.product.ProductCardOfBrandResponse;
 import com.app.ecommerce.DTO.product.ProductCardResponse;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
+import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.Product;
 import com.app.ecommerce.respositories.BrandRepository;
 import com.app.ecommerce.respositories.CategoryRepository;
@@ -104,6 +106,27 @@ public class ProductServicesImp implements IProductServices {
           .thumbnailUri(this.getProductThumbnail(product.getProductLine())).build());
     }
     return productsReponse;
+  }
+
+  @Override
+  public List<ProductCardOfBrandResponse> getProductsOfBrand() {
+    List<Brand> brands = brandRepository.findAllBrandlActive();
+    List<ProductCardOfBrandResponse> productCardOfBrandResponses = new ArrayList<ProductCardOfBrandResponse>();
+    for (Brand brand : brands) {
+      for (Product product : brand.getProducts()) {
+        productCardOfBrandResponses
+            .add(ProductCardOfBrandResponse.builder().thumbnailUri(this.getProductThumbnail(product.getProductLine()))
+                .id(product.getId())
+                .productLine(product.getProductLine())
+                .productName(product.getProductName())
+                .price(product.getPrice())
+                .discount(product.getDiscount())
+                .brandName(brand.getBrandName())
+                .build());
+      }
+    }
+    return productCardOfBrandResponses;
+
   }
 
   @Override

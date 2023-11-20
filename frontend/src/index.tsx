@@ -17,22 +17,22 @@ const theme = createTheme({
 });
 
 root.render(
-  <React.StrictMode>
-    <AuthProvider>
-      <ShoppingContextProvider>
-        <MantineProvider>
-          <Notifications
-            style={{
-              position: "absolute",
-              top: "700px",
-              right: "50px",
-            }}
-          />
-          <App />
-        </MantineProvider>
-      </ShoppingContextProvider>
-    </AuthProvider>
-  </React.StrictMode>
+  //<React.StrictMode>
+  <AuthProvider>
+    <ShoppingContextProvider>
+      <MantineProvider>
+        <Notifications
+          style={{
+            position: "absolute",
+            top: "700px",
+            right: "50px",
+          }}
+        />
+        <App />
+      </MantineProvider>
+    </ShoppingContextProvider>
+  </AuthProvider>
+  //</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

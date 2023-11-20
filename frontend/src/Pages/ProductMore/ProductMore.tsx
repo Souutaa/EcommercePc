@@ -10,11 +10,11 @@ function ProductMore() {
         <FilterSection />
         <div className="product">
           <div className="title">Acer</div>
+          {/* <ProductList />
           <ProductList />
           <ProductList />
           <ProductList />
-          <ProductList />
-          <ProductList />
+          <ProductList /> */}
         </div>
         <div className="pagination">
           <Pagination total={10} />

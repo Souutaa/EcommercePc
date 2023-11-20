@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.app.ecommerce.DTO.product.CreateProductRequest;
 import com.app.ecommerce.DTO.product.GetProductReponse;
+import com.app.ecommerce.DTO.product.ProductCardOfBrandResponse;
 import com.app.ecommerce.DTO.product.ProductCardResponse;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
 import com.app.ecommerce.DTO.productInfo.ProductInfoDTO;
@@ -73,8 +74,14 @@ public class ProductController {
   }
 
   @GetMapping(value = "/all")
-  public @ResponseBody ResponseEntity<Object> getAllCategory() {
+  public @ResponseBody ResponseEntity<Object> getAll() {
     List<ProductCardResponse> listProducts = this.productServices.getProducts();
+    return new ResponseEntity<Object>(listProducts, HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/allOfBrand")
+  public @ResponseBody ResponseEntity<Object> getAllproductOfBrand() {
+    List<ProductCardOfBrandResponse> listProducts = this.productServices.getProductsOfBrand();
     return new ResponseEntity<Object>(listProducts, HttpStatus.OK);
   }
 

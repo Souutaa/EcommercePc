@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,8 @@ public class Brand extends BaseEntity {
     private String brandName;
 
     // Mapping
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = "brand", fetch = FetchType.EAGER)
+
     @JsonManagedReference
     private List<Product> products;
 
