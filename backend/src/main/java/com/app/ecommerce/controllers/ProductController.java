@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,8 +33,10 @@ import com.app.ecommerce.DTO.product.ProductCardResponse;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
 import com.app.ecommerce.DTO.productInfo.ProductInfoDTO;
 import com.app.ecommerce.models.Product;
+import com.app.ecommerce.models.ProductWarranty;
 import com.app.ecommerce.services.IProductInfoServices;
 import com.app.ecommerce.services.IProductServices;
+import com.app.ecommerce.services.IProductWarrantyServices;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,9 @@ public class ProductController {
 
   @Autowired
   private IProductInfoServices productInfoServices;
+
+  @Autowired
+  private IProductWarrantyServices productWarrantyServices;
 
   @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<Product> createProductLine(
@@ -80,6 +84,7 @@ public class ProductController {
     List<String> productImages = this.productServices.getProductImages(productLine);
     String productThumbnail = this.productServices.getProductThumbnail(productLine);
     List<ProductInfoDTO> productInfos = this.productInfoServices.getProductInfos(product.getId());
+    List<ProductWarranty> productWarranties = this.productWarrantyServices.getAllProductWarrantiesByProductId(product.getId());
     return ResponseEntity.ok(GetProductReponse.builder()
         .product(product)
         .brandId(product.getBrand().getId())
@@ -88,6 +93,7 @@ public class ProductController {
         .thumbnailUri(productThumbnail)
         .imageUris(productImages)
         .productInfos(productInfos)
+        .stock(productWarranties.size())
         .build());
   }
 

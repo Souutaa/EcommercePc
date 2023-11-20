@@ -3,12 +3,13 @@ import Navbar from "../../Layouts/NavBar";
 import UserInfor from "../UserInfor/UserInfor";
 import UserOder from "../UserOrder/UserOrder";
 import OderUserStatus from "../OrderUserStatus/OderUserStatus";
+import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 function OderUser() {
   return (
     <>
-      <Navbar />
       <div className="container">
+        <Breadcrumbs />
         <div className="infouser-content">
           <div className="infouser-sidebar">
             <div className="infouser-avatar">

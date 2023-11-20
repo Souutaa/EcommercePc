@@ -3,6 +3,7 @@ import Product from "../../Components/Product";
 import { Carousel } from "@mantine/carousel";
 import ProductList from "../../Components/Product/ProductList";
 import { Pagination } from "@mantine/core";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 function ProductMore() {
   const images = [
     "/img/Carousel2.png",
@@ -18,8 +19,8 @@ function ProductMore() {
   });
   return (
     <>
-      <Navbar />
       <div className="container">
+        <Breadcrumbs />
         <div className="carousel-product">
           <Carousel withIndicators>{slides}</Carousel>
         </div>

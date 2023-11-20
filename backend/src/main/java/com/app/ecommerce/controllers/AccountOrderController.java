@@ -21,7 +21,6 @@ import com.app.ecommerce.models.AccountOrder;
 import com.app.ecommerce.models.OrderStatus;
 import com.app.ecommerce.respositories.AccountOrderRepository;
 import com.app.ecommerce.services.IAccountOrderServices;
-import com.app.ecommerce.services.IExportExcelServices;
 import com.app.ecommerce.services.implement.ExportExcelServicesImp;
 
 import jakarta.mail.MessagingException;
@@ -41,9 +40,6 @@ public class AccountOrderController {
   private JwtService jwtService;
 
   @Autowired
-  private IExportExcelServices excelServices;
-
-  @Autowired
   private AccountOrderRepository repo;
 
   @PostMapping("/create")
@@ -57,9 +53,14 @@ public class AccountOrderController {
 
   @PatchMapping("/update-status")
   public ResponseEntity<AccountOrder> updateStatus(
-      @Valid @RequestBody UpdateStatusRequest request) {
+      @Valid @RequestBody UpdateStatusRequest request, @RequestHeader("Authorization") String authorization) {
+    String token = authorization.split(" ")[1].trim();
+    String username = this.jwtService.extractUsername(token);
     if (request.getOrderStatus().equals(OrderStatus.CANCELED)) {
       return ResponseEntity.ok(orderServices.cancelOrder(request.getOrderId()));
+    }
+    if (request.getOrderStatus().equals(OrderStatus.CONFIRMED)) {
+      return ResponseEntity.ok(orderServices.confirmOrder(request.getOrderId(), username));
     }
     return ResponseEntity.ok(orderServices.updateOrderStatus(request));
   }

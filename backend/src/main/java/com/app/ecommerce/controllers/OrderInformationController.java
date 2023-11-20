@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.OrderInformation.UpdateOrderInformation;
-import com.app.ecommerce.DTO.brand.UpdateBrandDTO;
-import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.OrderInformation;
 import com.app.ecommerce.services.implement.OrderInformationImp;
 

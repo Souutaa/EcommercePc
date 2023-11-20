@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.account.UpdateAccountRoleRequest;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
@@ -75,11 +76,16 @@ public class UserController {
 
     @PatchMapping(value = "/{id}/active")
     public ResponseEntity<Account> activeUser(@PathVariable String id) {
-        return ResponseEntity.ok(accountServices.activeCategory(id));
+        return ResponseEntity.ok(accountServices.activeAccount(id));
+    }
+    
+    @PatchMapping(value = "/update-role")
+    public ResponseEntity<Account> updateAccountRole(@Valid @RequestBody UpdateAccountRoleRequest request) {
+        return ResponseEntity.ok(accountServices.updateRole(request.getUsername(), request.getRole()));
     }
 
     @DeleteMapping(value = "/delete")
     public void deleteUser(@RequestParam String id) {
-        accountServices.softDeleteAccout(Integer.parseInt(id));
+        accountServices.softDeleteAccount(Integer.parseInt(id));
     }
 }
