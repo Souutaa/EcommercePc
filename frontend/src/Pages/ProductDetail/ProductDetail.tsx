@@ -1,10 +1,10 @@
-import Navbar from "../../Layouts/NavBar";
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import ProductList from "../../Components/Product/ProductList";
 import ProductInfo from "../../Components/Product/ProductInfo";
 import ProductColor from "../../Components/Product/ProductColor";
 import Btn from "../../Components/Button";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
 
 function ProductDetail() {
   const images = [
@@ -24,8 +24,8 @@ function ProductDetail() {
   });
   return (
     <>
-      <Navbar />
       <div className="container">
+        <Breadcrumbs />
         <div className="product-details">
           <div className="product-detail-left">
             <div className="product-detail-main">

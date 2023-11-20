@@ -2,7 +2,7 @@ import { Button } from "@mantine/core";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
 
-function ProductOdered() {
+function NoProduct() {
   return (
     <>
       <div className="container">
@@ -10,10 +10,9 @@ function ProductOdered() {
         <div className="productodered">
           <img src="/img/Cartillustartion.png" alt="" />
           <div className="productodered-content">
-            <span className="productodered-title">Đặt hàng thành công</span>
+            <span className="productodered-title">Giỏ hàng của bạn trống</span>
             <span className="productodered-text">
-              Đặt hàng thành công, các sản phẩm sẽ đến với bạn sau ít ngày giao
-              hàng
+              Có vẻ bạn chưa thêm mặt hàng nào vào giỏ
             </span>
           </div>
           <Link to="/">
@@ -25,4 +24,4 @@ function ProductOdered() {
   );
 }
 
-export default ProductOdered;
+export default NoProduct;

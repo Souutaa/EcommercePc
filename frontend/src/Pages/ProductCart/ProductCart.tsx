@@ -1,4 +1,3 @@
-import Navbar from "../../Layouts/NavBar";
 import ProductCarts from "../../Components/Product/ProductCart";
 import { Input, Checkbox } from "@mantine/core";
 import ProductList from "../../Components/Product/ProductList";
@@ -7,55 +6,71 @@ import Btn from "../../Components/Button";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
 import CartText from "../../Components/CartText/CartText";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import { useShopingContext } from "../../Context/ShoppingContext";
+import NoProduct from "../NoProduct/NoProduct";
 
 function ProductCart() {
+  const {
+    cartItems,
+    totalPrice,
+    increaseQty,
+    decreaseQty,
+    removeCartItem,
+    clearCart,
+  } = useShopingContext();
   return (
     <>
-      <Navbar />
-      <div className="container">
-        <div className="productcart">
-          <div className="productcart-left">
-            <CartText />
-            <ProductCarts />
-          </div>
-          <div className="productcart-right">
-            <div className="productcart-sale">
-              <Input
-                size="md"
-                className="productcart-input"
-                placeholder="Mã giảm giá"
-              />
-              <Btn
-                maintine="a"
-                customStyle={{ marginTop: "16px" }}
-                color="#E5E7EB"
-              >
-                Thêm
-              </Btn>
+      {cartItems?.length > 0 ? (
+        <div className="container">
+          <Breadcrumbs />
+
+          <div className="productcart">
+            <div className="productcart-left">
+              <CartText />
+              <ProductCarts />
             </div>
-            <div className="productcart-body">
-              <Total />
-              <div className="productcart-provision">
-                <Checkbox
-                  defaultChecked
-                  label="Tôi đã đọc và đồng ý với điều khoản và điều kiện của website"
+            <div className="productcart-right">
+              <div className="productcart-sale">
+                <Input
+                  size="md"
+                  className="productcart-input"
+                  placeholder="Mã giảm giá"
                 />
+                <Btn
+                  maintine="a"
+                  customStyle={{ marginTop: "16px" }}
+                  color="#E5E7EB"
+                >
+                  Thêm
+                </Btn>
               </div>
-              <Link style={{ width: "100%" }} to={PATHS.PAYMENT}>
-                <div className="productcart-payment">
-                  <Btn maintine="a" customStyle={{ width: "100%" }}>
-                    Thanh toán
-                  </Btn>
+              <div className="productcart-body">
+                <Total />
+                <div className="productcart-provision">
+                  <Checkbox
+                    defaultChecked
+                    label="Tôi đã đọc và đồng ý với điều khoản và điều kiện của website"
+                  />
                 </div>
-              </Link>
+                <Link style={{ width: "100%" }} to={PATHS.PAYMENT}>
+                  <div className="productcart-payment">
+                    <Btn maintine="a" customStyle={{ width: "100%" }}>
+                      Thanh toán
+                    </Btn>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
+          <div className="product-more">
+            <div className="product-more-text">Có thể bạn tìm kiếm</div>
+            <ProductList />
+          </div>
         </div>
-        <div className="product-more">
-          <div className="product-more-text">Có thể bạn tìm kiếm</div>
-          <ProductList />
-        </div>
-      </div>
+      ) : (
+        <NoProduct />
+      )}
     </>
   );
 }

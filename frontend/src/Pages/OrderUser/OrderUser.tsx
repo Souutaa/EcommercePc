@@ -1,14 +1,14 @@
 import { Avatar, Pagination, SegmentedControl } from "@mantine/core";
-import Navbar from "../../Layouts/NavBar";
-import UserInfor from "../UserInfor/UserInfor";
-import UserOder from "../UserOrder/UserOrder";
-import OderUserStatus from "../OrderUserStatus/OderUserStatus";
+import UserInfor from "../../Components/UserInfor/UserInfor";
+import UserOder from "../../Components/UserOrder/UserOrder";
+import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
 
 function OderUser() {
   return (
     <>
-      <Navbar />
       <div className="container">
+        <Breadcrumbs />
         <div className="infouser-content">
           <div className="infouser-sidebar">
             <div className="infouser-avatar">

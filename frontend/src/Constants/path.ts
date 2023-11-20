@@ -1,4 +1,5 @@
 const LOGIN_PATH = "/login";
+const HOME_PATH = "/Home";
 
 export const PATHS = {
   LOGIN: {
@@ -8,12 +9,13 @@ export const PATHS = {
     FPVERIFI: LOGIN_PATH + "/forgot-password/verify",
     CHANGE: LOGIN_PATH + "/forgot-password/verify/change",
   },
-  MORE: "/more",
-  PRODUCT: "/product",
-  CART: "/cart",
-  PAYMENT: "/payment",
-  SEARCH: "/search",
-  ORDERED: "/ordered",
-  ORDER: "/order",
-  USERINFO: "/user-info",
+
+  MORE: HOME_PATH + "/More",
+  PRODUCT: "Home/Product",
+  CART: HOME_PATH + "/Cart",
+  PAYMENT: HOME_PATH + "/Cart/Payment",
+  SEARCH: HOME_PATH + "/Search",
+  ORDERED: HOME_PATH + "/Payment",
+  ORDER: HOME_PATH + "/InfoOder",
+  USERINFO: HOME_PATH + "/InfoUser",
 };

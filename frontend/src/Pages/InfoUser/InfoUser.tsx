@@ -1,17 +1,15 @@
 import { Avatar, Button, Divider, Input } from "@mantine/core";
 import UserInfor from "../../Components/UserInfor/UserInfor";
-import Navbar from "../../Layouts/NavBar";
 import UserOder from "../../Components/UserOrder/UserOrder";
-import CheckoutGrid from "../../Components/InputGrid/InputGrib4";
-import Seaparator from "../../Components/Seaparator/Seaparator";
 import InputGrid2 from "../../Components/InputGrid/InputGrid2";
 import InputGrib4 from "../../Components/InputGrid/InputGrib4";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
 
 function InfoUser() {
   return (
     <>
-      <Navbar />
       <div className="container">
+        <Breadcrumbs />
         <div className="infouser-content">
           <div className="infouser-sidebar">
             <div className="infouser-avatar">
