@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.ecommerce.DTO.product.CreateProductRequest;
+import com.app.ecommerce.DTO.product.ProductCardOfBrandResponse;
 import com.app.ecommerce.DTO.product.ProductCardResponse;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
 import com.app.ecommerce.models.Product;
@@ -20,6 +21,8 @@ public interface IProductServices {
   public Product getProduct(String productLine);
 
   public List<ProductCardResponse> getProducts();
+
+  public List<ProductCardOfBrandResponse> getProductsOfBrand();
 
   public List<String> getProductImages(String productLine);
 

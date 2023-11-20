@@ -5,24 +5,51 @@ import "./style.css";
 import TabProduct from "../../Components/TabProduct/TabProduct";
 import ButtonMore from "../../Components/Button/button-more";
 import ProductList from "../../Components/Product/ProductList";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+export type ProductItems = {
+  id: number;
+  productName: string;
+  productLine: string;
+  discount: number;
+  price: number;
+  thumbnailUri: string;
+};
+type Brand = {
+  id: number;
+  brandName: string;
+  products: ProductItems[];
+};
 
 function Content() {
+  const [brand, setBrand] = useState<Brand[]>([]);
+  useEffect(() => {
+    console.log("get brands data from api");
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get("http://127.0.0.1:8080/brand/allOfBrand");
+        console.log("products=> ", res);
+        setBrand(res.data);
+      } catch (error) {
+        console.log("error=> ", error);
+      }
+    };
+    fetchProducts();
+  }, []);
   return (
     <>
       <div className="container">
         <div className="products">
           <TabProduct />
-          <div className="title">Macbook</div>
-          <ProductList />
-
-          <div className="title">Acer</div>
-          <ProductList />
-
-          <div className="title">Asus</div>
-          <ProductList />
-
-          <div className="title">MSI</div>
-          <ProductList />
+          {brand.map((item) => {
+            return (
+              <div key={item.id}>
+                <div className="title">{item.brandName}</div>
+                <ProductList products={item.products} />
+              </div>
+            );
+          })}
         </div>
       </div>
     </>
