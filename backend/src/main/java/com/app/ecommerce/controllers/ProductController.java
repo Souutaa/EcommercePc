@@ -31,6 +31,7 @@ import com.app.ecommerce.DTO.product.CreateProductRequest;
 import com.app.ecommerce.DTO.product.GetProductReponse;
 import com.app.ecommerce.DTO.product.ProductCardResponse;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
+import com.app.ecommerce.DTO.productInfo.ProductInfoDTO;
 import com.app.ecommerce.models.Product;
 import com.app.ecommerce.models.ProductWarranty;
 import com.app.ecommerce.services.IProductInfoServices;
@@ -82,7 +83,7 @@ public class ProductController {
     Product product = this.productServices.getProduct(productLine);
     List<String> productImages = this.productServices.getProductImages(productLine);
     String productThumbnail = this.productServices.getProductThumbnail(productLine);
-    List<String> productInfos = this.productInfoServices.getProductInfos(product.getId());
+    List<ProductInfoDTO> productInfos = this.productInfoServices.getProductInfos(product.getId());
     List<ProductWarranty> productWarranties = this.productWarrantyServices.getAllProductWarrantiesByProductId(product.getId());
     return ResponseEntity.ok(GetProductReponse.builder()
         .product(product)
