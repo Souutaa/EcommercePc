@@ -45,18 +45,19 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
     }
 
     @Override
-    public AccountDetail saveAccountDetail(CreateAccountDetailDTO request) {
-        Optional<Account> accountFound = accountRepo.findById(Integer.parseInt(request.getAccount_id()));
-        if (accountFound.isPresent()) {
+    public AccountDetail saveAccountDetail(CreateAccountDetailDTO request, String username) {
+        Optional<Account> accountOpt = accountRepo.findByUsername(username);
+        if (accountOpt.isPresent()) {
             var accountDetail = AccountDetail.builder().city(request.getCity())
                     .detailedAddress(request.getDetailedAddress()).district(request.getDistrict())
                     .firstName(request.getFirstName()).lastName(request.getLastName())
                     .phoneNumber(request.getPhoneNumber())
-                    .account(accountFound.get())
+                    .account(accountOpt.get())
+                    .isDefault(accountOpt.get().getAccountDetails().size() > 0 ? false : true)
                     .build();
             return repo.save(accountDetail);
         } else {
-            throw new ResourceNotFoundException("Invoice with Id : " + accountFound + " Not Found");
+            throw new ResourceNotFoundException("Account with username : " + accountOpt + " Not Found");
         }
     }
 
@@ -117,6 +118,19 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
             repo.save(accountDetail);
         } else {
             throw new ResourceNotFoundException("Not exits accountDetail with Id  : " + accountFound + " Not Found");
+        }
+    }
+
+    @Override
+    public AccountDetail activeAccountDetailDefault(int id, String username) {
+        Optional<AccountDetail> accountFound = repo.findById(id);
+        if (accountFound.isPresent()) {
+            var accountDetail = accountFound.get();
+            this.repo.removAccountDetailsDefault(this.accountRepo.findByUsername(username).get().getId());
+            accountDetail.setDefault(true);
+            return repo.save(accountDetail);
+        } else {
+            throw new ResourceNotFoundException("Invoice with Id : " + accountFound + " Not Found");
         }
     }
 

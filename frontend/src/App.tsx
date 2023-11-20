@@ -21,7 +21,6 @@ import ProductOdered from "./Pages/ProductOdered/ProductOdered";
 import ProductSearch from "./Pages/ProductSearch/ProductSearch";
 
 function App() {
-
   const authContext = useAuthContext();
 
   useEffect(() => {

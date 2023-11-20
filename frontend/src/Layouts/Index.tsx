@@ -10,7 +10,9 @@ function MainLayout() {
   return (
     <AppShell className="App">
       <Header />
+
       <Outlet />
+
       <Footer />
     </AppShell>
   );

@@ -11,7 +11,9 @@ public interface IAccountDetailServices {
 
     public AccountDetail getAccountDetailById(int accountDetailId);
 
-    public AccountDetail saveAccountDetail(CreateAccountDetailDTO accountDetail);
+    public AccountDetail saveAccountDetail(CreateAccountDetailDTO accountDetail, String username);
+
+    public AccountDetail activeAccountDetailDefault(int id, String username);
 
     public AccountDetail updateAccountDetail(String id, UpdateAccountDetailDTO accountDetail);
 

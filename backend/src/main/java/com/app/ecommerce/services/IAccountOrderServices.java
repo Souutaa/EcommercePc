@@ -15,4 +15,6 @@ public interface IAccountOrderServices {
   public AccountOrder updateOrderStatus(@Valid UpdateStatusRequest request);
 
   public AccountOrder cancelOrder(Integer orderId);
+
+  public AccountOrder confirmOrder(Integer orderId, String username);
 }

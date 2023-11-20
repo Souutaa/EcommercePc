@@ -51,6 +51,9 @@ public class Account extends BaseEntity implements UserDetails {
     @JsonManagedReference
     private List<AccountOrder> accountOrders;
 
+    @OneToOne(mappedBy = "confirmedBy")
+    private AccountOrder confirmOrder;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
