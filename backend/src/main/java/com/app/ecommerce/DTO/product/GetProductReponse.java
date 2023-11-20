@@ -21,4 +21,5 @@ public class GetProductReponse {
   private String thumbnailUri;
   private List<String> imageUris;
   private List<String> productInfos;
+  private int stock;
 }

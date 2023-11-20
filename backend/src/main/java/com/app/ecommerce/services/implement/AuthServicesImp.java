@@ -33,10 +33,6 @@ public class AuthServicesImp implements IAuthServices {
         .role(Role.USER)
         .build();
     repository.save(account);
-    // try {
-    // } catch(Exception err) {
-    // throw new ResourceNotFoundException(err.getMessage());
-    // }
     var jwtToken = jwtService.generateToken(account);
     return AuthenticationResponse.builder()
         .token(jwtToken)

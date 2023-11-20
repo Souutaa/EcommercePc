@@ -3,19 +3,15 @@ package com.app.ecommerce.services.implement;
 import java.util.Optional;
 import java.util.Properties;
 
-import javax.mail.internet.AddressException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.app.ecommerce.DTO.order.CreateOrderRequest;
-import com.app.ecommerce.DTO.sendmail.sendMailInfoOrder;
 import com.app.ecommerce.DTO.sendmail.sendmailDTO;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
-import com.app.ecommerce.models.AccountOrder;
 import com.app.ecommerce.respositories.AccountOrderRepository;
 import com.app.ecommerce.respositories.AccountRepository;
 import com.app.ecommerce.services.IEmailServices;

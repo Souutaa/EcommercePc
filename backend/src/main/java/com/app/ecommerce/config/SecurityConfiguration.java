@@ -23,7 +23,6 @@ public class SecurityConfiguration {
   @Qualifier("handlerExceptionResolver")
   private HandlerExceptionResolver exceptionResolver;
 
-  // private final JwtAuthenticationFilter jwtAuthFilter;
   private final AuthenticationProvider authenticationProvider;
 
   @Bean
@@ -39,9 +38,10 @@ public class SecurityConfiguration {
         .csrf()
         .disable()
         .authorizeHttpRequests()
-        // .requestMatchers("/auth/**", "*/public").permitAll()
-        // .anyRequest().authenticated()
-        .anyRequest().permitAll()
+        .requestMatchers("/auth/**").permitAll()
+        .requestMatchers("/user/update-role").hasAuthority("ADMIN")
+        .anyRequest().authenticated()
+        // .anyRequest().permitAll()
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()

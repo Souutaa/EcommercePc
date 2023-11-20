@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
+import com.app.ecommerce.models.Role;
 import com.app.ecommerce.respositories.AccountRepository;
 import com.app.ecommerce.services.IAccountServices;
 
@@ -78,7 +79,7 @@ public class AccountServicesImp implements IAccountServices {
     }
 
     @Override
-    public Account activeCategory(String id) {
+    public Account activeAccount(String id) {
         Optional<Account> accountFound = repo.findById(Integer.parseInt(id));
         if (accountFound.isPresent()) {
             // Get value accoutFound
@@ -91,7 +92,7 @@ public class AccountServicesImp implements IAccountServices {
     }
 
     @Override
-    public void softDeleteAccout(int id) {
+    public void softDeleteAccount(int id) {
         Optional<Account> accountFound = repo.findById(id);
         if (accountFound.isPresent()) {
             // Create date
@@ -104,6 +105,18 @@ public class AccountServicesImp implements IAccountServices {
             repo.save(account);
         } else {
             throw new ResourceNotFoundException("Account with Id : " + id + " Not Found To Delete");
+        }
+    }
+
+    @Override
+    public Account updateRole(String username, Role role) {
+        Optional<Account> accountFound = repo.findByUsername(username);
+        if (accountFound.isPresent()) {
+            var account = accountFound.get();
+            account.setRole(role);
+            return repo.save(account);
+        } else {
+            throw new ResourceNotFoundException("Account with username : " + username + " Not Found");
         }
     }
 

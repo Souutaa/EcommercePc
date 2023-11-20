@@ -15,6 +15,7 @@ import com.app.ecommerce.models.OrderStatus;
 import com.app.ecommerce.models.ProductWarranty;
 import com.app.ecommerce.respositories.AccountOrderRepository;
 import com.app.ecommerce.services.IAccountOrderServices;
+import com.app.ecommerce.services.IAccountServices;
 import com.app.ecommerce.services.IEmailServices;
 import com.app.ecommerce.services.IOrderDetailServices;
 import com.app.ecommerce.services.IOrderInformationServices;
@@ -40,6 +41,9 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
 
   @Autowired
   private IOrderInformationServices orderInformationServices;
+
+  @Autowired
+  private IAccountServices accountServices;
 
   @Override
   public AccountOrder createOrder(CreateOrderRequest request, String username)
@@ -79,6 +83,14 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
       ProductWarranty productWarranty = orderDetail.getProductWarranty();
       this.productWarrantyServices.deactiveWarranty(productWarranty.getId());
     }
+    return this.accountOrderRepository.save(fetchedOrder);
+  }
+
+  @Override
+  public AccountOrder confirmOrder(Integer orderId, String username) {
+    AccountOrder fetchedOrder = this.accountOrderRepository.findById(orderId).get();
+    fetchedOrder.setStatus(OrderStatus.CONFIRMED);
+    fetchedOrder.setConfirmedBy(this.accountServices.getAccountByUserName(username));
     return this.accountOrderRepository.save(fetchedOrder);
   }
 }

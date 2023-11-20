@@ -4,11 +4,14 @@ import java.util.List;
 
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
 import com.app.ecommerce.models.Account;
+import com.app.ecommerce.models.Role;
 
 public interface IAccountServices {
     public List<Account> getAccounts(boolean active);
 
     public Account updatePassword(String id, UpdatePasswordDTO request);
+
+    public Account updateRole(String username, Role role);
 
     public Account saveAccount(Account account);
 
@@ -16,7 +19,7 @@ public interface IAccountServices {
 
     public Account getAccountByUserName(String username);
 
-    public Account activeCategory(String id);
+    public Account activeAccount(String id);
 
-    public void softDeleteAccout(int id);
+    public void softDeleteAccount(int id);
 }
