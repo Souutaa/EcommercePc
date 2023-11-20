@@ -30,6 +30,7 @@ import com.app.ecommerce.respositories.WarrantyPeriodRepository;
 import com.app.ecommerce.services.IProductServices;
 import com.app.ecommerce.utils.Utils;
 
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -51,6 +52,10 @@ public class ProductServicesImp implements IProductServices {
   @Override
   public Product create(CreateProductRequest request, MultipartFile thumbnail, MultipartFile[] productImages)
       throws IOException {
+
+    if(this.productRepository.findByProductLine(request.getProductLine()).isPresent()) {
+      throw new EntityExistsException("Product with product line: " + request.getProductLine() + " already exists");
+    }
 
     String fileBasePath = "/app/src/main/resources/thumbnails/" + request.getProductLine() + "/";
     String fileName = StringUtils.cleanPath(thumbnail.getOriginalFilename());

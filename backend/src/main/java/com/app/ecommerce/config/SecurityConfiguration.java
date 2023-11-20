@@ -41,7 +41,6 @@ public class SecurityConfiguration {
         .requestMatchers("/auth/**").permitAll()
         .requestMatchers("/user/update-role").hasAuthority("ADMIN")
         .anyRequest().authenticated()
-        // .anyRequest().permitAll()
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
