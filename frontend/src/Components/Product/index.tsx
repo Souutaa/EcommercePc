@@ -4,7 +4,7 @@ import ButtonAdd from "../Button/button-add-to-cart";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useShopingContext } from "../../Context/ShoppingContext";
-import { Button } from "@mantine/core";
+import { Button, Text } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { IconCheck } from "@tabler/icons-react";
 
@@ -48,7 +48,9 @@ function Product() {
               </div>
             </Link>
             <div className="product-info">
-              <h4 className="product-name">{item.productName}</h4>
+              <Text lineClamp={2} className="product-name">
+                {item.productName}
+              </Text>
               <div className="product-detail">
                 <span className="product-price">${item.price}</span>
                 <ButtonAdd

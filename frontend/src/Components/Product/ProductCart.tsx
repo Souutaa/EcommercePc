@@ -55,17 +55,26 @@ function ProductCarts() {
               <span className="productcart-fix">Sửa</span>
             </div>
             <span className="productcart-price">{item.price}</span>
-            <div className="productcart-width">
+            <div className="productcart">
               <Button
+                style={{ width: "36px" }}
+                className="button-plus"
                 onClick={() => {
                   increaseQty(item.id);
                 }}
                 leftSection={
-                  <IconPlus style={{ width: rem(12), height: rem(12) }} />
+                  <IconPlus
+                    style={{
+                      width: rem(12),
+                      height: rem(12),
+                    }}
+                  />
                 }
               />
               <div className="productcart-quality">{item.quantity}</div>
               <Button
+                style={{ width: "36px" }}
+                className="button-minus"
                 onClick={() => {
                   decreaseQty(item.id);
                 }}

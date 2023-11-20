@@ -9,11 +9,15 @@ import {
   IconMessageCircle,
   IconTrash,
   IconArrowsLeftRight,
+  IconLogout,
 } from "@tabler/icons-react";
 import InputSearch from "../Components/Input/input-search";
 import { PATHS } from "../Constants/path";
 import { useAuthContext } from "../Context/AuthContext";
 import { useState } from "react";
+import UserInfor from "../Components/UserInfor/UserInfor";
+import UserOder from "../Components/UserOrder/UserOrder";
+import Seaparator from "../Components/Seaparator/Seaparator";
 const Header = () => {
   const [opened, setOpened] = useState(false);
   const authContext = useAuthContext();
@@ -47,73 +51,30 @@ const Header = () => {
               </Link>
               <Menu opened={opened} onChange={setOpened}>
                 <Menu.Target>
-                  <Button>Toggle menu</Button>
+                  <div className="logo-user">
+                    <Avatar src="/img/Avatar.png" alt="it's me" />
+                  </div>
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Label>Application</Menu.Label>
-                  <Menu.Item
-                    leftSection={
-                      <IconSettings
-                        style={{ width: rem(14), height: rem(14) }}
-                      />
-                    }
-                  >
-                    Settings
-                  </Menu.Item>
-                  <Menu.Item
-                    leftSection={
-                      <IconMessageCircle
-                        style={{ width: rem(14), height: rem(14) }}
-                      />
-                    }
-                  >
-                    Messages
-                  </Menu.Item>
-                  <Menu.Item
-                    leftSection={
-                      <IconPhoto style={{ width: rem(14), height: rem(14) }} />
-                    }
-                  >
-                    Gallery
-                  </Menu.Item>
-                  <Menu.Item
-                    leftSection={
-                      <IconSearch style={{ width: rem(14), height: rem(14) }} />
-                    }
-                    rightSection={
-                      <Text size="xs" c="dimmed">
-                        ⌘K
-                      </Text>
-                    }
-                  >
-                    Search
-                  </Menu.Item>
+                  <UserInfor />
+                  <Seaparator />
+                  <UserOder />
+                  <Seaparator />
 
-                  <Menu.Divider />
-
-                  <Menu.Label>Danger zone</Menu.Label>
-                  <Menu.Item
-                    leftSection={
-                      <IconArrowsLeftRight
-                        style={{ width: rem(14), height: rem(14) }}
-                      />
-                    }
-                  >
-                    Transfer my data
-                  </Menu.Item>
                   <Menu.Item
                     color="red"
                     leftSection={
-                      <IconTrash style={{ width: rem(14), height: rem(14) }} />
+                      <IconLogout
+                        style={{
+                          width: rem(14),
+                          height: rem(14),
+                        }}
+                      />
                     }
                   >
-                    Delete my account
+                    SignOut
                   </Menu.Item>
                 </Menu.Dropdown>
-
-                <div className="logo-user">
-                  <Avatar src="/img/Avatar.png" alt="it's me" />
-                </div>
               </Menu>
             </div>
           )}

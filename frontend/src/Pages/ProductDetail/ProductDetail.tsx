@@ -1,4 +1,3 @@
-import Navbar from "../../Layouts/NavBar";
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import ProductList from "../../Components/Product/ProductList";
