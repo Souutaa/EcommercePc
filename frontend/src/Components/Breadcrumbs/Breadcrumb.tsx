@@ -11,7 +11,7 @@ function Breadcrumbs() {
     .split("/")
     .filter((crumb) => crumb !== "")
     .map((crumb) => {
-      currentLink = currentLink + "/${crumb}";
+      currentLink = currentLink + `/${crumb}`;
       return (
         <div className="crumb" key={crumb}>
           <Link to={currentLink}>{crumb}</Link>
