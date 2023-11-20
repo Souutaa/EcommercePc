@@ -35,13 +35,9 @@ function ProductDetail() {
   const [productDetail, setProductDetail] = useState<ProductDetail>();
   const [productsOfBrand, setProductsOfDetail] = useState<Brand>();
   useEffect(() => {
-    console.log("get productDetail data from api");
-
     //Get pathParam
     const getPath = location.pathname.split("/");
-    const pathParam = getPath[2];
-    console.log(pathParam);
-
+    const pathParam = getPath[3];
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
@@ -73,7 +69,7 @@ function ProductDetail() {
   const slides = productDetail?.imageUris.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
-        <img src={`http://127.0.0.1:8080/product/get-file?filePath=${url}`} />
+        <img alt="" src={`http://127.0.0.1:8080/product/get-file?filePath=${url}`} />
       </Carousel.Slide>
     );
   });
