@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import OderUser from "./Components/OrderUser/OrderUser";
+import OderUser from "./Pages/OrderUser/OrderUser";
 import { PATHS } from "./Constants/path";
 import { useAuthContext } from "./Context/AuthContext";
 import MainLayout from "./Layouts/Index";

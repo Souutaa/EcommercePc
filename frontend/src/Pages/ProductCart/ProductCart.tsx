@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
 import CartText from "../../Components/CartText/CartText";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import ProductOrderNotItem from "../ProductOdered/ProductOrderNotItem";
+import NoProduct from "../NoProduct/NoProduct";
 
 function ProductCart() {
   return (
@@ -61,7 +61,7 @@ function ProductCart() {
           </div>
         </>
       ) : (
-        <ProductOrderNotItem />
+        <NoProduct />
       )}
     </>
   );

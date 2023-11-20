@@ -1,6 +1,13 @@
 import { Group, ColorSwatch } from "@mantine/core";
+import { useState } from "react";
 
 function ProductColor() {
+  let defautlcl = "";
+  const [selectedColor, setselectedColor] = useState(defautlcl);
+  let colors = ["#111928", "#fff", "#6B7280"];
+  const handleChange = (color: string) => {
+    setselectedColor(color);
+  };
   return (
     <>
       <div className="product-detail-attribute">
@@ -11,9 +18,18 @@ function ProductColor() {
           </div>
           <div className="product-detail-color-value">
             <Group>
-              <ColorSwatch className="border-color-active" color="#111928" />
-              <ColorSwatch className="border-color" color="#fff" />
-              <ColorSwatch className="border-color" color="#6B7280" />
+              {colors.map((color, index) => {
+                return (
+                  <ColorSwatch
+                    key={index}
+                    onClick={() => handleChange(color)}
+                    className={`border-color ${
+                      selectedColor === color ? "border-color-active" : ""
+                    }`}
+                    color={color}
+                  />
+                );
+              })}
             </Group>
           </div>
         </div>
