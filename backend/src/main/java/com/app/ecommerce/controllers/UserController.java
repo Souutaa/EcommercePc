@@ -23,6 +23,7 @@ import com.app.ecommerce.DTO.accountDetail.AccountDetailResponse;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
+import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.services.IAccountServices;
 
 import jakarta.validation.Valid;
