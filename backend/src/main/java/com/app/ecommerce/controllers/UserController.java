@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.account.UpdateAccountRoleRequest;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
+import com.app.ecommerce.DTO.accountDetail.AccountDetailResponse;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
+import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.services.IAccountServices;
 
 import jakarta.validation.Valid;
@@ -59,12 +61,15 @@ public class UserController {
     }
 
     @GetMapping(value = "/getInfo")
-    public @ResponseBody ResponseEntity<Object> getLoggedIntUser(@RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<AccountDetailResponse> getLoggedInUser(@RequestHeader("Authorization") String authorization) {
         try {
             String token = authorization.split(" ")[1].trim();
             String username = this.jwtService.extractUsername(token);
             Account fetchedAccount = accountServices.getAccountByUserName(username);
-            return new ResponseEntity<>(fetchedAccount, HttpStatus.OK);
+            // HACK
+            return ResponseEntity
+                    .ok(AccountDetailResponse.builder().accountDetail(fetchedAccount.getAccountDetails().get(0))
+                            .email(fetchedAccount.getEmail()).username(username).build());
         } catch (ResourceNotFoundException ex) {
             throw new ResourceNotFoundException("user not found");
         }

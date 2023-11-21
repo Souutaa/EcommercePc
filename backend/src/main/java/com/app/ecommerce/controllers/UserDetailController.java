@@ -18,12 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.accountDetail.AccountDetailResponse;
 import com.app.ecommerce.DTO.accountDetail.CreateAccountDetailDTO;
 import com.app.ecommerce.DTO.accountDetail.UpdateAccountDetailDTO;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
+import com.app.ecommerce.models.Account;
 import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.services.IAccountDetailServices;
+import com.app.ecommerce.services.IAccountServices;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +37,9 @@ import lombok.RequiredArgsConstructor;
 public class UserDetailController {
     @Autowired
     private IAccountDetailServices accountDetailServices;
+
+    @Autowired
+    private IAccountServices accountServices;
 
     @Autowired
     private JwtService jwtService;
@@ -52,6 +58,17 @@ public class UserDetailController {
     public @ResponseBody ResponseEntity<Object> getAccountDetail(@PathVariable String id) {
         AccountDetail accountDetail = accountDetailServices.getAccountDetailById(Integer.parseInt(id));
         return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/default")
+    public @ResponseBody ResponseEntity<AccountDetailResponse> getAccountDetailDefautl(
+            @RequestHeader("Authorization") String authorization) {
+        String token = authorization.split(" ")[1].trim();
+        String username = this.jwtService.extractUsername(token);
+        AccountDetail accountDetail = accountDetailServices.getAccountDetailDefault(username);
+        Account account = this.accountServices.getAccountByUserName(username);
+        return new ResponseEntity<AccountDetailResponse>(AccountDetailResponse.builder().accountDetail(accountDetail)
+                .username(username).email(account.getEmail()).build(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")

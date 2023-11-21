@@ -26,4 +26,6 @@ public interface AccountDetailRepository extends JpaRepository<AccountDetail, In
     @Query(value = "UPDATE account_detail SET is_default = false WHERE account_id = ?1", nativeQuery = true)
     void removAccountDetailsDefault(Integer accountId);
 
+    @Query(value = "select public.account_detail.* from account_detail LEFT JOIN public.account ON account.id = account_detail.account_id WHERE is_default = true AND account.username = ?1", nativeQuery = true)
+    Optional<AccountDetail> findAccountDetailDefault(String username);
 }
