@@ -23,22 +23,6 @@ export interface UserInformation {
   username: string;
 }
 
-export interface UserInformation {
-  accountDetail: {
-    city: string;
-    detailedAddress: string;
-    district: string;
-    firstName: string;
-    id: number;
-    lastName: string;
-    default: boolean;
-    phoneNumber: string;
-    email: string;
-  };
-  email: string;
-  username: string;
-}
-
 function InfoUser() {
   const [userInfo, setUserInfo] = useState<UserInformation>();
   useEffect(() => {
