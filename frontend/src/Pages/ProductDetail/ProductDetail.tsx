@@ -13,12 +13,17 @@ import { ProductItems } from "../HomePage/Content";
 import ProductList from "../../Components/Product/ProductList";
 import ButtonAdd from "../../Components/Button/button-add-to-cart";
 
+type ProductInfo = {
+  id: number;
+  productInformation: string;
+};
+
 type ProductDetail = {
   brandId: number;
   categoryId: number;
   imageUris: string[];
   product: ProductItem;
-  productInfos: string[];
+  productInfos: ProductInfo[];
   thumbnailUri: string;
   warrantyPeriodId: number;
 };
@@ -69,7 +74,10 @@ function ProductDetail() {
   const slides = productDetail?.imageUris.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
-        <img alt="" src={`http://127.0.0.1:8080/product/get-file?filePath=${url}`} />
+        <img
+          alt=""
+          src={`http://127.0.0.1:8080/product/get-file?filePath=${url}`}
+        />
       </Carousel.Slide>
     );
   });
@@ -99,20 +107,30 @@ function ProductDetail() {
             </div>
           </div>
           <div className="product-detail-right">
-            <ProductInfo />
+            {productDetail?.product.id && (
+              <ProductInfo
+                brandId={productDetail?.brandId}
+                categoryId={productDetail?.categoryId}
+                imageUris={productDetail?.imageUris}
+                product={productDetail?.product}
+                productInfos={productDetail?.productInfos}
+                thumbnailUri={productDetail?.thumbnailUri}
+                warrantyPeriodId={productDetail?.warrantyPeriodId}
+              />
+            )}
             <ProductColor />
-            <Btn customStyle={{ width: "100%" }} maintine="a">
-              {productDetail?.product.id && (
-                <ButtonAdd
-                  discount={productDetail?.product.discount}
-                  id={productDetail?.product.id}
-                  price={productDetail?.product.price}
-                  productLine={productDetail?.product.productLine}
-                  productName={productDetail?.product.productName}
-                  thumbnailUri={productDetail?.thumbnailUri}
-                />
-              )}
-            </Btn>
+            {/* <Btn customStyle={{ width: "100%" }} maintine="a"> */}
+            {productDetail?.product.id && (
+              <ButtonAdd
+                discount={productDetail?.product.discount}
+                id={productDetail?.product.id}
+                price={productDetail?.product.price}
+                productLine={productDetail?.product.productLine}
+                productName={productDetail?.product.productName}
+                thumbnailUri={productDetail?.thumbnailUri}
+              />
+            )}
+            {/* </Btn> */}
           </div>
         </div>
         <div className="product-more">
