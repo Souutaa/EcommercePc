@@ -11,7 +11,7 @@ export const PATHS = {
   },
 
   MORE: HOME_PATH + "/More",
-  PRODUCT: "Home/Product",
+  PRODUCT: HOME_PATH + "/Product",
   CART: HOME_PATH + "/Cart",
   PAYMENT: HOME_PATH + "/Cart/Payment",
   SEARCH: HOME_PATH + "/Search",

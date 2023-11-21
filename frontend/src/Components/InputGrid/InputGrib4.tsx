@@ -1,10 +1,4 @@
-import {
-  NativeSelect,
-  Input,
-  Select,
-  ComboboxOption,
-  ComboboxItem,
-} from "@mantine/core";
+import { NativeSelect, Input, ComboboxItem } from "@mantine/core";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -25,24 +19,31 @@ export type Division = {
   districts: Districts[];
 };
 
-function InputGrib4() {
+interface props {
+  provinceCode: string,
+  districtCode: string,
+  phoneNumber: string,
+  email: string
+}
+
+function InputGrib4(props: props) {
   const [division, setDivision] = useState<Division[]>([]);
-  const [selected, setSelected] = useState("");
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
   useEffect(() => {
-    console.log("get division data from api");
-    const fetchProducts = async () => {
+    const provinceAxios = axios.create({});
+    const fetchProvices = async () => {
       try {
-        const res = await axios.get(
+        const res = await provinceAxios.get(
           "http://provinces.open-api.vn/api/?depth=2"
         );
-        console.log("division=> ", res);
         const data = await res.data;
         setDivision(data);
       } catch (error) {
         console.log("error=> ", error);
       }
     };
-    fetchProducts();
+    fetchProvices();
   }, []);
 
   return (
@@ -51,13 +52,13 @@ function InputGrib4() {
         <div className="productcheckout-grid-input">
           <span className="productcheckput-text">Số điện thoại:</span>
           <Input.Wrapper style={{ marginRight: "8px" }}>
-            <Input placeholder="0xx xxx xxxx" />
+            <Input placeholder="0xx xxx xxxx" value={props.email}/>
           </Input.Wrapper>
         </div>
         <div className="productcheckout-grid-input">
           <span className="productcheckput-text">Email:</span>
           <Input.Wrapper style={{ marginLeft: "8px" }}>
-            <Input placeholder="abc@gmail.com" />
+            <Input placeholder="abc@gmail.com" value={props.phoneNumber}/>
           </Input.Wrapper>
         </div>
         <div className="productcheckout-grid-input">
@@ -65,6 +66,7 @@ function InputGrib4() {
           <NativeSelect
             style={{ marginRight: "8px" }}
             placeholder="Chọn tỉnh, thành phố"
+            value={selectedProvince ? selectedProvince : props.provinceCode}
             data={division.map((division): ComboboxItem => {
               return {
                 value: division.code.toString(),
@@ -72,7 +74,7 @@ function InputGrib4() {
                 disabled: false,
               };
             })}
-            onChange={(e) => setSelected(e.target.value)}
+            onChange={(e) => setSelectedProvince(e.target.value)}
           />
         </div>
         <div className="productcheckout-grid-input">
@@ -80,8 +82,13 @@ function InputGrib4() {
           <NativeSelect
             style={{ marginLeft: "8px" }}
             placeholder="Native select"
+            value={selectedDistrict ? selectedDistrict : props.districtCode}
             data={division
-              .find((division) => +division.code === +selected)
+              .find(
+                (division) =>
+                  +division.code ===
+                  (!selectedProvince ? +props.districtCode : +selectedProvince)
+              )
               ?.districts.map((e): ComboboxItem => {
                 return {
                   value: e.code.toString(),
@@ -89,6 +96,7 @@ function InputGrib4() {
                   disabled: false,
                 };
               })}
+            onChange={(e) => setSelectedDistrict(e.target.value)}
           />
         </div>
       </div>

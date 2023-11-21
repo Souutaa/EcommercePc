@@ -94,13 +94,13 @@ public class CustomExceptionHandler {
     return errorDetail;
   }
 
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  @ExceptionHandler(RuntimeException.class)
-  public ProblemDetail hanldeServerException(RuntimeException ex) {
-    ProblemDetail errorDetail = null;
-    errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), ex.getMessage());
-    return errorDetail;
-  }
+  // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  // @ExceptionHandler(RuntimeException.class)
+  // public ProblemDetail hanldeServerException(RuntimeException ex) {
+  //   ProblemDetail errorDetail = null;
+  //   errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), ex.getMessage());
+  //   return errorDetail;
+  // }
 
   @ResponseStatus(HttpStatus.CONFLICT)
   @ExceptionHandler(DataIntegrityViolationException.class)

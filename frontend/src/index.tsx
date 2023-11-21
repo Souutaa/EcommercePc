@@ -7,6 +7,7 @@ import React from "react";
 import AuthProvider from "./Context/AuthContext";
 import { Notifications } from "@mantine/notifications";
 import { ShoppingContextProvider } from "./Context/ShoppingContext";
+import axios from "axios";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,6 +17,14 @@ const theme = createTheme({
   /** Put your mantine theme override here */
 });
 
+axios.interceptors.request.use(function (config) {
+  if (localStorage.getItem("accessToken")) {
+    config.headers.Authorization = "Bearer " + localStorage.getItem("accessToken");
+    return config;
+  }
+  return config;
+});
+
 root.render(
   //<React.StrictMode>
   <AuthProvider>
@@ -23,9 +32,10 @@ root.render(
       <MantineProvider>
         <Notifications
           style={{
-            position: "absolute",
-            top: "700px",
-            right: "50px",
+            position: "fixed",
+            top: "2%",
+            right: "2%",
+            zIndex: 9999999,
           }}
         />
         <App />

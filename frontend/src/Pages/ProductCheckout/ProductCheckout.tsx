@@ -1,17 +1,43 @@
-import { Input, Radio, Group, Divider } from "@mantine/core";
-import CheckoutGrid from "../../Components/InputGrid/InputGrib4";
-import Total from "../../Components/Total/Total";
-import Btn from "../../Components/Button";
+import { Divider, Group, Input, Radio } from "@mantine/core";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import Btn from "../../Components/Button";
 import CheckoutContent from "../../Components/CheckoutContent/CheckoutContent";
 import CheckoutText from "../../Components/CheckoutText/CheckoutText";
+import InputGrib4 from "../../Components/InputGrid/InputGrib4";
+import Total from "../../Components/Total/Total";
 import { PATHS } from "../../Constants/path";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import { useEffect, useState } from "react";
+import InputGrid2 from "../../Components/InputGrid/InputGrid2";
 import axios from "axios";
+import { useState, useEffect } from "react";
+import { UserInformation } from "../InfoUser/InfoUser";
 
 function ProductCheckout() {
-  
+  const [userInfo, setUserInfo] = useState<UserInformation | null>();
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8080/userDetail/default");
+        setUserInfo(response.data);
+
+      } catch {
+        setUserInfo({
+          accountDetail: {
+            city: "1",
+            district: "1",
+            detailedAddress: "",
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            id: null,
+          },
+          email: "",
+          username: "",
+        });
+      }
+    };
+    getUserInfo();
+  }, []);
 
   return (
     <>
@@ -23,17 +49,23 @@ function ProductCheckout() {
         <div className="productcheckout-body">
           <div className="productcheckout-left">
             <form action="">
-              <div className="productcheckout-input">
-                <span className="productcheckput-text">Họ và tên:</span>
-                <Input.Wrapper>
-                  <Input placeholder="Nguyễn Văn A" />
-                </Input.Wrapper>
-              </div>
-              <CheckoutGrid />
+              <InputGrid2
+                firstName={userInfo?.accountDetail.firstName ?? ""}
+                lastName={userInfo?.accountDetail.lastName ?? ""}
+              />
+              <InputGrib4
+                provinceCode={userInfo?.accountDetail.city ?? ""}
+                districtCode={userInfo?.accountDetail.district ?? ""}
+                email={userInfo?.email ?? ""}
+                phoneNumber={userInfo?.accountDetail.phoneNumber ?? ""}
+              />
               <div className="productcheckout-input">
                 <span className="productcheckput-text">Địa chỉ chi tiết:</span>
                 <Input.Wrapper>
-                  <Input placeholder="Số nhà, tên đường, xã, phường, thị trấn,..." />
+                  <Input
+                    placeholder="Số nhà, tên đường, xã, phường, thị trấn,..."
+                    value={userInfo?.accountDetail.detailedAddress}
+                  />
                 </Input.Wrapper>
               </div>
               <div className="productcheckout-input">

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,21 +18,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.accountDetail.AccountDetailResponse;
 import com.app.ecommerce.DTO.accountDetail.CreateAccountDetailDTO;
 import com.app.ecommerce.DTO.accountDetail.UpdateAccountDetailDTO;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
+import com.app.ecommerce.models.Account;
 import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.services.IAccountDetailServices;
+import com.app.ecommerce.services.IAccountServices;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController // This means that this class is a Controller
 @RequestMapping(value = "/userDetail") // This means URL's start with /demo (after Application path)
 @RequiredArgsConstructor
+@CrossOrigin
 public class UserDetailController {
     @Autowired
     private IAccountDetailServices accountDetailServices;
+
+    @Autowired
+    private IAccountServices accountServices;
 
     @Autowired
     private JwtService jwtService;
@@ -50,6 +58,17 @@ public class UserDetailController {
     public @ResponseBody ResponseEntity<Object> getAccountDetail(@PathVariable String id) {
         AccountDetail accountDetail = accountDetailServices.getAccountDetailById(Integer.parseInt(id));
         return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/default")
+    public @ResponseBody ResponseEntity<AccountDetailResponse> getAccountDetailDefautl(
+            @RequestHeader("Authorization") String authorization) {
+        String token = authorization.split(" ")[1].trim();
+        String username = this.jwtService.extractUsername(token);
+        AccountDetail accountDetail = accountDetailServices.getAccountDetailDefault(username);
+        Account account = this.accountServices.getAccountByUserName(username);
+        return new ResponseEntity<AccountDetailResponse>(AccountDetailResponse.builder().accountDetail(accountDetail)
+                .username(username).email(account.getEmail()).build(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")

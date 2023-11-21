@@ -5,6 +5,7 @@ import "@mantine/carousel/styles.css";
 import { AppShell } from "@mantine/core";
 import BannerSection from "./BannerSection";
 import Content from "./Content";
+import { memo } from "react";
 
 const Home = () => {
   return (
@@ -17,4 +18,4 @@ const Home = () => {
     // </AppShell>
   );
 };
-export default Home;
+export default memo(Home);

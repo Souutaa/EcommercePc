@@ -134,4 +134,13 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
         }
     }
 
+    @Override
+    public AccountDetail getAccountDetailDefault(String username) {
+        Optional<AccountDetail> opt = repo.findAccountDetailDefault(username);
+        if (opt.isPresent()) {
+            return opt.get();
+        } else {
+            throw new ResourceNotFoundException("acountDetail with Id : " + username + " Not Found");
+        }
+    }
 }
