@@ -18,11 +18,6 @@ type ProductInfo = {
   productInformation: string;
 };
 
-type ProductInfo = {
-  id: number;
-  productInformation: string;
-};
-
 type ProductDetail = {
   brandId: number;
   categoryId: number;
