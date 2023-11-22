@@ -3,6 +3,7 @@ package com.app.ecommerce.controllers;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,9 +49,21 @@ public class AccountOrderController {
   @Autowired
   private AccountOrderRepository repo;
 
-  @GetMapping("/{username}/getOrder")
-  public @ResponseBody ResponseEntity<Object> getAccountOrderById(@PathVariable String username) {
-    return new ResponseEntity<Object>(orderServices.getOrders(username), HttpStatus.OK);
+  @GetMapping("/getOrder")
+  public @ResponseBody ResponseEntity<List<AccountOrder>> getAccountOrderByUsername(
+      @RequestHeader("Authorization") String authorization) {
+    String token = authorization.split(" ")[1].trim();
+    String username = this.jwtService.extractUsername(token);
+    List<AccountOrder> orders = orderServices.getOrders(username);
+    return new ResponseEntity<List<AccountOrder>>(orders, HttpStatus.OK);
+  }
+
+  @GetMapping("/getOneOrder")
+  public @ResponseBody ResponseEntity<AccountOrder> getOneOrder(
+      @RequestHeader("Authorization") String authorization) {
+    String token = authorization.split(" ")[1].trim();
+    String username = this.jwtService.extractUsername(token);
+    return new ResponseEntity<AccountOrder>(orderServices.getOrderByUsername(username), HttpStatus.OK);
   }
 
   @PostMapping("/create")

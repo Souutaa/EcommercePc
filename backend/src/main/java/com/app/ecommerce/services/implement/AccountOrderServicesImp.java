@@ -12,6 +12,7 @@ import com.app.ecommerce.DTO.order.CreateOrderRequest;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.AccountOrder;
+import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.OrderDetail;
 import com.app.ecommerce.models.OrderInformation;
 import com.app.ecommerce.models.OrderStatus;
@@ -77,12 +78,18 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
 
   @Override
   public List<AccountOrder> getOrders(String username) {
-    List<AccountOrder> accountOrderFound = accountOrderRepository.findByUsername(username);
-    if (accountOrderFound.isEmpty()) {
-      throw new ResourceNotFoundException("Cannot found accountOrder with username: " +
-          username + " Not Found");
+    List<AccountOrder> accountOrders = accountOrderRepository.findByUsername(username);
+    return accountOrders;
+  }
+
+  @Override
+  public AccountOrder getOrderByUsername(String username) {
+    Optional<AccountOrder> opt = accountOrderRepository.findUsername(username);
+    if (opt.isPresent()) {
+      return opt.get();
+    } else {
+      throw new ResourceNotFoundException("Cannot found orderUser with name: " + username + " Not Found");
     }
-    return accountOrderFound;
   }
 
   @Override

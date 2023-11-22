@@ -11,7 +11,7 @@ type OrderDetail = {
   purchasePrice: number;
 };
 
-type AccountOrders = {
+export type AccountOrders = {
   id: number;
   username: string;
   status: string;
@@ -32,20 +32,10 @@ function OderUser() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/user/getInfo`);
-        
+        const res = await axios.get(`http://localhost:8080/order/getOrder`);
+
         console.log("userInfo ==> ", res);
-        const data = await res.data;
-        try {
-          const res = await axios.get(
-            `http://localhost:8080/order/${data.username}/getOrder`
-          );
-          console.log("accountOrder ==> ", res);
-          setUserInfo(data);
-          setAccountOrder(res.data);
-        } catch (error) {
-          console.log("error accountOrder ==> ", error);
-        }
+        setAccountOrder(res.data);
       } catch (error) {
         console.log("error userInfo ==> ", error);
       }
@@ -55,50 +45,59 @@ function OderUser() {
   }, []);
   return (
     <>
-      <div className="container">
-        <Breadcrumbs />
-        <div className="infouser-content">
-          <div className="infouser-sidebar">
-            <div className="infouser-avatar">
-              <Avatar style={{ marginTop: "20px" }}></Avatar>
-              <div className="margin-right">
-                <UserInfor />
+      {accountOrder.map((e) => {
+        <div className="container">
+          <Breadcrumbs />
+          <div className="infouser-content">
+            <div className="infouser-sidebar">
+              <div className="infouser-avatar">
+                <Avatar style={{ marginTop: "20px" }}></Avatar>
+                <div className="margin-right">
+                  <UserInfor />
+                </div>
+              </div>
+              <UserOder />
+            </div>
+
+            <div className="orderuser-container">
+              <SegmentedControl
+                style={{ backgroundColor: "#fff" }}
+                fullWidth
+                color="blue"
+                size="md"
+                radius="lg"
+                data={[
+                  "Tất cả",
+                  "Đang xử lý",
+                  "Đang giao",
+                  "Hoàn thành",
+                  "Đã hủy",
+                ]}
+              />
+              <div className="orderuser-status">
+                <OderUserStatus
+                  username={e.username}
+                  total={e.total}
+                  id={e.id}
+                  createAt={e.createAt}
+                  orderDetails={e.orderDetails}
+                  status={e.status}
+                />
+                {/* <OderUserStatus />
+                <OderUserStatus />
+                <OderUserStatus />
+                <OderUserStatus />
+                <OderUserStatus /> */}
+                <Pagination
+                  className="pagination-center"
+                  style={{ marginBottom: "-20px", marginTop: "30px" }}
+                  total={10}
+                />
               </div>
             </div>
-            <UserOder />
           </div>
-
-          <div className="orderuser-container">
-            <SegmentedControl
-              style={{ backgroundColor: "#fff" }}
-              fullWidth
-              color="blue"
-              size="md"
-              radius="lg"
-              data={[
-                "Tất cả",
-                "Đang xử lý",
-                "Đang giao",
-                "Hoàn thành",
-                "Đã hủy",
-              ]}
-            />
-            <div className="orderuser-status">
-              <OderUserStatus />
-              <OderUserStatus />
-              <OderUserStatus />
-              <OderUserStatus />
-              <OderUserStatus />
-              <OderUserStatus />
-              <Pagination
-                className="pagination-center"
-                style={{ marginBottom: "-20px", marginTop: "30px" }}
-                total={10}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+        </div>;
+      })}
     </>
   );
 }

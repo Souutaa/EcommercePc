@@ -2,6 +2,7 @@ package com.app.ecommerce.services;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import com.app.ecommerce.DTO.order.CreateOrderRequest;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
@@ -17,6 +18,8 @@ public interface IAccountOrderServices {
   public List<AccountOrder> getAllOrders();
 
   public List<AccountOrder> getOrders(String username);
+
+  public AccountOrder getOrderByUsername(String username);
 
   public AccountOrder updateOrderStatus(@Valid UpdateStatusRequest request);
 
