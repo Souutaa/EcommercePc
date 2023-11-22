@@ -18,6 +18,7 @@ import com.app.ecommerce.models.OrderInformation;
 import com.app.ecommerce.models.OrderStatus;
 import com.app.ecommerce.models.ProductWarranty;
 import com.app.ecommerce.respositories.AccountOrderRepository;
+import com.app.ecommerce.respositories.AccountRepository;
 import com.app.ecommerce.services.IAccountOrderServices;
 import com.app.ecommerce.services.IAccountServices;
 import com.app.ecommerce.services.IEmailServices;
@@ -33,6 +34,9 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
 
   @Autowired
   private AccountOrderRepository accountOrderRepository;
+
+  @Autowired
+  private AccountRepository accountRepository;
 
   @Autowired
   private IProductWarrantyServices productWarrantyServices;
@@ -55,6 +59,7 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
     AccountOrder newOrder = AccountOrder.builder().username(username).total(request.getTotal())
         .status(OrderStatus.PENDING)
         .orderDetails(orderDetailServices.createOrderDetail(request.getCartItems()))
+        .account(this.accountRepository.findByUsername(username).get())
         .build();
     AccountOrder createdOrder = this.accountOrderRepository.save(newOrder);
     OrderInformation orderInformation = OrderInformation.builder()

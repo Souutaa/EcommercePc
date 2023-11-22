@@ -5,7 +5,7 @@ import {
   Group,
   Input,
   NativeSelect,
-  Radio,
+  Radio
 } from "@mantine/core";
 import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
@@ -15,6 +15,7 @@ import Btn from "../../Components/Button";
 import CheckoutContent from "../../Components/CheckoutContent/CheckoutContent";
 import CheckoutText from "../../Components/CheckoutText/CheckoutText";
 import InputGrib4 from "../../Components/InputGrid/InputGrib4";
+import InputGrid2 from "../../Components/InputGrid/InputGrid2";
 import Total from "../../Components/Total/Total";
 import { PATHS } from "../../Constants/path";
 import { useShopingContext } from "../../Context/ShoppingContext";
