@@ -7,6 +7,8 @@ import Footer from "./Footer";
 import Header from "./Header";
 
 function MainLayout() {
+  const location = useLocation();
+  console.log(location);
   return (
     <AppShell className="App">
       <Header />

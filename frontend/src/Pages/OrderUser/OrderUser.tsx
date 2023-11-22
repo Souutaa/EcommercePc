@@ -5,7 +5,7 @@ import {
 } from "@mantine/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";

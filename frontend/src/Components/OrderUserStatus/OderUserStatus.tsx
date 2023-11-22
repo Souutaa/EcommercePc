@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import Seaparator from "../Seaparator/Seaparator";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { AccountOrders } from "../../Pages/OrderUser/OrderUser";
 import formatPrice from "../../Helper/formatPrice";
 import { PATHS } from "../../Constants/path";
