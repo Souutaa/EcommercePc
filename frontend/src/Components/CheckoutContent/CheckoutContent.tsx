@@ -1,4 +1,5 @@
 import { useShopingContext } from "../../Context/ShoppingContext";
+import formatPrice from "../../Helper/formatPrice";
 import ProductOrderNotItem from "../../Pages/ProductOdered/ProductOrderNotItem";
 
 function CheckoutContent() {
@@ -21,7 +22,9 @@ function CheckoutContent() {
             </div>
 
             <div className="productcheckout-quality">{item.quantity}</div>
-            <div className="productcheckout-price">{item.price}</div>
+            <div className="productcheckout-price">
+              {formatPrice(item.price)}
+            </div>
           </div>
         );
       })}

@@ -69,7 +69,6 @@ function ProductCheckout() {
       style={{ width: "100%", textDecoration: "none" }}
     ></Link>;
   };
-
   return (
     <>
       <div className="container">

@@ -1,6 +1,7 @@
 import { Button, MantineProvider, Text, rem } from "@mantine/core";
 import { ModalsProvider, modals } from "@mantine/modals";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
+import formatPrice from "../../Helper/formatPrice";
 import { CartItem, useShopingContext } from "../../Context/ShoppingContext";
 
 function ProductCarts() {
@@ -49,7 +50,7 @@ function ProductCarts() {
               <span className="productcart-color">Màu sắc: Black</span>
               <span className="productcart-fix">Sửa</span>
             </div>
-            <span className="productcart-price">{item.price}</span>
+            <span className="productcart-price">{formatPrice(item.price)}</span>
             <div className="productcart">
               <Button
                 style={{ width: "36px" }}

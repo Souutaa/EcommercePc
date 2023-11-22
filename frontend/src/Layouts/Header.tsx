@@ -71,7 +71,7 @@ const Header = () => {
                         }}
                       />
                     }
-                    onClick={() => authContext.logout()}
+                    onClick={authContext.logout}
                   >
                     SignOut
                   </Menu.Item>
