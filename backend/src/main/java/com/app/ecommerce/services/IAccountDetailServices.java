@@ -17,6 +17,10 @@ public interface IAccountDetailServices {
 
     public AccountDetail updateAccountDetail(String id, UpdateAccountDetailDTO accountDetail);
 
+    public AccountDetail getAccountDetailDefault(String username);    
+    
+    public List<AccountDetail> getAllAccountDetail(String username);
+
     public AccountDetail activeAccountDetail(String id);
 
     public void softDeleteAccountDetail(int id);

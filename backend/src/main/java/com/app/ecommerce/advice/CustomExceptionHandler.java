@@ -93,7 +93,6 @@ public class CustomExceptionHandler {
     }
     return errorDetail;
   }
-
   @ResponseStatus(HttpStatus.CONFLICT)
   @ExceptionHandler(DataIntegrityViolationException.class)
   public ProblemDetail handleConflictException(RuntimeException ex) {

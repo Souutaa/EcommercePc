@@ -1,5 +1,6 @@
 package com.app.ecommerce.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.accountDetail.AccountDetailResponse;
 import com.app.ecommerce.DTO.accountDetail.CreateAccountDetailDTO;
 import com.app.ecommerce.DTO.accountDetail.UpdateAccountDetailDTO;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
+import com.app.ecommerce.models.Account;
 import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.services.IAccountDetailServices;
+import com.app.ecommerce.services.IAccountServices;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,22 +40,51 @@ public class UserDetailController {
     private IAccountDetailServices accountDetailServices;
 
     @Autowired
+    private IAccountServices accountServices;
+
+    @Autowired
     private JwtService jwtService;
 
-    @GetMapping(value = "/all")
-    public @ResponseBody ResponseEntity<Object> getAllAccountDetail(@RequestParam Boolean active) {
-        try {
-            List<AccountDetail> accountDetail = accountDetailServices.getAllAccountDetails(active);
-            return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
-        } catch (ResourceNotFoundException ex) {
-            throw new ResourceNotFoundException("Can't have any user in list");
-        }
-    }
+    // @GetMapping(value = "/all")
+    // public @ResponseBody ResponseEntity<Object> getAllAccountDetail(@RequestParam Boolean active) {
+    //     try {
+    //         List<AccountDetail> accountDetail = accountDetailServices.getAllAccountDetails(active);
+    //         return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
+    //     } catch (ResourceNotFoundException ex) {
+    //         throw new ResourceNotFoundException("Can't have any user in list");
+    //     }
+    // }
 
     @GetMapping(value = "/{id}")
     public @ResponseBody ResponseEntity<Object> getAccountDetail(@PathVariable String id) {
         AccountDetail accountDetail = accountDetailServices.getAccountDetailById(Integer.parseInt(id));
         return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/default")
+    public @ResponseBody ResponseEntity<AccountDetailResponse> getDefaultAccountDetail(
+            @RequestHeader("Authorization") String authorization) {
+        String token = authorization.split(" ")[1].trim();
+        String username = this.jwtService.extractUsername(token);
+        AccountDetail accountDetail = accountDetailServices.getAccountDetailDefault(username);
+        Account account = this.accountServices.getAccountByUserName(username);
+        return new ResponseEntity<AccountDetailResponse>(AccountDetailResponse.builder().accountDetail(accountDetail)
+                .username(username).email(account.getEmail()).build(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all")
+    public @ResponseBody ResponseEntity<List<AccountDetailResponse>> getAllAccountDetail(
+            @RequestHeader("Authorization") String authorization) {
+        String token = authorization.split(" ")[1].trim();
+        String username = this.jwtService.extractUsername(token);
+        List<AccountDetail> accountDetails = accountDetailServices.getAllAccountDetail(username);
+        Account account = this.accountServices.getAccountByUserName(username);
+        List<AccountDetailResponse> responseList = new ArrayList<AccountDetailResponse>();
+        for (AccountDetail accountDetail : accountDetails) {
+            responseList.add(AccountDetailResponse.builder().accountDetail(accountDetail)
+                    .username(username).email(account.getEmail()).build());
+        }
+        return ResponseEntity.ok(responseList);
     }
 
     @PostMapping(value = "/create")

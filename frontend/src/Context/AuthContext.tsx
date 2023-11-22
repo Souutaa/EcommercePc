@@ -1,6 +1,6 @@
 import axios from "axios";
-import { createContext, useContext, useState } from "react";
 import * as jwt from "jwt-decode";
+import { createContext, useContext, useState } from "react";
 
 export interface Auth {
   sub: string | null;
@@ -61,11 +61,15 @@ const AuthProvider = ({ children }: ChildrenProps) => {
       exp: null,
       isAuthenticated: false,
     });
+    return window.location.replace('/');
   };
   const checkSession = () => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       let data = jwt.jwtDecode(accessToken);
+      if (data.exp && data.iat)
+        if (Date.now() >= data.exp * 1000) 
+          logout();
       setAuth({
         sub: data.sub ?? "",
         iat: data.iat ?? "",

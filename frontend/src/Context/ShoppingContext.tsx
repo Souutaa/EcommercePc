@@ -18,11 +18,13 @@ export type CartItem = {
   quantity: number;
   thumbnailUri: string;
   discount: number;
+  productLine: string;
 };
 
 type ProductItem = {
   id: number;
   productName: string;
+  productLine: string;
   price: number;
   thumbnailUri: string;
   discount: number;

@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
 import React, { ReactNode, CSSProperties } from "react";
 interface ButtonProps {
+  type?: "button" | "reset" | "submit" | undefined;
   variant?: string;
   children: ReactNode;
   maintine?: string;
@@ -11,6 +12,7 @@ interface ButtonProps {
 }
 
 const Btn: React.FC<ButtonProps> = ({
+  type,
   variant = "",
   children,
   maintine,
@@ -21,6 +23,7 @@ const Btn: React.FC<ButtonProps> = ({
 }: ButtonProps) => {
   return maintine ? (
     <Button
+      type={type}
       variant=""
       color={color}
       style={{ ...customStyle }}
@@ -39,6 +42,7 @@ const Btn: React.FC<ButtonProps> = ({
         border: "none",
       }}
       className={`${clsName ? clsName : ""}`}
+      type={type}
       {...rest}
     >
       {children}
