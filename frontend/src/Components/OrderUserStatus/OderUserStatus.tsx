@@ -1,10 +1,12 @@
-import { Button } from "@mantine/core";
 import { Link } from "react-router-dom";
 import Seaparator from "../Seaparator/Seaparator";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 
+
+
+import { PATHS } from "../../Constants/path";
 
 function OderUserStatus() {
   return (
@@ -15,13 +17,13 @@ function OderUserStatus() {
         <p className="user-order-date-order">2023-05-06 </p>
         <p className="user-order-total-price">29,490,000đ</p>
         <p className="user-order-status color-red">Đã Hủy</p>
-        <a
+        <Link
+          to={PATHS.INFORDER}
           className="user-order"
-          href="/ODER"
           style={{ textDecoration: "none" }}
         >
           Chi tiết hóa đơn
-        </a>
+        </Link>
       </div>
       <Seaparator />
     </>

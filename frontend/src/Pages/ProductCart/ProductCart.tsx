@@ -6,8 +6,8 @@ import Btn from "../../Components/Button";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
 import CartText from "../../Components/CartText/CartText";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import NoProduct from "../NoProduct/NoProduct";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 function ProductCart() {
   return (
