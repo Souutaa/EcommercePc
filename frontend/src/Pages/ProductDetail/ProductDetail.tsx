@@ -15,11 +15,6 @@ import ButtonAdd from "../../Components/Button/button-add-to-cart";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
 
 
-type ProductInfo = {
-  id: number;
-  productInformation: string;
-};
-
 type ProductDetail = {
   brandId: number;
   categoryId: number;

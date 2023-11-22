@@ -6,7 +6,7 @@ import {
   NativeSelect,
   Radio,
 } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import Btn from "../../Components/Button";
 import CheckoutContent from "../../Components/CheckoutContent/CheckoutContent";
@@ -24,6 +24,7 @@ function ProductCheckout() {
   const [userInfo, setUserInfo] = useState<UserInformation | null>();
   const [address, setAddress] = useState<UserInformation[] | null>();
   const [note, setNote] = useState("");
+  const navigate = useNavigate();
   const cartContext = useShopingContext();
   useEffect(() => {
     const getAllUserInfo = async () => {
@@ -63,10 +64,7 @@ function ProductCheckout() {
       }),
     });
     cartContext.clearCart();
-    return <Link
-      to={PATHS.ORDERED}
-      style={{ width: "100%", textDecoration: "none" }}
-    ></Link>;
+    return navigate(PATHS.ORDERED)
   };
   return (
     <>

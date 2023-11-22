@@ -32,5 +32,5 @@ build/
 
 ### VS Code ###
 .vscode/
-images/*
-thumbnails/*
+main/resources/images/*
+main/resources/thumbnails/*
