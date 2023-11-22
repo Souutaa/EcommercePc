@@ -42,6 +42,6 @@ public class AccountOrder extends BaseEntity {
     private Account account;
 
     @OneToMany()
-    @JsonManagedReference
+    @JsonBackReference
     private List<OrderDetail> orderDetails;
 }
