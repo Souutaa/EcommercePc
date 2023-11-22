@@ -3,8 +3,56 @@ import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
 import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+type OrderDetail = {
+  id: number;
+  purchasePrice: number;
+};
+
+type AccountOrders = {
+  id: number;
+  username: string;
+  status: string;
+  total: number;
+  createAt: Date;
+  orderDetails: OrderDetail[];
+};
+
+type UserInfo = {
+  id: number;
+  username: string;
+  accountOrders: AccountOrders[];
+};
 
 function OderUser() {
+  const [userInfo, setUserInfo] = useState<UserInfo[]>([]);
+  const [accountOrder, setAccountOrder] = useState<AccountOrders[]>([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8080/user/getInfo`);
+        
+        console.log("userInfo ==> ", res);
+        const data = await res.data;
+        try {
+          const res = await axios.get(
+            `http://localhost:8080/order/${data.username}/getOrder`
+          );
+          console.log("accountOrder ==> ", res);
+          setUserInfo(data);
+          setAccountOrder(res.data);
+        } catch (error) {
+          console.log("error accountOrder ==> ", error);
+        }
+      } catch (error) {
+        console.log("error userInfo ==> ", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
   return (
     <>
       <div className="container">

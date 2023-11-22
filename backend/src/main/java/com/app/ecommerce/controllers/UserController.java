@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RestController // This means that this class is a Controller
 @RequestMapping(value = "/user") // This means URL's start with /demo (after Application path)
 @RequiredArgsConstructor
+@CrossOrigin
 public class UserController {
     @Autowired
     private IAccountServices accountServices;
@@ -78,7 +80,7 @@ public class UserController {
     public ResponseEntity<Account> activeUser(@PathVariable String id) {
         return ResponseEntity.ok(accountServices.activeAccount(id));
     }
-    
+
     @PatchMapping(value = "/update-role")
     public ResponseEntity<Account> updateAccountRole(@Valid @RequestBody UpdateAccountRoleRequest request) {
         return ResponseEntity.ok(accountServices.updateRole(request.getUsername(), request.getRole()));

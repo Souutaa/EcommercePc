@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RestController // This means that this class is a Controller
 @RequestMapping(value = "/mail") // This means URL's start with /demo (afterApplication path)
 @RequiredArgsConstructor
+@CrossOrigin
 public class SendMailController {
 
     @Autowired
