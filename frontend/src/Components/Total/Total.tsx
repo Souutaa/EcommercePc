@@ -1,4 +1,5 @@
 import { useShopingContext } from "../../Context/ShoppingContext";
+import formatPrice from "../../Helper/formatPrice";
 
 function Total() {
   const {
@@ -16,15 +17,17 @@ function Total() {
       <div className="productcart-detail">
         <div className="productcart-total">
           <span className="productcart-texts">Tổng</span>
-          <span className="productcart-number">{totalPrice}</span>
+          <span className="productcart-number">{formatPrice(totalPrice)}</span>
         </div>
         <div className="productcart-sale-all">
           <span className="productcart-texts">Giảm giá</span>
-          <span className="productcart-number-sale">-{totalDiscount}</span>
+          <span className="productcart-number-sale">
+            -{formatPrice(totalDiscount)}
+          </span>
         </div>
         <div className="productcart-total-all">
           <span className="productcart-text">Tổng cộng:</span>
-          <span className="productcart-number-total">{total}</span>
+          <span className="productcart-number-total">{formatPrice(total)}</span>
         </div>
       </div>
     </>

@@ -1,13 +1,16 @@
 package com.app.ecommerce.services.implement;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.ecommerce.DTO.order.CreateOrderRequest;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
+import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.AccountOrder;
 import com.app.ecommerce.models.OrderDetail;
 import com.app.ecommerce.models.OrderInformation;
@@ -65,6 +68,21 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
     this.orderInformationServices.createOrderInformation(orderInformation);
     emailServices.sendOrderUser(request, username);
     return createdOrder;
+  }
+
+  @Override
+  public List<AccountOrder> getAllOrders() {
+    return accountOrderRepository.findAll();
+  }
+
+  @Override
+  public List<AccountOrder> getOrders(String username) {
+    List<AccountOrder> accountOrderFound = accountOrderRepository.findByUsername(username);
+    if (accountOrderFound.isEmpty()) {
+      throw new ResourceNotFoundException("Cannot found accountOrder with username: " +
+          username + " Not Found");
+    }
+    return accountOrderFound;
   }
 
   @Override

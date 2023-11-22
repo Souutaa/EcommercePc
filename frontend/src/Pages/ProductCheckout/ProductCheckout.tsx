@@ -11,8 +11,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function ProductCheckout() {
-  
-
   return (
     <>
       <div className="container">

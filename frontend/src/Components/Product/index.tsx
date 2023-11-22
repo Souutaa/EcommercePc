@@ -8,6 +8,7 @@ import { Button, Text } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { IconCheck } from "@tabler/icons-react";
 import { ProductItems } from "../../Pages/HomePage/Content";
+import formatPrice from "../../Helper/formatPrice";
 
 export type ProductItem = {
   id: number;
@@ -41,7 +42,7 @@ function Product(props: { products: ProductItems[] }) {
             <div className="product-info">
               <h4 className="product-name">{e.productName}</h4>
               <div className="product-detail">
-                <span className="product-price">${e.price}</span>
+                <span className="product-price">{formatPrice(e.price)}</span>
                 <ButtonAdd
                   id={e.id}
                   price={e.price}

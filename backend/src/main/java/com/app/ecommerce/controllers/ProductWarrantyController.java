@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,15 +22,18 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/product-warranty")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ProductWarrantyController {
 
   @Autowired
   private IProductWarrantyServices productWarrantyServices;
 
-  // NOTE: Product should be update by productLine or ProductId => ProductId to synchronize with other methods
+  // NOTE: Product should be update by productLine or ProductId => ProductId to
+  // synchronize with other methods
   @PostMapping(value = "/create")
   public ResponseEntity<List<ProductWarranty>> addProductWarranties(@RequestBody AddProductWarrantyRequest request) {
-    return ResponseEntity.ok(this.productWarrantyServices.addProductWarranties(request.getProductLine(), request.getProductWarranties()));
+    return ResponseEntity.ok(
+        this.productWarrantyServices.addProductWarranties(request.getProductLine(), request.getProductWarranties()));
   }
 
   @GetMapping(value = "/get-all")
@@ -38,7 +42,8 @@ public class ProductWarrantyController {
   }
 
   @PostMapping(value = "/active-warranty")
-  public ResponseEntity<ProductWarranty> activeProductWarranty(@RequestParam("productLine") String productLine) throws NumberFormatException, SQLException {
+  public ResponseEntity<ProductWarranty> activeProductWarranty(@RequestParam("productLine") String productLine)
+      throws NumberFormatException, SQLException {
     return ResponseEntity.ok(this.productWarrantyServices.activeWarranty(productLine));
   }
 
