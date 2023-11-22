@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, Input } from "@mantine/core";
+import { Avatar, Button, ComboboxItem, Divider, Input, NativeSelect } from "@mantine/core";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
 import InputGrid2 from "../../Components/InputGrid/InputGrid2";
@@ -6,6 +6,7 @@ import InputGrib4 from "../../Components/InputGrid/InputGrib4";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import Btn from "../../Components/Button";
 
 export interface UserInformation {
   accountDetail: {
@@ -41,31 +42,24 @@ export interface UserInformation {
 
 function InfoUser() {
   const [userInfo, setUserInfo] = useState<UserInformation>();
+  const [address, setAddress] = useState<UserInformation[] | null>();
   useEffect(() => {
-    const getUserInfo = async () => {
+    const getAllUserInfo = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8080/userDetail/default");
-        setUserInfo(response.data);
-
-      } catch {
-        setUserInfo({
-          accountDetail: {
-            city: "1",
-            district: "1",
-            detailedAddress: "",
-            firstName: "",
-            lastName: "",
-            phoneNumber: "",
-            id: -1,
-            default: true,
-            email: ""
-          },
-          email: "",
-          username: "",
-        });
-      }
+        const response = await axios.get(
+          "http://127.0.0.1:8080/userDetail/all"
+        );
+        setAddress(response.data);
+        setUserInfo(
+          response.data.find(
+            (item: { accountDetail: { default: boolean } }) => {
+              return item.accountDetail.default === true;
+            }
+          )
+        );
+      } catch {}
     };
-    getUserInfo();
+    getAllUserInfo();
   }, []);
 
   return (
@@ -89,6 +83,44 @@ function InfoUser() {
             </h5>
             <Divider></Divider>
             <form action="">
+              <div className="infouser-input" style={{ width: "100%", display: "flex", columnGap: "5%" }}>
+                <div style={{ flex: "1 1 50%" }}>
+                  <span className="productcheckput-text">Địa chỉ:</span>
+                  <NativeSelect
+                    style={{ width: "100%" }}
+                    placeholder="Native select"
+                    data={address?.map((addr): ComboboxItem => {
+                      return {
+                        value: addr.accountDetail.id?.toString() ?? "",
+                        label: `${addr.accountDetail.detailedAddress} ${
+                          addr.accountDetail.district
+                        } ${addr.accountDetail.city}${
+                          addr.accountDetail.default === true
+                            ? " - Mặc định"
+                            : ""
+                        }`,
+                        disabled: false,
+                      };
+                    })}
+                    onChange={(e) =>
+                      setUserInfo(
+                        address?.find(
+                          (addr) => +addr.accountDetail.id === +e.target.value
+                        )
+                      )
+                    }
+                  />
+                </div>
+                <Btn
+                  maintine="a"
+                  customStyle={{
+                    alignSelf: "flex-end",
+                    justifySelf: "flex-end",
+                  }}
+                >
+                  Thêm địa chỉ mới
+                </Btn>
+              </div>
               <div className="infouser-input">
                 <InputGrid2
                   firstName={userInfo?.accountDetail.firstName ?? ""}

@@ -4,21 +4,21 @@ import {
   Group,
   Input,
   NativeSelect,
-  Radio,
+  Radio
 } from "@mantine/core";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import Btn from "../../Components/Button";
 import CheckoutContent from "../../Components/CheckoutContent/CheckoutContent";
 import CheckoutText from "../../Components/CheckoutText/CheckoutText";
 import InputGrib4 from "../../Components/InputGrid/InputGrib4";
+import InputGrid2 from "../../Components/InputGrid/InputGrid2";
 import Total from "../../Components/Total/Total";
 import { PATHS } from "../../Constants/path";
-import InputGrid2 from "../../Components/InputGrid/InputGrid2";
-import axios from "axios";
-import { useState, useEffect, FormEvent } from "react";
-import { UserInformation } from "../InfoUser/InfoUser";
 import { useShopingContext } from "../../Context/ShoppingContext";
+import { UserInformation } from "../InfoUser/InfoUser";
 
 function ProductCheckout() {
   const [userInfo, setUserInfo] = useState<UserInformation | null>();
@@ -67,9 +67,9 @@ function ProductCheckout() {
     return navigate(PATHS.ORDERED)
   };
   return (
-    <>
-      <div className="container">
+    <> 
         <Breadcrumbs />
+        <div className="container" >
         <div className="productcheckout-title">
           <h1> Thông tin thanh toán</h1>
         </div>
