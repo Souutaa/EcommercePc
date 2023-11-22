@@ -2,7 +2,7 @@ import { Avatar } from "@mantine/core";
 
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import { Link } from "react-router-dom";
 import Total from "../../Components/Total/Total";
 import OrderWrapper from "../../Components/OrderWrapper/OrderWrapper";

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
 import CartText from "../../Components/CartText/CartText";
 import NoProduct from "../NoProduct/NoProduct";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 function ProductCart() {
   return (

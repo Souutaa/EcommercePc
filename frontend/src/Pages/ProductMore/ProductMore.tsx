@@ -2,7 +2,7 @@ import ProductList from "../../Components/Product/ProductList";
 import { Pagination } from "@mantine/core";
 
 import FilterSection from "../../Components/FilterSection/FilterSection";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 function ProductMore() {
   return (
     <>

@@ -1,6 +1,6 @@
 import { Pagination, Title, Text } from "@mantine/core";
 import ProductSearchs from "../../Components/Product/ProductSearch";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import FilterSection from "../../Components/FilterSection/FilterSection";
 
 function ProductSearch() {
