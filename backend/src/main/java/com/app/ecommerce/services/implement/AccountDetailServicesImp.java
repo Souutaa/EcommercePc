@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.text.html.Option;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -137,6 +139,16 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
     @Override
     public AccountDetail getAccountDetailDefault(String username) {
         Optional<AccountDetail> opt = repo.findAccountDetailDefault(username);
+        if (opt.isPresent()) {
+            return opt.get();
+        } else {
+            throw new ResourceNotFoundException("acountDetail with Id : " + username + " Not Found");
+        }
+    }
+
+    @Override
+    public List<AccountDetail> getAllAccountDetail(String username) {
+        Optional<List<AccountDetail>> opt = this.repo.findAllAccountDetail(username);
         if (opt.isPresent()) {
             return opt.get();
         } else {

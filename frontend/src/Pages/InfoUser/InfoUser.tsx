@@ -13,9 +13,11 @@ export interface UserInformation {
     detailedAddress: string;
     district: string;
     firstName: string;
-    id: number | null;
+    id: number;
     lastName: string;
+    default: boolean;
     phoneNumber: string;
+    email: string;
   };
   email: string;
   username: string;
@@ -38,7 +40,9 @@ function InfoUser() {
             firstName: "",
             lastName: "",
             phoneNumber: "",
-            id: null,
+            id: -1,
+            default: true,
+            email: ""
           },
           email: "",
           username: "",
