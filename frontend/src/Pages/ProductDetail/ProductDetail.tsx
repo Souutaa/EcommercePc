@@ -2,7 +2,6 @@ import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Btn from "../../Components/Button";
 
 import ProductColor from "../../Components/Product/ProductColor";
 import ProductInfo from "../../Components/Product/ProductInfo";
@@ -12,8 +11,12 @@ import { ProductItem } from "../../Components/Product";
 import { ProductItems } from "../HomePage/Content";
 import ProductList from "../../Components/Product/ProductList";
 import ButtonAdd from "../../Components/Button/button-add-to-cart";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
+type ProductInfo = {
+  id: number;
+  productInformation: string;
+};
 
 type ProductDetail = {
   brandId: number;
