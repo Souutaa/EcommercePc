@@ -20,6 +20,12 @@ export type AccountOrders = {
   //orderDetails: OrderDetail[];
 };
 
+type UserInfo = {
+  id: number;
+  username: string;
+  accountOrders: AccountOrders[];
+};
+
 function OderUser() {
   const [accountOrder, setAccountOrder] = useState<AccountOrders[]>([]);
   const [numberOfPage, setNumberOfPage] = useState(0);
