@@ -1,11 +1,11 @@
 import { Button } from "@mantine/core";
-import Navbar from "../../Layouts/NavBar";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 function ProductOrderNotItem() {
   return (
     <>
-      <Navbar />
+      <Breadcrumbs />
       <div className="productodered">
         <img src="/img/Cartillustartion.png" alt="" />
         <div className="productodered-content">

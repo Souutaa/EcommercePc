@@ -1,10 +1,8 @@
-import { Button } from "@mantine/core";
 import { Link } from "react-router-dom";
 import Seaparator from "../Seaparator/Seaparator";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { AccountOrders } from "../../Pages/OrderUser/OrderUser";
 import formatPrice from "../../Helper/formatPrice";
+import { PATHS } from "../../Constants/path";
 
 function OderUserStatus(props: AccountOrders) {
   return (
@@ -15,13 +13,13 @@ function OderUserStatus(props: AccountOrders) {
         <p className="user-order-date-order">{props.createdAt}</p>
         <p className="user-order-total-price">{formatPrice(props.total)}</p>
         <p className="user-order-status color-red">{props.status}</p>
-        <a
+        <Link
+          to={PATHS.INFORDER}
           className="user-order"
-          href="/ODER"
           style={{ textDecoration: "none" }}
         >
           Chi tiết hóa đơn
-        </a>
+        </Link>
       </div>
       <Seaparator />
     </>

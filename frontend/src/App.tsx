@@ -19,6 +19,17 @@ import ProductDetail from "./Pages/ProductDetail/ProductDetail";
 import ProductMore from "./Pages/ProductMore/ProductMore";
 import ProductOdered from "./Pages/ProductOdered/ProductOdered";
 import ProductSearch from "./Pages/ProductSearch/ProductSearch";
+import InfoOrder from "./Pages/InfoOrder/InfoOrder";
+import AdminLayouts from "./LayoutsAdmin/AdminLayouts";
+import ProductAdmin from "./PagesAdmin/ProductAdmin";
+import Dashborad from "./PagesAdmin/Dashborad";
+import BrandAdmin from "./PagesAdmin/BrandAdmin";
+import CategoriesAdmin from "./PagesAdmin/CategoriesAdmin";
+import OrderAdmin from "./PagesAdmin/OrderAdmin";
+import UserAdmin from "./PagesAdmin/UserAdmin";
+import RolesAdmin from "./PagesAdmin/RolesAdmin";
+import PermissionAdmin from "./PagesAdmin/PermissionAdmin";
+import PermissionGroup from "./PagesAdmin/PermissionGroup";
 
 function App() {
   // const authContext = useAuthContext();
@@ -60,6 +71,24 @@ function App() {
             <Route path={PATHS.ORDERED} element={<ProductOdered />} />
             <Route path={PATHS.ORDER} element={<OderUser />} />
             <Route path={PATHS.USERINFO} element={<InfoUser />} />
+            <Route path={PATHS.INFORDER} element={<InfoOrder />} />
+          </Route>
+          <Route path="/admin" element={<AdminLayouts />}>
+            <Route index element={<Dashborad />} />
+            <Route path="/admin/product" element={<ProductAdmin />} />
+            <Route path="/admin/brands" element={<BrandAdmin />} />
+            <Route path="/admin/categori" element={<CategoriesAdmin />} />
+            <Route path="/admin/order" element={<OrderAdmin />} />
+            <Route path="/admin/user" element={<UserAdmin />} />
+            <Route path="/admin/role" element={<RolesAdmin />} />
+            <Route
+              path="/admin/permissionadmin"
+              element={<PermissionAdmin />}
+            />
+            <Route
+              path="/admin/permissiongroup"
+              element={<PermissionGroup />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

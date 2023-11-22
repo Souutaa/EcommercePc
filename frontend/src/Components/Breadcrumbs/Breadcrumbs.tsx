@@ -1,6 +1,6 @@
+import { IconHome } from "@tabler/icons-react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-
 
 function Breadcrumbs() {
   const location = useLocation();
@@ -20,7 +20,9 @@ function Breadcrumbs() {
     });
   return (
     <>
-      <div className="breadcrumbs">{crumbs}</div>
+      <div className="breadcrumbs">
+        <IconHome /> {crumbs}
+      </div>
     </>
   );
 }
