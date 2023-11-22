@@ -14,6 +14,7 @@ import ProductList from "../../Components/Product/ProductList";
 import ButtonAdd from "../../Components/Button/button-add-to-cart";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
 
+
 type ProductInfo = {
   id: number;
   productInformation: string;

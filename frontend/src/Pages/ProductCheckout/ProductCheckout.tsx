@@ -43,7 +43,6 @@ function ProductCheckout() {
     };
     getAllUserInfo();
   }, []);
-
   const handleSubmitForm = async (e: FormEvent) => {
     e.preventDefault();
     await axios.post("http://127.0.0.1:8080/order/create", {
@@ -69,7 +68,6 @@ function ProductCheckout() {
       style={{ width: "100%", textDecoration: "none" }}
     ></Link>;
   };
-
   return (
     <>
       <div className="container">
