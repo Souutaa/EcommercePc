@@ -10,6 +10,11 @@ import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
 
+type OrderDetail = {
+  id: number;
+  purchasePrice: number;
+};
+
 export type AccountOrders = {
   id: number;
   username: string;
@@ -17,6 +22,12 @@ export type AccountOrders = {
   total: number;
   createdAt: string;
   //orderDetails: OrderDetail[];
+};
+
+type UserInfo = {
+  id: number;
+  username: string;
+  accountOrders: AccountOrders[];
 };
 
 function OderUser() {
