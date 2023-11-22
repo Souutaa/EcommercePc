@@ -11,11 +11,12 @@ export const PATHS = {
   },
 
   MORE: HOME_PATH + "/More",
-  PRODUCT: "Home/Product",
+  PRODUCT: HOME_PATH + "/Product",
   CART: HOME_PATH + "/Cart",
   PAYMENT: HOME_PATH + "/Cart/Payment",
   SEARCH: HOME_PATH + "/Search",
   ORDERED: HOME_PATH + "/Payment",
   ORDER: HOME_PATH + "/InfoOder",
   USERINFO: HOME_PATH + "/InfoUser",
+  INFORDER: HOME_PATH + "/InfoOders",
 };

@@ -3,15 +3,16 @@ import "@mantine/carousel/styles.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Btn from "../../Components/Button";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+
 import ProductColor from "../../Components/Product/ProductColor";
 import ProductInfo from "../../Components/Product/ProductInfo";
-import Navbar from "../../Layouts/NavBar";
+
 import { useLocation } from "react-router-dom";
 import { ProductItem } from "../../Components/Product";
 import { ProductItems } from "../HomePage/Content";
 import ProductList from "../../Components/Product/ProductList";
 import ButtonAdd from "../../Components/Button/button-add-to-cart";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
 
 type ProductDetail = {
   brandId: number;
@@ -69,7 +70,10 @@ function ProductDetail() {
   const slides = productDetail?.imageUris.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
-        <img alt="" src={`http://127.0.0.1:8080/product/get-file?filePath=${url}`} />
+        <img
+          alt=""
+          src={`http://127.0.0.1:8080/product/get-file?filePath=${url}`}
+        />
       </Carousel.Slide>
     );
   });
