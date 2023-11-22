@@ -12,11 +12,6 @@ import ProductInfo from "../../Components/Product/ProductInfo";
 import ProductList from "../../Components/Product/ProductList";
 import { ProductItems } from "../HomePage/Content";
 
-type ProductInfo = {
-  id: number;
-  productInformation: string;
-};
-
 type ProductDetail = {
   brandId: number;
   categoryId: number;
