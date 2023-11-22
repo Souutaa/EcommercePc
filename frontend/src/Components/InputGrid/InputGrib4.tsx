@@ -45,20 +45,19 @@ function InputGrib4(props: props) {
     };
     fetchProvices();
   }, []);
-
   return (
     <>
       <div className="productcheckout-grid">
         <div className="productcheckout-grid-input">
           <span className="productcheckput-text">Số điện thoại:</span>
           <Input.Wrapper style={{ marginRight: "8px" }}>
-            <Input placeholder="0xx xxx xxxx" value={props.email}/>
+            <Input placeholder="0xx xxx xxxx" value={props.phoneNumber}/>
           </Input.Wrapper>
         </div>
         <div className="productcheckout-grid-input">
           <span className="productcheckput-text">Email:</span>
           <Input.Wrapper style={{ marginLeft: "8px" }}>
-            <Input placeholder="abc@gmail.com" value={props.phoneNumber}/>
+            <Input placeholder="abc@gmail.com" value={props.email}/>
           </Input.Wrapper>
         </div>
         <div className="productcheckout-grid-input">
@@ -69,7 +68,7 @@ function InputGrib4(props: props) {
             value={selectedProvince ? selectedProvince : props.provinceCode}
             data={division.map((division): ComboboxItem => {
               return {
-                value: division.code.toString(),
+                value: division.name,
                 label: division.name,
                 disabled: false,
               };
@@ -85,13 +84,14 @@ function InputGrib4(props: props) {
             value={selectedDistrict ? selectedDistrict : props.districtCode}
             data={division
               .find(
-                (division) =>
-                  +division.code ===
-                  (!selectedProvince ? +props.districtCode : +selectedProvince)
+                (division) => {
+                  return division.name ===
+                  (!selectedProvince ? props.provinceCode : selectedProvince)
+                }
               )
               ?.districts.map((e): ComboboxItem => {
                 return {
-                  value: e.code.toString(),
+                  value: e.name,
                   label: e.name,
                   disabled: false,
                 };
