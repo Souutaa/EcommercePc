@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.account.UpdateAccountRoleRequest;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
+import com.app.ecommerce.DTO.accountDetail.AccountDetailResponse;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
@@ -29,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RestController // This means that this class is a Controller
 @RequestMapping(value = "/user") // This means URL's start with /demo (after Application path)
 @RequiredArgsConstructor
+@CrossOrigin
 public class UserController {
     @Autowired
     private IAccountServices accountServices;
@@ -57,12 +60,15 @@ public class UserController {
     }
 
     @GetMapping(value = "/getInfo")
-    public @ResponseBody ResponseEntity<Object> getLoggedIntUser(@RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<AccountDetailResponse> getLoggedInUser(@RequestHeader("Authorization") String authorization) {
         try {
             String token = authorization.split(" ")[1].trim();
             String username = this.jwtService.extractUsername(token);
             Account fetchedAccount = accountServices.getAccountByUserName(username);
-            return new ResponseEntity<>(fetchedAccount, HttpStatus.OK);
+            // HACK
+            return ResponseEntity
+                    .ok(AccountDetailResponse.builder().accountDetail(fetchedAccount.getAccountDetails().get(0))
+                            .email(fetchedAccount.getEmail()).username(username).build());
         } catch (ResourceNotFoundException ex) {
             throw new ResourceNotFoundException("user not found");
         }
@@ -78,7 +84,7 @@ public class UserController {
     public ResponseEntity<Account> activeUser(@PathVariable String id) {
         return ResponseEntity.ok(accountServices.activeAccount(id));
     }
-    
+
     @PatchMapping(value = "/update-role")
     public ResponseEntity<Account> updateAccountRole(@Valid @RequestBody UpdateAccountRoleRequest request) {
         return ResponseEntity.ok(accountServices.updateRole(request.getUsername(), request.getRole()));

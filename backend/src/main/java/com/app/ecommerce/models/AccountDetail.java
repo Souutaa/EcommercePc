@@ -27,14 +27,17 @@ public class AccountDetail extends BaseEntity {
     @Column(name = "detailed_address", length = 30, nullable = true)
     private String detailedAddress;
 
-    @Column(name = "district", length = 20, nullable = false)
+    @Column(name = "district", length = 50, nullable = false)
     private String district;
 
-    @Column(name = "city", length = 20, nullable = false)
+    @Column(name = "city", length = 50, nullable = false)
     private String city;
 
     @Column(name = "phone_number", length = 20, nullable = false)
     private String phoneNumber;
+
+    @Column(name = "email", length = 50, nullable = false)
+    private String email;
 
     @Column(name = "is_default", columnDefinition = "boolean default false")
     private boolean isDefault;

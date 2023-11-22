@@ -1,12 +1,7 @@
-import { notifications } from "@mantine/notifications";
-import { Button, Text, rem } from "@mantine/core";
-import { modals } from "@mantine/modals";
-import { MantineProvider } from "@mantine/core";
-import { ModalsProvider } from "@mantine/modals";
-import Btn from "../Button";
-import { CartItem, useShopingContext } from "../../Context/ShoppingContext";
-import { ProductItem } from ".";
+import { Button, MantineProvider, Text, rem } from "@mantine/core";
+import { ModalsProvider, modals } from "@mantine/modals";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
+import { CartItem, useShopingContext } from "../../Context/ShoppingContext";
 
 function ProductCarts() {
   const {
