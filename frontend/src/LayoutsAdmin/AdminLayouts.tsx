@@ -1,7 +1,7 @@
 import { AppShell, Avatar, Burger, Group, Menu, rem } from "@mantine/core";
 import { IconLogout } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IconArchive,
   IconBoxMultiple,
@@ -12,7 +12,7 @@ import {
   IconTruckDelivery,
   IconUser,
 } from "@tabler/icons-react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAuthContext } from "../Context/AuthContext";
 import Seaparator from "../Components/Seaparator/Seaparator";
 import AdminInfor from "../Components/AdminInfo/AdminInfo";
@@ -22,7 +22,11 @@ function AdminLayouts() {
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const [opened, setOpened] = useState(false);
   const authContext = useAuthContext();
-
+  const location = useLocation();
+  useEffect(() => {
+    console.log("check-session");
+    authContext.checkSession();
+  }, [location.key]);
   return (
     <AppShell
       header={{ height: 60 }}

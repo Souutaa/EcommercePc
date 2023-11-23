@@ -45,16 +45,6 @@ public class UserDetailController {
     @Autowired
     private JwtService jwtService;
 
-    // @GetMapping(value = "/all")
-    // public @ResponseBody ResponseEntity<Object> getAllAccountDetail(@RequestParam Boolean active) {
-    //     try {
-    //         List<AccountDetail> accountDetail = accountDetailServices.getAllAccountDetails(active);
-    //         return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
-    //     } catch (ResourceNotFoundException ex) {
-    //         throw new ResourceNotFoundException("Can't have any user in list");
-    //     }
-    // }
-
     @GetMapping(value = "/{id}")
     public @ResponseBody ResponseEntity<Object> getAccountDetail(@PathVariable String id) {
         AccountDetail accountDetail = accountDetailServices.getAccountDetailById(Integer.parseInt(id));
