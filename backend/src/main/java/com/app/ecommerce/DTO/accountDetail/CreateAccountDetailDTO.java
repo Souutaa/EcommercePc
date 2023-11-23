@@ -20,5 +20,7 @@ public class CreateAccountDetailDTO {
 
     private String city;
 
+    private String email;
+
     private String phoneNumber;
 }

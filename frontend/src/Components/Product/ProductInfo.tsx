@@ -1,6 +1,6 @@
-import ProductDetail from "../../Pages/ProductDetail/ProductDetail";
+import { ProductDetailType } from "../../Pages/ProductDetail/ProductDetail";
 
-function ProductInfo(props: ProductDetail) {
+function ProductInfo(props: ProductDetailType) {
   return (
     <>
       <div className="product-detail-info">

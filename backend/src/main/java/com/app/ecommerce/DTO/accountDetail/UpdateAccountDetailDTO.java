@@ -24,5 +24,5 @@ public class UpdateAccountDetailDTO {
     @Nullable
     private String phoneNumber;
     @Nullable
-    private boolean isDefault;
+    private String email;
 }

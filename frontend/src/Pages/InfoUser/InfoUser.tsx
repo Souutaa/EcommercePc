@@ -1,11 +1,19 @@
-import { Avatar, Button, Divider, Input } from "@mantine/core";
+import {
+  Avatar,
+  Button,
+  ComboboxItem,
+  Divider,
+  Flex,
+  Input,
+  NativeSelect,
+} from "@mantine/core";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
-import InputGrid2 from "../../Components/InputGrid/InputGrid2";
 import InputGrib4 from "../../Components/InputGrid/InputGrib4";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import Btn from "../../Components/Button";
 
 export interface UserInformation {
   accountDetail: {
@@ -19,54 +27,95 @@ export interface UserInformation {
     phoneNumber: string;
     email: string;
   };
-  email: string;
-  username: string;
-}
-
-export interface UserInformation {
-  accountDetail: {
-    city: string;
-    detailedAddress: string;
-    district: string;
-    firstName: string;
-    id: number;
-    lastName: string;
-    default: boolean;
-    phoneNumber: string;
-    email: string;
-  };
-  email: string;
   username: string;
 }
 
 function InfoUser() {
+  console.log("re-render");
   const [userInfo, setUserInfo] = useState<UserInformation>();
+  const [address, setAddress] = useState<UserInformation[] | null>([]);
+  const [preserveValue, setPreserveValue] = useState<UserInformation>();
+  const [isEditing, setIsEditing] = useState(false);
   useEffect(() => {
-    const getUserInfo = async () => {
+    const getAllUserInfo = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8080/userDetail/default");
-        setUserInfo(response.data);
-
-      } catch {
-        setUserInfo({
-          accountDetail: {
-            city: "1",
-            district: "1",
-            detailedAddress: "",
-            firstName: "",
-            lastName: "",
-            phoneNumber: "",
-            id: -1,
-            default: true,
-            email: ""
-          },
-          email: "",
-          username: "",
-        });
-      }
+        const response = await axios.get(
+          "http://127.0.0.1:8080/userDetail/all"
+        );
+        setAddress(response.data);
+        setUserInfo(
+          response.data.find(
+            (item: { accountDetail: { default: boolean } }) => {
+              return item.accountDetail.default === true;
+            }
+          )
+        );
+      } catch {}
     };
-    getUserInfo();
+    getAllUserInfo();
   }, []);
+
+  const handleSubmitChange = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      if (userInfo) {
+        let id = userInfo.accountDetail.id;
+        let updatedInfo = {
+          firstName: userInfo.accountDetail.firstName,
+          lastName: userInfo.accountDetail.lastName,
+          detailedAddress: userInfo.accountDetail.detailedAddress,
+          district: userInfo.accountDetail.district,
+          city: userInfo.accountDetail.city,
+          phoneNumber: userInfo.accountDetail.phoneNumber,
+          email: userInfo.accountDetail.email,
+        };
+        await axios.patch(
+          `http://127.0.0.1:8080/userDetail/${id}/update`,
+          updatedInfo
+        );
+  
+        setAddress((prevState) => {
+          let newState: UserInformation[] = [];
+          if (Array.isArray(prevState)) {
+            newState = [...prevState];
+            let newInfo = newState.find(
+              (item) => item.accountDetail.id === userInfo.accountDetail.id
+            );
+            if (newInfo && userInfo)
+              newInfo.accountDetail = {
+                ...updatedInfo,
+                id: userInfo.accountDetail.id,
+                default: userInfo.accountDetail.default,
+              };
+          }
+          return newState;
+        });
+        setIsEditing(false);
+      }
+    } catch {}
+  };
+
+  const handleSetDefaultAddress = async (id: number) => {
+    try {
+      await axios.patch(`http://127.0.0.1:8080/userDetail/${id}/default`);
+      setAddress((prevState) => {
+        let newState: UserInformation[] = [];
+        if (Array.isArray(prevState)) {
+          newState = [...prevState];
+          newState.forEach((item) => {
+            item.accountDetail.id === id
+              ? (item.accountDetail.default = true)
+              : (item.accountDetail.default = false);
+          });
+        }
+        return newState;
+      });
+    } catch {}
+  };
+
+  const handleDeleteUserDetail = async () => {
+    console.log()
+  }
 
   return (
     <>
@@ -88,17 +137,109 @@ function InfoUser() {
               Quản lý thông tin hồ sơ để bảo mật tài khoản
             </h5>
             <Divider></Divider>
-            <form action="">
+            <form action="" onSubmit={handleSubmitChange}>
+              <div
+                className="infouser-input"
+                style={{ width: "100%", display: "flex", columnGap: "5%" }}
+              >
+                <div style={{ flex: "1 1 50%" }}>
+                  <span className="productcheckput-text">Địa chỉ:</span>
+                  <NativeSelect
+                    style={{ width: "100%" }}
+                    placeholder="Native select"
+                    data={address?.map((addr): ComboboxItem => {
+                      return {
+                        value: addr.accountDetail.id?.toString() ?? "",
+                        label: `${addr.accountDetail.detailedAddress} ${
+                          addr.accountDetail.district
+                        } ${addr.accountDetail.city}${
+                          addr.accountDetail.default === true
+                            ? " - Mặc định"
+                            : ""
+                        }`,
+                        disabled: false,
+                      };
+                    })}
+                    onChange={(e) => {
+                      setUserInfo(
+                        address?.find(
+                          (addr) => +addr.accountDetail.id === +e.target.value
+                        )
+                      );
+                    }}
+                  />
+                </div>
+                {!userInfo?.accountDetail.default && (
+                  <Btn
+                    maintine="a"
+                    customStyle={{
+                      alignSelf: "flex-end",
+                      justifySelf: "flex-end",
+                    }}
+                    onClick={() => {
+                      if (userInfo) {
+                        handleSetDefaultAddress(userInfo?.accountDetail.id);
+                      }
+                    }}
+                  >
+                    Đặt mặc định
+                  </Btn>
+                )}
+              </div>
               <div className="infouser-input">
-                <InputGrid2
-                  firstName={userInfo?.accountDetail.firstName ?? ""}
-                  lastName={userInfo?.accountDetail.lastName ?? ""}
-                />
+                <>
+                  <div className="productcheckout-grid">
+                    <div className="productcheckout-grid-input">
+                      <span className="productcheckput-text">
+                        Họ và tên đệm:
+                      </span>
+                      <Input.Wrapper style={{ marginRight: "8px" }}>
+                        <Input
+                          placeholder="Nguyễn"
+                          value={userInfo?.accountDetail.firstName}
+                          onChange={(e) => {
+                            if (userInfo)
+                              setUserInfo({
+                                accountDetail: {
+                                  ...userInfo.accountDetail,
+                                  firstName: e.target.value,
+                                },
+                                username: userInfo.username,
+                              });
+                          }}
+                          disabled={isEditing ? false : true}
+                        />
+                      </Input.Wrapper>
+                    </div>
+                    <div className="productcheckout-grid-input">
+                      <span className="productcheckput-text">Tên:</span>
+                      <Input.Wrapper style={{ marginLeft: "8px" }}>
+                        <Input
+                          placeholder="Lương"
+                          value={userInfo?.accountDetail.lastName}
+                          onChange={(e) => {
+                            if (userInfo)
+                              setUserInfo({
+                                accountDetail: {
+                                  ...userInfo.accountDetail,
+                                  lastName: e.target.value,
+                                },
+                                username: userInfo.username,
+                              });
+                          }}
+                          disabled={isEditing ? false : true}
+                        />
+                      </Input.Wrapper>
+                    </div>
+                  </div>
+                </>
                 <InputGrib4
                   provinceCode={userInfo?.accountDetail.city ?? ""}
                   districtCode={userInfo?.accountDetail.district ?? ""}
-                  email={userInfo?.email ?? ""}
                   phoneNumber={userInfo?.accountDetail.phoneNumber ?? ""}
+                  setUserInfo={setUserInfo}
+                  userInfo={userInfo}
+                  isEditing={isEditing}
                 />
               </div>
               <div className="infouser-input">
@@ -107,12 +248,55 @@ function InfoUser() {
                   <Input
                     placeholder="208 Trần Bình Trọng"
                     value={userInfo?.accountDetail.detailedAddress}
+                    disabled={isEditing ? false : true}
+                    onChange={(e) => {
+                      if (userInfo)
+                        setUserInfo({
+                          accountDetail: {
+                            ...userInfo.accountDetail,
+                            detailedAddress: e.target.value,
+                          },
+                          username: userInfo.username,
+                        });
+                    }}
                   />
                 </Input.Wrapper>
               </div>
-              <Button style={{ display: "flex", margin: "6px 40px 40px 40px" }}>
-                Thay đổi
-              </Button>
+              {!isEditing ? (
+                <Button
+                  onClick={(e) => {
+                    setPreserveValue(userInfo);
+                    setIsEditing(true);
+                  }}
+                  style={{ display: "flex", margin: "6px 40px 40px 40px" }}
+                >
+                  Thay đổi
+                </Button>
+              ) : (
+                <Flex>
+                  <Button
+                    type="submit"
+                    style={{ display: "flex", margin: "6px 40px 40px 40px" }}
+                  >
+                    Lưu
+                  </Button>
+                  <Button
+                    onClick={(e) => {
+                      setUserInfo(preserveValue);
+                      setIsEditing(false);
+                    }}
+                    style={{ display: "flex", margin: "6px 40px 40px 40px" }}
+                  >
+                    Hủy
+                  </Button>
+                  <Button
+                    style={{ display: "flex", margin: "6px 40px 40px auto" }}
+                    onClick={handleDeleteUserDetail}
+                  >
+                    Xóa
+                  </Button>
+                </Flex>
+              )}
             </form>
           </div>
         </div>
