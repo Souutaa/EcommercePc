@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class ProductCardOfBrandResponse {
     private int id;
     private String brandName;
+    private String name;
     private String productLine;
     private String productName;
     private float price;

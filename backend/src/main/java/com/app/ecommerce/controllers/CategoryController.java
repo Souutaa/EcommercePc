@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.brand.BrandProductResponse;
+import com.app.ecommerce.DTO.category.CategoryProductResponse;
 import com.app.ecommerce.DTO.category.CreateCategoryDTO;
 import com.app.ecommerce.DTO.category.UpdateCategoryDTO;
 import com.app.ecommerce.models.Category;
@@ -42,10 +44,22 @@ public class CategoryController {
         return new ResponseEntity<Object>(listCategories, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/allOfCategory")
+    public @ResponseBody ResponseEntity<Object> getAllproductOfBrand() {
+        List<CategoryProductResponse> listProducts = this.categoryServices.getProductOfCategory();
+        return new ResponseEntity<Object>(listProducts, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/getByName")
     public @ResponseBody ResponseEntity<Object> getAllBrand(@RequestParam String name) {
         Category listCategories = categoryServices.getCategorybyName(name);
         return new ResponseEntity<Object>(listCategories, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getByIdOfCategory")
+    public @ResponseBody ResponseEntity<Object> getAllProductOfCategory(@RequestParam String name) {
+        CategoryProductResponse listCategory = categoryServices.getCategoryProductResponseById(name);
+        return new ResponseEntity<Object>(listCategory, HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")
