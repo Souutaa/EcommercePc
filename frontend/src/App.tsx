@@ -21,11 +21,11 @@ import ProductOdered from "./Pages/ProductOdered/ProductOdered";
 import ProductSearch from "./Pages/ProductSearch/ProductSearch";
 
 function App() {
-  const authContext = useAuthContext();
+  // const authContext = useAuthContext();
 
-  useEffect(() => {
-    authContext.checkSession();
-  }, [authContext]);
+  // useEffect(() => {
+  //   authContext.checkSession();
+  // }, [authContext]);
 
   return (
     <div className="App">
