@@ -3,12 +3,13 @@ import {
   Pagination,
   SegmentedControl,
 } from "@mantine/core";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
+import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 
 export type AccountOrders = {
@@ -18,12 +19,6 @@ export type AccountOrders = {
   total: number;
   createdAt: string;
   //orderDetails: OrderDetail[];
-};
-
-type UserInfo = {
-  id: number;
-  username: string;
-  accountOrders: AccountOrders[];
 };
 
 function OderUser() {
