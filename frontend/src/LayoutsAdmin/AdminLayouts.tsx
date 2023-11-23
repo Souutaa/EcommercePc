@@ -1,7 +1,7 @@
 import { AppShell, Avatar, Burger, Group, Menu, rem } from "@mantine/core";
 import { IconLogout } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   IconArchive,
   IconBoxMultiple,

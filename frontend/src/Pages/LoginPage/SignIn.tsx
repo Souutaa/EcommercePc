@@ -66,6 +66,7 @@ function SignIn() {
             <div className="form-group">
               <Button
                 onClick={() => {
+                  localStorage.removeItem("accessToken");
                   authContext.login({ username, password });
                   navigate("/");
                 }}

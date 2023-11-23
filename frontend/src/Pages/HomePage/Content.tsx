@@ -1,12 +1,11 @@
 import "@mantine/carousel/styles.css";
+import { SegmentedControlItem } from "@mantine/core";
 import "@mantine/core/styles.css";
-import Product from "../../Components/Product";
-import "./style.css";
-import TabProduct from "../../Components/TabProduct/TabProduct";
-import ButtonMore from "../../Components/Button/button-more";
-import ProductList from "../../Components/Product/ProductList";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import ProductList from "../../Components/Product/ProductList";
+import TabProduct from "../../Components/TabProduct/TabProduct";
+import "./style.css";
 
 export type ProductItems = {
   id: number;
@@ -19,6 +18,12 @@ export type ProductItems = {
 type Brand = {
   id: number;
   brandName: string;
+  products: ProductItems[];
+};
+
+export type Category = {
+  id: number;
+  name: string;
   products: ProductItems[];
 };
 
@@ -37,18 +42,30 @@ function Content() {
     };
     fetchProducts();
   }, []);
+
+  const [test, setTest] = useState(true);
+  const onChangeTest = (e: string) => {
+    if (e == "ALL") setTest(true);
+    else setTest(false);
+  };
+
   return (
     <>
       <div className="container">
         <div className="products">
-          <TabProduct />
+          {/* {filteredCategory.map((e) => {
+            return <TabProduct products={e.products} />;
+          })} */}
+          <TabProduct onChange={onChangeTest} />
           {brand.map((item) => {
-            return (
-              <div key={item.id}>
-                <div className="title">{item.brandName}</div>
-                <ProductList products={item.products} />
-              </div>
-            );
+            console.log(test);
+            if (test == true)
+              return (
+                <div key={item.id}>
+                  <div className="title">{item.brandName}</div>
+                  <ProductList products={item.products} />
+                </div>
+              );
           })}
         </div>
       </div>

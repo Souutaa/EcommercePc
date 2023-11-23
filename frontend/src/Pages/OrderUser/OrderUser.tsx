@@ -1,4 +1,12 @@
-import { Avatar, Pagination, SegmentedControl } from "@mantine/core";
+import {
+  Avatar,
+  Pagination,
+  SegmentedControl,
+} from "@mantine/core";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
 import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
@@ -7,53 +15,75 @@ import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-type OrderDetail = {
-  id: number;
-  purchasePrice: number;
-};
 
-type AccountOrders = {
+export type AccountOrders = {
   id: number;
   username: string;
   status: string;
   total: number;
-  createAt: Date;
-  orderDetails: OrderDetail[];
-};
-
-type UserInfo = {
-  id: number;
-  username: string;
-  accountOrders: AccountOrders[];
+  createdAt: string;
+  //orderDetails: OrderDetail[];
 };
 
 function OderUser() {
-  const [userInfo, setUserInfo] = useState<UserInfo[]>([]);
   const [accountOrder, setAccountOrder] = useState<AccountOrders[]>([]);
+  const [numberOfPage, setNumberOfPage] = useState(0);
+  const [filteredAccountOrder, setFilteredAccountOrder] = useState<
+    AccountOrders[]
+  >([]);
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchOrders = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/user/getInfo`);
-        
-        console.log("userInfo ==> ", res);
-        const data = await res.data;
-        try {
-          const res = await axios.get(
-            `http://localhost:8080/order/${data.username}/getOrder`
-          );
-          console.log("accountOrder ==> ", res);
-          setUserInfo(data);
-          setAccountOrder(res.data);
-        } catch (error) {
-          console.log("error accountOrder ==> ", error);
-        }
-      } catch (error) {
-        console.log("error userInfo ==> ", error);
-      }
+        const res = await axios.get(`http://localhost:8080/order/getOrder`);
+        setAccountOrder(res.data);
+        setFilteredAccountOrder(res.data);
+        setNumberOfPage(Math.ceil(res.data.length / infoPerPage));
+      } catch (error) {}
     };
-
-    fetchProducts();
+    fetchOrders();
   }, []);
+
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const infoPerPage = 2;
+  const offset = (currentPage - 1) * infoPerPage;
+
+  //Filter
+  const [currentFilter, setCurrentFilter] = useState("ALL");
+  const onChangeFilter = (index: string) => {
+    setCurrentFilter(index);
+    if (index === "ALL") {
+      setFilteredAccountOrder(accountOrder);
+      setNumberOfPage(Math.ceil(accountOrder.length / infoPerPage));
+    } else {
+      const filteredOrders = accountOrder.filter((e) => e.status === index);
+      setFilteredAccountOrder(filteredOrders);
+      setNumberOfPage(Math.ceil(filteredOrders.length / infoPerPage));
+    }
+    setCurrentPage(1);
+  };
+
+  const onPageChange = (selected: number) => {
+    setCurrentPage(selected);
+  };
+
+  const displayInfo = filteredAccountOrder
+    .slice(offset, offset + infoPerPage)
+    .map((e) => {
+      return (
+        <div key={e.id}>
+          <OderUserStatus
+            key={e.id}
+            username={e.username}
+            total={e.total}
+            id={e.id}
+            createdAt={e.createdAt}
+            status={e.status}
+          />
+        </div>
+      );
+    });
+
   return (
     <>
       <div className="container">
@@ -77,24 +107,40 @@ function OderUser() {
               size="md"
               radius="lg"
               data={[
-                "Tất cả",
-                "Đang xử lý",
-                "Đang giao",
-                "Hoàn thành",
-                "Đã hủy",
+                {
+                  value: "ALL",
+                  label: "Tất cả",
+                },
+                {
+                  value: "PENDING",
+                  label: "Đang xử lý",
+                },
+                {
+                  value: "DELIVERING",
+                  label: "Đang giao",
+                },
+                {
+                  value: "SUCCESS",
+                  label: "Hoàn thành",
+                },
+                {
+                  value: "CANCELED",
+                  label: "Đã hủy",
+                },
               ]}
+              value={currentFilter}
+              onChange={onChangeFilter}
             />
+
             <div className="orderuser-status">
-              <OderUserStatus />
-              <OderUserStatus />
-              <OderUserStatus />
-              <OderUserStatus />
-              <OderUserStatus />
-              <OderUserStatus />
+              {displayInfo}
               <Pagination
                 className="pagination-center"
                 style={{ marginBottom: "-20px", marginTop: "30px" }}
-                total={10}
+                total={numberOfPage}
+                defaultValue={1}
+                value={currentPage}
+                onChange={onPageChange}
               />
             </div>
           </div>

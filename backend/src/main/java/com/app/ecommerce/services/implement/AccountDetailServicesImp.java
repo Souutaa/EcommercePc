@@ -54,6 +54,7 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
                     .detailedAddress(request.getDetailedAddress()).district(request.getDistrict())
                     .firstName(request.getFirstName()).lastName(request.getLastName())
                     .phoneNumber(request.getPhoneNumber())
+                    .email(request.getEmail())
                     .account(accountOpt.get())
                     .email(request.getEmail())
                     .isDefault(accountOpt.get().getAccountDetails().size() > 0 ? false : true)
