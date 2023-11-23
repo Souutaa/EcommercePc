@@ -1,20 +1,14 @@
 import {
   Avatar,
-  Group,
   Pagination,
-  PaginationControl,
-  SegmentedControl,
-  SegmentedControlItem,
+  SegmentedControl
 } from "@mantine/core";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumb";
+import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
-import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { usePagination } from "@mantine/hooks";
-import ReactPaginate from "react-paginate";
 
 type OrderDetail = {
   id: number;
@@ -38,78 +32,61 @@ type UserInfo = {
 
 function OderUser() {
   const [accountOrder, setAccountOrder] = useState<AccountOrders[]>([]);
-  const [pageSize, setPageSize] = useState(0);
-
+  const [numberOfPage, setNumberOfPage] = useState(0);
+  const [filteredAccountOrder, setFilteredAccountOrder] = useState<
+    AccountOrders[]
+  >([]);
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchOrders = async () => {
       try {
         const res = await axios.get(`http://localhost:8080/order/getOrder`);
-
-        console.log("userInfo ==> ", res);
         setAccountOrder(res.data);
-      } catch (error) {
-        console.log("error userInfo ==> ", error);
-      }
+        setFilteredAccountOrder(res.data);
+        setNumberOfPage(Math.ceil(res.data.length / infoPerPage));
+      } catch (error) {}
     };
-
-    fetchProducts();
+    fetchOrders();
   }, []);
 
   //Pagination
-  const [pageNumber, setPageNumber] = useState(1);
-  const infoPerPage = 1;
-  const pagesVisited = pageNumber * infoPerPage;
-  const pageCount = Math.ceil(accountOrder.length / infoPerPage);
+  const [currentPage, setCurrentPage] = useState(1);
+  const infoPerPage = 2;
+  const offset = (currentPage - 1) * infoPerPage;
 
   //Filter
   const [currentFilter, setCurrentFilter] = useState("ALL");
   const onChangeFilter = (index: string) => {
     setCurrentFilter(index);
-    if (index == "ALL") {
-      setPageSize(pageCount);
+    if (index === "ALL") {
+      setFilteredAccountOrder(accountOrder);
+      setNumberOfPage(Math.ceil(accountOrder.length / infoPerPage));
     } else {
-      setPageSize(accountOrder.filter((e) => e.status == index).length);
+      const filteredOrders = accountOrder.filter((e) => e.status === index);
+      setFilteredAccountOrder(filteredOrders);
+      setNumberOfPage(Math.ceil(filteredOrders.length / infoPerPage));
     }
+    setCurrentPage(1);
   };
 
   const onPageChange = (selected: number) => {
-    setPageNumber(selected);
+    setCurrentPage(selected);
   };
 
-  const displayInfo = accountOrder
-    .slice(pagesVisited - 1, pagesVisited + infoPerPage + pageSize - 1)
+  const displayInfo = filteredAccountOrder
+    .slice(offset, offset + infoPerPage)
     .map((e) => {
-      if (currentFilter == "ALL") {
-        return (
-          <div key={e.id}>
-            <OderUserStatus
-              key={e.id}
-              username={e.username}
-              total={e.total}
-              id={e.id}
-              createdAt={e.createdAt}
-              //orderDetails={e.orderDetails}
-              status={e.status}
-            />
-          </div>
-        );
-      } else if (currentFilter == e.status) {
-        return (
-          <div key={e.id}>
-            <OderUserStatus
-              key={e.id}
-              username={e.username}
-              total={e.total}
-              id={e.id}
-              createdAt={e.createdAt}
-              //orderDetails={e.orderDetails}
-              status={e.status}
-            />
-          </div>
-        );
-      }
-      // console.log("1------", currentFilter);
-      // console.log("2------", e.status);
+      return (
+        <div key={e.id}>
+          <OderUserStatus
+            key={e.id}
+            username={e.username}
+            total={e.total}
+            id={e.id}
+            createdAt={e.createdAt}
+            status={e.status}
+          />
+        </div>
+      );
     });
 
   return (
@@ -134,7 +111,6 @@ function OderUser() {
               color="blue"
               size="md"
               radius="lg"
-              //defaultValue={currentFilter}
               data={[
                 {
                   value: "ALL",
@@ -166,8 +142,9 @@ function OderUser() {
               <Pagination
                 className="pagination-center"
                 style={{ marginBottom: "-20px", marginTop: "30px" }}
-                total={pageSize}
-                defaultValue={2}
+                total={numberOfPage}
+                defaultValue={1}
+                value={currentPage}
                 onChange={onPageChange}
               />
             </div>

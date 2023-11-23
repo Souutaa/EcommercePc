@@ -30,11 +30,11 @@ import UserAdmin from "./PagesAdmin/UserAdmin";
 import RolesAdmin from "./PagesAdmin/RolesAdmin";
 
 function App() {
-  const authContext = useAuthContext();
+  // const authContext = useAuthContext();
 
-  useEffect(() => {
-    authContext.checkSession();
-  }, [authContext]);
+  // useEffect(() => {
+  //   authContext.checkSession();
+  // }, [authContext]);
 
   return (
     <div className="App">
