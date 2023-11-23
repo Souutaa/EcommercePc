@@ -55,7 +55,7 @@ function TabProduct({ onChange }: any) {
       />
 
       {filteredCategory.map((e) => {
-        if (e.name == currentFilter)
+        if (e.name === currentFilter)
           return (
             <div key={e.id}>
               {/* <div className="title">{item.brandName}</div> */}
