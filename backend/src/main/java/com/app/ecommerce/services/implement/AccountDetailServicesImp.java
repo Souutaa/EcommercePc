@@ -56,6 +56,7 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
                     .phoneNumber(request.getPhoneNumber())
                     .email(request.getEmail())
                     .account(accountOpt.get())
+                    .email(request.getEmail())
                     .isDefault(accountOpt.get().getAccountDetails().size() > 0 ? false : true)
                     .build();
             return repo.save(accountDetail);
@@ -69,27 +70,12 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
         Optional<AccountDetail> accountFound = repo.findById(Integer.parseInt(id));
         if (accountFound.isPresent()) {
             var accountDetail = accountFound.get();
-            // city
-            accountDetail.setCity(request.getCity().isEmpty() ? accountDetail.getCity() : request.getCity());
-            // DetailAddress
-            accountDetail.setDetailedAddress(
-                    request.getDetailedAddress().isEmpty() ? accountDetail.getDetailedAddress() : request.getCity());
-            // District
-            accountDetail
-                    .setDistrict(request.getDistrict().isEmpty() ? accountDetail.getDistrict() : request.getDistrict());
-            // FirstName
-            accountDetail.setFirstName(
-                    request.getFirstName().isEmpty() ? accountDetail.getFirstName() : request.getFirstName());
-            // LastName
-            accountDetail
-                    .setLastName(request.getLastName().isEmpty() ? accountDetail.getLastName() : request.getLastName());
-            // PhoneNumber
-            accountDetail
-                    .setPhoneNumber(request.getPhoneNumber().isEmpty() ? accountDetail.getPhoneNumber()
-                            : request.getPhoneNumber());
-            // isDefault
-            // accountDetail.setDefault(request.get() ? accountDetail.getDefault() :
-            // request.getDefault());
+            accountDetail.setCity(request.getCity());
+            accountDetail.setDetailedAddress(request.getDetailedAddress());
+            accountDetail.setDistrict(request.getDistrict());
+            accountDetail.setFirstName(request.getFirstName());
+            accountDetail.setLastName(request.getLastName());
+            accountDetail.setPhoneNumber(request.getPhoneNumber());
             return repo.save(accountDetail);
         } else {
             throw new ResourceNotFoundException("Invoice with Id : " + accountFound + " Not Found");
