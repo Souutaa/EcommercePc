@@ -52,7 +52,7 @@ function TabProduct({ onChange }: any) {
       />
 
       {filteredCategory.map((e) => {
-        if (e.name == currentFilter)
+        if (e.name === currentFilter)
           return <ProductListNoButtonMore products={e.products} />;
         //if (e.name == "ALL") return null;
       })}
