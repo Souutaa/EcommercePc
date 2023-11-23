@@ -12,7 +12,7 @@ function OderUserStatus(props: AccountOrders) {
       <div className="user-oder-list">
         <p className="user-order-id"># {props.id} </p>
         <p className="user-order-name">{props.username} </p>
-        <p className="user-order-date-order">{props.createAt.getUTCDate()} </p>
+        <p className="user-order-date-order">{props.createdAt}</p>
         <p className="user-order-total-price">{formatPrice(props.total)}</p>
         <p className="user-order-status color-red">{props.status}</p>
         <Link
