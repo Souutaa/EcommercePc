@@ -13,12 +13,17 @@ import ProductList from "../../Components/Product/ProductList";
 import ButtonAdd from "../../Components/Button/button-add-to-cart";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
-type ProductDetail = {
+export type ProductInfoType = {
+  id: number;
+  productInformation: string;
+};
+
+export type ProductDetailType = {
   brandId: number;
   categoryId: number;
   imageUris: string[];
   product: ProductItem;
-  productInfos: ProductInfo[];
+  productInfos: ProductInfoType[];
   thumbnailUri: string;
   warrantyPeriodId: number;
 };
@@ -32,7 +37,7 @@ type Brand = {
 function ProductDetail() {
   const location = useLocation();
 
-  const [productDetail, setProductDetail] = useState<ProductDetail>();
+  const [productDetail, setProductDetail] = useState<ProductDetailType>();
   const [productsOfBrand, setProductsOfDetail] = useState<Brand>();
   useEffect(() => {
     //Get pathParam

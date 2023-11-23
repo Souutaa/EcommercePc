@@ -1,6 +1,7 @@
 import { NativeSelect, Input, ComboboxItem } from "@mantine/core";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { UserInformation } from "../../Pages/InfoUser/InfoUser";
 
 type Districts = {
   name: string;
@@ -20,10 +21,12 @@ export type Division = {
 };
 
 interface props {
-  provinceCode: string,
-  districtCode: string,
-  phoneNumber: string,
-  email: string
+  provinceCode: string;
+  districtCode: string;
+  phoneNumber: string;
+  setUserInfo: Function;
+  userInfo: UserInformation | undefined;
+  isEditing: boolean;
 }
 
 function InputGrib4(props: props) {
@@ -45,19 +48,51 @@ function InputGrib4(props: props) {
     };
     fetchProvices();
   }, []);
+  useEffect(() => {
+    setSelectedDistrict(props.districtCode)
+    setSelectedProvince(props.provinceCode)
+  }, [props])
   return (
     <>
       <div className="productcheckout-grid">
         <div className="productcheckout-grid-input">
           <span className="productcheckput-text">Số điện thoại:</span>
           <Input.Wrapper style={{ marginRight: "8px" }}>
-            <Input placeholder="0xx xxx xxxx" value={props.phoneNumber}/>
+            <Input
+              placeholder="0xx xxx xxxx"
+              value={props.phoneNumber}
+              disabled={props.isEditing ? false : true}
+              onChange={(e) => {
+                if (props.userInfo && props.isEditing)
+                  props.setUserInfo({
+                    accountDetail: {
+                      ...props.userInfo.accountDetail,
+                      phoneNumber: e.target.value,
+                    },
+                    username: props.userInfo.username,
+                  });
+              }}
+            />
           </Input.Wrapper>
         </div>
         <div className="productcheckout-grid-input">
           <span className="productcheckput-text">Email:</span>
           <Input.Wrapper style={{ marginLeft: "8px" }}>
-            <Input placeholder="abc@gmail.com" value={props.email}/>
+            <Input
+              placeholder="abc@gmail.com"
+              value={props.userInfo?.accountDetail.email}
+              disabled={props.isEditing ? false : true}
+              onChange={(e) => {
+                if (props.userInfo && props.isEditing)
+                  props.setUserInfo({
+                    accountDetail: {
+                      ...props.userInfo.accountDetail,
+                      email: e.target.value,
+                    },
+                    username: props.userInfo.username,
+                  });
+              }}
+            />
           </Input.Wrapper>
         </div>
         <div className="productcheckout-grid-input">
@@ -65,7 +100,8 @@ function InputGrib4(props: props) {
           <NativeSelect
             style={{ marginRight: "8px" }}
             placeholder="Chọn tỉnh, thành phố"
-            value={selectedProvince ? selectedProvince : props.provinceCode}
+            value={selectedProvince}
+            disabled={props.isEditing ? false : true}
             data={division.map((division): ComboboxItem => {
               return {
                 value: division.name,
@@ -73,7 +109,18 @@ function InputGrib4(props: props) {
                 disabled: false,
               };
             })}
-            onChange={(e) => setSelectedProvince(e.target.value)}
+            onChange={(e) => {
+              if (props.userInfo && props.isEditing) {
+                setSelectedProvince(e.target.value);
+                props.setUserInfo({
+                  accountDetail: {
+                    ...props.userInfo.accountDetail,
+                    city: e.target.value,
+                  },
+                  username: props.userInfo.username,
+                });
+              }
+            }}
           />
         </div>
         <div className="productcheckout-grid-input">
@@ -81,14 +128,15 @@ function InputGrib4(props: props) {
           <NativeSelect
             style={{ marginLeft: "8px" }}
             placeholder="Native select"
-            value={selectedDistrict ? selectedDistrict : props.districtCode}
+            value={selectedDistrict}
+            disabled={props.isEditing ? false : true}
             data={division
-              .find(
-                (division) => {
-                  return division.name ===
+              .find((division) => {
+                return (
+                  division.name ===
                   (!selectedProvince ? props.provinceCode : selectedProvince)
-                }
-              )
+                );
+              })
               ?.districts.map((e): ComboboxItem => {
                 return {
                   value: e.name,
@@ -96,7 +144,18 @@ function InputGrib4(props: props) {
                   disabled: false,
                 };
               })}
-            onChange={(e) => setSelectedDistrict(e.target.value)}
+            onChange={(e) => {
+              if (props.userInfo && props.isEditing) {
+                setSelectedDistrict(e.target.value);
+                props.setUserInfo({
+                  accountDetail: {
+                    ...props.userInfo.accountDetail,
+                    district: e.target.value,
+                  },
+                  username: props.userInfo.username,
+                });
+              }
+            }}
           />
         </div>
       </div>
