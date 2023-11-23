@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.ecommerce.DTO.order.CreateOrderRequest;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.config.JwtService;
-import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.models.AccountOrder;
 import com.app.ecommerce.models.OrderStatus;
 import com.app.ecommerce.respositories.AccountOrderRepository;
