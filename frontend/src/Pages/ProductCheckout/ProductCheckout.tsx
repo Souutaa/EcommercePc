@@ -116,8 +116,10 @@ function ProductCheckout() {
               <InputGrib4
                 provinceCode={userInfo?.accountDetail.city ?? ""}
                 districtCode={userInfo?.accountDetail.district ?? ""}
-                email={userInfo?.email ?? ""}
                 phoneNumber={userInfo?.accountDetail.phoneNumber ?? ""}
+                userInfo={undefined}
+                setUserInfo={setUserInfo}
+                isEditing={false}
               />
               <div className="productcheckout-input">
                 <span className="productcheckput-text">Địa chỉ chi tiết:</span>

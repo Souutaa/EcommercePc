@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as jwt from "jwt-decode";
-import { createContext, useContext, useState } from "react";
+import { createContext, memo, useCallback, useContext, useMemo, useState } from "react";
 
 export interface Auth {
   sub: string | null;
@@ -68,7 +68,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
     if (accessToken) {
       let data = jwt.jwtDecode(accessToken);
       if (data.exp && data.iat)
-        if (Date.now() >= data.exp * 1000) 
+        if (Date.now() >= data.exp * 1000)
           logout();
       setAuth({
         sub: data.sub ?? "",
@@ -93,5 +93,6 @@ export const useAuthContext = () => {
   }
   return object;
 };
+
 
 export default AuthProvider;

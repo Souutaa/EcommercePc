@@ -1,9 +1,15 @@
-import { Avatar, Button, ComboboxItem, Divider, Input, NativeSelect } from "@mantine/core";
+import {
+  Avatar,
+  Button,
+  ComboboxItem,
+  Divider,
+  Input,
+  NativeSelect,
+} from "@mantine/core";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
-import InputGrid2 from "../../Components/InputGrid/InputGrid2";
 import InputGrib4 from "../../Components/InputGrid/InputGrib4";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import Btn from "../../Components/Button";
@@ -20,29 +26,15 @@ export interface UserInformation {
     phoneNumber: string;
     email: string;
   };
-  email: string;
-  username: string;
-}
-
-export interface UserInformation {
-  accountDetail: {
-    city: string;
-    detailedAddress: string;
-    district: string;
-    firstName: string;
-    id: number;
-    lastName: string;
-    default: boolean;
-    phoneNumber: string;
-    email: string;
-  };
-  email: string;
   username: string;
 }
 
 function InfoUser() {
+  console.log("re-render");
   const [userInfo, setUserInfo] = useState<UserInformation>();
   const [address, setAddress] = useState<UserInformation[] | null>();
+  const [preserveValue, setPreserveValue] = useState<UserInformation>();
+  const [isEditing, setIsEditing] = useState(false);
   useEffect(() => {
     const getAllUserInfo = async () => {
       try {
@@ -61,6 +53,11 @@ function InfoUser() {
     };
     getAllUserInfo();
   }, []);
+
+  const handleSubmitChange = (e: FormEvent) => {
+    e.preventDefault();
+    console.log(userInfo);
+  };
 
   return (
     <>
@@ -82,8 +79,11 @@ function InfoUser() {
               Quản lý thông tin hồ sơ để bảo mật tài khoản
             </h5>
             <Divider></Divider>
-            <form action="">
-              <div className="infouser-input" style={{ width: "100%", display: "flex", columnGap: "5%" }}>
+            <form action="" onSubmit={handleSubmitChange}>
+              <div
+                className="infouser-input"
+                style={{ width: "100%", display: "flex", columnGap: "5%" }}
+              >
                 <div style={{ flex: "1 1 50%" }}>
                   <span className="productcheckput-text">Địa chỉ:</span>
                   <NativeSelect
@@ -102,13 +102,13 @@ function InfoUser() {
                         disabled: false,
                       };
                     })}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setUserInfo(
                         address?.find(
                           (addr) => +addr.accountDetail.id === +e.target.value
                         )
-                      )
-                    }
+                      );
+                    }}
                   />
                 </div>
                 <Btn
@@ -122,15 +122,59 @@ function InfoUser() {
                 </Btn>
               </div>
               <div className="infouser-input">
-                <InputGrid2
-                  firstName={userInfo?.accountDetail.firstName ?? ""}
-                  lastName={userInfo?.accountDetail.lastName ?? ""}
-                />
+                <>
+                  <div className="productcheckout-grid">
+                    <div className="productcheckout-grid-input">
+                      <span className="productcheckput-text">
+                        Họ và tên đệm:
+                      </span>
+                      <Input.Wrapper style={{ marginRight: "8px" }}>
+                        <Input
+                          placeholder="Nguyễn"
+                          value={userInfo?.accountDetail.firstName}
+                          onChange={(e) => {
+                            if (userInfo)
+                              setUserInfo({
+                                accountDetail: {
+                                  ...userInfo.accountDetail,
+                                  firstName: e.target.value,
+                                },
+                                username: userInfo.username,
+                              });
+                          }}
+                          disabled={isEditing ? false : true}
+                        />
+                      </Input.Wrapper>
+                    </div>
+                    <div className="productcheckout-grid-input">
+                      <span className="productcheckput-text">Tên:</span>
+                      <Input.Wrapper style={{ marginLeft: "8px" }}>
+                        <Input
+                          placeholder="Lương"
+                          value={userInfo?.accountDetail.lastName}
+                          onChange={(e) => {
+                            if (userInfo)
+                              setUserInfo({
+                                accountDetail: {
+                                  ...userInfo.accountDetail,
+                                  lastName: e.target.value,
+                                },
+                                username: userInfo.username,
+                              });
+                          }}
+                          disabled={isEditing ? false : true}
+                        />
+                      </Input.Wrapper>
+                    </div>
+                  </div>
+                </>
                 <InputGrib4
                   provinceCode={userInfo?.accountDetail.city ?? ""}
                   districtCode={userInfo?.accountDetail.district ?? ""}
-                  email={userInfo?.email ?? ""}
                   phoneNumber={userInfo?.accountDetail.phoneNumber ?? ""}
+                  setUserInfo={setUserInfo}
+                  userInfo={userInfo}
+                  isEditing={isEditing}
                 />
               </div>
               <div className="infouser-input">
@@ -139,12 +183,52 @@ function InfoUser() {
                   <Input
                     placeholder="208 Trần Bình Trọng"
                     value={userInfo?.accountDetail.detailedAddress}
+                    disabled={isEditing ? false : true}
+                    onChange={(e) => {
+                      if (userInfo)
+                        setUserInfo({
+                          accountDetail: {
+                            ...userInfo.accountDetail,
+                            detailedAddress: e.target.value,
+                          },
+                          username: userInfo.username,
+                        });
+                    }}
                   />
                 </Input.Wrapper>
               </div>
-              <Button style={{ display: "flex", margin: "6px 40px 40px 40px" }}>
-                Thay đổi
-              </Button>
+              {!isEditing ? (
+                <Button
+                  onClick={(e) => {
+                    setPreserveValue(userInfo);
+                    setIsEditing(true);
+                  }}
+                  style={{ display: "flex", margin: "6px 40px 40px 40px" }}
+                >
+                  Thay đổi
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    type="submit"
+                    style={{ display: "flex", margin: "6px 40px 40px 40px" }}
+                    onClick={() => {
+                      console.log(userInfo);
+                    }}
+                  >
+                    Lưu
+                  </Button>
+                  <Button
+                    onClick={(e) => {
+                      setUserInfo(preserveValue);
+                      setIsEditing(false);
+                    }}
+                    style={{ display: "flex", margin: "6px 40px 40px 40px" }}
+                  >
+                    Hủy
+                  </Button>
+                </>
+              )}
             </form>
           </div>
         </div>
