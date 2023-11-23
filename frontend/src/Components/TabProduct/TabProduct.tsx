@@ -1,8 +1,7 @@
 import { SegmentedControl, SegmentedControlItem } from "@mantine/core";
-import { Category, ProductItems } from "../../Pages/HomePage/Content";
 import axios from "axios";
-import { useState, useEffect } from "react";
-import ProductList from "../Product/ProductList";
+import { useEffect, useState } from "react";
+import { Category } from "../../Pages/HomePage/Content";
 import ProductListNoButtonMore from "../Product/ProductListNoButtonMore";
 
 function TabProduct({ onChange }: any) {
