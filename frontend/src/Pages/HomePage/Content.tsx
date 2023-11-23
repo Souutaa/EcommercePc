@@ -64,7 +64,7 @@ function Content() {
 
   const [test, setTest] = useState(true);
   const onChangeTest = (e: string) => {
-    if (e == "ALL") setTest(true);
+    if (e === "ALL") setTest(true);
     else setTest(false);
   };
 
@@ -78,7 +78,7 @@ function Content() {
           <TabProduct onChange={onChangeTest} />
           {brand.map((item) => {
             console.log(item);
-            if (test == true)
+            if (test === true)
               return (
                 <div key={item.id}>
                   {/* <div className="title">{item.brandName}</div> */}
