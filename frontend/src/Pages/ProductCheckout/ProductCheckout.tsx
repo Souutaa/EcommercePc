@@ -1,10 +1,11 @@
 import {
   ComboboxItem,
   Divider,
+  Flex,
   Group,
   Input,
   NativeSelect,
-  Radio
+  Radio,
 } from "@mantine/core";
 import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
@@ -14,7 +15,6 @@ import Btn from "../../Components/Button";
 import CheckoutContent from "../../Components/CheckoutContent/CheckoutContent";
 import CheckoutText from "../../Components/CheckoutText/CheckoutText";
 import InputGrib4 from "../../Components/InputGrid/InputGrib4";
-import InputGrid2 from "../../Components/InputGrid/InputGrid2";
 import Total from "../../Components/Total/Total";
 import { PATHS } from "../../Constants/path";
 import { useShopingContext } from "../../Context/ShoppingContext";
@@ -23,6 +23,7 @@ import { UserInformation } from "../InfoUser/InfoUser";
 function ProductCheckout() {
   const [userInfo, setUserInfo] = useState<UserInformation | null>();
   const [address, setAddress] = useState<UserInformation[] | null>();
+  const [isAddingAddress, setIsAddingAddress] = useState(false);
   const [note, setNote] = useState("");
   const navigate = useNavigate();
   const cartContext = useShopingContext();
@@ -63,13 +64,24 @@ function ProductCheckout() {
         };
       }),
     });
+    if (userInfo?.accountDetail.id === -1) {
+      await axios.post("http://127.0.0.1:8080/userDetail/create", {
+      firstName: userInfo?.accountDetail.firstName,
+      lastName: userInfo?.accountDetail.lastName,
+      phoneNumber: userInfo?.accountDetail.phoneNumber,
+      email: userInfo?.accountDetail.email,
+      city: userInfo?.accountDetail.city,
+      district: userInfo?.accountDetail.district,
+      detailedAddress: userInfo?.accountDetail.detailedAddress,
+    });
+    }
     cartContext.clearCart();
-    return navigate(PATHS.ORDERED)
+    return navigate(PATHS.ORDERED);
   };
   return (
-    <> 
-        <Breadcrumbs />
-        <div className="container" >
+    <>
+      <Breadcrumbs />
+      <div className="container">
         <div className="productcheckout-title">
           <h1> Thông tin thanh toán</h1>
         </div>
@@ -89,9 +101,9 @@ function ProductCheckout() {
                       } ${addr.accountDetail.city}${
                         addr.accountDetail.default === true ? " - Mặc định" : ""
                       }`,
-                      disabled: false,
                     };
                   })}
+                  disabled = {isAddingAddress ? true : false}
                   onChange={(e) =>
                     setUserInfo(
                       address?.find(
@@ -101,25 +113,105 @@ function ProductCheckout() {
                   }
                 />
               </div>
-              <Btn
-                maintine="a"
-                customStyle={{ alignSelf: "flex-end", justifySelf: "flex-end" }}
-              >
-                Thêm địa chỉ mới
-              </Btn>
+              <Flex>
+                {!isAddingAddress && (
+                  <Btn
+                    maintine="a"
+                    customStyle={{
+                      alignSelf: "flex-end",
+                      justifySelf: "flex-end",
+                    }}
+                    onClick={() => {
+                      setIsAddingAddress(true);
+                      setUserInfo((prevState) => {
+                        if (prevState) {
+                          let newState = {...prevState}
+                          newState.accountDetail = {
+                            city: "",
+                            default: false,
+                            detailedAddress: "",
+                            district: "",
+                            email: "",
+                            firstName: "",
+                            id: -1,
+                            lastName: "",
+                            phoneNumber: "" 
+                          }
+                          return newState;
+                        }
+                      })
+                    }}
+                  >
+                    Thêm địa chỉ mới
+                  </Btn>
+                )}
+                {isAddingAddress && (
+                  <Btn
+                    maintine="a"
+                    customStyle={{
+                      alignSelf: "flex-end",
+                      justifySelf: "flex-end",
+                    }}
+                    color="#f03a17"
+                    onClick={() => {
+                      setIsAddingAddress(false);
+                      if (address)
+                        setUserInfo(address[0]);
+                    }}
+                  >
+                    Hủy
+                  </Btn>
+                )}
+              </Flex>
             </div>
             <form action="" onSubmit={handleSubmitForm}>
-              <InputGrid2
-                firstName={userInfo?.accountDetail.firstName ?? ""}
-                lastName={userInfo?.accountDetail.lastName ?? ""}
-              />
+              <div className="productcheckout-grid">
+                <div className="productcheckout-grid-input">
+                  <span className="productcheckput-text">Họ và tên đệm:</span>
+                  <Input.Wrapper style={{ marginRight: "8px" }}>
+                    <Input
+                      placeholder="Nguyễn"
+                      value={userInfo?.accountDetail.firstName}
+                      onChange={(e) => {
+                        if (userInfo)
+                          setUserInfo({
+                            accountDetail: {
+                              ...userInfo.accountDetail,
+                              firstName: e.target.value,
+                            },
+                            username: userInfo.username,
+                          });
+                      }}
+                    />
+                  </Input.Wrapper>
+                </div>
+                <div className="productcheckout-grid-input">
+                  <span className="productcheckput-text">Tên:</span>
+                  <Input.Wrapper style={{ marginLeft: "8px" }}>
+                    <Input
+                      placeholder="Lương"
+                      value={userInfo?.accountDetail.lastName}
+                      onChange={(e) => {
+                        if (userInfo)
+                          setUserInfo({
+                            accountDetail: {
+                              ...userInfo.accountDetail,
+                              lastName: e.target.value,
+                            },
+                            username: userInfo.username,
+                          });
+                      }}
+                    />
+                  </Input.Wrapper>
+                </div>
+              </div>
               <InputGrib4
                 provinceCode={userInfo?.accountDetail.city ?? ""}
                 districtCode={userInfo?.accountDetail.district ?? ""}
                 phoneNumber={userInfo?.accountDetail.phoneNumber ?? ""}
-                userInfo={undefined}
+                userInfo={userInfo ?? undefined}
                 setUserInfo={setUserInfo}
-                isEditing={false}
+                isEditing={true}
               />
               <div className="productcheckout-input">
                 <span className="productcheckput-text">Địa chỉ chi tiết:</span>
@@ -127,6 +219,16 @@ function ProductCheckout() {
                   <Input
                     placeholder="Số nhà, tên đường, xã, phường, thị trấn,..."
                     value={userInfo?.accountDetail.detailedAddress}
+                    onChange={(e) => {
+                      if (userInfo)
+                        setUserInfo({
+                          accountDetail: {
+                            ...userInfo.accountDetail,
+                            detailedAddress: e.target.value,
+                          },
+                          username: userInfo.username,
+                        });
+                    }}
                   />
                 </Input.Wrapper>
               </div>
@@ -160,14 +262,9 @@ function ProductCheckout() {
                     Sửa sản phẩm
                   </Btn>
                 </Link>
-                {/* <Link
-                  to={PATHS.ORDERED}
-                  style={{ width: "100%", textDecoration: "none" }}
-                > */}
                 <Btn fullWidth type="submit" maintine="a">
                   Đặt hàng
                 </Btn>
-                {/* </Link> */}
               </div>
             </form>
           </div>

@@ -3,6 +3,7 @@ import {
   Button,
   ComboboxItem,
   Divider,
+  Flex,
   Input,
   NativeSelect,
 } from "@mantine/core";
@@ -32,7 +33,7 @@ export interface UserInformation {
 function InfoUser() {
   console.log("re-render");
   const [userInfo, setUserInfo] = useState<UserInformation>();
-  const [address, setAddress] = useState<UserInformation[] | null>();
+  const [address, setAddress] = useState<UserInformation[] | null>([]);
   const [preserveValue, setPreserveValue] = useState<UserInformation>();
   const [isEditing, setIsEditing] = useState(false);
   useEffect(() => {
@@ -54,10 +55,67 @@ function InfoUser() {
     getAllUserInfo();
   }, []);
 
-  const handleSubmitChange = (e: FormEvent) => {
+  const handleSubmitChange = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(userInfo);
+    try {
+      if (userInfo) {
+        let id = userInfo.accountDetail.id;
+        let updatedInfo = {
+          firstName: userInfo.accountDetail.firstName,
+          lastName: userInfo.accountDetail.lastName,
+          detailedAddress: userInfo.accountDetail.detailedAddress,
+          district: userInfo.accountDetail.district,
+          city: userInfo.accountDetail.city,
+          phoneNumber: userInfo.accountDetail.phoneNumber,
+          email: userInfo.accountDetail.email,
+        };
+        await axios.patch(
+          `http://127.0.0.1:8080/userDetail/${id}/update`,
+          updatedInfo
+        );
+  
+        setAddress((prevState) => {
+          let newState: UserInformation[] = [];
+          if (Array.isArray(prevState)) {
+            newState = [...prevState];
+            let newInfo = newState.find(
+              (item) => item.accountDetail.id === userInfo.accountDetail.id
+            );
+            if (newInfo && userInfo)
+              newInfo.accountDetail = {
+                ...updatedInfo,
+                id: userInfo.accountDetail.id,
+                default: userInfo.accountDetail.default,
+              };
+          }
+          return newState;
+        });
+        setIsEditing(false);
+      }
+    } catch {}
   };
+
+  const handleSetDefaultAddress = async (id: number) => {
+    try {
+      await axios.patch(`http://127.0.0.1:8080/userDetail/${id}/default`);
+      setAddress((prevState) => {
+        let newState: UserInformation[] = [];
+        if (Array.isArray(prevState)) {
+          newState = [...prevState];
+          newState.forEach((item) => {
+            item.accountDetail.id === id
+              ? (item.accountDetail.default = true)
+              : (item.accountDetail.default = false);
+          });
+        }
+        return newState;
+      });
+    } catch {}
+  };
+
+  const handleDeleteUserDetail = async () => {
+    console.log()
+  }
 
   return (
     <>
@@ -111,15 +169,22 @@ function InfoUser() {
                     }}
                   />
                 </div>
-                <Btn
-                  maintine="a"
-                  customStyle={{
-                    alignSelf: "flex-end",
-                    justifySelf: "flex-end",
-                  }}
-                >
-                  Thêm địa chỉ mới
-                </Btn>
+                {!userInfo?.accountDetail.default && (
+                  <Btn
+                    maintine="a"
+                    customStyle={{
+                      alignSelf: "flex-end",
+                      justifySelf: "flex-end",
+                    }}
+                    onClick={() => {
+                      if (userInfo) {
+                        handleSetDefaultAddress(userInfo?.accountDetail.id);
+                      }
+                    }}
+                  >
+                    Đặt mặc định
+                  </Btn>
+                )}
               </div>
               <div className="infouser-input">
                 <>
@@ -208,13 +273,10 @@ function InfoUser() {
                   Thay đổi
                 </Button>
               ) : (
-                <>
+                <Flex>
                   <Button
                     type="submit"
                     style={{ display: "flex", margin: "6px 40px 40px 40px" }}
-                    onClick={() => {
-                      console.log(userInfo);
-                    }}
                   >
                     Lưu
                   </Button>
@@ -227,7 +289,13 @@ function InfoUser() {
                   >
                     Hủy
                   </Button>
-                </>
+                  <Button
+                    style={{ display: "flex", margin: "6px 40px 40px auto" }}
+                    onClick={handleDeleteUserDetail}
+                  >
+                    Xóa
+                  </Button>
+                </Flex>
               )}
             </form>
           </div>
