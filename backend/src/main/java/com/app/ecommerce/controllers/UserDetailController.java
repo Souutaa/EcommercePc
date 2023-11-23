@@ -23,7 +23,6 @@ import com.app.ecommerce.DTO.accountDetail.AccountDetailResponse;
 import com.app.ecommerce.DTO.accountDetail.CreateAccountDetailDTO;
 import com.app.ecommerce.DTO.accountDetail.UpdateAccountDetailDTO;
 import com.app.ecommerce.config.JwtService;
-import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
 import com.app.ecommerce.models.AccountDetail;
 import com.app.ecommerce.services.IAccountDetailServices;
@@ -44,16 +43,6 @@ public class UserDetailController {
 
     @Autowired
     private JwtService jwtService;
-
-    // @GetMapping(value = "/all")
-    // public @ResponseBody ResponseEntity<Object> getAllAccountDetail(@RequestParam Boolean active) {
-    //     try {
-    //         List<AccountDetail> accountDetail = accountDetailServices.getAllAccountDetails(active);
-    //         return new ResponseEntity<Object>(accountDetail, HttpStatus.OK);
-    //     } catch (ResourceNotFoundException ex) {
-    //         throw new ResourceNotFoundException("Can't have any user in list");
-    //     }
-    // }
 
     @GetMapping(value = "/{id}")
     public @ResponseBody ResponseEntity<Object> getAccountDetail(@PathVariable String id) {

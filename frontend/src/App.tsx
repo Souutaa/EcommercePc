@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useCallback, useEffect } from "react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import OderUser from "./Pages/OrderUser/OrderUser";
 import { PATHS } from "./Constants/path";
@@ -32,12 +32,6 @@ import PermissionAdmin from "./PagesAdmin/PermissionAdmin";
 import PermissionGroup from "./PagesAdmin/PermissionGroup";
 
 function App() {
-  // const authContext = useAuthContext();
-
-  // useEffect(() => {
-  //   authContext.checkSession();
-  // }, [authContext]);
-
   return (
     <div className="App">
       <BrowserRouter>
