@@ -35,6 +35,36 @@ interface Order {
   orderInformation: OrderInformation;
 }
 import ChangePass from "../../Components/ChangePass/ChangePass";
+import Total from "../../Components/Total/Total";
+import UserInfor from "../../Components/UserInfor/UserInfor";
+import UserOder from "../../Components/UserOrder/UserOrder";
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
+import formatPrice from "../../Helper/formatPrice";
+
+export interface OrderItem {
+  productName: string;
+  productLine: string;
+  productSN: string;
+  warrantyDate: string;
+  price: number;
+  discount: number;
+}
+
+export interface OrderInformation {
+  id: number;
+  username: string;
+  fullname: string;
+  address: string;
+  note: string;
+  email: string;
+  phoneNumber: string;
+}
+
+interface Order {
+  orderItems: OrderItem[];
+  orderInformation: OrderInformation;
+}
 
 function InfoOrder() {
   const { orderId } = useParams();
