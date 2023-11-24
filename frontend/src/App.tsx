@@ -28,8 +28,6 @@ import CategoriesAdmin from "./PagesAdmin/CategoriesAdmin";
 import OrderAdmin from "./PagesAdmin/OrderAdmin";
 import UserAdmin from "./PagesAdmin/UserAdmin";
 import RolesAdmin from "./PagesAdmin/RolesAdmin";
-import PermissionAdmin from "./PagesAdmin/PermissionAdmin";
-import PermissionGroup from "./PagesAdmin/PermissionGroup";
 
 function App() {
   const authContext = useAuthContext();
@@ -81,14 +79,6 @@ function App() {
             <Route path="/admin/order" element={<OrderAdmin />} />
             <Route path="/admin/user" element={<UserAdmin />} />
             <Route path="/admin/role" element={<RolesAdmin />} />
-            <Route
-              path="/admin/permissionadmin"
-              element={<PermissionAdmin />}
-            />
-            <Route
-              path="/admin/permissiongroup"
-              element={<PermissionGroup />}
-            />
           </Route>
         </Routes>
       </BrowserRouter>

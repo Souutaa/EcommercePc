@@ -1,7 +1,7 @@
 import React from "react";
 
 const BrandAdmin = () => {
-  return <div>Brand</div>;
+  return <div></div>;
 };
 
 export default BrandAdmin;

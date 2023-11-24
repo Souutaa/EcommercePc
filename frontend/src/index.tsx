@@ -19,7 +19,8 @@ const theme = createTheme({
 
 axios.interceptors.request.use(function (config) {
   if (localStorage.getItem("accessToken")) {
-    config.headers.Authorization = "Bearer " + localStorage.getItem("accessToken");
+    config.headers.Authorization =
+      "Bearer " + localStorage.getItem("accessToken");
     return config;
   }
   return config;
