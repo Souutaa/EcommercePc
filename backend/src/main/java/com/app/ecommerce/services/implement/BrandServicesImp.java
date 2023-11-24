@@ -15,8 +15,10 @@ import com.app.ecommerce.DTO.brand.UpdateBrandDTO;
 import com.app.ecommerce.DTO.product.ProductCardOfBrandResponse;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Brand;
+import com.app.ecommerce.models.Category;
 import com.app.ecommerce.models.Product;
 import com.app.ecommerce.respositories.BrandRepository;
+import com.app.ecommerce.respositories.CategoryRepository;
 import com.app.ecommerce.services.IBrandServices;
 import com.app.ecommerce.services.IProductServices;
 
@@ -28,6 +30,9 @@ public class BrandServicesImp implements IBrandServices {
 
     @Autowired
     private BrandRepository repo;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private IProductServices productServices;
@@ -104,7 +109,8 @@ public class BrandServicesImp implements IBrandServices {
 
     @Override
     public Brand saveBrand(CreateBrandDTO request) {
-        var brand = Brand.builder().brandName(request.getBrandName()).build();
+        Category category = categoryRepository.findById(request.getCategoryId()).get();
+        var brand = Brand.builder().brandName(request.getBrandName()).category(category).build();
         return repo.save(brand);
     }
 

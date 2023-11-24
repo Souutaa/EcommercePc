@@ -27,4 +27,7 @@ public class Category extends BaseEntity {
     @JsonManagedReference
     private List<Product> products;
 
+    @OneToMany(mappedBy = "category")
+    @JsonManagedReference
+    private List<Brand> brands;
 }
