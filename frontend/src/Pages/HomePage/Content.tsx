@@ -15,25 +15,44 @@ export type ProductItems = {
   price: number;
   thumbnailUri: string;
 };
-type Brand = {
+export type Brand = {
   id: number;
   brandName: string;
+  // name: string;
   products: ProductItems[];
 };
 
 export type Category = {
   id: number;
   name: string;
-  products: ProductItems[];
+  //products: ProductItems[];
+  brands: Brand[];
 };
 
 function Content() {
-  const [brand, setBrand] = useState<Brand[]>([]);
+  const [brand, setBrand] = useState<Category[]>([]);
+  // useEffect(() => {
+  //   console.log("get brands data from api");
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const res = await axios.get("http://127.0.0.1:8080/brand/allOfBrand");
+  //       console.log("products=> ", res);
+  //       setBrand(res.data);
+  //     } catch (error) {
+  //       console.log("error=> ", error);
+  //     }
+  //   };
+  //   fetchProducts();
+  // }, []);
+
   useEffect(() => {
     console.log("get brands data from api");
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:8080/brand/allOfBrand");
+        const res = await axios.get(
+          // "http://localhost:8080/category/allOfCategory"
+          "http://localhost:8080/category/allOfCategoryBrand"
+        );
         console.log("products=> ", res);
         setBrand(res.data);
       } catch (error) {
@@ -45,7 +64,7 @@ function Content() {
 
   const [test, setTest] = useState(true);
   const onChangeTest = (e: string) => {
-    if (e == "ALL") setTest(true);
+    if (e === "ALL") setTest(true);
     else setTest(false);
   };
 
@@ -58,12 +77,13 @@ function Content() {
           })} */}
           <TabProduct onChange={onChangeTest} />
           {brand.map((item) => {
-            console.log(test);
-            if (test == true)
+            console.log(item);
+            if (test === true)
               return (
                 <div key={item.id}>
-                  <div className="title">{item.brandName}</div>
-                  <ProductList products={item.products} />
+                  {/* <div className="title">{item.brandName}</div> */}
+                  <div className="title">{item.name}</div>
+                  <ProductList brands={item.brands} />
                 </div>
               );
           })}

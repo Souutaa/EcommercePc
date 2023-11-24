@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class CreateBrandDTO {
   private String brandName;
+  private Integer categoryId;
 }

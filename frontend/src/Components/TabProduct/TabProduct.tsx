@@ -10,8 +10,11 @@ function TabProduct({ onChange }: any) {
     console.log("get category data from api");
     const fetchProducts = async () => {
       try {
+        // const res = await axios.get(
+        //   "http://localhost:8080/category/allOfCategory"
+        // );
         const res = await axios.get(
-          "http://localhost:8080/category/allOfCategory"
+          "http://localhost:8080/category/allOfCategoryBrand"
         );
         console.log("products category=> ", res);
         setFilteredCategory(res.data);
@@ -44,7 +47,7 @@ function TabProduct({ onChange }: any) {
         size="lg"
         radius="md"
         defaultValue={currentFilter}
-        data={dataFilter}
+        data={[...dataFilter, { label: "ALL", value: "ALL" }]}
         onChange={(e) => {
           onChangeFilter(e);
           onChange(e);
@@ -52,8 +55,13 @@ function TabProduct({ onChange }: any) {
       />
 
       {filteredCategory.map((e) => {
-        if (e.name == currentFilter)
-          return <ProductListNoButtonMore products={e.products} />;
+        if (e.name === currentFilter)
+          return (
+            <div key={e.id}>
+              {/* <div className="title">{item.brandName}</div> */}
+              <ProductListNoButtonMore brands={e.brands} />
+            </div>
+          );
         //if (e.name == "ALL") return null;
       })}
     </>

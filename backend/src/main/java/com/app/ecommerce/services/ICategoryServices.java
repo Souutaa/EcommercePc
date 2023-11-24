@@ -3,6 +3,7 @@ package com.app.ecommerce.services;
 import java.util.List;
 
 import com.app.ecommerce.DTO.brand.BrandProductResponse;
+import com.app.ecommerce.DTO.category.CategoryBrandProductResponse;
 import com.app.ecommerce.DTO.category.CategoryProductResponse;
 import com.app.ecommerce.DTO.category.CreateCategoryDTO;
 import com.app.ecommerce.DTO.category.UpdateCategoryDTO;
@@ -14,6 +15,8 @@ public interface ICategoryServices {
     public Category getCategorybyName(String name);
 
     public List<CategoryProductResponse> getProductOfCategory();
+
+    public List<CategoryBrandProductResponse> getBrandofCategory();
 
     public CategoryProductResponse getCategoryProductResponseById(String name);
 

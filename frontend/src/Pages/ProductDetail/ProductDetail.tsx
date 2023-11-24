@@ -12,6 +12,7 @@ import { ProductItems } from "../HomePage/Content";
 import ProductList from "../../Components/Product/ProductList";
 import ButtonAdd from "../../Components/Button/button-add-to-cart";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import ProductListDetail from "../../Components/Product/ProductListDetail";
 
 export type ProductInfoType = {
   id: number;
@@ -135,8 +136,11 @@ function ProductDetail() {
         </div>
         <div className="product-more">
           <div className="product-more-text">Các sản phẩm khác của Acer</div>
+          {/* {productsOfBrand?.products && (
+            <ProductList brands={productsOfBrand?.products} />
+          )} */}
           {productsOfBrand?.products && (
-            <ProductList products={productsOfBrand?.products} />
+            <ProductListDetail products={productsOfBrand?.products} />
           )}
         </div>
       </div>

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.ecommerce.DTO.brand.BrandProductResponse;
 import com.app.ecommerce.DTO.brand.CreateBrandDTO;
 import com.app.ecommerce.DTO.brand.UpdateBrandDTO;
-import com.app.ecommerce.DTO.product.ProductCardOfBrandResponse;
 import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.services.IBrandServices;
 
