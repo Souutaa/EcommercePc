@@ -1,13 +1,20 @@
 import Product from ".";
-import { ProductItems } from "../../Pages/HomePage/Content";
+import { Brand, ProductItems } from "../../Pages/HomePage/Content";
 import ButtonMore from "../Button/button-more";
-function ProductList(props: { products: ProductItems[] }) {
+function ProductList(props: { brands: Brand[] }) {
+  console.log("1231312312", props.brands);
   return (
     <>
-      <div className="product-list-detail">
-        <Product products={props.products} />
-      </div>
-      <ButtonMore />
+      {props.brands.map((e) => {
+        return (
+          <>
+            <div className="product-list-detail">
+              <Product products={e.products} />
+            </div>
+            <ButtonMore />
+          </>
+        );
+      })}
     </>
   );
 }

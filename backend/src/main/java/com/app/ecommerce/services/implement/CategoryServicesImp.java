@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.ecommerce.DTO.brand.BrandProductResponse;
+import com.app.ecommerce.DTO.category.CategoryBrandProductResponse;
 import com.app.ecommerce.DTO.category.CategoryProductResponse;
 import com.app.ecommerce.DTO.category.CreateCategoryDTO;
 import com.app.ecommerce.DTO.category.UpdateCategoryDTO;
@@ -50,6 +51,42 @@ public class CategoryServicesImp implements ICategoryServices {
         } else {
             throw new ResourceNotFoundException("Category with name: " + name + " Not Found");
         }
+    }
+
+    @Override
+    public List<CategoryBrandProductResponse> getBrandofCategory() {
+        List<Category> categories = repo.findAllCategoryActive();
+        List<CategoryBrandProductResponse> categoryBrands = new ArrayList<CategoryBrandProductResponse>();
+        for (Category category : categories) {
+            List<BrandProductResponse> categoryBrand = new ArrayList<BrandProductResponse>();
+            for (Brand brand : category.getBrands()) {
+                List<ProductCardOfBrandResponse> categoryProducts = new ArrayList<ProductCardOfBrandResponse>();
+                for (Product product : brand.getProducts()) {
+                    if (product.getCategory().getId() == category.getId()
+                            && product.getBrand().getId() == brand.getId())
+                        categoryProducts
+                                .add(ProductCardOfBrandResponse
+                                        .builder()
+                                        .thumbnailUri(productServices.getProductThumbnail(product.getProductLine()))
+                                        .id(product.getId())
+                                        .productLine(product.getProductLine())
+                                        .productName(product.getProductName())
+                                        .price(product.getPrice())
+                                        .discount(product.getDiscount())
+                                        .name(category.getName())
+                                        .build());
+                }
+                categoryBrand.add(BrandProductResponse
+                        .builder()
+                        .id(brand.getId())
+                        .brandName(brand.getBrandName())
+                        .products(categoryProducts).build());
+            }
+            categoryBrands.add(CategoryBrandProductResponse.builder().name(category.getName()).id(category.getId())
+                    .brands(categoryBrand).build());
+        }
+        return categoryBrands;
+
     }
 
     @Override

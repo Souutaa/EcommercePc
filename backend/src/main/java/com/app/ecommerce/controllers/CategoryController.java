@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.brand.BrandProductResponse;
+import com.app.ecommerce.DTO.category.CategoryBrandProductResponse;
 import com.app.ecommerce.DTO.category.CategoryProductResponse;
 import com.app.ecommerce.DTO.category.CreateCategoryDTO;
 import com.app.ecommerce.DTO.category.UpdateCategoryDTO;
@@ -48,6 +49,12 @@ public class CategoryController {
     public @ResponseBody ResponseEntity<Object> getAllproductOfBrand() {
         List<CategoryProductResponse> listProducts = this.categoryServices.getProductOfCategory();
         return new ResponseEntity<Object>(listProducts, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/allOfCategoryBrand")
+    public @ResponseBody ResponseEntity<Object> getAllBrandOfCategory() {
+        List<CategoryBrandProductResponse> list = this.categoryServices.getBrandofCategory();
+        return new ResponseEntity<Object>(list, HttpStatus.OK);
     }
 
     @GetMapping(value = "/getByName")
