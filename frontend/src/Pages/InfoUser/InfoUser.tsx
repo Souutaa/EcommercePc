@@ -14,6 +14,8 @@ import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import Btn from "../../Components/Button";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../Constants/path";
 
 export interface UserInformation {
   accountDetail: {
@@ -31,11 +33,11 @@ export interface UserInformation {
 }
 
 function InfoUser() {
-  console.log("re-render");
   const [userInfo, setUserInfo] = useState<UserInformation>();
   const [address, setAddress] = useState<UserInformation[] | null>([]);
   const [preserveValue, setPreserveValue] = useState<UserInformation>();
   const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     const getAllUserInfo = async () => {
       try {
@@ -73,7 +75,7 @@ function InfoUser() {
           `http://127.0.0.1:8080/userDetail/${id}/update`,
           updatedInfo
         );
-  
+
         setAddress((prevState) => {
           let newState: UserInformation[] = [];
           if (Array.isArray(prevState)) {
@@ -113,9 +115,20 @@ function InfoUser() {
     } catch {}
   };
 
-  const handleDeleteUserDetail = async () => {
-    console.log()
-  }
+  const handleDeleteUserDetail = async (id: number) => {
+    await axios.delete(`http://127.0.0.1:8080/userDetail/delete?id=${id}`);
+    setAddress((prevState) => {
+      let newState: UserInformation[] = [];
+      if (Array.isArray(prevState)) {
+        newState = [...prevState];
+        newState.splice(
+          newState.findIndex((item) => item.accountDetail.id === id),
+          1
+        );
+      }
+      return newState;
+    });
+  };
 
   return (
     <>
@@ -132,10 +145,23 @@ function InfoUser() {
             <UserOder />
           </div>
           <div className="infouser-container">
-            <h3 className="infouser-title">Hồ sơ của tôi</h3>
-            <h5 className="infouser-text">
-              Quản lý thông tin hồ sơ để bảo mật tài khoản
-            </h5>
+            <Flex style={{ width: "100%" }} justify={"space-between"}>
+              <h3 className="infouser-title">Hồ sơ của tôi</h3>
+              <Btn
+                maintine="a"
+                customStyle={{
+                  alignSelf: "center",
+                  justifySelf: "flex-end",
+                }}
+                style={{
+                  margin: "20px 40px 10px 0"
+                }}
+                color="#12e17b"
+                onClick={() => {navigate(PATHS.ADDUSERINFO)}}
+              >
+                Thêm địa chỉ mới
+              </Btn>
+            </Flex>
             <Divider></Divider>
             <form action="" onSubmit={handleSubmitChange}>
               <div
@@ -291,7 +317,10 @@ function InfoUser() {
                   </Button>
                   <Button
                     style={{ display: "flex", margin: "6px 40px 40px auto" }}
-                    onClick={handleDeleteUserDetail}
+                    onClick={() => {
+                      if (userInfo)
+                        handleDeleteUserDetail(userInfo.accountDetail.id);
+                    }}
                   >
                     Xóa
                   </Button>

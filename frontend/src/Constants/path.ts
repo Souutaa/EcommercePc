@@ -18,5 +18,6 @@ export const PATHS = {
   ORDERED: HOME_PATH + "/Payment",
   ORDER: HOME_PATH + "/InfoOder",
   USERINFO: HOME_PATH + "/InfoUser",
+  ADDUSERINFO: HOME_PATH + "/InfoUser/add",
   INFORDER: HOME_PATH + "/InfoOders",
 };
