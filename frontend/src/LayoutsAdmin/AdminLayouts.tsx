@@ -65,19 +65,21 @@ function AdminLayouts() {
               <Menu.Item leftSection>Welcome!</Menu.Item>
               <AdminInfor />
               <Seaparator />
-              <Menu.Item
-                color="red"
-                leftSection={
-                  <IconLogout
-                    style={{
-                      width: rem(14),
-                      height: rem(14),
-                    }}
-                  />
-                }
-              >
-                SignOut
-              </Menu.Item>
+              <Link style={{ textDecoration: "none" }} to={"/"}>
+                <Menu.Item
+                  color="red"
+                  leftSection={
+                    <IconLogout
+                      style={{
+                        width: rem(14),
+                        height: rem(14),
+                      }}
+                    />
+                  }
+                >
+                  SignOut
+                </Menu.Item>
+              </Link>
             </Menu.Dropdown>
           </Menu>
         </Group>
@@ -119,14 +121,6 @@ function AdminLayouts() {
         <Link to="/admin/role" className="admin-title">
           <IconFlag />
           <span className="admin-text">Roles</span>
-        </Link>
-        <Link to="/admin/permissionadmin" className="admin-title">
-          <IconBoxMultiple />
-          <span className="admin-text">Permission</span>
-        </Link>
-        <Link to="/admin/permissiongroup" className="admin-title">
-          <IconBoxMultiple />
-          <span className="admin-text">Permission Groups</span>
         </Link>
       </AppShell.Navbar>
       <AppShell.Main>
