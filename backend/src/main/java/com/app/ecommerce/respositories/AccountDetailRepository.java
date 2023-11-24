@@ -29,6 +29,6 @@ public interface AccountDetailRepository extends JpaRepository<AccountDetail, In
     @Query(value = "select public.account_detail.* from account_detail LEFT JOIN public.account ON account.id = account_detail.account_id WHERE is_default = true AND account.username = ?1", nativeQuery = true)
     Optional<AccountDetail> findAccountDetailDefault(String username);
 
-    @Query(value = "select public.account_detail.* from account_detail LEFT JOIN public.account ON account.id = account_detail.account_id WHERE account.username = ?1 ORDER BY account_detail.is_default DESC", nativeQuery = true)
+    @Query(value = "select public.account_detail.* from account_detail LEFT JOIN public.account ON account.id = account_detail.account_id WHERE account.username = ?1 AND account_detail.deleted_at IS NULL ORDER BY account_detail.is_default DESC", nativeQuery = true)
     Optional<List<AccountDetail>> findAllAccountDetail(String username);
 }

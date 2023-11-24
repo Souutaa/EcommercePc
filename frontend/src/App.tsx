@@ -28,6 +28,7 @@ import CategoriesAdmin from "./PagesAdmin/CategoriesAdmin";
 import OrderAdmin from "./PagesAdmin/OrderAdmin";
 import UserAdmin from "./PagesAdmin/UserAdmin";
 import RolesAdmin from "./PagesAdmin/RolesAdmin";
+import AddNewInfo from "./Pages/InfoUser/AddNewInfo";
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
             <Route path={PATHS.ORDERED} element={<ProductOdered />} />
             <Route path={PATHS.ORDER} element={<OderUser />} />
             <Route path={PATHS.USERINFO} element={<InfoUser />} />
+            <Route path={PATHS.ADDUSERINFO} element={<AddNewInfo />} />
             <Route path={PATHS.INFORDER} element={<InfoOrder />} />
           </Route>
           <Route path="/admin" element={<AdminLayouts />}>
