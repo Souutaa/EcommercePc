@@ -28,7 +28,7 @@ public class OrderInformationController {
     @Autowired
     private OrderInformationImp orderInformationService;
 
-    @GetMapping(value = "/getById")
+    @GetMapping(value = "/")
     public @ResponseBody ResponseEntity<Object> getbyId(@RequestParam String id) {
         OrderInformation orderInformation = orderInformationService.getOrderInformationById(Integer.parseInt(id));
         return new ResponseEntity<Object>(orderInformation, HttpStatus.OK);

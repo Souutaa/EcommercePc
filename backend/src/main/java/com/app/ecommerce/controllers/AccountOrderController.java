@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.order.CreateOrderRequest;
+import com.app.ecommerce.DTO.order.OrderDetailResponse;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.models.AccountOrder;
@@ -104,5 +106,12 @@ public class AccountOrderController {
     List<AccountOrder> accountOrders = repo.findAll();
     ExportExcelServicesImp test = new ExportExcelServicesImp(accountOrders);
     test.export(response);
+  }
+
+  @GetMapping("/getOrderDetail")
+  public ResponseEntity<OrderDetailResponse> getOrderDetail(@RequestHeader("Authorization") String authorization, @RequestParam String id) {
+    String token = authorization.split(" ")[1].trim();
+    String username = this.jwtService.extractUsername(token);
+    return ResponseEntity.ok(this.orderServices.getOrderDetail(username, Integer.parseInt(id)));
   }
 }

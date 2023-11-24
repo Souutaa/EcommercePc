@@ -16,7 +16,7 @@ function OderUserStatus(props: AccountOrders) {
         <Link
           to={PATHS.INFORDER}
           className="user-order"
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none" }} 
         >
           Chi tiết hóa đơn
         </Link>

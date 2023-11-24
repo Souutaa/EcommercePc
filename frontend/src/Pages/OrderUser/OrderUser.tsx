@@ -17,7 +17,6 @@ export type AccountOrders = {
   status: string;
   total: number;
   createdAt: string;
-  //orderDetails: OrderDetail[];
 };
 
 function OderUser() {

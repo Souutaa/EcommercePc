@@ -2,9 +2,9 @@ package com.app.ecommerce.services;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import com.app.ecommerce.DTO.order.CreateOrderRequest;
+import com.app.ecommerce.DTO.order.OrderDetailResponse;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.models.AccountOrder;
 
@@ -26,4 +26,6 @@ public interface IAccountOrderServices {
   public AccountOrder cancelOrder(Integer orderId);
 
   public AccountOrder confirmOrder(Integer orderId, String username);
+
+  public OrderDetailResponse getOrderDetail(String username, Integer orderId);
 }

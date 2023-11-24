@@ -65,7 +65,10 @@ function App() {
             <Route path={PATHS.ORDER} element={<OderUser />} />
             <Route path={PATHS.USERINFO} element={<InfoUser />} />
             <Route path={PATHS.ADDUSERINFO} element={<AddNewInfo />} />
-            <Route path={PATHS.INFORDER} element={<InfoOrder />} />
+            <Route
+              path={PATHS.INFORDER + "/:orderId"}
+              element={<InfoOrder />}
+            />
           </Route>
           <Route path="/admin" element={<AdminLayouts />}>
             <Route index element={<Dashborad />} />
