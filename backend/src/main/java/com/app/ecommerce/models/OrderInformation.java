@@ -1,5 +1,7 @@
 package com.app.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,5 +38,6 @@ public class OrderInformation extends BaseEntity {
     // Mapping
     @OneToOne(optional = false, fetch=FetchType.LAZY)
     @MapsId
+    @JsonBackReference
     private AccountOrder accountOrder;
 }

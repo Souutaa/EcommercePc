@@ -26,7 +26,6 @@ public class OrderDetail extends BaseEntity {
     // ---------- Mapping -----------
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_warranty_id", referencedColumnName = "id")
-    // @JsonBackReference
     private ProductWarranty productWarranty;
 
     @ManyToOne(fetch = FetchType.LAZY)

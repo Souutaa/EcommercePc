@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.ecommerce.DTO.order.CartItem;
+import com.app.ecommerce.models.AccountOrder;
 import com.app.ecommerce.models.OrderDetail;
 import com.app.ecommerce.models.Product;
 import com.app.ecommerce.models.ProductWarranty;
@@ -29,7 +30,7 @@ public class OrderDetailServicesImp implements IOrderDetailServices {
   private IProductWarrantyServices productWarrantyServices;
 
   @Override
-  public List<OrderDetail> createOrderDetail(List<CartItem> cartItems) throws NumberFormatException, SQLException {
+  public List<OrderDetail> createOrderDetail(List<CartItem> cartItems, AccountOrder order) throws NumberFormatException, SQLException {
     List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
     for (CartItem cartItem : cartItems) {
       Product product = productServices.getProduct(cartItem.getProductLine());
@@ -39,6 +40,7 @@ public class OrderDetailServicesImp implements IOrderDetailServices {
           .purchaseDiscount(product.getDiscount())
           .purchasePrice(product.getPrice())
           .productWarranty(productWarranty)
+          .accountOrder(order)
           .build();
         orderDetails.add(newOrderDetail);
       }

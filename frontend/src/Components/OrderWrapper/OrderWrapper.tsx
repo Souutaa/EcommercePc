@@ -1,30 +1,53 @@
 import { Link } from "react-router-dom";
+import { OrderItem } from "../../Pages/InfoOrder/InfoOrder";
+import formatPrice from "../../Helper/formatPrice";
+import { PATHS } from "../../Constants/path";
 
-function OrderWrapper() {
+interface Props {
+  orderItems: OrderItem[] | undefined;
+}
+
+function OrderWrapper(props: Props) {
   return (
     <>
       <div className="infoorder-wrapper">
         <div className="infoorder-titles">
           <h4 className="infoorder-title ">Sản phẩm</h4>
-          <h4 className="infoorder-title ">Số lượng</h4>
           <h4 className="infoorder-title ">Giá</h4>
+          <h4 className="infoorder-title ">Giảm</h4>
           <h4 className="infoorder-title ">Tổng</h4>
         </div>
-        <div className="infoorder-item">
-          <Link
-            style={{ textDecoration: "none" }}
-            to=""
-            className="infoorder-item-name "
-          >
-            Laptop MSI Gaming GF65 Thin 10UE i5 10500H/16GB/512GB/6GB RTX3060
-            Max-Q/144Hz/Balo/Win10 (286VN)
-            <br />
-            <span className="infoorder-item-warranty">Hết bảo hành</span>
-          </Link>
-          <p className="infoorder-item-quantity ">1</p>
-          <p className="infoorder-item-price ">29,490,000đ</p>
-          <p className="infoorder-item-total-price ">29,490,000đ</p>
-        </div>
+        {props.orderItems?.map((item) => {
+          let basePrice = item.price;
+          let discount = item.price * (item.discount / 100)
+          return (
+            <div className="infoorder-item">
+              <Link
+                style={{ textDecoration: "none" }}
+                to={PATHS.PRODUCT + `/${item.productLine}`}
+                className="infoorder-item-name"
+              >
+                {item.productName}
+                <br />
+                <br />
+                <span>S/N: {item.productSN}</span>
+                <span className="infoorder-item-warranty">
+                  Bảo hành đến:{" "}
+                  {new Date(item.warrantyDate).toLocaleDateString()}
+                </span>
+              </Link>
+              <p className="infoorder-item-quantity">
+                {formatPrice(basePrice)}
+              </p>
+              <p className="infoorder-item-price ">
+                {formatPrice(discount)}
+              </p>
+              <p className="infoorder-item-total-price ">
+                {formatPrice(basePrice - discount)}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </>
   );
