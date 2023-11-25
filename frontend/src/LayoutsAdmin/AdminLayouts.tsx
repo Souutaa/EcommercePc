@@ -1,10 +1,17 @@
-import { AppShell, Avatar, Burger, Group, Menu, rem } from "@mantine/core";
+import {
+  AppShell,
+  Avatar,
+  Burger,
+  Divider,
+  Group,
+  Menu,
+  rem,
+} from "@mantine/core";
 import { IconLogout } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import {
   IconArchive,
-  IconBoxMultiple,
   IconBrandNem,
   IconBriefcase,
   IconFlag,
@@ -104,7 +111,7 @@ function AdminLayouts() {
           <IconBrandNem />
           <span className="admin-text">Brands</span>
         </Link>
-        <Link to="/admin/categori" className="admin-title">
+        <Link to="/admin/category" className="admin-title">
           <IconArchive />
           <span className="admin-text">Categories</span>
         </Link>
@@ -126,6 +133,19 @@ function AdminLayouts() {
       <AppShell.Main>
         <div className="container-fluid">
           <Outlet />
+          <div className="container-footer">
+            <Divider my="sm" />
+            <div className="container-footer-text">
+              <div className="container-footer-name">
+                2023 © Techshop - Mystery V
+              </div>
+              <div>
+                <span className="container-footer-contact">About</span>
+                <span className="container-footer-contact">Support</span>
+                <span className="container-footer-contact">Contact Us</span>
+              </div>
+            </div>
+          </div>
         </div>
       </AppShell.Main>
     </AppShell>

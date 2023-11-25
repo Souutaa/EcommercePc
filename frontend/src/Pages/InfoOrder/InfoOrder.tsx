@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Total from "../../Components/Total/Total";
 import OrderWrapper from "../../Components/OrderWrapper/OrderWrapper";
 import ShipInfo from "../../Components/ShipInfo/ShipInfo";
+import ChangePass from "../../Components/ChangePass/ChangePass";
 
 function InfoOrder() {
   return (
@@ -22,6 +23,7 @@ function InfoOrder() {
               </div>
             </div>
             <UserOder />
+            <ChangePass />
           </div>
           <div className="infoorder-container">
             <div className="infoorder-detail">
