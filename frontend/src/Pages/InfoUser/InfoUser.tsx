@@ -16,6 +16,7 @@ import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import Btn from "../../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
+import ChangePass from "../../Components/ChangePass/ChangePass";
 
 export interface UserInformation {
   accountDetail: {
@@ -143,10 +144,11 @@ function InfoUser() {
               </div>
             </div>
             <UserOder />
+            <ChangePass />
           </div>
           <div className="infouser-container">
             <Flex style={{ width: "100%" }} justify={"space-between"}>
-              <h3 className="infouser-title">Hồ sơ của tôi</h3>
+              <h3 className="infouser-title mb-20">Hồ sơ của tôi</h3>
               <Btn
                 maintine="a"
                 customStyle={{
@@ -154,10 +156,12 @@ function InfoUser() {
                   justifySelf: "flex-end",
                 }}
                 style={{
-                  margin: "20px 40px 10px 0"
+                  margin: "20px 40px 10px 0",
                 }}
                 color="#12e17b"
-                onClick={() => {navigate(PATHS.ADDUSERINFO)}}
+                onClick={() => {
+                  navigate(PATHS.ADDUSERINFO);
+                }}
               >
                 Thêm địa chỉ mới
               </Btn>

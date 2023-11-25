@@ -34,6 +34,7 @@ interface Order {
   orderItems: OrderItem[];
   orderInformation: OrderInformation;
 }
+import ChangePass from "../../Components/ChangePass/ChangePass";
 
 function InfoOrder() {
   const { orderId } = useParams();
@@ -80,6 +81,7 @@ function InfoOrder() {
               </div>
             </div>
             <UserOder />
+            <ChangePass />
           </div>
           <div className="infoorder-container">
             <div className="infoorder-detail">

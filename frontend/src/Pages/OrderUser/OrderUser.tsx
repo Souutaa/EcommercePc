@@ -1,15 +1,11 @@
-import {
-  Avatar,
-  Pagination,
-  SegmentedControl,
-} from "@mantine/core";
+import { Avatar, Pagination, SegmentedControl } from "@mantine/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
-
+import ChangePass from "../../Components/ChangePass/ChangePass";
 
 export type AccountOrders = {
   id: number;
@@ -91,6 +87,7 @@ function OderUser() {
               </div>
             </div>
             <UserOder />
+            <ChangePass />
           </div>
 
           <div className="orderuser-container">

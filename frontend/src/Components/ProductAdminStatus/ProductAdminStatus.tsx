@@ -3,7 +3,7 @@ import React from "react";
 import SeaparatorTable from "../Seaparator/SeaparatorTable";
 import ButtonDelete from "../Button/button-delete";
 import ButtonView from "../Button/button-view";
-import ButtonChange from "../Button/button-change";
+import ButtonChange from "../Button/button-change-product";
 
 const ProductAdminStatus = () => {
   return (

@@ -1,9 +1,8 @@
-import { useCallback, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import OderUser from "./Pages/OrderUser/OrderUser";
 import { PATHS } from "./Constants/path";
-import { useAuthContext } from "./Context/AuthContext";
+
 import MainLayout from "./Layouts/Index";
 import Home from "./Pages/HomePage";
 import InfoUser from "./Pages/InfoUser/InfoUser";
@@ -29,6 +28,7 @@ import OrderAdmin from "./PagesAdmin/OrderAdmin";
 import UserAdmin from "./PagesAdmin/UserAdmin";
 import RolesAdmin from "./PagesAdmin/RolesAdmin";
 import AddNewInfo from "./Pages/InfoUser/AddNewInfo";
+import ChangePassUser from "./Pages/ChangePassUser/ChangePassUser";
 
 function App() {
   return (
@@ -69,12 +69,13 @@ function App() {
               path={PATHS.INFORDER + "/:orderId"}
               element={<InfoOrder />}
             />
+            <Route path={PATHS.CHANGEPASSUSER} element={<ChangePassUser />} />
           </Route>
           <Route path="/admin" element={<AdminLayouts />}>
             <Route index element={<Dashborad />} />
             <Route path="/admin/product" element={<ProductAdmin />} />
             <Route path="/admin/brands" element={<BrandAdmin />} />
-            <Route path="/admin/categori" element={<CategoriesAdmin />} />
+            <Route path="/admin/category" element={<CategoriesAdmin />} />
             <Route path="/admin/order" element={<OrderAdmin />} />
             <Route path="/admin/user" element={<UserAdmin />} />
             <Route path="/admin/role" element={<RolesAdmin />} />

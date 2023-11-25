@@ -15,12 +15,12 @@ const ProductAdmin = () => {
     <MantineProvider>
       <ModalsProvider>
         <Notifications />
-        <div className="header-product">
+        <div className="header-content">
           <h4 className="page-title">Products</h4>
           <Breadcrumbs />
         </div>
-        <div className="card-product">
-          <div className="button-admin-product">
+        <div className="body-content">
+          <div className="button-admin">
             <ButtonAddAdmin />
           </div>
           <div className="product-datatable-wrapper">
