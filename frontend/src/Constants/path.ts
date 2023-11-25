@@ -1,3 +1,5 @@
+import HomePage from "../Pages/HomePage";
+
 const LOGIN_PATH = "/login";
 const HOME_PATH = "/Home";
 
@@ -20,4 +22,5 @@ export const PATHS = {
   USERINFO: HOME_PATH + "/InfoUser",
   ADDUSERINFO: HOME_PATH + "/InfoUser/add",
   INFORDER: HOME_PATH + "/InfoOders",
+  CHANGEPASSUSER: HOME_PATH + "/ChangePassword",
 };

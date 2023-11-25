@@ -268,7 +268,7 @@ body {
   width: 100%;
   height: 1px;
   align-self: stretch;
-  background: var(--gray-100, #f3f4f6);
+  background: #eef2f7;
 }
 
 .user-info-name {
@@ -1692,6 +1692,25 @@ p {
   margin-top: 10px;
 }
 
+/*ChangePass*/
+.change-pass-user {
+  text-align: left;
+  margin-top: -5px;
+  margin-left: 20px;
+}
+
+.change-pass-users {
+  color: #1f2a37;
+}
+
+.change-pass-users:hover {
+  color: #228be6;
+}
+
+.change-pass-content {
+  padding: 30px 350px;
+}
+
 
 
 /*Admin Page*/
@@ -1721,9 +1740,29 @@ p {
   margin: 20px 0 20px 10px;
 }
 
-.container-fuild {}
+.container-footer {
+  margin-top: 30px;
+}
 
-.page-title-box {}
+.container-footer-text {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.container-footer-name {
+  color: #98a6ad;
+}
+
+.container-footer-contact {
+  margin: 0 10px;
+  color: #98a6ad;
+}
+
+.container-footer-contact:hover {
+  cursor: pointer;
+  color: black;
+}
 
 .page-title-right {
   float: right;
@@ -1812,13 +1851,13 @@ tr:hover {
 }
 
 /* PRODUCT ADMIN*/
-.header-product {
+.header-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.card-product {
+.body-content {
   background-color: var(--white-color);
   width: 100%;
   height: auto;
@@ -1826,7 +1865,7 @@ tr:hover {
   border-radius: 10px;
 }
 
-.button-admin-product {
+.button-admin {
   width: 100%;
   text-align: left;
   margin-bottom: 20px;
@@ -1837,7 +1876,7 @@ tr:hover {
   justify-content: space-between;
 }
 
-.dataTables-length {}
+
 
 .form-lable {
   display: flex;
@@ -1936,4 +1975,9 @@ td {
 .product-thumbnail {
   margin-top: 5px;
   margin-bottom: 20px;
+}
+
+/*Brand Admin*/
+.text-hover:hover {
+  background-color: #f1f3fa;
 }
