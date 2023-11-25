@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import OrderWrapper from "../../Components/OrderWrapper/OrderWrapper";
 import ShipInfo from "../../Components/ShipInfo/ShipInfo";
+import ChangePass from "../../Components/ChangePass/ChangePass";
 import Total from "../../Components/Total/Total";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
