@@ -140,7 +140,10 @@ function ProductDetail() {
             <ProductList brands={productsOfBrand?.products} />
           )} */}
           {productsOfBrand?.products && (
-            <ProductListDetail products={productsOfBrand?.products} />
+            <ProductListDetail
+              products={productsOfBrand?.products}
+              name={productsOfBrand.brandName}
+            />
           )}
         </div>
       </div>

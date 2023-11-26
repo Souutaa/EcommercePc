@@ -1,8 +1,10 @@
-import { SegmentedControl, SegmentedControlItem } from "@mantine/core";
+import { Button, SegmentedControl, SegmentedControlItem } from "@mantine/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Category } from "../../Pages/HomePage/Content";
 import ProductListNoButtonMore from "../Product/ProductListNoButtonMore";
+import { Link } from "react-router-dom";
+import { PATHS } from "../../Constants/path";
 
 function TabProduct({ onChange }: any) {
   const [filteredCategory, setFilteredCategory] = useState<Category[]>([]);
@@ -25,6 +27,7 @@ function TabProduct({ onChange }: any) {
     fetchProducts();
   }, []);
 
+  const dataFilterDefault = [{ label: "ALL", value: "ALL" }];
   const dataFilter = filteredCategory.map((e): SegmentedControlItem => {
     return {
       value: e.name,
@@ -46,8 +49,8 @@ function TabProduct({ onChange }: any) {
         color="blue"
         size="lg"
         radius="md"
-        defaultValue={currentFilter}
-        data={[...dataFilter, { label: "ALL", value: "ALL" }]}
+        defaultValue="ALL"
+        data={[...dataFilterDefault, ...dataFilter]}
         onChange={(e) => {
           onChangeFilter(e);
           onChange(e);
@@ -59,7 +62,8 @@ function TabProduct({ onChange }: any) {
           return (
             <div key={e.id}>
               {/* <div className="title">{item.brandName}</div> */}
-              <ProductListNoButtonMore brands={e.brands} />
+              <ProductListNoButtonMore brands={e.brands} category={currentFilter} />
+              
             </div>
           );
         //if (e.name == "ALL") return null;
