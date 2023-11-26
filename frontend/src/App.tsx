@@ -53,6 +53,7 @@ function App() {
                 element={<ChangePassword />}
               ></Route>
             </Route>
+            <Route path="/Home" element={<Home />} />
             <Route path={PATHS.MORE} element={<ProductMore />} />
             <Route
               path={PATHS.PRODUCT + "/:productLine"}

@@ -42,7 +42,6 @@ function TabProduct({ onChange }: any) {
     <>
       <SegmentedControl
         style={{ background: "#FFF", marginTop: "20px" }}
-        fullWidth
         color="blue"
         size="lg"
         radius="md"
