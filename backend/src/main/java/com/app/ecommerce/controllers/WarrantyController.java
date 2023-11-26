@@ -1,5 +1,7 @@
 package com.app.ecommerce.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,9 +32,14 @@ public class WarrantyController {
   @Autowired
   private final IWarrantyPeriodServices warrantyPeriodServices;
 
-  @GetMapping(value = "{id}")
+  @GetMapping(value = "/{id}")
   public ResponseEntity<WarrantyPeriod> getWarrantyPeriod(@PathVariable String id) {
     return ResponseEntity.ok(warrantyPeriodServices.getWarrantyPeriodById(Integer.parseInt(id)));
+  }
+
+  @GetMapping(value = "")
+  public ResponseEntity<List<WarrantyPeriod>> getAllWarrantyPeriod() {
+    return ResponseEntity.ok(warrantyPeriodServices.getWarrantyPeriod());
   }
 
   @PostMapping(value = "/create")

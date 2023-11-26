@@ -28,6 +28,7 @@ import com.app.ecommerce.models.Product;
 import com.app.ecommerce.respositories.BrandRepository;
 import com.app.ecommerce.respositories.CategoryRepository;
 import com.app.ecommerce.respositories.ProductRepository;
+import com.app.ecommerce.respositories.ProductWarrantyRepository;
 import com.app.ecommerce.respositories.WarrantyPeriodRepository;
 import com.app.ecommerce.services.IProductServices;
 import com.app.ecommerce.utils.Utils;
@@ -51,13 +52,28 @@ public class ProductServicesImp implements IProductServices {
   @Autowired
   private WarrantyPeriodRepository warrantyPeriodRepository;
 
+  @Autowired
+  private ProductWarrantyServicesImp productWarrantyService;
+
   @Override
   public Product create(CreateProductRequest request, MultipartFile thumbnail, MultipartFile[] productImages)
       throws IOException {
 
-    if(this.productRepository.findByProductLine(request.getProductLine()).isPresent()) {
+    if (this.productRepository.findByProductLine(request.getProductLine()).isPresent()) {
       throw new EntityExistsException("Product with product line: " + request.getProductLine() + " already exists");
     }
+
+    Product newProduct = Product.builder()
+        .productLine(request.getProductLine())
+        .productName(request.getProductName())
+        .brand(this.brandRepository.findById(request.getBrandId()).get())
+        .category(this.categoryRepository.findById(request.getCategoryId()).get())
+        .warrantyPeriod(this.warrantyPeriodRepository.findById(request.getWarrantyPeriodId()).get())
+        .price(request.getPrice())
+        .discount(request.getDiscount())
+        .build();
+
+    Product createdProduct = this.productRepository.save(newProduct);
 
     String fileBasePath = "/app/src/main/resources/thumbnails/" + request.getProductLine() + "/";
     String fileName = StringUtils.cleanPath(thumbnail.getOriginalFilename());
@@ -74,16 +90,7 @@ public class ProductServicesImp implements IProductServices {
       Utils.copyFiles(image, imageBasePath + request.getProductLine() + "_" + UUID.randomUUID() + "." + imageExtension);
     }
 
-    Product newProduct = Product.builder()
-        .productLine(request.getProductLine())
-        .productName(request.getProductName())
-        .brand(this.brandRepository.findById(request.getBrandId()).get())
-        .category(this.categoryRepository.findById(request.getCategoryId()).get())
-        .warrantyPeriod(this.warrantyPeriodRepository.findById(request.getWarrantyPeriodId()).get())
-        .price(request.getPrice())
-        .discount(request.getDiscount())
-        .build();
-    return this.productRepository.save(newProduct);
+    return createdProduct;
   }
 
   @Override
@@ -103,7 +110,12 @@ public class ProductServicesImp implements IProductServices {
     for (Product product : products) {
       productsReponse.add(ProductCardResponse.builder().id(product.getId()).productLine(product.getProductLine())
           .productName(product.getProductName()).price(product.getPrice()).discount(product.getDiscount())
-          .thumbnailUri(this.getProductThumbnail(product.getProductLine())).build());
+          .thumbnailUri(this.getProductThumbnail(product.getProductLine()))
+          .stock(this.productWarrantyService.getProductStock(product.getId())).deletedAt(product.getDeletedAt())
+          .brandName(product.getBrand().getBrandName())
+          .categoryName(product.getCategory().getName())
+          .createdAt(product.getCreatedAt())
+          .build());
     }
     return productsReponse;
   }

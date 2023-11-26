@@ -43,6 +43,12 @@ public class BrandController {
         return new ResponseEntity<Object>(listBrands, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{categoryId}")
+    public @ResponseBody ResponseEntity<Object> getAllCategory(@PathVariable String categoryId) {
+        List<Brand> listBrands = brandServices.getCategoryBrands(Integer.parseInt(categoryId));
+        return new ResponseEntity<Object>(listBrands, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/allOfBrand")
     public @ResponseBody ResponseEntity<Object> getAllproductOfBrand() {
         List<BrandProductResponse> listProducts = this.brandServices.getProductsOfBrand();

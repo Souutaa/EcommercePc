@@ -11,6 +11,8 @@ public interface IBrandServices {
 
     public List<Brand> getBrands(boolean active);
 
+    public List<Brand> getCategoryBrands(int categoryId);
+
     public List<BrandProductResponse> getProductsOfBrand();
 
     public BrandProductResponse getBrandProductResponseById(int id);

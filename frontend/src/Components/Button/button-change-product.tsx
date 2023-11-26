@@ -12,7 +12,7 @@ const ButtonChange = () => {
           title: "Product's Information",
           children: (
             <>
-              <FormChange />
+              {/* <FormChange /> */}
             </>
           ),
         });

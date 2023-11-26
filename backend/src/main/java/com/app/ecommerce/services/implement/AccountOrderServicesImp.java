@@ -165,6 +165,7 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
               .build());
     }
 
-    return OrderDetailResponse.builder().orderInformation(orderInformation).orderItems(orderItems).build();
+    return OrderDetailResponse.builder().orderInformation(orderInformation).orderItems(orderItems)
+        .orderStatus(orderInformation.getAccountOrder().getStatus()).build();
   }
 }

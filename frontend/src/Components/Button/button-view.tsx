@@ -4,6 +4,7 @@ import { modals } from "@mantine/modals";
 import React from "react";
 import FormView from "../FormView/FormView";
 
+
 const ButtonView = () => {
   return (
     <IconEye
@@ -13,7 +14,7 @@ const ButtonView = () => {
           title: "Product's Information",
           children: (
             <>
-              <FormView />
+              {/* <FormView id={props.id}/> */}
             </>
           ),
         });

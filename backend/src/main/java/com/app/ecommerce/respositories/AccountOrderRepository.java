@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.app.ecommerce.models.AccountOrder;
 
 public interface AccountOrderRepository extends JpaRepository<AccountOrder, Integer> {
+    @Query(value = "SELECT * from account_order where username = ?1 ORDER BY created_at DESC, id DESC", nativeQuery = true)
     List<AccountOrder> findByUsername(String username);
 
     @Query(value = "SELECT * from account_order where username = ?1 LIMIT 1", nativeQuery = true)

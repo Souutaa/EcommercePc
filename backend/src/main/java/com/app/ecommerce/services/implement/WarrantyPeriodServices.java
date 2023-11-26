@@ -2,6 +2,7 @@ package com.app.ecommerce.services.implement;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,11 @@ public class WarrantyPeriodServices implements IWarrantyPeriodServices {
     } else {
       throw new ResourceNotFoundException("WarantyPeriod with Id  : " + id + " Not Found");
     }
+  }
+
+  @Override
+  public List<WarrantyPeriod> getWarrantyPeriod() {
+    return this.warrantyPeriodRepository.findAll();
   }
 
 }
