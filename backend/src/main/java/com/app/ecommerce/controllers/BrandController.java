@@ -50,8 +50,8 @@ public class BrandController {
         return new ResponseEntity<Object>(listProducts, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getByName")
-    public @ResponseBody ResponseEntity<Object> getAllBrand(@RequestParam String name) {
+    @GetMapping(value = "/{name}")
+    public @ResponseBody ResponseEntity<Object> getAllBrand(@PathVariable String name) {
         Brand listBrand = brandServices.getBrandbyName(name);
         return new ResponseEntity<Object>(listBrand, HttpStatus.OK);
     }
