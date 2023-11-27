@@ -8,6 +8,7 @@ import FilterSection from "../../Components/FilterSection/FilterSection";
 import { ProductItem } from "../../Components/Product";
 import ProductListFollowCategory from "../../Components/Product/ProductListFollowCategory";
 import formatPrice from "../../Helper/formatPrice";
+import { ProductItems } from "../HomePage/Content";
 
 type CategoryProductMore = {
   id: number;
