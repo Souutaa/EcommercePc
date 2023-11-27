@@ -7,7 +7,7 @@ import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import FilterSection from "../../Components/FilterSection/FilterSection";
 import { ProductItem } from "../../Components/Product";
 import ProductListFollowCategory from "../../Components/Product/ProductListFollowCategory";
-import { ProductItems } from "../HomePage/Content";
+import formatPrice from "../../Helper/formatPrice";
 
 type CategoryProductMore = {
   id: number;
@@ -68,11 +68,18 @@ function ProductMore() {
 
   useEffect(() => {}, [currentFilter]);
 
+  const valueLabelFormat = (value: number) => {
+    return formatPrice(value);
+  };
+
   return (
     <>
       <div className="container">
         <Breadcrumbs />
-        <FilterSection onChange={onChangeFilter} />
+        <FilterSection
+          onChange={onChangeFilter}
+          onChangFilterSlide={valueLabelFormat}
+        />
         <div className="product">
           <div className="title">
             {productMorefollowBrand?.brandName

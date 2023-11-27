@@ -17,7 +17,7 @@ const UserAdminStatus = () => {
         </td>
         <td className="table-action pd-20 text-left">
           <ButtonChangeUser />
-          <ButtonDelete />
+          <ButtonDelete productLine="" />
         </td>
       </tr>
       <SeaparatorTable />
