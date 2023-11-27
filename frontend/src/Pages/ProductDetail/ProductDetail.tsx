@@ -26,6 +26,9 @@ export type ProductDetailType = {
   productInfos: ProductInfoType[];
   thumbnailUri: string;
   warrantyPeriodId: number;
+  warrantyPeriod: number;
+  categoryName: string;
+  brandName: string;
 };
 
 type Brand = {
@@ -124,6 +127,9 @@ function ProductDetail() {
                 productInfos={productDetail?.productInfos}
                 thumbnailUri={productDetail?.thumbnailUri}
                 warrantyPeriodId={productDetail?.warrantyPeriodId}
+                brandName={productDetail?.brandName}
+                categoryName={productDetail?.categoryName}
+                warrantyPeriod={productDetail?.warrantyPeriod}
               />
             )}
             <ProductColor />
@@ -146,7 +152,10 @@ function ProductDetail() {
         <div className="product-more">
           <div className="product-more-text">Các sản phẩm khác của Acer</div>
           {productsOfBrand?.products && (
-            <ProductListDetail products={productsOfBrand?.products} />
+            <ProductListDetail
+              products={productsOfBrand?.products}
+              name={productsOfBrand.brandName}
+            />
           )}
         </div>
       </div>

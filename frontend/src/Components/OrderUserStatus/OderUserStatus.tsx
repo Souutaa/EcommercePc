@@ -14,7 +14,7 @@ function OderUserStatus(props: AccountOrders) {
         <p className="user-order-total-price">{formatPrice(props.total)}</p>
         <p className="user-order-status color-red">{props.status}</p>
         <Link
-          to={PATHS.INFORDER}
+          to={PATHS.INFORDER + `/${props.id}`}
           className="user-order"
           style={{ textDecoration: "none" }} 
         >

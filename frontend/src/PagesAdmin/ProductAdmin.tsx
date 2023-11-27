@@ -1,5 +1,5 @@
 import { Input } from "@mantine/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
 import PagiProductAdmin from "../Components/PaginationProductAdmin/PagiProductAdmin";
 import ProductAdminStatus from "../Components/ProductAdminStatus/ProductAdminStatus";
@@ -10,8 +10,37 @@ import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import ButtonAddAdmin from "../Components/Button/button-add-product-admin";
 import SearchAdmin from "../Components/SearchAdmin/SearchAdmin";
+import axios from "axios";
+
+export interface AdminProductInformation {
+  id: number;
+  productLine: string;
+  productName: string;
+  price: number;
+  discount: number;
+  thumbnailUri: string;
+  stock: number;
+  categoryName: string;
+  brandName: string;
+  deletedAt: string;
+  createdAt: string;
+}
 
 const ProductAdmin = () => {
+  const [products, setProducts] = useState<AdminProductInformation[]>();
+  const [newProduct, setNewProduct] = useState<String>("");
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:8080/product/all"
+        );
+        setProducts(response.data);
+      } catch {}
+    };
+    fetchProducts();
+  }, [newProduct]);
+
   return (
     <MantineProvider>
       <ModalsProvider>
@@ -22,7 +51,7 @@ const ProductAdmin = () => {
         </div>
         <div className="body-content">
           <div className="button-admin">
-            <ButtonAddAdmin />
+            <ButtonAddAdmin setNewProduct={setNewProduct}/>
           </div>
           <div className="product-datatable-wrapper">
             <div className="product-datatable-sort">
@@ -31,11 +60,9 @@ const ProductAdmin = () => {
             </div>
             <table className="table-centered">
               <ProductTitleAdmin />
-              <ProductAdminStatus />
-              <ProductAdminStatus />
-              <ProductAdminStatus />
-              <ProductAdminStatus />
-              <ProductAdminStatus />
+              {products && products.map(product => {
+                return <ProductAdminStatus product={product}/>
+              })}
             </table>
             <PagiProductAdmin />
           </div>

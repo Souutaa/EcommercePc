@@ -12,7 +12,7 @@ const CategoryAdminStatus = () => {
         <td className="sorting">Laptop</td>
         <td className="table-action sorting">
           <ButtonChangeCategory />
-          <ButtonDelete />
+          {/* <ButtonDelete /> */}
         </td>
       </tr>
       <SeaparatorTable />

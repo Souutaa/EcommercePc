@@ -43,14 +43,20 @@ public class BrandController {
         return new ResponseEntity<Object>(listBrands, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{categoryId}")
+    public @ResponseBody ResponseEntity<Object> getAllCategory(@PathVariable String categoryId) {
+        List<Brand> listBrands = brandServices.getCategoryBrands(Integer.parseInt(categoryId));
+        return new ResponseEntity<Object>(listBrands, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/allOfBrand")
     public @ResponseBody ResponseEntity<Object> getAllproductOfBrand() {
         List<BrandProductResponse> listProducts = this.brandServices.getProductsOfBrand();
         return new ResponseEntity<Object>(listProducts, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getByName")
-    public @ResponseBody ResponseEntity<Object> getAllBrand(@RequestParam String name) {
+    @GetMapping(value = "/{name}")
+    public @ResponseBody ResponseEntity<Object> getAllBrand(@PathVariable String name) {
         Brand listBrand = brandServices.getBrandbyName(name);
         return new ResponseEntity<Object>(listBrand, HttpStatus.OK);
     }

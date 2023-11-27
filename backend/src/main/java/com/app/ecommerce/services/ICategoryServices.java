@@ -18,7 +18,9 @@ public interface ICategoryServices {
 
     public List<CategoryBrandProductResponse> getBrandofCategory();
 
-    public CategoryProductResponse getCategoryProductResponseById(String name);
+    public CategoryProductResponse getCategoryProductResponsebyName(String name);
+
+    public BrandProductResponse getCategoryProductResponse(String name, String brandName);
 
     public Category saveCategory(CreateCategoryDTO request);
 

@@ -1,5 +1,6 @@
 package com.app.ecommerce.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.category.CategoryBrandDTO;
+import com.app.ecommerce.DTO.brand.BrandProductResponse;
 import com.app.ecommerce.DTO.category.CategoryBrandProductResponse;
 import com.app.ecommerce.DTO.category.CategoryProductResponse;
+import com.app.ecommerce.DTO.category.CategorySimpleResponse;
 import com.app.ecommerce.DTO.category.CreateCategoryDTO;
 import com.app.ecommerce.DTO.category.UpdateCategoryDTO;
+import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.Category;
 import com.app.ecommerce.services.ICategoryServices;
 
@@ -44,6 +49,25 @@ public class CategoryController {
         return new ResponseEntity<Object>(listCategories, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/all/simple")
+    public @ResponseBody ResponseEntity<Object> getAllSimpleCategory(@RequestParam boolean active) {
+        List<Category> listCategories = categoryServices.getCategories(active);
+        List<CategorySimpleResponse> categoryResponse = new ArrayList<CategorySimpleResponse>();
+        for (Category category : listCategories) {
+            if (category.getDeletedAt() != null) {
+                continue;
+            }
+            List<CategoryBrandDTO> brands = new ArrayList<CategoryBrandDTO>();
+            for (Brand brand : category.getBrands()) {
+                brands.add(CategoryBrandDTO.builder().brandName(brand.getBrandName()).id(brand.getId()).build());
+            }
+            categoryResponse
+                    .add(CategorySimpleResponse.builder().id(category.getId()).name(category.getName())
+                            .brands(brands).build());
+        }
+        return new ResponseEntity<Object>(categoryResponse, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/allOfCategory")
     public @ResponseBody ResponseEntity<Object> getAllproductOfBrand() {
         List<CategoryProductResponse> listProducts = this.categoryServices.getProductOfCategory();
@@ -62,10 +86,17 @@ public class CategoryController {
         return new ResponseEntity<Object>(listCategories, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getByIdOfCategory")
-    public @ResponseBody ResponseEntity<Object> getAllProductOfCategory(@RequestParam String name) {
-        CategoryProductResponse listCategory = categoryServices.getCategoryProductResponseById(name);
+    @GetMapping(value = "/{name}")
+    public @ResponseBody ResponseEntity<Object> getAllProductOfCategory(@PathVariable String name) {
+        CategoryProductResponse listCategory = categoryServices.getCategoryProductResponsebyName(name);
         return new ResponseEntity<Object>(listCategory, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{name}/{brandName}")
+    public @ResponseBody ResponseEntity<Object> getAllProductOfCategory(@PathVariable("name") String name,
+            @PathVariable("brandName") String brandName) {
+        BrandProductResponse brand = categoryServices.getCategoryProductResponse(name, brandName);
+        return new ResponseEntity<Object>(brand, HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")

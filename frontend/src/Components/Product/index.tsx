@@ -12,6 +12,7 @@ import formatPrice from "../../Helper/formatPrice";
 
 export type ProductItem = {
   id: number;
+  name?: string;
   productName: string;
   productLine: string;
   discount: number;

@@ -156,4 +156,9 @@ public class BrandServicesImp implements IBrandServices {
         }
     }
 
+    @Override
+    public List<Brand> getCategoryBrands(int categoryId) {
+        return this.repo.getCategoryBrands(categoryId);    
+    }
+
 }
