@@ -17,4 +17,9 @@ public interface BrandRepository extends JpaRepository<Brand, Integer> {
 
     @Query(value = "select * from brand where deleted_at is not null", nativeQuery = true)
     List<Brand> findAllBrandNotActive();
+
+    @Query(value = "SELECT brand.* FROM public.brand " + //
+                    "WHERE brand.category_id = ?1 " + //
+                    "ORDER BY brand.id ASC", nativeQuery = true)
+    List<Brand> getCategoryBrands(Integer categoryId);
 }

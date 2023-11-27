@@ -11,7 +11,7 @@ const BrandAdminStatus = () => {
         <td className="sorting">AMD</td>
         <td className="table-action sorting">
           <ButtonChangeBrand />
-          <ButtonDelete />
+          {/* <ButtonDelete /> */}
         </td>
       </tr>
       <SeaparatorTable />

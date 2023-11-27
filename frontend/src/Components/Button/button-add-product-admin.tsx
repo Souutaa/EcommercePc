@@ -3,7 +3,7 @@ import { modals } from "@mantine/modals";
 import React from "react";
 import FromProduct from "../FormProduct/FormProduct";
 
-const ButtonAddAdmin = () => {
+const ButtonAddAdmin = (props: {setNewProduct: (productLine: string) => void}) => {
   return (
     <div>
       <Button
@@ -13,7 +13,7 @@ const ButtonAddAdmin = () => {
             title: "Add new product",
             children: (
               <>
-                <FromProduct />
+                <FromProduct setNewProduct={props.setNewProduct}/>
               </>
             ),
           });

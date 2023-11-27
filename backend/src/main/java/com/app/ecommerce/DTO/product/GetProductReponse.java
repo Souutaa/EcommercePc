@@ -18,9 +18,12 @@ public class GetProductReponse {
   private Product product;
   private int brandId;
   private int categoryId;
+  private String brandName;
+  private String categoryName;
   private int warrantyPeriodId;
   private String thumbnailUri;
   private List<String> imageUris;
   private List<ProductInfoDTO> productInfos;
+  private int warrantyPeriod;
   private int stock;
 }

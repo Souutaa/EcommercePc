@@ -1,11 +1,18 @@
-import { IconPencil } from "@tabler/icons-react";
-import React from "react";
-import SeaparatorTable from "../Seaparator/SeaparatorTable";
+import { modals } from "@mantine/modals";
+import { IconEye, IconPencil } from "@tabler/icons-react";
+import formatPrice from "../../Helper/formatPrice";
+import { AdminProductInformation } from "../../PagesAdmin/ProductAdmin";
 import ButtonDelete from "../Button/button-delete";
-import ButtonView from "../Button/button-view";
-import ButtonChange from "../Button/button-change-product";
+import FormChange from "../FormChange/FormChange";
+import FormView from "../FormView/FormView";
+import SeaparatorTable from "../Seaparator/SeaparatorTable";
 
-const ProductAdminStatus = () => {
+interface Props {
+  product: AdminProductInformation;
+}
+
+const ProductAdminStatus = (props: Props) => {
+  const { product } = props;
   return (
     <tbody>
       <tr>
@@ -16,24 +23,52 @@ const ProductAdminStatus = () => {
               height: "48px",
               marginRight: "10px",
             }}
-            src="/img/img(1).png"
+            src={`http://127.0.0.1:8080/product/get-file?filePath=${product.thumbnailUri}`}
             alt=""
           />
-          <p className="text-product-admin">
-            Laptop gaming MSI Katana 15 B13VGK 1211VN
-          </p>
+          <p className="text-product-admin">{product.productName}</p>
         </td>
-        <td className="pd-20 text-left  ">Laptop</td>
-        <td className="pd-20 text-left">2023-05-09 19:50:29</td>
-        <td className="pd-20 text-left  ">8,190,000đ</td>
-        <td className="pd-20 text-left  ">3</td>
+        <td className="pd-20 text-left  ">{product.categoryName}</td>
+        <td className="pd-20 text-left">{product.createdAt}</td>
+        <td className="pd-20 text-left  ">{formatPrice(product.price)}</td>
+        <td className="pd-20 text-left  ">{product.stock}</td>
         <td className="pd-20 text-left  ">
-          <span className="badge bg-success">Actived</span>
+          {product.deletedAt ? (
+            <span className="badge bg-failed">Deactived</span>
+          ) : (
+            <span className="badge bg-success">Actived</span>
+          )}
         </td>
         <td className="table-action pd-20 text-left">
-          <ButtonView />
-          <ButtonChange />
-          <ButtonDelete />
+          <IconEye
+            onClick={() => {
+              modals.open({
+                size: "xl",
+                title: "Product's Information",
+                children: (
+                  <>
+                    <FormView productLine={product.productLine} />
+                  </>
+                ),
+              });
+            }}
+            style={{ marginRight: "5px" }}
+          />
+          <IconPencil
+            onClick={() => {
+              modals.open({
+                size: "xl",
+                title: "Product's Information",
+                children: (
+                  <>
+                    <FormChange productLine={product.productLine}/>
+                  </>
+                ),
+              });
+            }}
+            style={{ marginRight: "5px" }}
+          />
+          <ButtonDelete productLine={product.productLine} />
         </td>
       </tr>
 

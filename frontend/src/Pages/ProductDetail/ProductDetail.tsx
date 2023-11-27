@@ -7,12 +7,11 @@ import ProductColor from "../../Components/Product/ProductColor";
 import ProductInfo from "../../Components/Product/ProductInfo";
 
 import { useLocation } from "react-router-dom";
-import { ProductItem } from "../../Components/Product";
-import { ProductItems } from "../HomePage/Content";
-import ProductList from "../../Components/Product/ProductList";
-import ButtonAdd from "../../Components/Button/button-add-to-cart";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import ButtonAdd from "../../Components/Button/button-add-to-cart";
+import { ProductItem } from "../../Components/Product";
 import ProductListDetail from "../../Components/Product/ProductListDetail";
+import { ProductItems } from "../HomePage/Content";
 
 export type ProductInfoType = {
   id: number;
@@ -27,6 +26,9 @@ export type ProductDetailType = {
   productInfos: ProductInfoType[];
   thumbnailUri: string;
   warrantyPeriodId: number;
+  warrantyPeriod: number;
+  categoryName: string;
+  brandName: string;
 };
 
 type Brand = {
@@ -119,6 +121,9 @@ function ProductDetail() {
                 productInfos={productDetail?.productInfos}
                 thumbnailUri={productDetail?.thumbnailUri}
                 warrantyPeriodId={productDetail?.warrantyPeriodId}
+                brandName={productDetail?.brandName}
+                categoryName={productDetail?.categoryName}
+                warrantyPeriod={productDetail?.warrantyPeriod}
               />
             )}
             <ProductColor />

@@ -101,6 +101,9 @@ public class ProductController {
         .imageUris(productImages)
         .productInfos(productInfos)
         .stock(productWarranties.size())
+        .categoryName(product.getCategory().getName())
+        .brandName(product.getBrand().getBrandName())
+        .warrantyPeriod(product.getWarrantyPeriod().getMonths())
         .build());
   }
 

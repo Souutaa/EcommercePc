@@ -1,5 +1,7 @@
 package com.app.ecommerce.DTO.product;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,4 +18,9 @@ public class ProductCardResponse {
     private float price;
     private float discount;
     private String thumbnailUri;
+    private int stock;
+    private String categoryName;
+    private String brandName;
+    private Date deletedAt;
+    private Date createdAt;
 }

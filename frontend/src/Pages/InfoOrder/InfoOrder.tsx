@@ -1,4 +1,4 @@
-import { Avatar } from "@mantine/core";
+import { Avatar, Button, Flex } from "@mantine/core";
 
 import { useParams } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
@@ -34,6 +34,7 @@ export interface OrderInformation {
 interface Order {
   orderItems: OrderItem[];
   orderInformation: OrderInformation;
+  orderStatus: string;
 }
 
 function InfoOrder() {
@@ -54,20 +55,36 @@ function InfoOrder() {
       setOrder({
         orderInformation: data.orderInformation,
         orderItems: data.orderItems,
+        orderStatus: data.orderStatus,
       });
-      data.orderItems.forEach((item : OrderItem) => {
+      data.orderItems.forEach((item: OrderItem) => {
         let basePrice = item.price;
-        let discount = item.price * (item.discount / 100)
+        let discount = item.price * (item.discount / 100);
         setOrderTotal((prevState) => {
           let newState = { ...prevState };
           newState.discount = prevState.discount + discount;
           newState.total = prevState.total + basePrice;
           return newState;
         });
-      })
+      });
     };
     fetchOrder();
   }, [orderId]);
+
+  const handleCancelOrder = async () => {
+    await axios.patch("http://127.0.0.1:8080/order/update-status", {
+      orderId,
+      orderStatus: "CANCELED",
+    });
+    setOrder((prevState) => {
+      if (prevState) {
+        let newState = { ...prevState };
+        return { ...newState, orderStatus: "CANCELED" };
+      }
+      return prevState;
+    });
+  };
+
   return (
     <>
       <div className="container">
@@ -85,13 +102,22 @@ function InfoOrder() {
           </div>
           <div className="infoorder-container">
             <div className="infoorder-detail">
-              <h4 className="heading-territory">
-                Thông tin hóa đơn
-                <span className="oder-id">#{order?.orderInformation.id}</span>
-              </h4>
-              <OrderWrapper
-                orderItems={order?.orderItems}
-              />
+              <Flex
+                align={"center"}
+                justify={"space-between"}
+                style={{ paddingBottom: "1rem" }}
+              >
+                <h4 className="heading-territory">
+                  Thông tin hóa đơn
+                  <span className="oder-id">#{order?.orderInformation.id}</span>
+                </h4>
+                {order?.orderStatus === "PENDING" && (
+                  <Button color="#f03a17" onClick={handleCancelOrder}>
+                    Hủy đơn hàng
+                  </Button>
+                )}
+              </Flex>
+              <OrderWrapper orderItems={order?.orderItems} />
             </div>
             <div className="info-total-address">
               <div className="infoorder-summary">
