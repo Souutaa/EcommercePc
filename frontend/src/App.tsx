@@ -53,11 +53,18 @@ function App() {
                 element={<ChangePassword />}
               ></Route>
             </Route>
-            <Route path={PATHS.MORE} element={<ProductMore />} />
+            <Route path="/Home" element={<Home />} />
+            <Route
+              path={PATHS.MORE + "/:name" + "/:brandName"}
+              element={<ProductMore />}
+            />
+            <Route path={PATHS.MORE + "/:name"} element={<ProductMore />} />
+
             <Route
               path={PATHS.PRODUCT + "/:productLine"}
               element={<ProductDetail />}
             />
+
             <Route path={PATHS.CART} element={<ProductCart />} />
             <Route path={PATHS.PAYMENT} element={<ProductCheckout />} />
             <Route path={PATHS.SEARCH} element={<ProductSearch />} />

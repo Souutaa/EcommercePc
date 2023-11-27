@@ -30,7 +30,7 @@ export type Category = {
 };
 
 function Content() {
-  const [brand, setBrand] = useState<Category[]>([]);
+  const [category, setCategory] = useState<Category[]>([]);
   // useEffect(() => {
   //   console.log("get brands data from api");
   //   const fetchProducts = async () => {
@@ -54,7 +54,7 @@ function Content() {
           "http://localhost:8080/category/allOfCategoryBrand"
         );
         console.log("products=> ", res);
-        setBrand(res.data);
+        setCategory(res.data);
       } catch (error) {
         console.log("error=> ", error);
       }
@@ -76,14 +76,13 @@ function Content() {
             return <TabProduct products={e.products} />;
           })} */}
           <TabProduct onChange={onChangeTest} />
-          {brand.map((item) => {
-            console.log(item);
-            if (test === true)
+          {category.map((item) => {
+            if (test == true)
               return (
                 <div key={item.id}>
                   {/* <div className="title">{item.brandName}</div> */}
                   <div className="title">{item.name}</div>
-                  <ProductList brands={item.brands} />
+                  <ProductList brands={item.brands} name={item.name} />
                 </div>
               );
           })}

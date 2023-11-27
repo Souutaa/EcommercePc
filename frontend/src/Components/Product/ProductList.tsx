@@ -1,20 +1,21 @@
+import { useState } from "react";
 import Product from ".";
-import { Brand, ProductItems } from "../../Pages/HomePage/Content";
+import { Brand, Category, ProductItems } from "../../Pages/HomePage/Content";
 import ButtonMore from "../Button/button-more";
-function ProductList(props: { brands: Brand[] }) {
-  console.log("1231312312", props.brands);
+
+function ProductList(props: { brands: Brand[]; name: string }) {
+  const categoryItems = props.brands.map((e, index) => {
+    return e.products;
+  });
+
   return (
     <>
-      {props.brands.map((e) => {
-        return (
-          <>
-            <div className="product-list-detail">
-              <Product products={e.products} />
-            </div>
-            <ButtonMore />
-          </>
-        );
-      })}
+      <>
+        <div className="product-list-detail">
+          <Product products={categoryItems.flat()} />
+        </div>
+        <ButtonMore categoryName={props.name} />
+      </>
     </>
   );
 }

@@ -19,6 +19,7 @@ import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.Category;
 import com.app.ecommerce.models.Product;
+import com.app.ecommerce.respositories.BrandRepository;
 import com.app.ecommerce.respositories.CategoryRepository;
 import com.app.ecommerce.services.ICategoryServices;
 import com.app.ecommerce.services.IProductServices;
@@ -31,6 +32,9 @@ public class CategoryServicesImp implements ICategoryServices {
 
     @Autowired
     private CategoryRepository repo;
+
+    @Autowired
+    private BrandRepository brandRepo;
 
     @Autowired
     private IProductServices productServices;
@@ -116,7 +120,7 @@ public class CategoryServicesImp implements ICategoryServices {
     }
 
     @Override
-    public CategoryProductResponse getCategoryProductResponseById(String name) {
+    public CategoryProductResponse getCategoryProductResponsebyName(String name) {
         Optional<Category> opt = repo.findCategoryByName(name);
         CategoryProductResponse bResponse = new CategoryProductResponse();
         List<ProductCardOfBrandResponse> categoryProducts = new ArrayList<ProductCardOfBrandResponse>();
@@ -142,6 +146,38 @@ public class CategoryServicesImp implements ICategoryServices {
             return bResponse;
         } else {
             throw new ResourceNotFoundException("Cannot found category with name: " + name + " Not Found");
+        }
+    }
+
+    @Override
+    public BrandProductResponse getCategoryProductResponse(String name, String brandName) {
+        Optional<Category> opt = repo.findCategoryByName(name);
+        if (opt.isEmpty()) {
+            throw new ResourceNotFoundException("Cannot found category with name: " + name + " Not Found");
+        } else {
+            Optional<Brand> test = brandRepo.findBrandByName(brandName);
+            BrandProductResponse bResponse = new BrandProductResponse();
+            List<ProductCardOfBrandResponse> brandProducts = new ArrayList<ProductCardOfBrandResponse>();
+            if (test.isEmpty()) {
+                throw new ResourceNotFoundException("Cannot found brand with name: " + brandName + " Not Found");
+            } else {
+                var brand = test.get();
+                for (Product product : brand.getProducts()) {
+                    brandProducts.add(ProductCardOfBrandResponse.builder()
+                            .thumbnailUri(productServices.getProductThumbnail(product.getProductLine()))
+                            .id(product.getId())
+                            .productLine(product.getProductLine())
+                            .productName(product.getProductName())
+                            .price(product.getPrice())
+                            .discount(product.getDiscount())
+                            .brandName(brand.getBrandName())
+                            .build());
+                }
+                bResponse.setBrandName(brand.getBrandName());
+                bResponse.setId(brand.getId());
+                bResponse.setProducts(brandProducts);
+                return bResponse;
+            }
         }
     }
 

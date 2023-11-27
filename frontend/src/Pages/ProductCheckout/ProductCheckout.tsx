@@ -66,22 +66,22 @@ function ProductCheckout() {
     });
     if (userInfo?.accountDetail.id === -1) {
       await axios.post("http://127.0.0.1:8080/userDetail/create", {
-      firstName: userInfo?.accountDetail.firstName,
-      lastName: userInfo?.accountDetail.lastName,
-      phoneNumber: userInfo?.accountDetail.phoneNumber,
-      email: userInfo?.accountDetail.email,
-      city: userInfo?.accountDetail.city,
-      district: userInfo?.accountDetail.district,
-      detailedAddress: userInfo?.accountDetail.detailedAddress,
-    });
+        firstName: userInfo?.accountDetail.firstName,
+        lastName: userInfo?.accountDetail.lastName,
+        phoneNumber: userInfo?.accountDetail.phoneNumber,
+        email: userInfo?.accountDetail.email,
+        city: userInfo?.accountDetail.city,
+        district: userInfo?.accountDetail.district,
+        detailedAddress: userInfo?.accountDetail.detailedAddress,
+      });
     }
     cartContext.clearCart();
     return navigate(PATHS.ORDERED);
   };
   return (
     <>
-      <Breadcrumbs />
       <div className="container">
+        <Breadcrumbs />
         <div className="productcheckout-title">
           <h1> Thông tin thanh toán</h1>
         </div>
@@ -103,7 +103,7 @@ function ProductCheckout() {
                       }`,
                     };
                   })}
-                  disabled = {isAddingAddress ? true : false}
+                  disabled={isAddingAddress ? true : false}
                   onChange={(e) =>
                     setUserInfo(
                       address?.find(
@@ -125,7 +125,7 @@ function ProductCheckout() {
                       setIsAddingAddress(true);
                       setUserInfo((prevState) => {
                         if (prevState) {
-                          let newState = {...prevState}
+                          let newState = { ...prevState };
                           newState.accountDetail = {
                             city: "",
                             default: false,
@@ -135,11 +135,11 @@ function ProductCheckout() {
                             firstName: "",
                             id: -1,
                             lastName: "",
-                            phoneNumber: "" 
-                          }
+                            phoneNumber: "",
+                          };
                           return newState;
                         }
-                      })
+                      });
                     }}
                   >
                     Thêm địa chỉ mới
@@ -155,8 +155,7 @@ function ProductCheckout() {
                     color="#f03a17"
                     onClick={() => {
                       setIsAddingAddress(false);
-                      if (address)
-                        setUserInfo(address[0]);
+                      if (address) setUserInfo(address[0]);
                     }}
                   >
                     Hủy
