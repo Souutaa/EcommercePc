@@ -63,22 +63,57 @@ function ProductMore() {
     fetchProducts();
     fetchProductsBrand();
   }, []);
+
+  const [currentFilter, setCurrentFilter] = useState("Sản phẩm nổi bật");
+  const onChangeFilter = (index: string) => {
+    setCurrentFilter(index);
+  };
+
+  useEffect(() => {}, [currentFilter]);
+
   return (
     <>
       <div className="container">
         <Breadcrumbs />
-        <FilterSection />
+        <FilterSection onChange={onChangeFilter} />
         <div className="product">
           <div className="title">
             {productMorefollowBrand?.brandName
               ? productMorefollowBrand.brandName
               : category?.name}
           </div>
-          {productMorefollowBrand && (
-            <ProductListFollowCategory
-              products={productMorefollowBrand.products}
-            />
-          )}
+          {productMorefollowBrand &&
+            (currentFilter == "2" ? (
+              <ProductListFollowCategory
+                products={productMorefollowBrand.products.sort(
+                  (a: ProductItem, b: ProductItem) => a.price - b.price
+                )}
+              />
+            ) : currentFilter == "3" ? (
+              <ProductListFollowCategory
+                products={productMorefollowBrand.products.sort(
+                  (a: ProductItem, b: ProductItem) => b.price - a.price
+                )}
+              />
+            ) : currentFilter == "4" ? (
+              <ProductListFollowCategory
+                products={productMorefollowBrand.products.sort(
+                  (a: ProductItem, b: ProductItem) =>
+                    a.productName > a.productName ? 1 : -1
+                )}
+              />
+            ) : currentFilter == "5" ? (
+              <ProductListFollowCategory
+                products={productMorefollowBrand.products.sort(
+                  (a: ProductItem, b: ProductItem) =>
+                    a.productName > a.productName ? -1 : 1
+                )}
+              />
+            ) : (
+              <ProductListFollowCategory
+                products={productMorefollowBrand.products}
+              />
+            ))}
         </div>
         <div className="pagination">
           <Pagination total={10} />

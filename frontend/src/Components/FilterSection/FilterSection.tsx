@@ -1,7 +1,8 @@
 import { Checkbox, Select } from "@mantine/core";
 import Slider from "../Slider/Slider";
+import { useState } from "react";
 
-function FilterSection() {
+function FilterSection({ onChange }: any) {
   return (
     <>
       <div className="filter-section">
@@ -15,14 +16,35 @@ function FilterSection() {
             </label>
             <div className="filter-select">
               <Select
+                searchValue="Sản phẩm nổi bật"
                 placeholder="Chọn giá trị bạn muốn loc"
                 data={[
-                  "Sản phẩm nổi bật",
-                  "Giá: Tăng dần",
-                  "Giá: Giảm dần",
-                  "Tên: A-Z",
-                  "Tên: Z-A",
+                  {
+                    label: "Sản phẩm nổi bật",
+                    value: "1",
+                  },
+                  {
+                    label: "Giá: Tăng dần",
+                    value: "2",
+                  },
+                  {
+                    label: "Giá: Giảm dần",
+                    value: "3",
+                  },
+                  {
+                    label: "Tên: A-Z",
+                    value: "4",
+                  },
+                  {
+                    label: "Tên: Z-A",
+                    value: "5",
+                  },
                 ]}
+                defaultValue={"Sản phẩm nổi bật"}
+                onChange={(e) => {
+                  onChange(e);
+                  console.log(e);
+                }}
               />
             </div>
           </div>

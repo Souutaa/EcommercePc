@@ -76,6 +76,7 @@ function ProductDetail() {
     return (
       <Carousel.Slide key={index}>
         <img
+          style={{ width: "120px", height: "120px" }}
           alt=""
           src={`http://127.0.0.1:8080/product/get-file?filePath=${url}`}
         />
@@ -91,6 +92,7 @@ function ProductDetail() {
           <div className="product-detail-left">
             <div className="product-detail-main">
               <img
+                className="img-product"
                 src={`http://127.0.0.1:8080/product/get-file?filePath=${productDetail?.thumbnailUri}`}
                 alt=""
               />

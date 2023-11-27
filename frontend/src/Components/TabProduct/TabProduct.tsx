@@ -62,8 +62,10 @@ function TabProduct({ onChange }: any) {
           return (
             <div key={e.id}>
               {/* <div className="title">{item.brandName}</div> */}
-              <ProductListNoButtonMore brands={e.brands} category={currentFilter} />
-              
+              <ProductListNoButtonMore
+                brands={e.brands}
+                category={currentFilter}
+              />
             </div>
           );
         //if (e.name == "ALL") return null;
