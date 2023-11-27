@@ -1,18 +1,13 @@
-import { Button, MantineProvider, Text, rem } from "@mantine/core";
+import { Button, Text, rem } from "@mantine/core";
 import { ModalsProvider, modals } from "@mantine/modals";
-import { IconMinus, IconPlus } from "@tabler/icons-react";
-import formatPrice from "../../Helper/formatPrice";
+import { IconMinus, IconPlus, IconX } from "@tabler/icons-react";
 import { CartItem, useShopingContext } from "../../Context/ShoppingContext";
+import formatPrice from "../../Helper/formatPrice";
+import { notifications } from "@mantine/notifications";
 
 function ProductCarts() {
-  const {
-    cartItems,
-    totalPrice,
-    increaseQty,
-    decreaseQty,
-    removeCartItem,
-    clearCart,
-  } = useShopingContext();
+  const { cartItems, increaseQty, decreaseQty, removeCartItem, checkCart } =
+    useShopingContext();
 
   const openDeleteModal = (item: CartItem) => {
     modals.openConfirmModal({
@@ -25,10 +20,7 @@ function ProductCarts() {
         console.log("Cancel");
       },
       onConfirm: () => {
-        {
-          console.log("Confirmed");
-          removeCartItem(item.id);
-        }
+        removeCartItem(item.id);
       },
     });
   };
@@ -55,6 +47,7 @@ function ProductCarts() {
               <Button
                 style={{ width: "36px" }}
                 className="button-plus"
+                disabled = {!checkCart(item.id, item.stock) ? true : false}
                 onClick={() => {
                   increaseQty(item.id);
                 }}
@@ -79,21 +72,20 @@ function ProductCarts() {
                 }
               />
             </div>
-            <MantineProvider>
-              <ModalsProvider>
-                <img
-                  onClick={() => {
-                    openDeleteModal(item);
-                  }}
-                  src="/img/delete.png"
-                  alt=""
-                  className="productcart-delete"
-                />
-              </ModalsProvider>
-            </MantineProvider>
+            <img
+              onClick={() => {
+                openDeleteModal(item);
+              }}
+              src="/img/delete.png"
+              alt=""
+              className="productcart-delete"
+            />
           </div>
         );
       })}
+      <ModalsProvider>
+
+      </ModalsProvider>
     </>
   );
 }

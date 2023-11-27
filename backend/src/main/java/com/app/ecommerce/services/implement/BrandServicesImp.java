@@ -72,8 +72,8 @@ public class BrandServicesImp implements IBrandServices {
     }
 
     @Override
-    public Brand getBrandbyName(String name) {
-        Optional<Brand> opt = repo.findBrandByName(name);
+    public Brand getBrandbyName(String name, Integer categoryId) {
+        Optional<Brand> opt = repo.findBrandByName(name, categoryId);
         if (opt.isPresent()) {
             return opt.get();
         } else {

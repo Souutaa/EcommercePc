@@ -1,8 +1,36 @@
 import { Checkbox, Select } from "@mantine/core";
 import Slider from "../Slider/Slider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function FilterSection({ onChange }: any) {
+  const [checkedCheckbox, setCheckedCheckbox] = useState<
+    (EventTarget & HTMLInputElement)[]
+  >([]);
+  const [priceRange, setPriceRange] = useState([Number.MAX_VALUE, 0]);
+  useEffect(() => {
+    const range = {
+      min: Number.MAX_VALUE,
+      max: Number.MIN_VALUE,
+    };
+    checkedCheckbox.forEach((checkbox) => {
+      const checkboxRange = checkbox.value
+        .split(",")
+        .map((item: string): number => +item);
+      if (range.min > checkboxRange[0]) range.min = checkboxRange[0];
+      if (range.max < checkboxRange[1]) range.max = checkboxRange[1];
+    });
+    setPriceRange((prevState) => {
+      if (prevState) {
+        let newState = [...prevState];
+        newState[0] = range.min;
+        newState[1] = range.max;
+        return newState;
+      }
+      return prevState;
+    });
+  }, [checkedCheckbox]);
+  console.log(priceRange);
+
   return (
     <>
       <div className="filter-section">
@@ -52,13 +80,104 @@ function FilterSection({ onChange }: any) {
         <div className="filter-selection">
           <h4 className="filter-selection-text">Giá:</h4>
           <div className="filter-checkbox">
-            <Checkbox className="m10" label="100.000đ - 500.000đ" />
-            <Checkbox className="m10" label="500.000đ - 2.000.000đ" />
-            <Checkbox className="m10" label="2.000.000đ - 10.000.000đ" />
-            <Checkbox className="m10" label="10.000.000đ - 20.000.000đ" />
-            <Checkbox className="m10" label="20.000.000đ - 50.000.000đ" />
-            <Checkbox className="m10" label="50.000.000đ - 75.000.000đ" />
-            <Checkbox className="m10" label="75.000.000đ - 100.000.000đ" />
+            <Checkbox
+              className="m10"
+              label="100.000đ - 500.000đ"
+              value={["100000", "500000"]}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setCheckedCheckbox([...checkedCheckbox, e.target]);
+                } else {
+                  setCheckedCheckbox([
+                    ...checkedCheckbox.filter((item) => item !== e.target),
+                  ]);
+                }
+              }}
+            />
+            <Checkbox
+              className="m10"
+              label="500.000đ - 2.000.000đ"
+              value={["500000", "2000000"]}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setCheckedCheckbox([...checkedCheckbox, e.target]);
+                } else {
+                  setCheckedCheckbox([
+                    ...checkedCheckbox.filter((item) => item !== e.target),
+                  ]);
+                }
+              }}
+            />
+            <Checkbox
+              className="m10"
+              label="2.000.000đ - 10.000.000đ"
+              value={["2000000", "10000000"]}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setCheckedCheckbox([...checkedCheckbox, e.target]);
+                } else {
+                  setCheckedCheckbox([
+                    ...checkedCheckbox.filter((item) => item !== e.target),
+                  ]);
+                }
+              }}
+            />
+            <Checkbox
+              className="m10"
+              label="10.000.000đ - 20.000.000đ"
+              value={["10000000", "20000000"]}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setCheckedCheckbox([...checkedCheckbox, e.target]);
+                } else {
+                  setCheckedCheckbox([
+                    ...checkedCheckbox.filter((item) => item !== e.target),
+                  ]);
+                }
+              }}
+            />
+            <Checkbox
+              className="m10"
+              label="20.000.000đ - 50.000.000đ"
+              value={["20000000", "50000000"]}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setCheckedCheckbox([...checkedCheckbox, e.target]);
+                } else {
+                  setCheckedCheckbox([
+                    ...checkedCheckbox.filter((item) => item !== e.target),
+                  ]);
+                }
+              }}
+            />
+            <Checkbox
+              className="m10"
+              label="50.000.000đ - 75.000.000đ"
+              value={["50000000", "75000000"]}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setCheckedCheckbox([...checkedCheckbox, e.target]);
+                } else {
+                  setCheckedCheckbox([
+                    ...checkedCheckbox.filter((item) => item !== e.target),
+                  ]);
+                }
+              }}
+            />
+            <Checkbox
+              className="m10"
+              label="75.000.000đ - 100.000.000đ"
+              value={["75000000", "100000000"]}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setCheckedCheckbox([...checkedCheckbox, e.target]);
+                } else {
+                  setCheckedCheckbox([
+                    ...checkedCheckbox.filter((item) => item !== e.target),
+                  ]);
+                }
+              }}
+            />
           </div>
         </div>
       </div>

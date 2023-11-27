@@ -17,7 +17,7 @@ public interface IBrandServices {
 
     public BrandProductResponse getBrandProductResponseById(int id);
 
-    public Brand getBrandbyName(String name);
+    public Brand getBrandbyName(String name, Integer categoryId);
 
     public Brand saveBrand(CreateBrandDTO request);
 

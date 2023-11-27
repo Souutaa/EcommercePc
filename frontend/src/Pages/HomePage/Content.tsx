@@ -14,6 +14,7 @@ export type ProductItems = {
   discount: number;
   price: number;
   thumbnailUri: string;
+  stock: number;
 };
 export type Brand = {
   id: number;
@@ -50,7 +51,6 @@ function Content() {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          // "http://localhost:8080/category/allOfCategory"
           "http://localhost:8080/category/allOfCategoryBrand"
         );
         console.log("products=> ", res);
@@ -77,7 +77,7 @@ function Content() {
           })} */}
           <TabProduct onChange={onChangeTest} />
           {category.map((item) => {
-            if (test == true)
+            if (test === true)
               return (
                 <div key={item.id}>
                   {/* <div className="title">{item.brandName}</div> */}

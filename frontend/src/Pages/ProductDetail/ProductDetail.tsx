@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import ButtonAdd from "../../Components/Button/button-add-to-cart";
+import { ProductItem } from "../../Components/Product";
+import ProductColor from "../../Components/Product/ProductColor";
 import ProductInfo from "../../Components/Product/ProductInfo";
 import ProductListDetail from "../../Components/Product/ProductListDetail";
-import { Button } from "@mantine/core";
-import { ProductItem } from "../../Components/Product";
 import { ProductItems } from "../HomePage/Content";
-import ProductList from "../../Components/Product/ProductList";
-import ProductColor from "../../Components/Product/ProductColor";
-import ButtonAdd from "../../Components/Button/button-add-to-cart";
+import { Button } from "@mantine/core";
 
 export type ProductInfoType = {
   id: number;
@@ -29,6 +28,7 @@ export type ProductDetailType = {
   warrantyPeriod: number;
   categoryName: string;
   brandName: string;
+  stock: number;
 };
 
 type Brand = {
@@ -57,6 +57,7 @@ function ProductDetail() {
           `http://127.0.0.1:8080/product/${location.pathname.split("/")[3]}`
         );
         const data = res.data;
+        console.log(data)
 
         try {
           const brandRes = await axios.get(
@@ -130,20 +131,25 @@ function ProductDetail() {
                 brandName={productDetail?.brandName}
                 categoryName={productDetail?.categoryName}
                 warrantyPeriod={productDetail?.warrantyPeriod}
+                stock={productDetail?.stock}
               />
             )}
             <ProductColor />
-            {/* <Btn customStyle={{ width: "100%" }} maintine="a"> */}
             {productDetail?.product.id && (
               <div className="full-width">
-                <ButtonAdd
-                  discount={productDetail?.product.discount}
-                  id={productDetail?.product.id}
-                  price={productDetail?.product.price}
-                  productLine={productDetail?.product.productLine}
-                  productName={productDetail?.product.productName}
-                  thumbnailUri={productDetail?.thumbnailUri}
-                />
+                {productDetail.stock === 0 ? (
+                  <Button disabled>Hết hàng</Button>
+                ) : (
+                  <ButtonAdd
+                    discount={productDetail?.product.discount}
+                    id={productDetail?.product.id}
+                    price={productDetail?.product.price}
+                    productLine={productDetail?.product.productLine}
+                    productName={productDetail?.product.productName}
+                    thumbnailUri={productDetail?.thumbnailUri}
+                    stock={productDetail?.stock}
+                  />
+                )}
               </div>
             )}
             {/* </Btn> */}

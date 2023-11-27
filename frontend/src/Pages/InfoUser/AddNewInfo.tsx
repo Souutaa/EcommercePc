@@ -270,7 +270,9 @@ function AddNewInfo() {
                 <Btn fullWidth type="submit" maintine="a">
                   Lưu
                 </Btn>
-                <Btn fullWidth maintine="a" color="#f03a17">
+                <Btn fullWidth maintine="a" color="#f03a17" onClick={() => {
+                  navigate('/Home/InfoUser')
+                }}>
                   Hủy
                 </Btn>
               </div>

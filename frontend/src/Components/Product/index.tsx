@@ -18,6 +18,7 @@ export type ProductItem = {
   discount: number;
   price: number;
   thumbnailUri: string;
+  stock: number;
 };
 
 function Product(props: { products: ProductItems[] }) {
@@ -51,6 +52,7 @@ function Product(props: { products: ProductItems[] }) {
                   productLine={e.productLine}
                   productName={e.productName}
                   thumbnailUri={e.thumbnailUri}
+                  stock={e.stock}
                 />
               </div>
             </div>

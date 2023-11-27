@@ -3,7 +3,6 @@ package com.app.ecommerce.DTO.brand;
 import java.util.List;
 
 import com.app.ecommerce.DTO.product.ProductCardOfBrandResponse;
-import com.app.ecommerce.models.Product;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

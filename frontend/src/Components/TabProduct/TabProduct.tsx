@@ -1,10 +1,8 @@
-import { Button, SegmentedControl, SegmentedControlItem } from "@mantine/core";
+import { SegmentedControl, SegmentedControlItem } from "@mantine/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Category } from "../../Pages/HomePage/Content";
 import ProductListNoButtonMore from "../Product/ProductListNoButtonMore";
-import { Link } from "react-router-dom";
-import { PATHS } from "../../Constants/path";
 
 function TabProduct({ onChange }: any) {
   const [filteredCategory, setFilteredCategory] = useState<Category[]>([]);

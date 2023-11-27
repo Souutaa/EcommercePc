@@ -4,7 +4,7 @@ import { IconTrash } from "@tabler/icons-react";
 import axios from "axios";
 
 interface Props {
-  productLine: string;
+  productLine?: string;
 }
 
 const ButtonDelete = (props: Props) => {

@@ -19,6 +19,7 @@ export type CartItem = {
   thumbnailUri: string;
   discount: number;
   productLine: string;
+  stock: number;
 };
 
 type ProductItem = {
@@ -28,6 +29,7 @@ type ProductItem = {
   price: number;
   thumbnailUri: string;
   discount: number;
+  stock: number;
 };
 
 interface ShoppingContextType {
@@ -40,6 +42,7 @@ interface ShoppingContextType {
   addCartItem: (item: ProductItem) => void;
   removeCartItem: (id: number) => void;
   clearCart: () => void;
+  checkCart: (id: number, stock: number) => boolean;
 }
 
 const ShoppingContext = createContext<ShoppingContextType>(
@@ -154,6 +157,14 @@ export const ShoppingContextProvider = ({
     setCartItems(newItems);
   };
 
+  const checkCart = (id: number, stock: number) => {
+    const currentCartItem = cartItems.find((item) => item.id === id);
+    if (currentCartItem) {
+      return stock > currentCartItem.quantity
+    }
+    return true;
+  }
+
   const clearCart = () => {
     console.log("removeCartItem=> ");
     setCartItems([]);
@@ -172,6 +183,7 @@ export const ShoppingContextProvider = ({
           removeCartItem,
           addCartItem,
           clearCart,
+          checkCart
         }}
       >
         {children}

@@ -437,8 +437,8 @@ body {
 }
 
 .product-list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* display: grid;
+  grid-template-columns: repeat(4, 1fr); */
 }
 
 .product-item {
@@ -755,7 +755,7 @@ footer {
 
 /*Product more*/
 .product-list-detail {
-  display: grid;
+  /* display: grid; */
   grid-template-columns: repeat(4, 1fr);
   margin-bottom: 32px;
 }

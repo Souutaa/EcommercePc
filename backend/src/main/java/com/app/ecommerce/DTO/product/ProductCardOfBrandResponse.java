@@ -18,4 +18,5 @@ public class ProductCardOfBrandResponse {
     private float price;
     private float discount;
     private String thumbnailUri;
+    private int stock;
 }

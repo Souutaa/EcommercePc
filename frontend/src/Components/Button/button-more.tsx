@@ -1,11 +1,6 @@
-import Btn from "../../Components/Button";
 import { Link } from "react-router-dom";
+import Btn from "../../Components/Button";
 import { PATHS } from "../../Constants/path";
-import { Brand } from "../../Pages/HomePage/Content";
-import { Button } from "@mantine/core";
-import ProductMore from "../../Pages/ProductMore/ProductMore";
-import { ProductItem } from "../Product";
-import { useEffect, useState } from "react";
 function ButtonMore(props: { brandName?: string; categoryName: string }) {
   const url = props.brandName
     ? PATHS.MORE + `/${props.categoryName}/${props.brandName}`

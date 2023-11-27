@@ -21,6 +21,7 @@ import com.app.ecommerce.models.Category;
 import com.app.ecommerce.models.Product;
 import com.app.ecommerce.respositories.BrandRepository;
 import com.app.ecommerce.respositories.CategoryRepository;
+import com.app.ecommerce.respositories.ProductWarrantyRepository;
 import com.app.ecommerce.services.ICategoryServices;
 import com.app.ecommerce.services.IProductServices;
 
@@ -32,6 +33,9 @@ public class CategoryServicesImp implements ICategoryServices {
 
     @Autowired
     private CategoryRepository repo;
+
+    @Autowired
+    private ProductWarrantyRepository productWarrantyRepository;
 
     @Autowired
     private BrandRepository brandRepo;
@@ -78,6 +82,8 @@ public class CategoryServicesImp implements ICategoryServices {
                                         .price(product.getPrice())
                                         .discount(product.getDiscount())
                                         .name(category.getName())
+                                        .stock(this.productWarrantyRepository.findAllByProductId(product.getId()).get()
+                                                .size())
                                         .build());
                 }
                 categoryBrand.add(BrandProductResponse
@@ -155,7 +161,7 @@ public class CategoryServicesImp implements ICategoryServices {
         if (opt.isEmpty()) {
             throw new ResourceNotFoundException("Cannot found category with name: " + name + " Not Found");
         } else {
-            Optional<Brand> test = brandRepo.findBrandByName(brandName);
+            Optional<Brand> test = brandRepo.findBrandByName(brandName, opt.get().getId());
             BrandProductResponse bResponse = new BrandProductResponse();
             List<ProductCardOfBrandResponse> brandProducts = new ArrayList<ProductCardOfBrandResponse>();
             if (test.isEmpty()) {

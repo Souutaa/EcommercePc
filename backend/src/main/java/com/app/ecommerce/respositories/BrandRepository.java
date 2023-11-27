@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import com.app.ecommerce.models.Brand;
 
 public interface BrandRepository extends JpaRepository<Brand, Integer> {
-    @Query(value = "select * from brand where brand_name = ?1", nativeQuery = true)
-    Optional<Brand> findBrandByName(String name);
+    @Query(value = "select * from brand where brand_name = ?1 and category_id = ?2", nativeQuery = true)
+    Optional<Brand> findBrandByName(String name, Integer categoryId);
 
     @Query(value = "select * from brand where deleted_at is null", nativeQuery = true)
     List<Brand> findAllBrandlActive();

@@ -21,7 +21,9 @@ import com.app.ecommerce.DTO.brand.BrandProductResponse;
 import com.app.ecommerce.DTO.brand.CreateBrandDTO;
 import com.app.ecommerce.DTO.brand.UpdateBrandDTO;
 import com.app.ecommerce.models.Brand;
+import com.app.ecommerce.models.Category;
 import com.app.ecommerce.services.IBrandServices;
+import com.app.ecommerce.services.ICategoryServices;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +35,9 @@ public class BrandController {
 
     @Autowired
     private IBrandServices brandServices;
+
+    @Autowired
+    private ICategoryServices categoryServices;
 
     // Get Brand based on active
     // if active == true => getBrand actived
@@ -55,9 +60,10 @@ public class BrandController {
         return new ResponseEntity<Object>(listProducts, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{name}")
-    public @ResponseBody ResponseEntity<Object> getAllBrand(@PathVariable String name) {
-        Brand listBrand = brandServices.getBrandbyName(name);
+    @GetMapping(value = "/{categoryName}/{brandName}")
+    public @ResponseBody ResponseEntity<Object> getAllBrand(@PathVariable String categoryName, @PathVariable String brandName) {
+        Category category = this.categoryServices.getCategorybyName(categoryName);
+        Brand listBrand = brandServices.getBrandbyName(brandName, category.getId());
         return new ResponseEntity<Object>(listBrand, HttpStatus.OK);
     }
 

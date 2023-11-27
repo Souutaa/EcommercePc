@@ -1,15 +1,13 @@
-import ProductList from "../../Components/Product/ProductList";
 import { Pagination } from "@mantine/core";
 
-import FilterSection from "../../Components/FilterSection/FilterSection";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import { useLocation, useParams } from "react-router-dom";
-import { ProductItem } from "../../Components/Product";
-import ProductListNoButtonMore from "../../Components/Product/ProductListNoButtonMore";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ProductItems } from "../HomePage/Content";
+import { useLocation, useParams } from "react-router-dom";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import FilterSection from "../../Components/FilterSection/FilterSection";
+import { ProductItem } from "../../Components/Product";
 import ProductListFollowCategory from "../../Components/Product/ProductListFollowCategory";
+import { ProductItems } from "../HomePage/Content";
 
 type CategoryProductMore = {
   id: number;
@@ -27,7 +25,6 @@ type BrandProductMore = {
 
 function ProductMore() {
   const { name, brandName } = useParams();
-  const location = useLocation();
   const [category, setCategory] = useState<CategoryProductMore>();
   const [productMorefollowBrand, setProductMoreFollowBrand] =
     useState<BrandProductMore>();
@@ -83,30 +80,30 @@ function ProductMore() {
               : category?.name}
           </div>
           {productMorefollowBrand &&
-            (currentFilter == "2" ? (
+            (currentFilter === "2" ? (
               <ProductListFollowCategory
                 products={productMorefollowBrand.products.sort(
                   (a: ProductItem, b: ProductItem) => a.price - b.price
                 )}
               />
-            ) : currentFilter == "3" ? (
+            ) : currentFilter === "3" ? (
               <ProductListFollowCategory
                 products={productMorefollowBrand.products.sort(
                   (a: ProductItem, b: ProductItem) => b.price - a.price
                 )}
               />
-            ) : currentFilter == "4" ? (
+            ) : currentFilter === "4" ? (
               <ProductListFollowCategory
                 products={productMorefollowBrand.products.sort(
                   (a: ProductItem, b: ProductItem) =>
-                    a.productName > a.productName ? 1 : -1
+                    a.productName > b.productName ? 1 : -1
                 )}
               />
-            ) : currentFilter == "5" ? (
+            ) : currentFilter === "5" ? (
               <ProductListFollowCategory
                 products={productMorefollowBrand.products.sort(
                   (a: ProductItem, b: ProductItem) =>
-                    a.productName > a.productName ? -1 : 1
+                    a.productName > b.productName ? -1 : 1
                 )}
               />
             ) : (
