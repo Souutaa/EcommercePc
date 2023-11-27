@@ -2,7 +2,7 @@ import { Checkbox, Select } from "@mantine/core";
 import Slider from "../Slider/Slider";
 import { useEffect, useState } from "react";
 
-function FilterSection({ onChange }: any) {
+function FilterSection({ onChange, onChangFilterSlide }: any) {
   const [checkedCheckbox, setCheckedCheckbox] = useState<
     (EventTarget & HTMLInputElement)[]
   >([]);
@@ -36,7 +36,7 @@ function FilterSection({ onChange }: any) {
       <div className="filter-section">
         <div className="filter-product">
           <div className="filter-price">
-            <Slider />
+            <Slider onChangeFilter={onChangFilterSlide} />
           </div>
           <div className="filter-options">
             <label className="filter-text" htmlFor="">
