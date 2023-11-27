@@ -1,17 +1,17 @@
+import React, { useEffect, useState } from "react";
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import axios from "axios";
-import { useEffect, useState } from "react";
-
-import ProductColor from "../../Components/Product/ProductColor";
-import ProductInfo from "../../Components/Product/ProductInfo";
-
 import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import ButtonAdd from "../../Components/Button/button-add-to-cart";
-import { ProductItem } from "../../Components/Product";
+import ProductInfo from "../../Components/Product/ProductInfo";
 import ProductListDetail from "../../Components/Product/ProductListDetail";
+import { Button } from "@mantine/core";
+import { ProductItem } from "../../Components/Product";
 import { ProductItems } from "../HomePage/Content";
+import ProductList from "../../Components/Product/ProductList";
+import ProductColor from "../../Components/Product/ProductColor";
+import ButtonAdd from "../../Components/Button/button-add-to-cart";
 
 export type ProductInfoType = {
   id: number;
@@ -40,62 +40,68 @@ type Brand = {
 function ProductDetail() {
   const location = useLocation();
 
-  const [productDetail, setProductDetail] = useState<ProductDetailType>();
-  const [productsOfBrand, setProductsOfDetail] = useState<Brand>();
+  const [productDetail, setProductDetail] = useState<
+    ProductDetailType | undefined
+  >(undefined);
+  const [selectedImage, setSelectedImage] = useState<string | undefined>(
+    undefined
+  );
+  const [productsOfBrand, setProductsOfDetail] = useState<Brand | undefined>(
+    undefined
+  );
+
   useEffect(() => {
-    //Get pathParam
-    const getPath = location.pathname.split("/");
-    const pathParam = getPath[3];
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://127.0.0.1:8080/product/${pathParam}`
+          `http://127.0.0.1:8080/product/${location.pathname.split("/")[3]}`
         );
-        console.log("productDetail=> ", res);
-        const data = await res.data;
+        const data = res.data;
+
         try {
-          const res = await axios.get(
+          const brandRes = await axios.get(
             `http://127.0.0.1:8080/brand/getByIdOfBrand?id=${data.brandId}`
           );
-          console.log("productsBrand=> ", res);
           setProductDetail(data);
-          setProductsOfDetail(res.data);
+          setProductsOfDetail(brandRes.data);
         } catch (error) {
-          console.log("error=> ", error);
+          console.log("error in fetching brand data => ", error);
         }
       } catch (error) {
-        console.log("error=> ", error);
+        console.log("error in fetching product data => ", error);
       }
     };
 
-    fetchProducts();
-    console.log("get brand have products data from api");
-    const fetchProductsOfBrand = async () => {};
-    fetchProductsOfBrand();
+    fetchData();
   }, [location]);
 
-  const slides = productDetail?.imageUris.map((url, index) => {
-    return (
-      <Carousel.Slide key={index}>
-        <img
-          style={{ width: "120px", height: "120px" }}
-          alt=""
-          src={`http://127.0.0.1:8080/product/get-file?filePath=${url}`}
-        />
-      </Carousel.Slide>
-    );
-  });
+  const handleThumbnailClick = (imageUri: string) => {
+    setSelectedImage(imageUri);
+  };
+
+  const slides = productDetail?.imageUris.map((url, index) => (
+    <Carousel.Slide key={index} onClick={() => handleThumbnailClick(url)}>
+      <img
+        style={{ width: "120px", height: "120px", cursor: "pointer" }}
+        alt=""
+        src={`http://127.0.0.1:8080/product/get-file?filePath=${url}`}
+      />
+    </Carousel.Slide>
+  ));
 
   return (
     <>
       <div className="container">
         <Breadcrumbs />
         <div className="product-details">
+          {/* ... (existing code) */}
           <div className="product-detail-left">
             <div className="product-detail-main">
               <img
-                className="img-product"
-                src={`http://127.0.0.1:8080/product/get-file?filePath=${productDetail?.thumbnailUri}`}
+                style={{ width: "100%", height: "670px" }}
+                src={`http://127.0.0.1:8080/product/get-file?filePath=${
+                  selectedImage || productDetail?.thumbnailUri
+                }`}
                 alt=""
               />
             </div>
@@ -129,23 +135,22 @@ function ProductDetail() {
             <ProductColor />
             {/* <Btn customStyle={{ width: "100%" }} maintine="a"> */}
             {productDetail?.product.id && (
-              <ButtonAdd
-                discount={productDetail?.product.discount}
-                id={productDetail?.product.id}
-                price={productDetail?.product.price}
-                productLine={productDetail?.product.productLine}
-                productName={productDetail?.product.productName}
-                thumbnailUri={productDetail?.thumbnailUri}
-              />
+              <div className="full-width">
+                <ButtonAdd
+                  discount={productDetail?.product.discount}
+                  id={productDetail?.product.id}
+                  price={productDetail?.product.price}
+                  productLine={productDetail?.product.productLine}
+                  productName={productDetail?.product.productName}
+                  thumbnailUri={productDetail?.thumbnailUri}
+                />
+              </div>
             )}
             {/* </Btn> */}
           </div>
         </div>
         <div className="product-more">
           <div className="product-more-text">Các sản phẩm khác của Acer</div>
-          {/* {productsOfBrand?.products && (
-            <ProductList brands={productsOfBrand?.products} />
-          )} */}
           {productsOfBrand?.products && (
             <ProductListDetail
               products={productsOfBrand?.products}

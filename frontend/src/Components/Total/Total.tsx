@@ -1,7 +1,7 @@
 import { useShopingContext } from "../../Context/ShoppingContext";
 import formatPrice from "../../Helper/formatPrice";
 
-function Total() {
+function  Total() {
   const {
     cartItems,
     totalPrice,

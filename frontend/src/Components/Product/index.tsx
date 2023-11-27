@@ -4,7 +4,7 @@ import ButtonAdd from "../Button/button-add-to-cart";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useShopingContext } from "../../Context/ShoppingContext";
-import { Button, Text } from "@mantine/core";
+import { Button, Flex, Text } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { IconCheck } from "@tabler/icons-react";
 import { ProductItems } from "../../Pages/HomePage/Content";
@@ -23,10 +23,10 @@ export type ProductItem = {
 function Product(props: { products: ProductItems[] }) {
   const products = props.products;
   return (
-    <>
+    <Flex gap={'md'} wrap={'wrap'}>
       {products.map((e) => {
         return (
-          <div key={e.id} className="product-item">
+          <div key={e.id} className="product-item"  style={{flex: "1 1 25%"}}>
             <Link
               to={{
                 pathname: PATHS.PRODUCT + `/${e.productLine}`,
@@ -57,7 +57,7 @@ function Product(props: { products: ProductItems[] }) {
           </div>
         );
       })}
-    </>
+    </Flex>
   );
 }
 

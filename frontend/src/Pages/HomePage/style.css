@@ -1596,7 +1596,7 @@ p {
   align-items: start;
   padding: 2rem;
   gap: 3rem;
-  color: #374151;
+  color: #737C84;
 }
 
 .infoorder-title:first-child {
@@ -1632,9 +1632,9 @@ p {
   display: grid;
   grid-column: 1/6;
   font-weight: 500;
-
   color: #374151;
   text-align: left;
+  width: 200px;
 }
 
 .infoorder-item-warranty {
@@ -1645,8 +1645,8 @@ p {
 }
 
 .infoorder-item-quantity {
-  grid-column: 6/7;
   color: #374151;
+  grid-column: 6/7;
 }
 
 .infoorder-item-price {
@@ -1689,7 +1689,7 @@ p {
   font-size: 1.2rem;
   color: #374151;
   text-align: left;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 /*ChangePass*/
@@ -1898,6 +1898,8 @@ tr:hover {
 .sorting {
   padding: 20px;
   text-align: left;
+  color: #6c757d;
+
 }
 
 .dtr-control {
@@ -1919,6 +1921,20 @@ tr:hover {
 
 .bg-success {
   background-color: #0acf97 !important;
+  color: var(--white-color);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.bg-danger {
+  background-color: rgb(21 15 16 / 18%);
+  color: var(--white-color);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.bg-warning {
+  background-color: rgba(255, 188, 0, .18);
   color: var(--white-color);
   border-radius: 5px;
   padding: 5px;
@@ -1973,4 +1989,16 @@ td {
 /*Brand Admin*/
 .text-hover:hover {
   background-color: #f1f3fa;
+}
+/*Order admin*/
+.order-total-admin {
+  width: 300px;
+}
+
+.infoorder-footer {
+  margin-bottom: 30px;
+}
+
+.text-status {
+  margin-left: 10px;
 }

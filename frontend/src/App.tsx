@@ -59,7 +59,6 @@ function App() {
               element={<ProductMore />}
             />
             <Route path={PATHS.MORE + "/:name"} element={<ProductMore />} />
-
             <Route
               path={PATHS.PRODUCT + "/:productLine"}
               element={<ProductDetail />}

@@ -9,6 +9,7 @@ import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import ButtonAddAdmin from "../Components/Button/button-add-product-admin";
+import SearchAdmin from "../Components/SearchAdmin/SearchAdmin";
 import axios from "axios";
 
 export interface AdminProductInformation {
@@ -55,12 +56,7 @@ const ProductAdmin = () => {
           <div className="product-datatable-wrapper">
             <div className="product-datatable-sort">
               <LengthProduct />
-              <div className="dataTables-filter">
-                <label htmlFor="" className="form-lable">
-                  Search
-                  <Input style={{ marginLeft: "10px" }} />
-                </label>
-              </div>
+              <SearchAdmin />
             </div>
             <table className="table-centered">
               <ProductTitleAdmin />
