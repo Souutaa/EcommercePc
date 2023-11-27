@@ -2,19 +2,18 @@ import { RangeSlider } from "@mantine/core";
 import formatPrice from "../../Helper/formatPrice";
 import { useState } from "react";
 
-function Slider({ onChangFilter }: any) {
-  const [valueStart, setValueStart] = useState(100000);
-  const [valueEnd, setValueEnd] = useState(500000000);
+function Slider({ onChange }: any) {
   return (
     <>
       <RangeSlider
         mt={50}
         step={500000}
-        min={valueStart}
-        max={valueEnd}
+        min={100000}
+        max={100000000}
         labelAlwaysOn
-        defaultValue={[valueStart, valueEnd]}
-        label={onChangFilter}
+        defaultValue={[100000, 100000000]}
+        label={onChange}
+        onChange={onChange}
       />
     </>
   );

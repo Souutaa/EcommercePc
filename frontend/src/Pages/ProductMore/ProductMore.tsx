@@ -29,6 +29,9 @@ function ProductMore() {
   const [category, setCategory] = useState<CategoryProductMore>();
   const [productMorefollowBrand, setProductMoreFollowBrand] =
     useState<BrandProductMore>();
+  const [productMoreFollowBrandFilter, setProductMoreFollowBrandFilter] =
+    useState<ProductItem[]>();
+
   useEffect(() => {
     console.log("get brands data from api");
     const fetchProducts = async () => {
@@ -39,11 +42,12 @@ function ProductMore() {
         );
         console.log("products more=> ", res);
         setCategory(res.data);
+        setProductMoreFollowBrand(res.data);
+        setProductMoreFollowBrandFilter(res.data.products);
       } catch (error) {
         console.log("error=> ", error);
       }
     };
-
     const fetchProductsBrand = async () => {
       try {
         const url =
@@ -57,20 +61,72 @@ function ProductMore() {
         console.log("error=> ", error);
       }
     };
-
     fetchProducts();
     fetchProductsBrand();
   }, []);
 
-  const [currentFilter, setCurrentFilter] = useState("Sản phẩm nổi bật");
+  const [currentFilter, setCurrentFilter] = useState("1");
   const onChangeFilter = (index: string) => {
     setCurrentFilter(index);
+    if (productMorefollowBrand)
+      switch (index) {
+        case "2": {
+          setProductMoreFollowBrandFilter(
+            productMorefollowBrand.products.sort(
+              (a: ProductItem, b: ProductItem) => a.price - b.price
+            )
+          );
+          break;
+        }
+        case "3": {
+          setProductMoreFollowBrandFilter(
+            productMorefollowBrand.products.sort(
+              (a: ProductItem, b: ProductItem) => b.price - a.price
+            )
+          );
+          break;
+        }
+        case "4": {
+          setProductMoreFollowBrandFilter((prevState) => {
+            return productMorefollowBrand.products.sort(
+              (a: ProductItem, b: ProductItem) =>
+                a.productName > b.productName ? 1 : -1
+            );
+          });
+          break;
+        }
+        case "5": {
+          setProductMoreFollowBrandFilter(() => {
+            return productMorefollowBrand.products.sort(
+              (a: ProductItem, b: ProductItem) =>
+                a.productName > b.productName ? -1 : 1
+            );
+          });
+          break;
+        }
+        default: {
+          setProductMoreFollowBrandFilter(productMorefollowBrand.products);
+        }
+      }
   };
 
-  useEffect(() => {}, [currentFilter]);
-
+  
   const valueLabelFormat = (value: number) => {
     return formatPrice(value);
+  };
+
+  const priceFilter = (min: number, max: number) => {
+    if (productMorefollowBrand) {
+      if (min === Number.MAX_VALUE && max === Number.MIN_VALUE) {
+        setProductMoreFollowBrandFilter(productMorefollowBrand?.products);
+        return;
+      }
+      setProductMoreFollowBrandFilter(
+        productMorefollowBrand.products.filter((item) => {
+          return item.price >= min && item.price <= max;
+        })
+      );
+    }
   };
 
   return (
@@ -78,6 +134,7 @@ function ProductMore() {
       <div className="container">
         <Breadcrumbs />
         <FilterSection
+          onChangePrice={priceFilter}
           onChange={onChangeFilter}
           onChangFilterSlide={valueLabelFormat}
         />
@@ -87,38 +144,11 @@ function ProductMore() {
               ? productMorefollowBrand.brandName
               : category?.name}
           </div>
-          {productMorefollowBrand &&
-            (currentFilter === "2" ? (
-              <ProductListFollowCategory
-                products={productMorefollowBrand.products.sort(
-                  (a: ProductItem, b: ProductItem) => a.price - b.price
-                )}
-              />
-            ) : currentFilter === "3" ? (
-              <ProductListFollowCategory
-                products={productMorefollowBrand.products.sort(
-                  (a: ProductItem, b: ProductItem) => b.price - a.price
-                )}
-              />
-            ) : currentFilter === "4" ? (
-              <ProductListFollowCategory
-                products={productMorefollowBrand.products.sort(
-                  (a: ProductItem, b: ProductItem) =>
-                    a.productName > b.productName ? 1 : -1
-                )}
-              />
-            ) : currentFilter === "5" ? (
-              <ProductListFollowCategory
-                products={productMorefollowBrand.products.sort(
-                  (a: ProductItem, b: ProductItem) =>
-                    a.productName > b.productName ? -1 : 1
-                )}
-              />
-            ) : (
-              <ProductListFollowCategory
-                products={productMorefollowBrand.products}
-              />
-            ))}
+          {productMoreFollowBrandFilter && (
+            <ProductListFollowCategory
+              products={productMoreFollowBrandFilter}
+            />
+          )}
         </div>
         <div className="pagination">
           <Pagination total={10} />

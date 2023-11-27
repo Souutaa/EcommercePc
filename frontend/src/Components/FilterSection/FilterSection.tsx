@@ -1,8 +1,8 @@
-import { Checkbox, Select } from "@mantine/core";
+import { Checkbox, NativeSelect, Select } from "@mantine/core";
 import Slider from "../Slider/Slider";
 import { useEffect, useState } from "react";
 
-function FilterSection({ onChange, onChangFilterSlide }: any) {
+function FilterSection({ onChange, onChangFilterSlide, onChangePrice }: any) {
   const [checkedCheckbox, setCheckedCheckbox] = useState<
     (EventTarget & HTMLInputElement)[]
   >([]);
@@ -12,13 +12,14 @@ function FilterSection({ onChange, onChangFilterSlide }: any) {
       min: Number.MAX_VALUE,
       max: Number.MIN_VALUE,
     };
-    checkedCheckbox.forEach((checkbox) => {
-      const checkboxRange = checkbox.value
-        .split(",")
-        .map((item: string): number => +item);
-      if (range.min > checkboxRange[0]) range.min = checkboxRange[0];
-      if (range.max < checkboxRange[1]) range.max = checkboxRange[1];
-    });
+    if (checkedCheckbox)
+      checkedCheckbox.forEach((checkbox) => {
+        const checkboxRange = checkbox.value
+          .split(",")
+          .map((item: string): number => +item);
+        if (range.min > checkboxRange[0]) range.min = checkboxRange[0];
+        if (range.max < checkboxRange[1]) range.max = checkboxRange[1];
+      });
     setPriceRange((prevState) => {
       if (prevState) {
         let newState = [...prevState];
@@ -29,22 +30,23 @@ function FilterSection({ onChange, onChangFilterSlide }: any) {
       return prevState;
     });
   }, [checkedCheckbox]);
-  console.log(priceRange);
 
+  useEffect(() => {
+    onChangePrice(priceRange[0], priceRange[1]);
+  }, [priceRange]);
   return (
     <>
       <div className="filter-section">
         <div className="filter-product">
           <div className="filter-price">
-            <Slider onChangeFilter={onChangFilterSlide} />
+            <Slider onChange={onChangFilterSlide} />
           </div>
           <div className="filter-options">
             <label className="filter-text" htmlFor="">
               Filter:
             </label>
             <div className="filter-select">
-              <Select
-                searchValue="Sản phẩm nổi bật"
+              <NativeSelect
                 placeholder="Chọn giá trị bạn muốn loc"
                 data={[
                   {
@@ -68,10 +70,9 @@ function FilterSection({ onChange, onChangFilterSlide }: any) {
                     value: "5",
                   },
                 ]}
-                defaultValue={"Sản phẩm nổi bật"}
+                defaultValue={"1"}
                 onChange={(e) => {
-                  onChange(e);
-                  console.log(e);
+                  onChange(e.target.value);
                 }}
               />
             </div>
