@@ -5,3 +5,4 @@ export default function formatPrice(price: number) {
   });
   return formatter.format(price);
 }
+
