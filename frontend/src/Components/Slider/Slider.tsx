@@ -1,18 +1,22 @@
 import { RangeSlider } from "@mantine/core";
-import formatPrice from "../../Helper/formatPrice";
-import { useState } from "react";
 
 function Slider({ onChange }: any) {
+  function valueLabelFormat(value: number) {
+    let scaledValue = value;
+    let stringValue = scaledValue.toLocaleString("vi-VN");
+
+    return `${stringValue}  ${"VND"}`;
+  }
   return (
     <>
       <RangeSlider
         mt={50}
         step={500000}
-        min={100000}
+        min={0}
         max={100000000}
         labelAlwaysOn
         defaultValue={[100000, 100000000]}
-        label={onChange}
+        label={valueLabelFormat}
         onChange={onChange}
       />
     </>

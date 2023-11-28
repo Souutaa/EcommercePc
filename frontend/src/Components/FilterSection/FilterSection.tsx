@@ -1,4 +1,4 @@
-import { Checkbox, NativeSelect, Select } from "@mantine/core";
+import { Checkbox, NativeSelect } from "@mantine/core";
 import Slider from "../Slider/Slider";
 import { useEffect, useState } from "react";
 
