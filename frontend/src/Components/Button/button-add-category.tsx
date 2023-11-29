@@ -4,7 +4,7 @@ import React from "react";
 import { Notifications } from "@mantine/notifications";
 import FormCategory from "../FormCategory/FormCategory";
 
-const ButtonAddCategory = () => {
+const ButtonAddCategory = (props: {onFinish: () => void}) => {
   return (
     <MantineProvider>
       <ModalsProvider>
@@ -16,7 +16,7 @@ const ButtonAddCategory = () => {
               title: "Add New Category",
               children: (
                 <>
-                  <FormCategory />
+                  <FormCategory onFinish={props.onFinish}/>
                 </>
               ),
             });
