@@ -1,11 +1,11 @@
-import { Pagination } from "@mantine/core";
+import { Pagination, isNumberLike } from "@mantine/core";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import FilterSection from "../../Components/FilterSection/FilterSection";
-import { ProductItem } from "../../Components/Product";
+import Product, { ProductItem } from "../../Components/Product";
 import ProductListFollowCategory from "../../Components/Product/ProductListFollowCategory";
 import formatPrice from "../../Helper/formatPrice";
 import { ProductItems } from "../HomePage/Content";
@@ -31,6 +31,7 @@ function ProductMore() {
     useState<BrandProductMore>();
   const [productMoreFollowBrandFilter, setProductMoreFollowBrandFilter] =
     useState<ProductItem[]>();
+  const [numberOfPage, setNumberOfPage] = useState(0);
 
   useEffect(() => {
     console.log("get brands data from api");
@@ -57,6 +58,7 @@ function ProductMore() {
         const res = await axios.get(url);
         console.log("products more follow brand based on Category=> ", res);
         setProductMoreFollowBrand(res.data);
+        setNumberOfPage(Math.ceil(res.data.products.length / infoPerPage));
       } catch (error) {
         console.log("error=> ", error);
       }
@@ -65,6 +67,12 @@ function ProductMore() {
     fetchProductsBrand();
   }, []);
 
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const infoPerPage = 2;
+  const offset = (currentPage - 1) * infoPerPage;
+
+  //filter
   const [currentFilter, setCurrentFilter] = useState("1");
   const onChangeFilter = (index: string) => {
     setCurrentFilter(index);
@@ -76,6 +84,9 @@ function ProductMore() {
               (a: ProductItem, b: ProductItem) => a.price - b.price
             )
           );
+          setNumberOfPage(
+            Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+          );
           break;
         }
         case "3": {
@@ -83,6 +94,9 @@ function ProductMore() {
             productMorefollowBrand.products.sort(
               (a: ProductItem, b: ProductItem) => b.price - a.price
             )
+          );
+          setNumberOfPage(
+            Math.ceil(productMorefollowBrand.products.length / infoPerPage)
           );
           break;
         }
@@ -93,6 +107,9 @@ function ProductMore() {
                 a.productName > b.productName ? 1 : -1
             );
           });
+          setNumberOfPage(
+            Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+          );
           break;
         }
         case "5": {
@@ -102,15 +119,30 @@ function ProductMore() {
                 a.productName > b.productName ? -1 : 1
             );
           });
+          setNumberOfPage(
+            Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+          );
           break;
         }
         default: {
           setProductMoreFollowBrandFilter(productMorefollowBrand.products);
+          setNumberOfPage(
+            Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+          );
         }
       }
+    setCurrentPage(1);
   };
 
-  
+  const onPageChange = (selected: number) => {
+    setCurrentPage(selected);
+  };
+
+  const numberOfPageComboBox = (e: ProductItem[]) => {
+    console.log("bao nehiu a ", e);
+    if (e.length) setNumberOfPage(Math.ceil(e.length / infoPerPage));
+  };
+
   const valueLabelFormat = (value: number) => {
     return formatPrice(value);
   };
@@ -119,13 +151,16 @@ function ProductMore() {
     if (productMorefollowBrand) {
       if (min === Number.MAX_VALUE && max === Number.MIN_VALUE) {
         setProductMoreFollowBrandFilter(productMorefollowBrand?.products);
-        return;
+        setNumberOfPage(
+          Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+        );
+      } else {
+        setProductMoreFollowBrandFilter(
+          productMorefollowBrand.products.filter((item) => {
+            return item.price >= min && item.price <= max;
+          })
+        );
       }
-      setProductMoreFollowBrandFilter(
-        productMorefollowBrand.products.filter((item) => {
-          return item.price >= min && item.price <= max;
-        })
-      );
     }
   };
 
@@ -137,6 +172,7 @@ function ProductMore() {
           onChangePrice={priceFilter}
           onChange={onChangeFilter}
           onChangFilterSlide={valueLabelFormat}
+          onChangeNumberOfPage={numberOfPageComboBox}
         />
         <div className="product">
           <div className="title">
@@ -144,14 +180,23 @@ function ProductMore() {
               ? productMorefollowBrand.brandName
               : category?.name}
           </div>
+
           {productMoreFollowBrandFilter && (
             <ProductListFollowCategory
-              products={productMoreFollowBrandFilter}
+              products={productMoreFollowBrandFilter.slice(
+                offset,
+                offset + infoPerPage
+              )}
             />
           )}
         </div>
         <div className="pagination">
-          <Pagination total={10} />
+          <Pagination
+            total={numberOfPage}
+            defaultValue={1}
+            value={currentPage}
+            onChange={onPageChange}
+          />
         </div>
       </div>
     </>

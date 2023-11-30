@@ -13,7 +13,10 @@ function Slider({ onChange }: any) {
         labelAlwaysOn
         defaultValue={[100000, 100000000]}
         label={onChange}
-        onChange={onChange}
+        onChange={
+          onChange
+          //onChangeNumberOfPage(e);
+        }
       />
     </>
   );
