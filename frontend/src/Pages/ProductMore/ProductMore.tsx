@@ -9,6 +9,7 @@ import Product, { ProductItem } from "../../Components/Product";
 import ProductListFollowCategory from "../../Components/Product/ProductListFollowCategory";
 import formatPrice from "../../Helper/formatPrice";
 import { ProductItems } from "../HomePage/Content";
+import { useDebounce } from "../../Hooks/use-debounce";
 
 type CategoryProductMore = {
   id: number;
@@ -34,14 +35,12 @@ function ProductMore() {
   const [numberOfPage, setNumberOfPage] = useState(0);
 
   useEffect(() => {
-    console.log("get brands data from api");
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
           // "http://localhost:8080/category/allOfCategory"
           `http://localhost:8080/category/${name}`
         );
-        console.log("products more=> ", res);
         setCategory(res.data);
         setProductMoreFollowBrand(res.data);
         setProductMoreFollowBrandFilter(res.data.products);
@@ -143,11 +142,10 @@ function ProductMore() {
     if (e.length) setNumberOfPage(Math.ceil(e.length / infoPerPage));
   };
 
-  const valueLabelFormat = (value: number) => {
-    return formatPrice(value);
-  };
+  const valueLabelFormat = useDebounce<number[]>((value) => priceFilter(value[0], value[1]), 1000);
 
   const priceFilter = (min: number, max: number) => {
+    console.log(min, max)
     if (productMorefollowBrand) {
       if (min === Number.MAX_VALUE && max === Number.MIN_VALUE) {
         setProductMoreFollowBrandFilter(productMorefollowBrand?.products);
