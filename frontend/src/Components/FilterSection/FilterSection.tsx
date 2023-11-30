@@ -2,7 +2,12 @@ import { Checkbox, NativeSelect, Select } from "@mantine/core";
 import Slider from "../Slider/Slider";
 import { useEffect, useState } from "react";
 
-function FilterSection({ onChange, onChangFilterSlide, onChangePrice }: any) {
+function FilterSection({
+  onChange,
+  onChangFilterSlide,
+  onChangePrice,
+  onChangeNumberOfPage,
+}: any) {
   const [checkedCheckbox, setCheckedCheckbox] = useState<
     (EventTarget & HTMLInputElement)[]
   >([]);
@@ -39,7 +44,10 @@ function FilterSection({ onChange, onChangFilterSlide, onChangePrice }: any) {
       <div className="filter-section">
         <div className="filter-product">
           <div className="filter-price">
-            <Slider onChange={onChangFilterSlide} />
+            <Slider
+              onChange={onChangFilterSlide}
+              //onChangeNumberOfPage={onChangeNumberOfPage}
+            />
           </div>
           <div className="filter-options">
             <label className="filter-text" htmlFor="">
@@ -88,6 +96,7 @@ function FilterSection({ onChange, onChangFilterSlide, onChangePrice }: any) {
               onChange={(e) => {
                 if (e.target.checked) {
                   setCheckedCheckbox([...checkedCheckbox, e.target]);
+                  onChangeNumberOfPage(e);
                 } else {
                   setCheckedCheckbox([
                     ...checkedCheckbox.filter((item) => item !== e.target),
@@ -102,6 +111,7 @@ function FilterSection({ onChange, onChangFilterSlide, onChangePrice }: any) {
               onChange={(e) => {
                 if (e.target.checked) {
                   setCheckedCheckbox([...checkedCheckbox, e.target]);
+                  onChangeNumberOfPage(e);
                 } else {
                   setCheckedCheckbox([
                     ...checkedCheckbox.filter((item) => item !== e.target),
@@ -116,6 +126,7 @@ function FilterSection({ onChange, onChangFilterSlide, onChangePrice }: any) {
               onChange={(e) => {
                 if (e.target.checked) {
                   setCheckedCheckbox([...checkedCheckbox, e.target]);
+                  onChangeNumberOfPage(e);
                 } else {
                   setCheckedCheckbox([
                     ...checkedCheckbox.filter((item) => item !== e.target),
@@ -130,6 +141,7 @@ function FilterSection({ onChange, onChangFilterSlide, onChangePrice }: any) {
               onChange={(e) => {
                 if (e.target.checked) {
                   setCheckedCheckbox([...checkedCheckbox, e.target]);
+                  onChangeNumberOfPage(e);
                 } else {
                   setCheckedCheckbox([
                     ...checkedCheckbox.filter((item) => item !== e.target),
@@ -144,6 +156,7 @@ function FilterSection({ onChange, onChangFilterSlide, onChangePrice }: any) {
               onChange={(e) => {
                 if (e.target.checked) {
                   setCheckedCheckbox([...checkedCheckbox, e.target]);
+                  onChangeNumberOfPage(e);
                 } else {
                   setCheckedCheckbox([
                     ...checkedCheckbox.filter((item) => item !== e.target),
@@ -158,6 +171,7 @@ function FilterSection({ onChange, onChangFilterSlide, onChangePrice }: any) {
               onChange={(e) => {
                 if (e.target.checked) {
                   setCheckedCheckbox([...checkedCheckbox, e.target]);
+                  onChangeNumberOfPage(e);
                 } else {
                   setCheckedCheckbox([
                     ...checkedCheckbox.filter((item) => item !== e.target),
@@ -172,6 +186,7 @@ function FilterSection({ onChange, onChangFilterSlide, onChangePrice }: any) {
               onChange={(e) => {
                 if (e.target.checked) {
                   setCheckedCheckbox([...checkedCheckbox, e.target]);
+                  onChangeNumberOfPage(e);
                 } else {
                   setCheckedCheckbox([
                     ...checkedCheckbox.filter((item) => item !== e.target),

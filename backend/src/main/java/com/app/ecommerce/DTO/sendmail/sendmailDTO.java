@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class sendmailDTO {
-  // private String username;
-
+  private String username;
   private String email;
 }
