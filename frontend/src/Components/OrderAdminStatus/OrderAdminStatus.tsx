@@ -1,20 +1,23 @@
 import React from "react";
 import SeaparatorTable from "../Seaparator/SeaparatorTable";
 import ButtonChangeOrder from "../Button/button-change-order";
+import { AdminOrder } from "../../PagesAdmin/OrderAdmin";
+import formatPrice from "../../Helper/formatPrice";
 
-const OrderAdminStatus = () => {
+const OrderAdminStatus = (props: { order: AdminOrder }) => {
+  const { order } = props;
   return (
     <tbody>
       <tr>
-        <td className="pd-20 text-left">#18</td>
-        <td className="pd-20 text-left">2023-05-09 19:50:29</td>
-        <td className="pd-20 text-left">testuser1</td>
-        <td className="pd-20 text-left">58,980,000₫</td>
+        <td className="pd-20 text-left">#{order.id}</td>
+        <td className="pd-20 text-left">{order.createdAt}</td>
+        <td className="pd-20 text-left">{order.username}</td>
+        <td className="pd-20 text-left">{formatPrice(order.total)}</td>
         <td className="pd-20 text-left">
-          <span className="badge bg-success">Đã giao</span>
+          <span className="badge bg-success">{order.status}</span>
         </td>
         <td className="table-action pd-20 text-left">
-          <ButtonChangeOrder />
+          <ButtonChangeOrder orderId={order.id}/>
         </td>
       </tr>
 

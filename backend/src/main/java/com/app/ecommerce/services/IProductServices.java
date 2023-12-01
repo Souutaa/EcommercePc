@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.app.ecommerce.DTO.product.CreateProductRequest;
 import com.app.ecommerce.DTO.product.ProductCardOfBrandResponse;
 import com.app.ecommerce.DTO.product.ProductCardResponse;
+import com.app.ecommerce.DTO.product.TopSellingProduct;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
 import com.app.ecommerce.models.Product;
 
@@ -32,4 +33,5 @@ public interface IProductServices {
 
   public Product undoSoftDelete(String productLine);
 
+  public List<TopSellingProduct> getTopSellingProducts();
 }

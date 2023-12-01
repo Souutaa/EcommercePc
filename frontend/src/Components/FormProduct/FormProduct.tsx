@@ -237,8 +237,7 @@ const FromProduct = (props: {setNewProduct: (productLine: string) => void}) => {
         <div className="input-2 mb-20">
           <NativeSelect
             style={{ width: "49%" }}
-            label="Brand"
-            placeholder="Acer"
+            label="Category"
             value={categoryId}
             data={
               categories
@@ -264,8 +263,7 @@ const FromProduct = (props: {setNewProduct: (productLine: string) => void}) => {
           />
           <NativeSelect
             style={{ width: "49%" }}
-            label="Category"
-            placeholder="Laptop"
+            label="Brand"
             data={
               categories
                 ? categories

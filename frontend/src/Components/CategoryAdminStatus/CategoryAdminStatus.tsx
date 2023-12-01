@@ -1,15 +1,13 @@
-import React from "react";
 
-import ButtonDelete from "../Button/button-delete";
-import SeaparatorTable from "../Seaparator/SeaparatorTable";
 import ButtonChangeCategory from "../Button/button-change-category";
+import SeaparatorTable from "../Seaparator/SeaparatorTable";
 
-const CategoryAdminStatus = () => {
+const CategoryAdminStatus = (props: { id: string; name: string }) => {
   return (
     <tbody>
       <tr className="text-hover">
-        <td className="sorting">1</td>
-        <td className="sorting">Laptop</td>
+        <td className="sorting">{props.id}</td>
+        <td className="sorting">{props.name}</td>
         <td className="table-action sorting">
           <ButtonChangeCategory />
           {/* <ButtonDelete /> */}

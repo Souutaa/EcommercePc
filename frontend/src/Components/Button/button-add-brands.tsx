@@ -4,7 +4,7 @@ import React from "react";
 import FormBrands from "../FormBrands/FormBrands";
 import { Notifications } from "@mantine/notifications";
 
-const ButtonAddBrands = () => {
+const ButtonAddBrands = (props: {onFinish: () => void}) => {
   return (
     <MantineProvider>
       <ModalsProvider>
@@ -16,7 +16,7 @@ const ButtonAddBrands = () => {
               title: "Add New Brand",
               children: (
                 <>
-                  <FormBrands />
+                  <FormBrands onFinish={props.onFinish}/>
                 </>
               ),
             });

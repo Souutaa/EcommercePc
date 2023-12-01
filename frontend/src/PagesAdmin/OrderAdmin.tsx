@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
 import LengthProduct from "../Components/LengthProduct/LengthProduct";
 import SearchAdmin from "../Components/SearchAdmin/SearchAdmin";
@@ -8,8 +8,28 @@ import OrderAdminStatus from "../Components/OrderAdminStatus/OrderAdminStatus";
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
+import axios from "axios";
+
+export interface AdminOrder {
+  id: number;
+  username: string;
+  status: string;
+  total: number;
+  createdAt: string;
+}
 
 const OrderAdmin = () => {
+  const [orders, setOrders] = useState<AdminOrder[]>([]);
+
+  const fetchOrders = useCallback(async () => {
+    const response = await axios.get("http://127.0.0.1:8080/order/getAllOrder");
+    setOrders(response.data);
+  }, []);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
+
   return (
     <MantineProvider>
       <ModalsProvider>
@@ -26,13 +46,9 @@ const OrderAdmin = () => {
             </div>
             <table className="table-centered">
               <OrderTitleAdmin />
-              <OrderAdminStatus />
-              <OrderAdminStatus />
-              <OrderAdminStatus />
-              <OrderAdminStatus />
-              <OrderAdminStatus />
-              <OrderAdminStatus />
-              <OrderAdminStatus />
+              {orders.map((order) => (
+                <OrderAdminStatus key={order.id} order={order} />
+              ))}
             </table>
             <PagiProductAdmin />
           </div>

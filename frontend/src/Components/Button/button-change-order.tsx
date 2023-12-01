@@ -3,7 +3,7 @@ import { IconPencil } from "@tabler/icons-react";
 import React from "react";
 import FromChangeOrder from "../FromChangeOrder/FromChangeOrder";
 
-const ButtonChangeOrder = () => {
+const ButtonChangeOrder = (props: {orderId: number}) => {
   return (
     <IconPencil
       onClick={() => {
@@ -12,7 +12,7 @@ const ButtonChangeOrder = () => {
           title: "Các sản phẩm từ hóa đơn # 18",
           children: (
             <>
-              <FromChangeOrder />
+              <FromChangeOrder orderId={props.orderId}/>
             </>
           ),
         });

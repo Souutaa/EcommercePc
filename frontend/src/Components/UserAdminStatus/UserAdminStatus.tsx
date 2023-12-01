@@ -2,21 +2,26 @@ import React from "react";
 import ButtonDelete from "../Button/button-delete";
 import SeaparatorTable from "../Seaparator/SeaparatorTable";
 import ButtonChangeUser from "../Button/button-change-user";
+import { User } from "../../PagesAdmin/UserAdmin";
 
-const UserAdminStatus = () => {
+const UserAdminStatus = (props: { user: User }) => {
+  const { user } = props;
   return (
     <tbody>
       <tr>
-        <td className="pd-20 text-left  ">testadmin1</td>
-        <td className="pd-20 text-left  ">0351116516</td>
-        <td className="pd-20 text-left">testadmin@gmail.com9</td>
-        <td className="pd-20 text-left  ">ADMIN</td>
-        <td className="pd-20 text-left  ">02-04-2023</td>
+        <td className="pd-20 text-left  ">{user.username}</td>
+        <td className="pd-20 text-left">{user.email}</td>
+        <td className="pd-20 text-left  ">{user.role}</td>
         <td className="pd-20 text-left  ">
-          <span className="badge bg-success">Active</span>
+          {new Date(user.createdAt).toLocaleDateString()}
+        </td>
+        <td className="pd-20 text-left  ">
+          <span className="badge bg-success">
+            {user.deletedAt ? "Deactivated" : "Active"}
+          </span>
         </td>
         <td className="table-action pd-20 text-left">
-          <ButtonChangeUser />
+          <ButtonChangeUser username={user.username} />
           <ButtonDelete />
         </td>
       </tr>

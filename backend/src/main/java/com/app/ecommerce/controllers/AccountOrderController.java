@@ -3,7 +3,6 @@ package com.app.ecommerce.controllers;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -56,6 +54,12 @@ public class AccountOrderController {
     String token = authorization.split(" ")[1].trim();
     String username = this.jwtService.extractUsername(token);
     List<AccountOrder> orders = orderServices.getOrders(username);
+    return new ResponseEntity<List<AccountOrder>>(orders, HttpStatus.OK);
+  }
+
+  @GetMapping("/getAllOrder")
+  public @ResponseBody ResponseEntity<List<AccountOrder>> getAllOrder() {
+    List<AccountOrder> orders = orderServices.getAllOrders();
     return new ResponseEntity<List<AccountOrder>>(orders, HttpStatus.OK);
   }
 
@@ -109,7 +113,8 @@ public class AccountOrderController {
   }
 
   @GetMapping("/getOrderDetail")
-  public ResponseEntity<OrderDetailResponse> getOrderDetail(@RequestHeader("Authorization") String authorization, @RequestParam String id) {
+  public ResponseEntity<OrderDetailResponse> getOrderDetail(@RequestHeader("Authorization") String authorization,
+      @RequestParam String id) {
     String token = authorization.split(" ")[1].trim();
     String username = this.jwtService.extractUsername(token);
     return ResponseEntity.ok(this.orderServices.getOrderDetail(username, Integer.parseInt(id)));

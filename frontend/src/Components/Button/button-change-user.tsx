@@ -3,16 +3,16 @@ import { IconPencil } from "@tabler/icons-react";
 import React from "react";
 import FormChangeUser from "../FormChangeUser/FormChangeUser";
 
-const ButtonChangeUser = () => {
+const ButtonChangeUser = (props: { username: string }) => {
   return (
     <IconPencil
       onClick={() => {
         modals.open({
           size: "xl",
-          title: "Change testuser5's information",
+          title: "Change user's information",
           children: (
             <>
-              <FormChangeUser />
+              <FormChangeUser username={props.username}/>
             </>
           ),
         });

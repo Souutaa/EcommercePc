@@ -7,7 +7,6 @@ const UserTitleAdmin = () => {
     <thead className="table-light">
       <tr>
         <th className="sorting">Customer</th>
-        <th className="sorting">Phone</th>
         <th className="sorting" style={{ width: "250px" }}>
           Email
         </th>

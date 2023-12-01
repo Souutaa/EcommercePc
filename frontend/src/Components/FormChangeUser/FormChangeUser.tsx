@@ -1,19 +1,39 @@
-import { Button, Input, NativeSelect } from "@mantine/core";
+import { Button, Input, NativeSelect, PasswordInput } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { notifications } from "@mantine/notifications";
 import { IconCheck } from "@tabler/icons-react";
-import React from "react";
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
+import { User } from "../../PagesAdmin/UserAdmin";
 
-const FormChangeUser = () => {
+const FormChangeUser = (props: { username: string }) => {
+  const [user, setUser] = useState<User>();
+  const [password, setPassword] = useState<string>("");
+
+  const fetchUser = useCallback(async () => {
+    const response = await axios.get(
+      `http://127.0.0.1:8080/user/${props.username}`
+    );
+    setUser(response.data);
+  }, [props.username]);
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
   return (
     <div>
       <div className="modal-body">
         <div className="input-2">
-          <Input.Wrapper style={{ width: "49%" }} className="mb-20" label="Họ">
-            <Input placeholder="Lê Thái" />
-          </Input.Wrapper>
-          <Input.Wrapper style={{ width: "49%" }} className="mb-20" label="Tên">
-            <Input placeholder="Vi" />
+          <Input.Wrapper
+            style={{ width: "49%" }}
+            className="mb-20"
+            label="Username"
+          >
+            <Input
+              placeholder="abc@gmail.com"
+              value={user?.username}
+              disabled
+            />
           </Input.Wrapper>
         </div>
         <div className="input-2">
@@ -22,36 +42,47 @@ const FormChangeUser = () => {
             className="mb-20"
             label="Email"
           >
-            <Input placeholder="abc@gmail.com" />
+            <Input
+              placeholder="abc@gmail.com"
+              value={user?.email}
+              onChange={(e) => {
+                setUser((prevState) => {
+                  if (prevState) {
+                    let newState = { ...prevState };
+                    newState.username = e.target.value;
+                    return newState;
+                  }
+                  return prevState;
+                });
+              }}
+            />
           </Input.Wrapper>
-          <Input.Wrapper
+          <PasswordInput
             style={{ width: "49%" }}
-            className="mb-20"
-            label="Điện thoại"
-          >
-            <Input placeholder="0123273621" />
-          </Input.Wrapper>
-        </div>
-        <div className="input-2">
-          <NativeSelect
-            style={{ width: "49%" }}
-            label="Tỉnh thành phố"
-            data={["TP.HCM", "Hà Nội"]}
-          />
-
-          <NativeSelect
-            style={{ width: "49%" }}
-            label="Quận huyện"
-            data={["Quận 7", "Quận 8"]}
+            label="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Input.Wrapper className="mb-20" label="Địa chỉ chi tiết">
-          <Input placeholder="Số nhà, tên đường, xã, phường, thị trấn..." />
-        </Input.Wrapper>
         <NativeSelect
           style={{ width: "49%" }}
           label="Role"
-          data={["Admin", "Người dùng", "Nhân viên", "Testing"]}
+          value={user?.role}
+          onChange={(e) => {
+            setUser((prevState) => {
+              if (prevState) {
+                let newState = { ...prevState };
+                newState.role = e.target.value;
+                return newState;
+              }
+              return prevState;
+            });
+          }}
+          data={[
+            { value: "ADMIN", label: "Quản trị viên" },
+            { value: "USER", label: "Người dùng" },
+            { value: "MANAGER", label: "Nhân viên" },
+          ]}
         />
       </div>
       <div className="modal-footer">
