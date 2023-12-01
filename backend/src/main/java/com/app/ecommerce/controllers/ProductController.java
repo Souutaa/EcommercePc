@@ -31,6 +31,7 @@ import com.app.ecommerce.DTO.product.CreateProductRequest;
 import com.app.ecommerce.DTO.product.GetProductReponse;
 import com.app.ecommerce.DTO.product.ProductCardOfBrandResponse;
 import com.app.ecommerce.DTO.product.ProductCardResponse;
+import com.app.ecommerce.DTO.product.TopSellingProduct;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
 import com.app.ecommerce.DTO.productInfo.ProductInfoDTO;
 import com.app.ecommerce.models.Product;
@@ -133,5 +134,10 @@ public class ProductController {
   @PatchMapping(value = "/undo-delete")
   public ResponseEntity<Product> undoDeleteProduct(@QueryParam("productLine") String productLine) {
     return ResponseEntity.ok(this.productServices.undoSoftDelete(productLine));
+  }
+
+  @GetMapping(value = "/getTopSelling")
+   public ResponseEntity<List<TopSellingProduct>> getTopSellingProduct() {
+    return ResponseEntity.ok(this.productServices.getTopSellingProducts());
   }
 }

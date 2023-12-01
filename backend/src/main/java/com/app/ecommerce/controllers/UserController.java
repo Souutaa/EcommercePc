@@ -1,5 +1,6 @@
 package com.app.ecommerce.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.account.SimpleAccountDTO;
 import com.app.ecommerce.DTO.account.UpdateAccountRoleRequest;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
 import com.app.ecommerce.DTO.accountDetail.AccountDetailResponse;
@@ -43,17 +45,29 @@ public class UserController {
     public @ResponseBody ResponseEntity<Object> getUsers(@RequestParam Boolean active) {
         try {
             List<Account> listUsers = accountServices.getAccounts(active);
-            return new ResponseEntity<Object>(listUsers, HttpStatus.OK);
+
+            List<SimpleAccountDTO> responseUsers = new ArrayList<SimpleAccountDTO>();
+
+            for (Account user : listUsers) {
+                responseUsers.add(SimpleAccountDTO.builder().id(user.getId()).username(user.getUsername())
+                        .role(user.getRole()).createdAt(user.getCreatedAt()).deletedAt(user.getDeletedAt())
+                        .email(user.getEmail()).build());
+            }
+
+            return new ResponseEntity<Object>(responseUsers, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             throw new ResourceNotFoundException("Can't have any user in list");
         }
     }
 
-    @GetMapping(value = "/{username}/getUser")
-    public @ResponseBody ResponseEntity<Object> getAllAccount(@RequestParam String id, @PathVariable String username) {
+    @GetMapping(value = "/{username}")
+    public @ResponseBody ResponseEntity<Object> getAccount(@PathVariable String username) {
         try {
-            Account test = accountServices.getAccountById(Integer.parseInt(id));
-            return new ResponseEntity<>(test, HttpStatus.OK);
+            Account user = accountServices.getAccountByUserName(username);
+            SimpleAccountDTO simpleUser = SimpleAccountDTO.builder().id(user.getId()).username(user.getUsername())
+                        .role(user.getRole()).createdAt(user.getCreatedAt()).deletedAt(user.getDeletedAt())
+                        .email(user.getEmail()).build();
+            return new ResponseEntity<>(simpleUser, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             throw new ResourceNotFoundException("user not found");
         }

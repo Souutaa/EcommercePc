@@ -1,17 +1,39 @@
-import React from "react";
-import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
-import PagiProductAdmin from "../Components/PaginationProductAdmin/PagiProductAdmin";
-import ButtonAddAdmin from "../Components/Button/button-add-product-admin";
-import LengthProduct from "../Components/LengthProduct/LengthProduct";
-import SearchAdmin from "../Components/SearchAdmin/SearchAdmin";
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
 import ButtonAddUsers from "../Components/Button/button-add-users";
-import UserTitleAdmin from "../Components/UserTitleAdmin/UserTitleAdmin";
+import LengthProduct from "../Components/LengthProduct/LengthProduct";
+import PagiProductAdmin from "../Components/PaginationProductAdmin/PagiProductAdmin";
+import SearchAdmin from "../Components/SearchAdmin/SearchAdmin";
 import UserAdminStatus from "../Components/UserAdminStatus/UserAdminStatus";
+import UserTitleAdmin from "../Components/UserTitleAdmin/UserTitleAdmin";
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+  createdAt: string;
+  deletedAt: string;
+}
 
 const UserAdmin = () => {
+  const [users, setUsers] = useState<User[]>([]);
+
+  const fetchUsers = useCallback(async () => {
+    const response = await axios.get(
+      "http://127.0.0.1:8080/user/all?active=false"
+    );
+    setUsers(response.data);
+  }, []);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
   return (
     <MantineProvider>
       <ModalsProvider>
@@ -31,12 +53,9 @@ const UserAdmin = () => {
             </div>
             <table className="table-centered">
               <UserTitleAdmin />
-              <UserAdminStatus />
-              <UserAdminStatus />
-              <UserAdminStatus />
-              <UserAdminStatus />
-              <UserAdminStatus />
-              <UserAdminStatus />
+              {users.map((user) => (
+                <UserAdminStatus user={user} />
+              ))}
             </table>
             <PagiProductAdmin />
           </div>

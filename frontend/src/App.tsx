@@ -21,7 +21,7 @@ import ProductSearch from "./Pages/ProductSearch/ProductSearch";
 import InfoOrder from "./Pages/InfoOrder/InfoOrder";
 import AdminLayouts from "./LayoutsAdmin/AdminLayouts";
 import ProductAdmin from "./PagesAdmin/ProductAdmin";
-import Dashborad from "./PagesAdmin/Dashborad";
+import Dashborad from "./PagesAdmin/Dashboard";
 import BrandAdmin from "./PagesAdmin/BrandAdmin";
 import CategoriesAdmin from "./PagesAdmin/CategoriesAdmin";
 import OrderAdmin from "./PagesAdmin/OrderAdmin";

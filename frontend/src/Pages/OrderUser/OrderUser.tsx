@@ -107,6 +107,10 @@ function OderUser() {
                   label: "Đang xử lý",
                 },
                 {
+                  value: "CONFIRMED",
+                  label: "Đã xác nhận",
+                },
+                {
                   value: "DELIVERING",
                   label: "Đang giao",
                 },
