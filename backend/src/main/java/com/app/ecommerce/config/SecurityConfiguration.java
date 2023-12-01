@@ -38,6 +38,7 @@ public class SecurityConfiguration {
         .csrf()
         .disable()
         .authorizeHttpRequests()
+        .requestMatchers("/user/*/updatepassword").permitAll()
         // .requestMatchers("/auth/**").permitAll()
         // .requestMatchers("/user/update-role").hasAuthority("ADMIN")
         .anyRequest().permitAll()

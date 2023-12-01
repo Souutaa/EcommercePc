@@ -71,7 +71,7 @@ public class EmailServicesImp implements IEmailServices {
 
     @Override
     public Account sendOTPbyEmail(sendmailDTO sendmail) throws MessagingException {
-        Optional<Account> userFound = repo.findByUsername(sendmail.getUsername());
+        Optional<Account> userFound = repo.findByUsername(sendmail.getEmail());
         if (userFound.isPresent()) {
             var otp = Utils.generateOTP();
             var user = userFound.get();
@@ -101,7 +101,7 @@ public class EmailServicesImp implements IEmailServices {
 
             return repo.save(user);
         } else {
-            throw new ResourceNotFoundException("Account with id: " + sendmail.getUsername() + " Not Found");
+            throw new ResourceNotFoundException("Account with id: " + sendmail.getEmail() + " Not Found");
         }
     }
 

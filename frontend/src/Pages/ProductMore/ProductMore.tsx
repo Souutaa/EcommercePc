@@ -142,10 +142,13 @@ function ProductMore() {
     if (e.length) setNumberOfPage(Math.ceil(e.length / infoPerPage));
   };
 
-  const valueLabelFormat = useDebounce<number[]>((value) => priceFilter(value[0], value[1]), 1000);
+  const valueLabelFormat = useDebounce<number[]>(
+    (value) => priceFilter(value[0], value[1]),
+    1000
+  );
 
   const priceFilter = (min: number, max: number) => {
-    console.log(min, max)
+    console.log(min, max);
     if (productMorefollowBrand) {
       if (min === Number.MAX_VALUE && max === Number.MIN_VALUE) {
         setProductMoreFollowBrandFilter(productMorefollowBrand?.products);
@@ -173,11 +176,7 @@ function ProductMore() {
           onChangeNumberOfPage={numberOfPageComboBox}
         />
         <div className="product">
-          <div className="title">
-            {productMorefollowBrand?.brandName
-              ? productMorefollowBrand.brandName
-              : category?.name}
-          </div>
+          <div className="title">{brandName ? brandName : name}</div>
 
           {productMoreFollowBrandFilter && (
             <ProductListFollowCategory
