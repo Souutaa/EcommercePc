@@ -1,6 +1,7 @@
 import { Button, PinInput } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
+
 import { useMemo, useState } from "react";
 function ForgotPasswordVerification() {
   const [pin, setPin] = useState("");

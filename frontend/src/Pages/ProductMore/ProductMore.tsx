@@ -141,7 +141,6 @@ function ProductMore() {
     console.log("bao nehiu a ", e);
     if (e.length) setNumberOfPage(Math.ceil(e.length / infoPerPage));
   };
-
   const valueLabelFormat = useDebounce<number[]>(
     (value) => priceFilter(value[0], value[1]),
     1000
