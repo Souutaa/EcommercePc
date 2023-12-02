@@ -21,4 +21,17 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
       "ORDER BY product.price DESC, totalSold DESC " + //
       "LIMIT 20", nativeQuery = true)
   List<TopSellingProduct> getTopSellingProduct();
+
+  @Query(value = "SELECT product.* " + //
+      "FROM product " + //
+      "LEFT JOIN product_info ON product_info.product_id = product.id " + //
+      "LEFT JOIN brand ON product.brand_id = brand.id  " + //
+      "LEFT JOIN category ON product.category_id = category.id " + //
+      "WHERE UPPER(product.product_line) LIKE UPPER(?1) OR " + //
+      "UPPER(product.product_name) LIKE UPPER(?1) OR " + //
+      "UPPER(product_info.product_information) LIKE UPPER(?1) OR " + //
+      "UPPER(category.name) LIKE UPPER(?1) OR " + //
+      "UPPER(brand.brand_name) LIKE UPPER(?1) " + //
+      "GROUP BY product.id;", nativeQuery = true)
+  List<Product> searchProducts(String searchString);
 }

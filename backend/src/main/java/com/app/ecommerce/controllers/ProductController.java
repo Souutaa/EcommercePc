@@ -21,16 +21,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.app.ecommerce.DTO.order.CreateOrderRequest;
 import com.app.ecommerce.DTO.product.CreateProductRequest;
 import com.app.ecommerce.DTO.product.GetProductReponse;
 import com.app.ecommerce.DTO.product.ProductCardOfBrandResponse;
 import com.app.ecommerce.DTO.product.ProductCardResponse;
+import com.app.ecommerce.DTO.product.SearchProduct;
 import com.app.ecommerce.DTO.product.TopSellingProduct;
 import com.app.ecommerce.DTO.product.UpdateProductLineRequest;
 import com.app.ecommerce.DTO.productInfo.ProductInfoDTO;
@@ -92,7 +95,8 @@ public class ProductController {
     List<String> productImages = this.productServices.getProductImages(productLine);
     String productThumbnail = this.productServices.getProductThumbnail(productLine);
     List<ProductInfoDTO> productInfos = this.productInfoServices.getProductInfos(product.getId());
-    List<ProductWarranty> productWarranties = this.productWarrantyServices.getAllProductWarrantiesByProductId(product.getId());
+    List<ProductWarranty> productWarranties = this.productWarrantyServices
+        .getAllProductWarrantiesByProductId(product.getId());
     return ResponseEntity.ok(GetProductReponse.builder()
         .product(product)
         .brandId(product.getBrand().getId())
@@ -137,7 +141,12 @@ public class ProductController {
   }
 
   @GetMapping(value = "/getTopSelling")
-   public ResponseEntity<List<TopSellingProduct>> getTopSellingProduct() {
+  public ResponseEntity<List<TopSellingProduct>> getTopSellingProduct() {
     return ResponseEntity.ok(this.productServices.getTopSellingProducts());
+  }
+
+  @PostMapping(value = "/search")
+  public ResponseEntity<List<ProductCardResponse>> searchProduct(@RequestBody SearchProduct request) {
+    return ResponseEntity.ok(this.productServices.searchProducts(request.getSearch()));
   }
 }
