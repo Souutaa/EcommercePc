@@ -32,7 +32,7 @@ public class Account extends BaseEntity implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     @Email(message = "Email must be valid")
     private String email;
 

@@ -3,6 +3,8 @@ package com.app.ecommerce.controllers;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,12 +31,12 @@ public class SendMailController {
     @Autowired
     private IEmailServices emailServices;
 
-    @PatchMapping("/{id}/sendmail")
-    public ResponseEntity<Account> sendMail(@PathVariable String id,
+    @PatchMapping("/sendmail")
+    public ResponseEntity<Account> sendMail(
             @RequestBody sendmailDTO sendmail)
             throws UnsupportedEncodingException, MessagingException {
         // String siteURL = Utilities.getSiteURL(request);
-        return ResponseEntity.ok(emailServices.sendOTPbyEmail(id, sendmail));
+        return new ResponseEntity<Account>(emailServices.sendOTPbyEmail(sendmail), HttpStatus.OK);
     }
 
     @PostMapping("/sendorder")

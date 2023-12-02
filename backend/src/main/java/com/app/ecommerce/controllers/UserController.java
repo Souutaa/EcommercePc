@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.account.ChangePasswordDTO;
 import com.app.ecommerce.DTO.account.SimpleAccountDTO;
 import com.app.ecommerce.DTO.account.UpdateAccountRoleRequest;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
@@ -88,10 +89,23 @@ public class UserController {
         }
     }
 
-    @PatchMapping(value = "/{id}/updatepassword")
-    public ResponseEntity<Account> updatePasswordUser(@PathVariable String id,
+    @PatchMapping(value = "/{email}/updatepassword")
+    public ResponseEntity<Account> updatePasswordUser(@PathVariable("email") String email,
             @Valid @RequestBody UpdatePasswordDTO password) {
-        return ResponseEntity.ok(accountServices.updatePassword(id, password));
+        return ResponseEntity.ok(accountServices.updatePassword(email, password));
+    }
+
+    @PatchMapping(value = "/changepassword")
+    public ResponseEntity<Account> ChangePasswordUser(@RequestHeader("Authorization") String authorization,
+            @Valid @RequestBody ChangePasswordDTO password) {
+        try {
+            String token = authorization.split(" ")[1].trim();
+            String username = this.jwtService.extractUsername(token);
+            // Account fetchedAccount = accountServices.getAccountByUserName(username);
+            return ResponseEntity.ok(accountServices.changePassword(username, password));
+        } catch (ResourceNotFoundException ex) {
+            throw new ResourceNotFoundException("user not found");
+        }
     }
 
     @PatchMapping(value = "/{id}/active")

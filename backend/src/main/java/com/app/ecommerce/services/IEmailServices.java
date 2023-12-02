@@ -7,7 +7,7 @@ import com.app.ecommerce.models.Account;
 import jakarta.mail.MessagingException;
 
 public interface IEmailServices {
-    public Account sendOTPbyEmail(String id, sendmailDTO sendmail) throws MessagingException;
+    public Account sendOTPbyEmail(sendmailDTO sendmail) throws MessagingException;
 
     public void sendOrderUser(CreateOrderRequest request, String username) throws MessagingException;
 }

@@ -1,13 +1,15 @@
-import { Pagination } from "@mantine/core";
+import { Pagination, isNumberLike } from "@mantine/core";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import FilterSection from "../../Components/FilterSection/FilterSection";
-import { ProductItem } from "../../Components/Product";
+import Product, { ProductItem } from "../../Components/Product";
 import ProductListFollowCategory from "../../Components/Product/ProductListFollowCategory";
+import formatPrice from "../../Helper/formatPrice";
 import { ProductItems } from "../HomePage/Content";
+import { useDebounce } from "../../Hooks/use-debounce";
 
 type CategoryProductMore = {
   id: number;
@@ -28,21 +30,24 @@ function ProductMore() {
   const [category, setCategory] = useState<CategoryProductMore>();
   const [productMorefollowBrand, setProductMoreFollowBrand] =
     useState<BrandProductMore>();
+  const [productMoreFollowBrandFilter, setProductMoreFollowBrandFilter] =
+    useState<ProductItem[]>();
+  const [numberOfPage, setNumberOfPage] = useState(0);
+
   useEffect(() => {
-    console.log("get brands data from api");
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
           // "http://localhost:8080/category/allOfCategory"
           `http://localhost:8080/category/${name}`
         );
-        console.log("products more=> ", res);
         setCategory(res.data);
+        setProductMoreFollowBrand(res.data);
+        setProductMoreFollowBrandFilter(res.data.products);
       } catch (error) {
         console.log("error=> ", error);
       }
     };
-
     const fetchProductsBrand = async () => {
       try {
         const url =
@@ -52,68 +57,142 @@ function ProductMore() {
         const res = await axios.get(url);
         console.log("products more follow brand based on Category=> ", res);
         setProductMoreFollowBrand(res.data);
+        setNumberOfPage(Math.ceil(res.data.products.length / infoPerPage));
       } catch (error) {
         console.log("error=> ", error);
       }
     };
-
     fetchProducts();
     fetchProductsBrand();
   }, []);
 
-  const [currentFilter, setCurrentFilter] = useState("Sản phẩm nổi bật");
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const infoPerPage = 2;
+  const offset = (currentPage - 1) * infoPerPage;
+
+  //filter
+  const [currentFilter, setCurrentFilter] = useState("1");
   const onChangeFilter = (index: string) => {
     setCurrentFilter(index);
+    if (productMorefollowBrand)
+      switch (index) {
+        case "2": {
+          setProductMoreFollowBrandFilter(
+            productMorefollowBrand.products.sort(
+              (a: ProductItem, b: ProductItem) => a.price - b.price
+            )
+          );
+          setNumberOfPage(
+            Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+          );
+          break;
+        }
+        case "3": {
+          setProductMoreFollowBrandFilter(
+            productMorefollowBrand.products.sort(
+              (a: ProductItem, b: ProductItem) => b.price - a.price
+            )
+          );
+          setNumberOfPage(
+            Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+          );
+          break;
+        }
+        case "4": {
+          setProductMoreFollowBrandFilter((prevState) => {
+            return productMorefollowBrand.products.sort(
+              (a: ProductItem, b: ProductItem) =>
+                a.productName > b.productName ? 1 : -1
+            );
+          });
+          setNumberOfPage(
+            Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+          );
+          break;
+        }
+        case "5": {
+          setProductMoreFollowBrandFilter(() => {
+            return productMorefollowBrand.products.sort(
+              (a: ProductItem, b: ProductItem) =>
+                a.productName > b.productName ? -1 : 1
+            );
+          });
+          setNumberOfPage(
+            Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+          );
+          break;
+        }
+        default: {
+          setProductMoreFollowBrandFilter(productMorefollowBrand.products);
+          setNumberOfPage(
+            Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+          );
+        }
+      }
+    setCurrentPage(1);
   };
 
-  useEffect(() => {}, [currentFilter]);
+  const onPageChange = (selected: number) => {
+    setCurrentPage(selected);
+  };
+
+  const numberOfPageComboBox = (e: ProductItem[]) => {
+    console.log("bao nehiu a ", e);
+    if (e.length) setNumberOfPage(Math.ceil(e.length / infoPerPage));
+  };
+  const valueLabelFormat = useDebounce<number[]>(
+    (value) => priceFilter(value[0], value[1]),
+    1000
+  );
+
+  const priceFilter = (min: number, max: number) => {
+    console.log(min, max);
+    if (productMorefollowBrand) {
+      if (min === Number.MAX_VALUE && max === Number.MIN_VALUE) {
+        setProductMoreFollowBrandFilter(productMorefollowBrand?.products);
+        setNumberOfPage(
+          Math.ceil(productMorefollowBrand.products.length / infoPerPage)
+        );
+      } else {
+        setProductMoreFollowBrandFilter(
+          productMorefollowBrand.products.filter((item) => {
+            return item.price >= min && item.price <= max;
+          })
+        );
+      }
+    }
+  };
 
   return (
     <>
       <div className="container">
         <Breadcrumbs />
-        <FilterSection onChange={onChangeFilter} />
+        <FilterSection
+          onChangePrice={priceFilter}
+          onChange={onChangeFilter}
+          onChangFilterSlide={valueLabelFormat}
+          onChangeNumberOfPage={numberOfPageComboBox}
+        />
         <div className="product">
-          <div className="title">
-            {productMorefollowBrand?.brandName
-              ? productMorefollowBrand.brandName
-              : category?.name}
-          </div>
-          {productMorefollowBrand &&
-            (currentFilter === "2" ? (
-              <ProductListFollowCategory
-                products={productMorefollowBrand.products.sort(
-                  (a: ProductItem, b: ProductItem) => a.price - b.price
-                )}
-              />
-            ) : currentFilter === "3" ? (
-              <ProductListFollowCategory
-                products={productMorefollowBrand.products.sort(
-                  (a: ProductItem, b: ProductItem) => b.price - a.price
-                )}
-              />
-            ) : currentFilter === "4" ? (
-              <ProductListFollowCategory
-                products={productMorefollowBrand.products.sort(
-                  (a: ProductItem, b: ProductItem) =>
-                    a.productName > b.productName ? 1 : -1
-                )}
-              />
-            ) : currentFilter === "5" ? (
-              <ProductListFollowCategory
-                products={productMorefollowBrand.products.sort(
-                  (a: ProductItem, b: ProductItem) =>
-                    a.productName > b.productName ? -1 : 1
-                )}
-              />
-            ) : (
-              <ProductListFollowCategory
-                products={productMorefollowBrand.products}
-              />
-            ))}
+          <div className="title">{brandName ? brandName : name}</div>
+
+          {productMoreFollowBrandFilter && (
+            <ProductListFollowCategory
+              products={productMoreFollowBrandFilter.slice(
+                offset,
+                offset + infoPerPage
+              )}
+            />
+          )}
         </div>
         <div className="pagination">
-          <Pagination total={10} />
+          <Pagination
+            total={numberOfPage}
+            defaultValue={1}
+            value={currentPage}
+            onChange={onPageChange}
+          />
         </div>
       </div>
     </>

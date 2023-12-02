@@ -11,6 +11,8 @@ import com.app.ecommerce.models.Account;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     Optional<Account> findByUsername(String username);
 
+    Optional<Account> findByEmail(String email);
+
     @Query(value = "select * from account where deleted_at is null", nativeQuery = true)
     List<Account> findAllAccountActive();
 

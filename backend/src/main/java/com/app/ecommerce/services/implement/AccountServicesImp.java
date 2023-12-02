@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.app.ecommerce.DTO.account.ChangePasswordDTO;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
@@ -62,8 +63,8 @@ public class AccountServicesImp implements IAccountServices {
     }
 
     @Override
-    public Account updatePassword(String id, UpdatePasswordDTO request) {
-        Optional<Account> opt = repo.findById(Integer.parseInt(id));
+    public Account updatePassword(String email, UpdatePasswordDTO request) {
+        Optional<Account> opt = repo.findByEmail(email);
         if (opt.isPresent()) {
             var user = opt.get();
             var otp = request.getVerificationCode();
@@ -74,7 +75,23 @@ public class AccountServicesImp implements IAccountServices {
             user.setVerificationCode(null);
             return repo.save(user);
         } else {
-            throw new ResourceNotFoundException("User with id : " + id + " Not Found");
+            throw new ResourceNotFoundException("User with mail : " + email + " Not Found");
+        }
+    }
+
+    @Override
+    public Account changePassword(String username, ChangePasswordDTO request) {
+        Optional<Account> opt = repo.findByUsername(username);
+        if (opt.isPresent()) {
+            var user = opt.get();
+            var oldpassword = request.getOldpassword();
+            if (oldpassword.compareTo(user.getPassword()) == -1) {
+                throw new ResourceNotFoundException("Old Password is not correct");
+            }
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            return repo.save(user);
+        } else {
+            throw new ResourceNotFoundException("User with username : " + username + " Not Found");
         }
     }
 

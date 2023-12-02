@@ -1,6 +1,6 @@
 import { RangeSlider } from "@mantine/core";
 
-function Slider() {
+function Slider({ onChange }: any) {
   function valueLabelFormat(value: number) {
     let scaledValue = value;
     let stringValue = scaledValue.toLocaleString("vi-VN");
@@ -12,11 +12,12 @@ function Slider() {
       <RangeSlider
         mt={50}
         step={500000}
-        min={500000}
-        max={50000000}
+        min={0}
+        max={100000000}
         labelAlwaysOn
-        defaultValue={[500000, 50000000]}
+        defaultValue={[100000, 100000000]}
         label={valueLabelFormat}
+        onChange={onChange}
       />
     </>
   );

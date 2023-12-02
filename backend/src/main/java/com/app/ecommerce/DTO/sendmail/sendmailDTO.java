@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class sendmailDTO {
   // private String username;
-
   private String email;
 }
