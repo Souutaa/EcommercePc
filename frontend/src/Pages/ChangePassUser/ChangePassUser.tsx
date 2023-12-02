@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { PATHS } from "../../Constants/path";
 import { useAuthContext } from "../../Context/AuthContext";
+import ChangeMail from "../../Components/ChangeMail/ChangePass";
 
 const ChangePassUser = () => {
   const navigate = useNavigate();
@@ -49,6 +50,9 @@ const ChangePassUser = () => {
           </div>
           <UserOder />
           <ChangePass />
+          <div style={{ marginTop: "15px" }}>
+            <ChangeMail />
+          </div>
         </div>
         <div className="infouser-container">
           <h3 className="infouser-title mb-20">Thay đổi mật khẩu</h3>
@@ -66,7 +70,7 @@ const ChangePassUser = () => {
               <PasswordInput
                 style={{ textAlign: "left" }}
                 label="Mật khẩu mới"
-                defaultValue="hello my friend"
+                defaultValue=".........."
                 visible={visible}
                 onVisibilityChange={toggle}
                 onChange={(e) => {
@@ -76,7 +80,7 @@ const ChangePassUser = () => {
               <PasswordInput
                 style={{ textAlign: "left" }}
                 label="Nhập lại mật khẩu mới"
-                defaultValue="hello my friend"
+                defaultValue=".........."
                 visible={visible}
                 onVisibilityChange={toggle}
                 onChange={(e) => {

@@ -11,6 +11,7 @@ import UserOder from "../../Components/UserOrder/UserOrder";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import formatPrice from "../../Helper/formatPrice";
+import ChangeMail from "../../Components/ChangeMail/ChangePass";
 
 export interface OrderItem {
   productName: string;
@@ -99,6 +100,9 @@ function InfoOrder() {
             </div>
             <UserOder />
             <ChangePass />
+            <div style={{ marginTop: "15px" }}>
+              <ChangeMail />
+            </div>
           </div>
           <div className="infoorder-container">
             <div className="infoorder-detail">

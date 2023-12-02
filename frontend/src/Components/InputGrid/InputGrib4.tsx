@@ -49,9 +49,9 @@ function InputGrib4(props: props) {
     fetchProvices();
   }, []);
   useEffect(() => {
-    setSelectedDistrict(props.districtCode)
-    setSelectedProvince(props.provinceCode)
-  }, [props])
+    setSelectedDistrict(props.districtCode);
+    setSelectedProvince(props.provinceCode);
+  }, [props]);
   return (
     <>
       <div className="productcheckout-grid">
@@ -80,8 +80,12 @@ function InputGrib4(props: props) {
           <Input.Wrapper style={{ marginLeft: "8px" }}>
             <Input
               placeholder="abc@gmail.com"
-              value={props.userInfo?.accountDetail.email}
-              disabled={props.isEditing ? false : true}
+              value={props.userInfo?.accountDetail.email.replace(
+                /(\w{2})[\w.-]+@([\w.]+\w)/,
+                "$1****@$2"
+              )}
+              // disabled={props.isEditing ? false : true}
+              disabled={true}
               onChange={(e) => {
                 if (props.userInfo && props.isEditing)
                   props.setUserInfo({

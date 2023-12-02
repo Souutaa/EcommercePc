@@ -29,6 +29,7 @@ import UserAdmin from "./PagesAdmin/UserAdmin";
 import RolesAdmin from "./PagesAdmin/RolesAdmin";
 import AddNewInfo from "./Pages/InfoUser/AddNewInfo";
 import ChangePassUser from "./Pages/ChangePassUser/ChangePassUser";
+import ChangeMailUser from "./Pages/ChangeMailUser/ChangeMailUser";
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
               element={<InfoOrder />}
             />
             <Route path={PATHS.CHANGEPASSUSER} element={<ChangePassUser />} />
+            <Route path={PATHS.CHANGEMAILUSER} element={<ChangeMailUser />} />
           </Route>
           <Route path="/admin" element={<AdminLayouts />}>
             <Route index element={<Dashborad />} />

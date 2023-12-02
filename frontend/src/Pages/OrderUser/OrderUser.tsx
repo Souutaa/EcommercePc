@@ -6,6 +6,7 @@ import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
 import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
 import ChangePass from "../../Components/ChangePass/ChangePass";
+import ChangeMail from "../../Components/ChangeMail/ChangePass";
 
 export type AccountOrders = {
   id: number;
@@ -88,6 +89,9 @@ function OderUser() {
             </div>
             <UserOder />
             <ChangePass />
+            <div style={{ marginTop: "15px" }}>
+              <ChangeMail />
+            </div>
           </div>
 
           <div className="orderuser-container">
