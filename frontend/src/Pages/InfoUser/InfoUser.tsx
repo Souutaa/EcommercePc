@@ -17,6 +17,7 @@ import Btn from "../../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
 import ChangePass from "../../Components/ChangePass/ChangePass";
+import ChangeMail from "../../Components/ChangeMail/ChangePass";
 
 export interface UserInformation {
   accountDetail: {
@@ -145,6 +146,9 @@ function InfoUser() {
             </div>
             <UserOder />
             <ChangePass />
+            <div style={{ marginTop: "15px" }}>
+              <ChangeMail />
+            </div>
           </div>
           <div className="infouser-container">
             <Flex style={{ width: "100%" }} justify={"space-between"}>

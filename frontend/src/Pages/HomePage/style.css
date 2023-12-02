@@ -1596,7 +1596,7 @@ p {
   align-items: start;
   padding: 2rem;
   gap: 3rem;
-  color: #737C84;
+  color: #737c84;
 }
 
 .infoorder-title:first-child {
@@ -1709,6 +1709,11 @@ p {
 
 .change-pass-content {
   padding: 30px 350px;
+}
+.pin-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*Admin Page*/
@@ -1899,7 +1904,6 @@ tr:hover {
   padding: 20px;
   text-align: left;
   color: #6c757d;
-
 }
 
 .dtr-control {
@@ -1934,7 +1938,7 @@ tr:hover {
 }
 
 .bg-warning {
-  background-color: rgba(255, 188, 0, .18);
+  background-color: rgba(255, 188, 0, 0.18);
   color: var(--white-color);
   border-radius: 5px;
   padding: 5px;

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.ecommerce.DTO.account.ChangePasswordDTO;
 import com.app.ecommerce.DTO.account.SimpleAccountDTO;
 import com.app.ecommerce.DTO.account.UpdateAccountRoleRequest;
+import com.app.ecommerce.DTO.account.UpdateMailDTO;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
 import com.app.ecommerce.DTO.accountDetail.AccountDetailResponse;
 import com.app.ecommerce.config.JwtService;
@@ -66,8 +67,8 @@ public class UserController {
         try {
             Account user = accountServices.getAccountByUserName(username);
             SimpleAccountDTO simpleUser = SimpleAccountDTO.builder().id(user.getId()).username(user.getUsername())
-                        .role(user.getRole()).createdAt(user.getCreatedAt()).deletedAt(user.getDeletedAt())
-                        .email(user.getEmail()).build();
+                    .role(user.getRole()).createdAt(user.getCreatedAt()).deletedAt(user.getDeletedAt())
+                    .email(user.getEmail()).build();
             return new ResponseEntity<>(simpleUser, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             throw new ResourceNotFoundException("user not found");
@@ -95,13 +96,24 @@ public class UserController {
         return ResponseEntity.ok(accountServices.updatePassword(email, password));
     }
 
+    @PatchMapping(value = "/updatemail")
+    public ResponseEntity<Account> updateMailUser(@RequestHeader("Authorization") String authorization,
+            @Valid @RequestBody UpdateMailDTO password) {
+        try {
+            String token = authorization.split(" ")[1].trim();
+            String username = this.jwtService.extractUsername(token);
+            return ResponseEntity.ok(accountServices.updateMail(username, password));
+        } catch (ResourceNotFoundException ex) {
+            throw new ResourceNotFoundException("user not found");
+        }
+    }
+
     @PatchMapping(value = "/changepassword")
     public ResponseEntity<Account> ChangePasswordUser(@RequestHeader("Authorization") String authorization,
             @Valid @RequestBody ChangePasswordDTO password) {
         try {
             String token = authorization.split(" ")[1].trim();
             String username = this.jwtService.extractUsername(token);
-            // Account fetchedAccount = accountServices.getAccountByUserName(username);
             return ResponseEntity.ok(accountServices.changePassword(username, password));
         } catch (ResourceNotFoundException ex) {
             throw new ResourceNotFoundException("user not found");

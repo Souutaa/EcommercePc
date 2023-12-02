@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.app.ecommerce.DTO.account.ChangePasswordDTO;
+import com.app.ecommerce.DTO.account.UpdateMailDTO;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.Account;
@@ -92,6 +93,30 @@ public class AccountServicesImp implements IAccountServices {
             return repo.save(user);
         } else {
             throw new ResourceNotFoundException("User with username : " + username + " Not Found");
+        }
+    }
+
+    @Override
+    public Account updateMail(String email, UpdateMailDTO request) {
+        Optional<Account> opt = repo.findByEmail(email);
+        if (opt.isPresent()) {
+            var user = opt.get();
+            var oldMail = request.getOldEmail();
+            var otp = request.getVerificationCode();
+
+            if (oldMail.compareTo(user.getEmail()) == -1) {
+                throw new ResourceNotFoundException("Old Mail is not correct");
+            }
+
+            if (otp.compareTo(user.getVerificationCode()) == -1) {
+                throw new ResourceNotFoundException("OTP is not correct");
+            }
+
+            user.setEmail(request.getEmail());
+            user.setVerificationCode(null);
+            return repo.save(user);
+        } else {
+            throw new ResourceNotFoundException("User with mail : " + email + " Not Found");
         }
     }
 

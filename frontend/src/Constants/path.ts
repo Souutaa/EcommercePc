@@ -23,4 +23,5 @@ export const PATHS = {
   ADDUSERINFO: HOME_PATH + "/InfoUser/add",
   INFORDER: HOME_PATH + "/InfoOders",
   CHANGEPASSUSER: HOME_PATH + "/ChangePassword",
+  CHANGEMAILUSER: HOME_PATH + "/ChangeMail",
 };
