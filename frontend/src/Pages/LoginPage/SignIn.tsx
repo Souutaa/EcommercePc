@@ -16,6 +16,8 @@ const images = [
 function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorHandleInputUsername, setErrorHandleInputUsername] = useState("");
+  const [errorHandleInputPass, setErrorHandleInputPass] = useState("");
   const navigate = useNavigate();
   const authContext = useAuthContext();
 
@@ -26,6 +28,22 @@ function SignIn() {
       </Carousel.Slide>
     );
   });
+
+  const inputUsernameHandle = (e: string) => {
+    if (!e) {
+      setErrorHandleInputUsername("Vui lòng nhập Username");
+    } else {
+      setErrorHandleInputUsername("");
+    }
+  };
+
+  const inputPassHandle = (e: string) => {
+    if (!e) {
+      setErrorHandleInputPass("Vui lòng nhập Password");
+    } else {
+      setErrorHandleInputPass("");
+    }
+  };
 
   return (
     <>
@@ -41,10 +59,12 @@ function SignIn() {
               <label className="form-text" htmlFor="">
                 Tài khoản
               </label>
-              <Input.Wrapper>
+              <Input.Wrapper error={errorHandleInputUsername}>
                 <Input
+                  error={errorHandleInputUsername}
                   placeholder="abc@gmail.com"
                   onChange={(e) => {
+                    inputUsernameHandle(e.target.value);
                     setUsername(e.target.value);
                   }}
                 />
@@ -56,8 +76,10 @@ function SignIn() {
                 Mật khẩu
               </label>
               <PasswordInput
+                error={errorHandleInputPass}
                 placeholder="Nhập mật khẩu"
                 onChange={(e) => {
+                  inputPassHandle(e.target.value);
                   setPassword(e.target.value);
                 }}
               />
