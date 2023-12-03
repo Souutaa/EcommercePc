@@ -1,21 +1,25 @@
 import { Link } from "react-router-dom";
 import Btn from "../Button";
 import { PATHS } from "../../Constants/path";
+import { ProductItem } from ".";
+import formatPrice from "../../Helper/formatPrice";
 
-function ProductSearchs() {
+function ProductSearchs(props: {product: ProductItem}) {
+  const {product} = props;
+
   return (
     <>
       <div className="productsearch-card">
         <div className="productsearch-img">
-          <img src="/img/Img(4).png" alt="" />
+          <img src={`http://127.0.0.1:8080/product/get-file?filePath=${product.thumbnailUri}`} alt="" />
         </div>
         <div className="productsearch-content">
           <span className="productsearch-text">
-            Laptop Gaming Nitro 5 Eagle AN515-57-53F9
+            {product.productName}
           </span>
           <div className="productsearch-info">
-            <span className="productsearch-price">₫20.990.000</span>
-            <Link to={PATHS.PRODUCT}>
+            <span className="productsearch-price">{formatPrice(product.price)}</span>
+            <Link to={PATHS.PRODUCT + `/${product.productLine}`}>
               <Btn maintine="a">Xem sản phẩm</Btn>
             </Link>
           </div>

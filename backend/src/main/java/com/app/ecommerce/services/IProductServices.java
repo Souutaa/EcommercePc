@@ -34,4 +34,6 @@ public interface IProductServices {
   public Product undoSoftDelete(String productLine);
 
   public List<TopSellingProduct> getTopSellingProducts();
+
+  public List<ProductCardResponse> searchProducts(String searchString);
 }

@@ -253,4 +253,22 @@ public class ProductServicesImp implements IProductServices {
     return this.productRepository.getTopSellingProduct();
   }
 
+  @Override
+  public List<ProductCardResponse> searchProducts(String searchString) {
+    List<Product> products = this.productRepository.searchProducts(searchString);
+    List<ProductCardResponse> productCards = new ArrayList<ProductCardResponse>();
+
+    for (Product product : products) {
+      productCards.add(ProductCardResponse.builder().id(product.getId()).productLine(product.getProductLine())
+          .productName(product.getProductName()).price(product.getPrice()).discount(product.getDiscount())
+          .thumbnailUri(this.getProductThumbnail(product.getProductLine()))
+          .stock(this.productWarrantyService.getProductStock(product.getId())).deletedAt(product.getDeletedAt())
+          .brandName(product.getBrand().getBrandName())
+          .categoryName(product.getCategory().getName())
+          .createdAt(product.getCreatedAt())
+          .build());
+    }
+    return productCards;
+  }
+
 }

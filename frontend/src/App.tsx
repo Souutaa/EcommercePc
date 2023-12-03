@@ -56,7 +56,7 @@ function App() {
             </Route>
             <Route path="/Home" element={<Home />} />
             <Route
-              path={PATHS.MORE + "/:name" + "/:brandName"}
+              path={PATHS.MORE + "/:name/:brandName"}
               element={<ProductMore />}
             />
             <Route path={PATHS.MORE + "/:name"} element={<ProductMore />} />
@@ -67,7 +67,7 @@ function App() {
 
             <Route path={PATHS.CART} element={<ProductCart />} />
             <Route path={PATHS.PAYMENT} element={<ProductCheckout />} />
-            <Route path={PATHS.SEARCH} element={<ProductSearch />} />
+            <Route path={PATHS.SEARCH + "/:search"} element={<ProductSearch />} />
             <Route path={PATHS.ORDERED} element={<ProductOdered />} />
             <Route path={PATHS.ORDER} element={<OderUser />} />
             <Route path={PATHS.USERINFO} element={<InfoUser />} />

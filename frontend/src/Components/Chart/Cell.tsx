@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { Legend, RadialBar, RadialBarChart, Tooltip } from "recharts";
 import { AdminOrder } from "../../PagesAdmin/OrderAdmin";
-import { ensure } from "../../Helper/ensure";
 const initPieChart = [
   {
     name: "Đã giao",
@@ -61,8 +60,7 @@ const Cell = (props: { date: Date | null }) => {
                 ? new Date(props.date).toLocaleDateString()
                 : new Date().toLocaleDateString())
         ).length,
-        total: orders.filter((item: AdminOrder) => item.status === "DELIVERED")
-          .length,
+        total: orders.length,
         fill: "rgb(10, 207, 151)",
       },
       {
@@ -75,8 +73,7 @@ const Cell = (props: { date: Date | null }) => {
                 ? new Date(props.date).toLocaleDateString()
                 : new Date().toLocaleDateString())
         ).length,
-        total: orders.filter((item: AdminOrder) => item.status === "PENDING")
-          .length,
+        total: orders.length,
         fill: "rgba(255, 195, 66, 1)",
       },
       {
@@ -89,8 +86,7 @@ const Cell = (props: { date: Date | null }) => {
                 ? new Date(props.date).toLocaleDateString()
                 : new Date().toLocaleDateString())
         ).length,
-        total: orders.filter((item: AdminOrder) => item.status === "CONFIRMED")
-          .length,
+        total: orders.length,
         fill: "rgb(18,225,123)",
       },
       {
@@ -103,8 +99,7 @@ const Cell = (props: { date: Date | null }) => {
                 ? new Date(props.date).toLocaleDateString()
                 : new Date().toLocaleDateString())
         ).length,
-        total: orders.filter((item: AdminOrder) => item.status === "DELIVERING")
-          .length,
+        total: orders.length,
         fill: "#727cf5",
       },
       {
@@ -117,8 +112,7 @@ const Cell = (props: { date: Date | null }) => {
                 ? new Date(props.date).toLocaleDateString()
                 : new Date().toLocaleDateString())
         ).length,
-        total: orders.filter((item: AdminOrder) => item.status === "CANCELED")
-          .length,
+        total: orders.length,
         fill: "rgba(255, 66, 66, 1)",
       },
     ]);
