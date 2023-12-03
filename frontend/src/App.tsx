@@ -30,6 +30,7 @@ import RolesAdmin from "./PagesAdmin/RolesAdmin";
 import AddNewInfo from "./Pages/InfoUser/AddNewInfo";
 import ChangePassUser from "./Pages/ChangePassUser/ChangePassUser";
 import ChangeMailUser from "./Pages/ChangeMailUser/ChangeMailUser";
+import WarrantyPeriodsAdmin from "./PagesAdmin/WarrantyPeriods";
 
 function App() {
   return (
@@ -67,7 +68,10 @@ function App() {
 
             <Route path={PATHS.CART} element={<ProductCart />} />
             <Route path={PATHS.PAYMENT} element={<ProductCheckout />} />
-            <Route path={PATHS.SEARCH + "/:search"} element={<ProductSearch />} />
+            <Route
+              path={PATHS.SEARCH + "/:search"}
+              element={<ProductSearch />}
+            />
             <Route path={PATHS.ORDERED} element={<ProductOdered />} />
             <Route path={PATHS.ORDER} element={<OderUser />} />
             <Route path={PATHS.USERINFO} element={<InfoUser />} />
@@ -87,6 +91,10 @@ function App() {
             <Route path="/admin/order" element={<OrderAdmin />} />
             <Route path="/admin/user" element={<UserAdmin />} />
             <Route path="/admin/role" element={<RolesAdmin />} />
+            <Route
+              path="/admin/warranty-periods"
+              element={<WarrantyPeriodsAdmin />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

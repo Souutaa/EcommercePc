@@ -15,7 +15,7 @@ function Slider({ onChange }: any) {
         min={0}
         max={100000000}
         labelAlwaysOn
-        defaultValue={[100000, 100000000]}
+        defaultValue={[0, 100000000]}
         label={valueLabelFormat}
         onChange={onChange}
       />

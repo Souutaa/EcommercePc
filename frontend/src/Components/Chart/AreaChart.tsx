@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -7,78 +7,93 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { MonthlyRevenue } from "../../PagesAdmin/Dashboard";
 
-const AreaCharts = () => {
-  const data = [
-    {
-      name: "Jan",
-      pv: 2400,
-      amt: 150000,
-    },
-    {
-      name: "Feb",
+const initData = [
+  {
+    name: "Jan",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "Feb",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "Mar",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "Apr",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "May",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "Jun",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "Jul",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "Aug",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "Sep",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "Oct",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "Nov",
+    pv: 0,
+    amt: 0,
+  },
+  {
+    name: "Dec",
+    pv: 0,
+    amt: 0,
+  },
+];
 
-      pv: 1398,
-      amt: 150000,
-    },
-    {
-      name: "Mar",
-      pv: 12000,
-      amt: 150000,
-    },
-    {
-      name: "Apr",
+const AreaCharts = (props: { revenues: MonthlyRevenue[] }) => {
+  const [data, setData] = useState(initData);
+  const { revenues } = props;
 
-      pv: 3908,
-      amt: 150000,
-    },
-    {
-      name: "May",
+  useEffect(() => {
+    setData((prevState) => {
+      if (prevState) {
+        let newState = [...prevState];
+        revenues.map(revenue => {
+          console.log(newState[revenue.month - 1])
+          return newState[revenue.month - 1].pv = revenue.total;
+        })
+        return newState
+      }
+      return prevState;
+    })
+  }, [revenues])
 
-      pv: 4800,
-      amt: 150000,
-    },
-    {
-      name: "Jun",
-
-      pv: 3800,
-      amt: 150000,
-    },
-    {
-      name: "Jul",
-
-      pv: 4300,
-      amt: 150000,
-    },
-    {
-      name: "Aug",
-
-      pv: 4300,
-      amt: 150000,
-    },
-    {
-      name: "Sep",
-
-      pv: 4300,
-      amt: 150000,
-    },
-    {
-      name: "Nov",
-
-      pv: 4300,
-      amt: 150000,
-    },
-    {
-      name: "Dec",
-
-      pv: 4300,
-      amt: 150000,
-    },
-  ];
   return (
     <AreaChart
       style={{ width: "100%" }}
-      width={1200}
+      width={1100}
       height={250}
       data={data}
       margin={{ top: 10, right: 30, left: 0, bottom: 0 }}

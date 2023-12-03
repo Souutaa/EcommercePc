@@ -1,10 +1,10 @@
-import { IconCheck } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import { Button, ComboboxItem, Input, NativeSelect } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import React, { useCallback, useEffect, useState } from "react";
 import { Category } from "../FormChange/FormChange";
 import axios from "axios";
+import { IconCheck } from "@tabler/icons-react";
 
 const FormBrands = (props: {onFinish: () => void}) => {
   const [categories, setCategories] = useState<Category[]>([]);

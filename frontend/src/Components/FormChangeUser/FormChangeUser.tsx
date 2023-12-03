@@ -16,9 +16,25 @@ const FormChangeUser = (props: { username: string }) => {
     );
     setUser(response.data);
   }, [props.username]);
+
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
+  let data = ({
+    username: user?.username,
+    password: password,
+    email: user?.email,
+    role: user?.role,
+  });
+
+  const handleUpdateUser = async () => {
+    const response = await axios.patch(
+      `http://127.0.0.1:8080/user/update-info`,
+      data
+    );
+    console.log(response);
+  };
 
   return (
     <div>
@@ -49,7 +65,7 @@ const FormChangeUser = (props: { username: string }) => {
                 setUser((prevState) => {
                   if (prevState) {
                     let newState = { ...prevState };
-                    newState.username = e.target.value;
+                    newState.email = e.target.value;
                     return newState;
                   }
                   return prevState;
@@ -89,6 +105,7 @@ const FormChangeUser = (props: { username: string }) => {
         <Button
           mt="md"
           onClick={() => {
+            handleUpdateUser();
             notifications.show({
               withCloseButton: true,
               autoClose: 1500,

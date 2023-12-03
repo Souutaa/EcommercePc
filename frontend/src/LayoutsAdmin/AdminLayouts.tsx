@@ -7,7 +7,7 @@ import {
   Menu,
   rem,
 } from "@mantine/core";
-import { IconLogout } from "@tabler/icons-react";
+import { IconCalendarTime, IconLogout, IconTimeDuration0 } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import {
@@ -114,6 +114,10 @@ function AdminLayouts() {
         <Link to="/admin/category" className="admin-title">
           <IconArchive />
           <span className="admin-text">Categories</span>
+        </Link>
+        <Link to="/admin/warranty-periods" className="admin-title">
+          <IconCalendarTime />
+          <span className="admin-text">Warranty Periods</span>
         </Link>
         <Seaparator />
         <Link to="/admin/order" className="admin-title">

@@ -6,6 +6,9 @@ import ButtonDelete from "../Button/button-delete";
 import FormChange from "../FormChange/FormChange";
 import FormView from "../FormView/FormView";
 import SeaparatorTable from "../Seaparator/SeaparatorTable";
+import { Switch } from "@mantine/core";
+import { useState } from "react";
+import axios from "axios";
 
 interface Props {
   product: AdminProductInformation;
@@ -13,6 +16,20 @@ interface Props {
 
 const ProductAdminStatus = (props: Props) => {
   const { product } = props;
+
+  const [checked, setChecked] = useState(product.deletedAt === null);
+
+  const handleUnlockProduct = async () => {
+    const response = await axios.patch(
+      `http://127.0.0.1:8080/product/undo-delete?productLine=${product.productLine}`
+    );
+  };
+
+  const handleLockProduct = async () => {
+    const response = await axios.delete(
+      `http://127.0.0.1:8080/product/delete?productLine=${product.productLine}`
+    );
+  };
   return (
     <tbody>
       <tr>
@@ -33,11 +50,20 @@ const ProductAdminStatus = (props: Props) => {
         <td className="pd-20 text-left  ">{formatPrice(product.price)}</td>
         <td className="pd-20 text-left  ">{product.stock}</td>
         <td className="pd-20 text-left  ">
-          {product.deletedAt ? (
-            <span className="badge bg-failed">Deactived</span>
-          ) : (
-            <span className="badge bg-success">Actived</span>
-          )}
+          <Switch
+            size="lg"
+            onLabel="Active"
+            offLabel="Locked"
+            checked={checked}
+            onChange={(e) => {
+              setChecked(e.currentTarget.checked);
+              if (e.currentTarget.checked === true) {
+                handleUnlockProduct();
+              } else {
+                handleLockProduct();
+              }
+            }}
+          />
         </td>
         <td className="table-action pd-20 text-left">
           <IconEye
@@ -61,14 +87,13 @@ const ProductAdminStatus = (props: Props) => {
                 title: "Product's Information",
                 children: (
                   <>
-                    <FormChange productLine={product.productLine}/>
+                    <FormChange productLine={product.productLine} />
                   </>
                 ),
               });
             }}
             style={{ marginRight: "5px" }}
           />
-          <ButtonDelete productLine={product.productLine} />
         </td>
       </tr>
 
