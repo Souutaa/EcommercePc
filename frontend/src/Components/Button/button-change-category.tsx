@@ -3,7 +3,7 @@ import { IconPencil } from "@tabler/icons-react";
 import React from "react";
 import FormChangeCategory from "../FormChangeCategory/FormChangeCategory";
 
-const ButtonChangeCategory = () => {
+const ButtonChangeCategory = (props: { id: string }) => {
   return (
     <IconPencil
       onClick={() => {
@@ -12,7 +12,7 @@ const ButtonChangeCategory = () => {
           title: "Change Category's information",
           children: (
             <>
-              <FormChangeCategory />
+              <FormChangeCategory id={props.id} />
             </>
           ),
         });

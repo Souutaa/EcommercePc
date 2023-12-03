@@ -21,7 +21,7 @@ const CategoriesAdmin = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, [fetchCategories]);
+  }, [fetchCategories, categories]);
 
   return (
     <div>
@@ -31,7 +31,7 @@ const CategoriesAdmin = () => {
       </div>
       <div className="body-content">
         <div className="button-admin">
-          <ButtonAddCategory onFinish={fetchCategories}/>
+          <ButtonAddCategory onFinish={fetchCategories} />
         </div>
         <table className="table-centered">
           <thead className="table-light">
