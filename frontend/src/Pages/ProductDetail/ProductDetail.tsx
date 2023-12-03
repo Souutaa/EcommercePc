@@ -57,7 +57,7 @@ function ProductDetail() {
           `http://127.0.0.1:8080/product/${location.pathname.split("/")[3]}`
         );
         const data = res.data;
-        console.log(data)
+        console.log("dấd", data);
 
         try {
           const brandRes = await axios.get(
@@ -134,7 +134,12 @@ function ProductDetail() {
                 stock={productDetail?.stock}
               />
             )}
-            <ProductColor />
+            {productDetail?.product.id && (
+              <ProductColor
+                product={productDetail?.product}
+                warrantyPeriod={productDetail.warrantyPeriod}
+              />
+            )}
             {productDetail?.product.id && (
               <div className="full-width">
                 {productDetail.stock === 0 ? (
