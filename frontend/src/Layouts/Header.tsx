@@ -1,6 +1,6 @@
 import { Avatar, Menu } from "@mantine/core";
 import { Button, Text, rem } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Btn from "../Components/Button";
 import {
   IconSettings,
@@ -21,6 +21,8 @@ import Seaparator from "../Components/Seaparator/Seaparator";
 const Header = () => {
   const [opened, setOpened] = useState(false);
   const authContext = useAuthContext();
+  let url = useLocation();
+  const slicedPath = url.pathname.split("/").slice(0, 2).join("/");
 
   return (
     <div className="header">
@@ -30,12 +32,15 @@ const Header = () => {
             <img src="/img/logoipsum-247.png" alt="" />
             <img src="/img/Techshop.png" alt="" />
           </Link>
-          <InputSearch />
+
+          {slicedPath === "/login" ? null : <InputSearch />}
 
           {!authContext.auth.isAuthenticated ? (
-            <Link to="/login">
-              <Btn maintine="a">Đăng Nhập</Btn>
-            </Link>
+            slicedPath === "/login" ? null : (
+              <Link to="/login">
+                <Btn maintine="a">Đăng Nhập</Btn>
+              </Link>
+            )
           ) : (
             <div className="user-login">
               <Link to={PATHS.CART}>

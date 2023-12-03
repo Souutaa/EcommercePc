@@ -29,6 +29,7 @@ import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.Category;
 import com.app.ecommerce.services.ICategoryServices;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController // This means that this class is a Controller
@@ -101,7 +102,7 @@ public class CategoryController {
 
     @PostMapping(value = "/create")
     public ResponseEntity<Category> createBrand(
-            @RequestBody CreateCategoryDTO category) {
+           @Valid @RequestBody CreateCategoryDTO category) {
         return ResponseEntity.ok(categoryServices.saveCategory(category));
     }
 

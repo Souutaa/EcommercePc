@@ -1,15 +1,17 @@
+import { IconCheck, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import { Button, ComboboxItem, Input, NativeSelect } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import React, { useCallback, useEffect, useState } from "react";
 import { Category } from "../FormChange/FormChange";
 import axios from "axios";
-import { IconCheck } from "@tabler/icons-react";
 
-const FormBrands = (props: {onFinish: () => void}) => {
+const FormBrands = (props: { onFinish: () => void }) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryId, setCategoryId] = useState(-1);
   const [brandName, setBrandName] = useState("");
+  const [errorHandle, setErrorHandle] = useState("");
+
   const fetchCategories = useCallback(async () => {
     const response = await axios.get(
       "http://127.0.0.1:8080/category/all/simple?active=false"
@@ -19,6 +21,18 @@ const FormBrands = (props: {onFinish: () => void}) => {
   useEffect(() => {
     fetchCategories();
   }, [fetchCategories]);
+
+  //Error handle
+  const handleErrorInput = (e: string) => {
+    if (!e) {
+      setErrorHandle("Vui lòng nhập tên Brand muốn tạo");
+    } else {
+      setErrorHandle("");
+    }
+  };
+  ////////////
+
+  useEffect(() => {}, [errorHandle]);
 
   return (
     <div>
@@ -43,10 +57,14 @@ const FormBrands = (props: {onFinish: () => void}) => {
             setCategoryId(+event.target.value);
           }}
         />
-        <Input.Wrapper className="mb-20" label="Name">
+        <Input.Wrapper className="mb-20" label="Brand Name" error={errorHandle}>
           <Input
             value={brandName}
-            onChange={(e) => setBrandName(e.target.value)}
+            error={errorHandle}
+            onChange={(e) => {
+              handleErrorInput(e.target.value);
+              setBrandName(e.target.value);
+            }}
           />
         </Input.Wrapper>
       </div>
@@ -54,20 +72,35 @@ const FormBrands = (props: {onFinish: () => void}) => {
         <Button
           mt="md"
           onClick={async () => {
-            await axios.post("http://127.0.0.1:8080/brand/create", {
-              brandName,
-              categoryId,
-            });
+            await axios
+              .post("http://127.0.0.1:8080/brand/create", {
+                brandName,
+                categoryId,
+              })
+              .then((req) => {
+                notifications.show({
+                  withCloseButton: true,
+                  autoClose: 1500,
+                  message: `Thêm thành công brand: ${brandName} `,
+                  color: "teal",
+                  icon: <IconCheck />,
+                  className: "my-notification-class",
+                  loading: false,
+                });
+              })
+              .catch((e) => {
+                notifications.show({
+                  withCloseButton: true,
+                  autoClose: 1500,
+                  message: `Thêm không thành công brand`,
+                  color: "red",
+                  icon: <IconX />,
+                  className: "my-notification-class",
+                  loading: false,
+                });
+              });
+
             props.onFinish();
-            notifications.show({
-              withCloseButton: true,
-              autoClose: 1500,
-              message: "Thêm brand thành công",
-              color: "teal",
-              icon: <IconCheck />,
-              className: "my-notification-class",
-              loading: false,
-            });
             modals.closeAll();
           }}
         >

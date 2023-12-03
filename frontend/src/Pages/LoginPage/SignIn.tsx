@@ -1,11 +1,12 @@
 import { Carousel } from "@mantine/carousel";
-import { Button } from "@mantine/core";
+import { Button, MantineProvider, Notification } from "@mantine/core";
 import { Input, PasswordInput } from "@mantine/core";
 import "@mantine/carousel/styles.css";
 import { Link, useNavigate } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuthContext } from "../../Context/AuthContext";
+import { useFocusTrap } from "@mantine/hooks";
 
 const images = [
   "/img/Carousel1.png",
@@ -46,7 +47,7 @@ function SignIn() {
   };
 
   return (
-    <>
+    <MantineProvider>
       <div className="modal">
         <div className="modal-carousel">
           <Carousel withIndicators>{slides}</Carousel>
@@ -87,10 +88,9 @@ function SignIn() {
 
             <div className="form-group">
               <Button
-                onClick={() => {
+                onClick={(e) => {
                   localStorage.removeItem("accessToken");
                   authContext.login({ username, password });
-                  navigate("/");
                 }}
               >
                 Đăng nhập
@@ -128,7 +128,7 @@ function SignIn() {
           </form>
         </div>
       </div>
-    </>
+    </MantineProvider>
   );
 }
 
