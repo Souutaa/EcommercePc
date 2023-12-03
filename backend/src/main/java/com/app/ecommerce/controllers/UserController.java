@@ -65,9 +65,12 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/{username}")
-    public @ResponseBody ResponseEntity<Object> getAccount(@PathVariable String username) {
+    // @GetMapping(value = "/{username}")
+    @GetMapping(value = "/getAccount")
+    public @ResponseBody ResponseEntity<Object> getAccount(@RequestHeader("Authorization") String authorization) {
         try {
+            String token = authorization.split(" ")[1].trim();
+            String username = this.jwtService.extractUsername(token);
             Account user = accountServices.getAccountByUserName(username);
             SimpleAccountDTO simpleUser = SimpleAccountDTO.builder().id(user.getId()).username(user.getUsername())
                     .role(user.getRole()).createdAt(user.getCreatedAt()).deletedAt(user.getDeletedAt())

@@ -941,6 +941,11 @@ footer {
   align-items: flex-start;
   margin-bottom: 16px;
 }
+.product-detail-warranty {
+  font-size: 30px;
+  margin-bottom: 12px;
+  color: var(--gray-100, #4e5156);
+}
 
 .product-detail-price-new {
   color: var(--blue-500, #3f83f8);
