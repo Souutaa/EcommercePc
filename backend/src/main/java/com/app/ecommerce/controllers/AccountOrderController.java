@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.order.CreateOrderRequest;
+import com.app.ecommerce.DTO.order.MonthlyRevenue;
 import com.app.ecommerce.DTO.order.OrderDetailResponse;
+import com.app.ecommerce.DTO.order.TrustedBuyer;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.models.AccountOrder;
@@ -61,14 +63,6 @@ public class AccountOrderController {
   public @ResponseBody ResponseEntity<List<AccountOrder>> getAllOrder() {
     List<AccountOrder> orders = orderServices.getAllOrders();
     return new ResponseEntity<List<AccountOrder>>(orders, HttpStatus.OK);
-  }
-
-  @GetMapping("/getOneOrder")
-  public @ResponseBody ResponseEntity<AccountOrder> getOneOrder(
-      @RequestHeader("Authorization") String authorization) {
-    String token = authorization.split(" ")[1].trim();
-    String username = this.jwtService.extractUsername(token);
-    return new ResponseEntity<AccountOrder>(orderServices.getOrderByUsername(username), HttpStatus.OK);
   }
 
   @PostMapping("/create")
@@ -118,5 +112,15 @@ public class AccountOrderController {
     String token = authorization.split(" ")[1].trim();
     String username = this.jwtService.extractUsername(token);
     return ResponseEntity.ok(this.orderServices.getOrderDetail(username, Integer.parseInt(id)));
+  }
+
+  @GetMapping("/getMonthlyRevenue")
+  public ResponseEntity<List<MonthlyRevenue>> getMonthlyRevenue() {
+    return ResponseEntity.ok(this.orderServices.getMongMonthlyRevenues());
+  }
+
+  @GetMapping("/getTrustedBuyers")
+  public ResponseEntity<List<TrustedBuyer>> getTrustedBuyers() {
+    return ResponseEntity.ok(this.orderServices.getTrustedBuyers());
   }
 }

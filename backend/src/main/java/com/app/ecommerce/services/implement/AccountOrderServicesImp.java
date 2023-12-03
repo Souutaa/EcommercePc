@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.ecommerce.DTO.order.CreateOrderRequest;
+import com.app.ecommerce.DTO.order.MonthlyRevenue;
 import com.app.ecommerce.DTO.order.OrderDetailResponse;
 import com.app.ecommerce.DTO.order.OrderItemDTO;
+import com.app.ecommerce.DTO.order.TrustedBuyer;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
 import com.app.ecommerce.models.AccountOrder;
@@ -167,5 +169,15 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
 
     return OrderDetailResponse.builder().orderInformation(orderInformation).orderItems(orderItems)
         .orderStatus(orderInformation.getAccountOrder().getStatus()).build();
+  }
+
+  @Override
+  public List<MonthlyRevenue> getMongMonthlyRevenues() {
+    return this.accountOrderRepository.getMonthlyRevenues();
+  }
+
+  @Override
+  public List<TrustedBuyer> getTrustedBuyers() {
+    return this.accountOrderRepository.getTrustedBuyers();
   }
 }

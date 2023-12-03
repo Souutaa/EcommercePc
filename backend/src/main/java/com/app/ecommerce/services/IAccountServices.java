@@ -2,6 +2,7 @@ package com.app.ecommerce.services;
 
 import java.util.List;
 
+import com.app.ecommerce.DTO.account.AdminUpdateUserDTO;
 import com.app.ecommerce.DTO.account.ChangePasswordDTO;
 import com.app.ecommerce.DTO.account.UpdateMailDTO;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
@@ -28,4 +29,6 @@ public interface IAccountServices {
     public Account activeAccount(String id);
 
     public void softDeleteAccount(int id);
+
+    public Account updateAccountInfo(AdminUpdateUserDTO request);
 }

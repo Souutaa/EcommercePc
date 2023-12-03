@@ -35,8 +35,6 @@ const ChangeMailUser = () => {
         if (res.data.error) {
           alert(res.data.error);
         } else {
-          // localStorage.setItem("mail", res.data.email);
-          //alert(`OTP đã được gửi đến mail: ${email}`);
           console.log(res.data.email);
         }
       });

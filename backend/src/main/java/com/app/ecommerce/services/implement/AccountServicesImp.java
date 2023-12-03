@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.app.ecommerce.DTO.account.AdminUpdateUserDTO;
 import com.app.ecommerce.DTO.account.ChangePasswordDTO;
 import com.app.ecommerce.DTO.account.UpdateMailDTO;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
@@ -160,6 +161,21 @@ public class AccountServicesImp implements IAccountServices {
         } else {
             throw new ResourceNotFoundException("Account with username : " + username + " Not Found");
         }
+    }
+
+    @Override
+    public Account updateAccountInfo(AdminUpdateUserDTO request) {
+        Optional<Account> optAccount = repo.findByUsername(request.getUsername());
+        if (!optAccount.isPresent()) {
+            throw new ResourceNotFoundException("Account with username : " + request.getUsername() + " Not Found");
+        }
+        Account account = optAccount.get();
+        if (!account.getPassword().isEmpty()) {
+            account.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+        account.setEmail(request.getEmail());
+        account.setRole(request.getRole());
+        return this.repo.save(account);
     }
 
 }

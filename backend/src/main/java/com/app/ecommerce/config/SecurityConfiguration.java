@@ -38,10 +38,25 @@ public class SecurityConfiguration {
         .csrf()
         .disable()
         .authorizeHttpRequests()
-        .requestMatchers("/user/*/updatepassword").permitAll()
-        // .requestMatchers("/auth/**").permitAll()
-        // .requestMatchers("/user/update-role").hasAuthority("ADMIN")
-        .anyRequest().permitAll()
+        .requestMatchers("/user/*/updatepassword", "/auth/**", "/brand/**", "/category/**", "/product/**", "/product-info/**", "/product-warranty/**", "/mail/**", "/warranty-period/**").permitAll()
+        .requestMatchers("/order/getOrder", "/order/update-status", "/order/getOrderDetail", "/order/create", "/orderinformation/**", "/user/**", "/userDetail/**").authenticated()
+        .requestMatchers("/order/export/excel", "/order/getMonthlyRevenue", "/order/getTrustedBuyers", "/order/getAllOrder", "/brand/create", 
+        "/brand/*/active", "/brand/delete", "/brand/*/update",
+        "/category/create", "/category/*/update", "/category/*/activeCategory", "/category/deleteCategory",
+        "/product/create", "/product/update", "/product/delete", "/product/undo-delete", "/product/getTopSelling",
+        "/product-info/add-info", "/product-info/update", "/product-info/delete",
+        "/product-warranty/create",
+        "/user/update-role", "/user/delete", "/user/*/active",
+        "/warranty-period/create", "/warranty-period/*/update", "/warranty-period/delete", "/warranty-period/*/active"
+        ).hasAuthority("ADMIN")
+        .requestMatchers("/order/getMonthlyRevenue", "/order/getTrustedBuyers", "/order/getAllOrder", 
+        "/brand/create", "/brand/*/update",
+        "/category/create", "/category/*/update",
+        "/product/create", "/product/update", "/product/delete", "/product/undo-delete", "/product/getTopSelling",
+        "/product-info/add-info", "/product-info/update", "/product-info/delete",
+        "/product-warranty/create",
+        "/warranty-period/create", "/warranty-period/*/update", "/warranty-period/delete", "/warranty-period/*/active"
+        ).hasAuthority("MANAGER")
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()

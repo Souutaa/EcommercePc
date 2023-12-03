@@ -18,8 +18,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
       "LEFT JOIN product ON product.id = product_warranty.product_id " + //
       "WHERE product_warranty.purchased_at IS NOT NULL " + //
       "GROUP BY  product.id, product.product_name, product.price ,product.created_at " + //
-      "ORDER BY product.price DESC, totalSold DESC " + //
-      "LIMIT 20", nativeQuery = true)
+      "ORDER BY totalSold DESC, product.price DESC " + //
+      "LIMIT 10", nativeQuery = true)
   List<TopSellingProduct> getTopSellingProduct();
 
   @Query(value = "SELECT product.* " + //

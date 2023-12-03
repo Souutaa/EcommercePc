@@ -3,6 +3,8 @@ package com.app.ecommerce.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.QueryParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ecommerce.DTO.account.AdminUpdateUserDTO;
 import com.app.ecommerce.DTO.account.ChangePasswordDTO;
 import com.app.ecommerce.DTO.account.SimpleAccountDTO;
 import com.app.ecommerce.DTO.account.UpdateAccountRoleRequest;
@@ -78,21 +81,6 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/getInfo")
-    public ResponseEntity<AccountDetailResponse> getLoggedInUser(@RequestHeader("Authorization") String authorization) {
-        try {
-            String token = authorization.split(" ")[1].trim();
-            String username = this.jwtService.extractUsername(token);
-            Account fetchedAccount = accountServices.getAccountByUserName(username);
-            // HACK
-            return ResponseEntity
-                    .ok(AccountDetailResponse.builder().accountDetail(fetchedAccount.getAccountDetails().get(0))
-                            .email(fetchedAccount.getEmail()).username(username).build());
-        } catch (ResourceNotFoundException ex) {
-            throw new ResourceNotFoundException("user not found");
-        }
-    }
-
     @PatchMapping(value = "/{email}/updatepassword")
     public ResponseEntity<Account> updatePasswordUser(@PathVariable("email") String email,
             @Valid @RequestBody UpdatePasswordDTO password) {
@@ -134,7 +122,12 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/delete")
-    public void deleteUser(@RequestParam String id) {
+    public void deleteUser(@QueryParam("id") String id) {
         accountServices.softDeleteAccount(Integer.parseInt(id));
+    }
+
+    @PatchMapping(value = "/update-info")
+    public ResponseEntity<Account> updateUser(@RequestBody AdminUpdateUserDTO updateUserDTO) {
+        return ResponseEntity.ok(accountServices.updateAccountInfo(updateUserDTO));
     }
 }

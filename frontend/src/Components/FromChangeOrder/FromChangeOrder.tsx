@@ -46,7 +46,6 @@ const FromChangeOrder = (props: { orderId: number }) => {
   useEffect(() => {
     fetchOrder();
   }, [fetchOrder]);
-
   return (
     <div>
       <div className="infoorder-wrapper">
@@ -56,7 +55,7 @@ const FromChangeOrder = (props: { orderId: number }) => {
           <span className="text-status bg-warning">{order?.orderStatus}</span>
         </div>
         <br />
-        {order?.orderStatus !== "CANCELED" && (
+        {!(order?.orderStatus === "CANCELED" || order?.orderStatus === "SUCCESS") && (
           <>
             <NativeSelect
               style={{ width: "50%", marginTop: "20px" }}
