@@ -1,6 +1,8 @@
+
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import axios from "axios";
+import { error } from "console";
 import * as jwt from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -48,6 +50,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
     isAuthenticated: false,
   });
   useEffect(() => {}, [userInfo]);
+
   const login = (loginInfo: LoginInfo) => {
     const data = { username: loginInfo.username, password: loginInfo.password };
     axios
@@ -117,6 +120,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
       className: "my-notification-class",
       loading: false,
     });
+
   };
 
   const checkSession = () => {

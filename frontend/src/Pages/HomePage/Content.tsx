@@ -77,13 +77,20 @@ function Content() {
           })} */}
           <TabProduct onChange={onChangeTest} />
           {category.map((item) => {
+            console.log("item", item.brands.length);
             if (test === true)
               return (
-                <div key={item.id}>
-                  {/* <div className="title">{item.brandName}</div> */}
-                  <div className="title">{item.name}</div>
-                  <ProductList brands={item.brands} name={item.name} />
-                </div>
+                <>
+                  {item.brands.length > 0 ? (
+                    <div key={item.id}>
+                      {/* <div className="title">{item.brandName}</div> */}
+                      <div className="title">{item.name}</div>
+                      <ProductList brands={item.brands} name={item.name} />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </>
               );
           })}
         </div>

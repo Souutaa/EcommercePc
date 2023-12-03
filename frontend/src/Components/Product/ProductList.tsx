@@ -12,6 +12,7 @@ function ProductList(props: { brands: Brand[]; name: string }) {
     <>
       <>
         <div className="product-list-detail">
+
           <Product products={categoryItems.flat()} />
         </div>
         <ButtonMore categoryName={props.name} />
