@@ -3,7 +3,7 @@ import { IconPencil } from "@tabler/icons-react";
 import React from "react";
 import FormChangeBrand from "../FormChangeBrand/FormChangeBrand";
 
-const ButtonChangeBrand = () => {
+const ButtonChangeBrand = (props: { id: number }) => {
   return (
     <IconPencil
       onClick={() => {
@@ -12,7 +12,7 @@ const ButtonChangeBrand = () => {
           title: "Change Brand's information",
           children: (
             <>
-              <FormChangeBrand />
+              <FormChangeBrand id={props.id} />
             </>
           ),
         });

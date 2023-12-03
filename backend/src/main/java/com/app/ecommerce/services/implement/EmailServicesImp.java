@@ -71,7 +71,7 @@ public class EmailServicesImp implements IEmailServices {
 
     @Override
     public Account sendOTPbyEmail(sendmailDTO sendmail) throws MessagingException {
-        Optional<Account> userFound = repo.findByUsername(sendmail.getEmail());
+        Optional<Account> userFound = repo.findByEmail(sendmail.getEmail());
         if (userFound.isPresent()) {
             var otp = Utils.generateOTP();
             var user = userFound.get();

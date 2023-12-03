@@ -123,6 +123,7 @@ const ChangeMailUser = () => {
             <Input.Wrapper mt="md" label="Mã xác nhận">
               <div className="pin-center">
                 <PinInput
+                  length={6}
                   mt="md"
                   onChange={(e) => {
                     setVerificationCode(e);

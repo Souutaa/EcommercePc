@@ -18,7 +18,7 @@ function ForgotPasswordVerification() {
         <div className="form-signin">
           <div className="form-group ">
             <PinInput
-              length={4}
+              length={6}
               size="xl"
               placeholder="○"
               onChange={(e) => {

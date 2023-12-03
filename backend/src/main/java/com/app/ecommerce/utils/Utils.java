@@ -21,7 +21,7 @@ public class Utils {
   }
 
   public static String generateOTP() {
-    int randomPin = (int) (Math.random() * 9000) + 1000;
+    int randomPin = (int) (Math.random() * 900000) + 1000;
     String otp = String.valueOf(randomPin);
     return otp; // returning value of otp
   }
