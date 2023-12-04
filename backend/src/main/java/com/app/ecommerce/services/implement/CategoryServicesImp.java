@@ -72,19 +72,21 @@ public class CategoryServicesImp implements ICategoryServices {
                 for (Product product : brand.getProducts()) {
                     if (product.getCategory().getId() == category.getId()
                             && product.getBrand().getId() == brand.getId())
-                        categoryProducts
-                                .add(ProductCardOfBrandResponse
-                                        .builder()
-                                        .thumbnailUri(productServices.getProductThumbnail(product.getProductLine()))
-                                        .id(product.getId())
-                                        .productLine(product.getProductLine())
-                                        .productName(product.getProductName())
-                                        .price(product.getPrice())
-                                        .discount(product.getDiscount())
-                                        .name(category.getName())
-                                        .stock(this.productWarrantyRepository.findAllByProductId(product.getId()).get()
-                                                .size())
-                                        .build());
+                        if (product.getDeletedAt() == null)
+                            categoryProducts
+                                    .add(ProductCardOfBrandResponse
+                                            .builder()
+                                            .thumbnailUri(productServices.getProductThumbnail(product.getProductLine()))
+                                            .id(product.getId())
+                                            .productLine(product.getProductLine())
+                                            .productName(product.getProductName())
+                                            .price(product.getPrice())
+                                            .discount(product.getDiscount())
+                                            .name(category.getName())
+                                            .stock(this.productWarrantyRepository.findAllByProductId(product.getId())
+                                                    .get()
+                                                    .size())
+                                            .build());
                 }
                 categoryBrand.add(BrandProductResponse
                         .builder()
@@ -133,15 +135,16 @@ public class CategoryServicesImp implements ICategoryServices {
         if (opt.isPresent()) {
             var category = opt.get();
             for (Product product : category.getProducts()) {
-                categoryProducts.add(ProductCardOfBrandResponse.builder()
-                        .thumbnailUri(productServices.getProductThumbnail(product.getProductLine()))
-                        .id(product.getId())
-                        .productLine(product.getProductLine())
-                        .productName(product.getProductName())
-                        .price(product.getPrice())
-                        .discount(product.getDiscount())
-                        .name(category.getName())
-                        .build());
+                if (product.getDeletedAt() == null)
+                    categoryProducts.add(ProductCardOfBrandResponse.builder()
+                            .thumbnailUri(productServices.getProductThumbnail(product.getProductLine()))
+                            .id(product.getId())
+                            .productLine(product.getProductLine())
+                            .productName(product.getProductName())
+                            .price(product.getPrice())
+                            .discount(product.getDiscount())
+                            .name(category.getName())
+                            .build());
             }
             bResponse.setName(category.getName());
             ;
@@ -169,15 +172,16 @@ public class CategoryServicesImp implements ICategoryServices {
             } else {
                 var brand = test.get();
                 for (Product product : brand.getProducts()) {
-                    brandProducts.add(ProductCardOfBrandResponse.builder()
-                            .thumbnailUri(productServices.getProductThumbnail(product.getProductLine()))
-                            .id(product.getId())
-                            .productLine(product.getProductLine())
-                            .productName(product.getProductName())
-                            .price(product.getPrice())
-                            .discount(product.getDiscount())
-                            .brandName(brand.getBrandName())
-                            .build());
+                    if (product.getDeletedAt() == null)
+                        brandProducts.add(ProductCardOfBrandResponse.builder()
+                                .thumbnailUri(productServices.getProductThumbnail(product.getProductLine()))
+                                .id(product.getId())
+                                .productLine(product.getProductLine())
+                                .productName(product.getProductName())
+                                .price(product.getPrice())
+                                .discount(product.getDiscount())
+                                .brandName(brand.getBrandName())
+                                .build());
                 }
                 bResponse.setBrandName(brand.getBrandName());
                 bResponse.setId(brand.getId());

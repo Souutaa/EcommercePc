@@ -61,17 +61,6 @@ function AddNewInfo() {
 
   const handleSubmitForm = async (e: FormEvent) => {
     e.preventDefault();
-    if (userInfo)
-      console.log({
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName,
-        phoneNumber: userInfo.phoneNumber,
-        email: userInfo.email,
-        city: userInfo.city,
-        district: userInfo.district,
-        detailedAddress: userInfo.detailedAddress,
-        default: userInfo.isDefault
-      });
     const response = await axios.post("http://127.0.0.1:8080/userDetail/create", {
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,

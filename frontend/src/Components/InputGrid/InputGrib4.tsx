@@ -31,8 +31,8 @@ interface props {
 
 function InputGrib4(props: props) {
   const [division, setDivision] = useState<Division[]>([]);
-  const [selectedProvince, setSelectedProvince] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedProvince, setSelectedProvince] = useState(props.provinceCode);
+  const [selectedDistrict, setSelectedDistrict] = useState(props.districtCode);
   useEffect(() => {
     const provinceAxios = axios.create({});
     const fetchProvices = async () => {
@@ -80,12 +80,8 @@ function InputGrib4(props: props) {
           <Input.Wrapper style={{ marginLeft: "8px" }}>
             <Input
               placeholder="abc@gmail.com"
-              value={props.userInfo?.accountDetail.email.replace(
-                /(\w{2})[\w.-]+@([\w.]+\w)/,
-                "$1****@$2"
-              )}
-              // disabled={props.isEditing ? false : true}
-              disabled={true}
+              value={props.userInfo?.accountDetail.email}
+              disabled={props.isEditing ? false : true}
               onChange={(e) => {
                 if (props.userInfo && props.isEditing)
                   props.setUserInfo({
@@ -136,10 +132,7 @@ function InputGrib4(props: props) {
             disabled={props.isEditing ? false : true}
             data={division
               .find((division) => {
-                return (
-                  division.name ===
-                  (!selectedProvince ? props.provinceCode : selectedProvince)
-                );
+                return division.name === selectedProvince;
               })
               ?.districts.map((e): ComboboxItem => {
                 return {

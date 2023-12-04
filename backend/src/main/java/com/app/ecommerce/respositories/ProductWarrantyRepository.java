@@ -16,6 +16,10 @@ public interface ProductWarrantyRepository extends JpaRepository<ProductWarranty
                   "AND product_warranty.deleted_at IS NULL AND product_warranty.purchased_at IS NULL ORDER BY id ASC", nativeQuery = true)
   Optional<List<ProductWarranty>> findAllByProductId(Integer productId);
 
+  @Query(value = "SELECT * FROM public.product_warranty WHERE product_warranty.product_id = ?1 " +
+                  "ORDER BY id ASC", nativeQuery = true)
+  Optional<List<ProductWarranty>> getAllByProductId(Integer productId);
+
   @Query(value = "SELECT product_warranty.* " + //
                   "FROM public.product, public.product_warranty, public.warranty_period " + //
                   "WHERE product.id = product_warranty.product_id " + //

@@ -32,19 +32,6 @@ export type Category = {
 
 function Content() {
   const [category, setCategory] = useState<Category[]>([]);
-  // useEffect(() => {
-  //   console.log("get brands data from api");
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const res = await axios.get("http://127.0.0.1:8080/brand/allOfBrand");
-  //       console.log("products=> ", res);
-  //       setBrand(res.data);
-  //     } catch (error) {
-  //       console.log("error=> ", error);
-  //     }
-  //   };
-  //   fetchProducts();
-  // }, []);
 
   useEffect(() => {
     console.log("get brands data from api");
@@ -72,9 +59,6 @@ function Content() {
     <>
       <div className="container">
         <div className="products">
-          {/* {filteredCategory.map((e) => {
-            return <TabProduct products={e.products} />;
-          })} */}
           <TabProduct onChange={onChangeTest} />
           {category.map((item) => {
             console.log("item", item.brands.length);

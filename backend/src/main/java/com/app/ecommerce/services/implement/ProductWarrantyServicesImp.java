@@ -67,4 +67,9 @@ public class ProductWarrantyServicesImp implements IProductWarrantyServices {
     productWarranty.setWarrantyPeriod(null);
     return this.productWarrantyRepository.save(productWarranty);
   }
+
+  @Override
+  public List<ProductWarranty> getWarrantyPeriodsByProductId(int id) {
+    return this.productWarrantyRepository.getAllByProductId(id).get();
+  }
 }

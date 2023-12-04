@@ -114,8 +114,8 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
     public AccountDetail activeAccountDetailDefault(int id, String username) {
         Optional<AccountDetail> accountFound = repo.findById(id);
         if (accountFound.isPresent()) {
-            var accountDetail = accountFound.get();
             this.repo.removAccountDetailsDefault(this.accountRepo.findByUsername(username).get().getId());
+            var accountDetail = repo.findById(id).get();
             accountDetail.setDefault(true);
             return repo.save(accountDetail);
         } else {

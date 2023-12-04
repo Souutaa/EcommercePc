@@ -124,7 +124,7 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
   public AccountOrder cancelOrder(Integer orderId) {
     AccountOrder fetchedOrder = this.accountOrderRepository.findById(orderId).get();
     fetchedOrder.setStatus(OrderStatus.CANCELED);
-    List<OrderDetail> orderDetails = fetchedOrder.getOrderDetails();
+    List<OrderDetail> orderDetails = this.orderDetailRepository.findAllByOrderId(orderId).get();
     for (OrderDetail orderDetail : orderDetails) {
       ProductWarranty productWarranty = orderDetail.getProductWarranty();
       this.productWarrantyServices.deactiveWarranty(productWarranty.getId());
