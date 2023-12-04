@@ -7,7 +7,11 @@ import {
   Menu,
   rem,
 } from "@mantine/core";
-import { IconCalendarTime, IconLogout, IconTimeDuration0 } from "@tabler/icons-react";
+import {
+  IconCalendarTime,
+  IconLogout,
+  IconTimeDuration0,
+} from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import {
@@ -24,6 +28,7 @@ import { useAuthContext } from "../Context/AuthContext";
 import Seaparator from "../Components/Seaparator/Seaparator";
 import AdminInfor from "../Components/AdminInfo/AdminInfo";
 import { PATHS } from "../Constants/path";
+import { IconArrowBarRight } from "@tabler/icons-react";
 
 function AdminLayouts() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
@@ -32,11 +37,11 @@ function AdminLayouts() {
   const authContext = useAuthContext();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(authContext.auth)
+  console.log(authContext.auth);
   useEffect(() => {
     console.log("check-session");
     authContext.checkSession(() => {
-      navigate(PATHS.HOME)
+      navigate(PATHS.HOME);
     });
   }, [location.key]);
   return (
@@ -79,17 +84,25 @@ function AdminLayouts() {
               <Seaparator />
               <Link style={{ textDecoration: "none" }} to={"/"}>
                 <Menu.Item
-                  color="red"
                   leftSection={
-                    <IconLogout
+                    <IconHome
                       style={{
                         width: rem(14),
                         height: rem(14),
                       }}
                     />
                   }
+                  rightSection={
+                    <IconArrowBarRight
+                      style={{
+                        width: rem(14),
+                        height: rem(14),
+                      }}
+                    />
+                  }
+                  style={{ fontSize: "16px" }}
                 >
-                  SignOut
+                  Đi tới trang chủ
                 </Menu.Item>
               </Link>
             </Menu.Dropdown>
@@ -133,10 +146,6 @@ function AdminLayouts() {
         <Link to="/admin/user" className="admin-title">
           <IconUser />
           <span className="admin-text">Users</span>
-        </Link>
-        <Link to="/admin/role" className="admin-title">
-          <IconFlag />
-          <span className="admin-text">Roles</span>
         </Link>
       </AppShell.Navbar>
       <AppShell.Main>

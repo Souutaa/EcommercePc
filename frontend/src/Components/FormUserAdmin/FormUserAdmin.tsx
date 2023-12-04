@@ -11,6 +11,42 @@ const FormUserAdmin = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [errorHandleInputUsername, setErrorHandleInputUsername] = useState("");
+  const [errorHandleInputPass, setErrorHandleInputPass] = useState("");
+  const [errorHandleInputPassConfirm, setErrorHandleInputPassConfirm] =
+    useState("");
+  const [errorHandleInputMail, setErrorHandleInputMail] = useState("");
+  const inputUsernameHandle = (e: string) => {
+    if (!e) {
+      setErrorHandleInputUsername("Vui lòng nhập Username");
+    } else {
+      setErrorHandleInputUsername("");
+    }
+  };
+
+  const inputPassHandle = (e: string) => {
+    if (!e) {
+      setErrorHandleInputPass("Vui lòng nhập Password");
+    } else {
+      setErrorHandleInputPass("");
+    }
+  };
+
+  const inputPassConfirmHandle = (e: string) => {
+    if (!e) {
+      setErrorHandleInputPassConfirm("Vui lòng nhập lại Password");
+    } else {
+      setErrorHandleInputPassConfirm("");
+    }
+  };
+
+  const inputMailHandle = (e: string) => {
+    if (!e) {
+      setErrorHandleInputMail("Vui lòng nhập mail: ***@*mail.com");
+    } else {
+      setErrorHandleInputMail("");
+    }
+  };
 
   const data = {
     username: username,
@@ -78,34 +114,58 @@ const FormUserAdmin = () => {
   return (
     <div>
       <div className="modal-body">
-        <Input.Wrapper className="mb-20" label="Tên đăng nhập">
+        <Input.Wrapper
+          className="mb-20"
+          label="Tên đăng nhập"
+          error={errorHandleInputUsername}
+        >
           <Input
+            error={errorHandleInputUsername}
             placeholder="username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+              inputUsernameHandle(e.target.value);
+              setUsername(e.target.value);
+            }}
           />
         </Input.Wrapper>
-        <Input.Wrapper className="mb-20" label="Email">
+        <Input.Wrapper
+          className="mb-20"
+          label="Email"
+          error={errorHandleInputMail}
+        >
           <Input
+            error={errorHandleInputMail}
             placeholder="abc@gmail.com"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              inputMailHandle(e.target.value);
+              setEmail(e.target.value);
+            }}
           />
         </Input.Wrapper>
         <div className="input-2">
           <PasswordInput
+            error={errorHandleInputPass}
             style={{ width: "49%" }}
             label="Password"
             onVisibilityChange={toggle}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              inputPassHandle(e.target.value);
+              setPassword(e.target.value);
+            }}
           />
           <PasswordInput
             style={{ width: "49%" }}
+            error={errorHandleInputPassConfirm}
             label="Confirm password"
             onVisibilityChange={toggle}
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => {
+              inputPassConfirmHandle(e.target.value);
+              setConfirmPassword(e.target.value);
+            }}
           />
         </div>
       </div>

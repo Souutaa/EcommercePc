@@ -128,6 +128,7 @@ function ProductSearch() {
           onChangFilterSlide={valueLabelFormat}
           onChangeNumberOfPage={numberOfPageComboBox}
         />
+        {filteredProducts.length === 0 &&  <p>Không có sản phẩm nào</p>}
         {filteredProducts &&
           filteredProducts
             .slice(offset, offset + infoPerPage)

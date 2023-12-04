@@ -1,8 +1,4 @@
-import {
-  BrowserRouter,
-  Route,
-  Routes
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { PATHS } from "./Constants/path";
 import OderUser from "./Pages/OrderUser/OrderUser";
@@ -32,7 +28,6 @@ import CategoriesAdmin from "./PagesAdmin/CategoriesAdmin";
 import Dashborad from "./PagesAdmin/Dashboard";
 import OrderAdmin from "./PagesAdmin/OrderAdmin";
 import ProductAdmin from "./PagesAdmin/ProductAdmin";
-import RolesAdmin from "./PagesAdmin/RolesAdmin";
 import UserAdmin from "./PagesAdmin/UserAdmin";
 import WarrantyPeriodsAdmin from "./PagesAdmin/WarrantyPeriods";
 
@@ -94,7 +89,6 @@ function App() {
             <Route path="/admin/category" element={<CategoriesAdmin />} />
             <Route path="/admin/order" element={<OrderAdmin />} />
             <Route path="/admin/user" element={<UserAdmin />} />
-            <Route path="/admin/role" element={<RolesAdmin />} />
             <Route
               path="/admin/warranty-periods"
               element={<WarrantyPeriodsAdmin />}
