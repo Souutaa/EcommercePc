@@ -3,6 +3,8 @@ import { Button, Input, PasswordInput } from "@mantine/core";
 import "@mantine/carousel/styles.css";
 import { useState } from "react";
 import axios from "axios";
+import { notifications } from "@mantine/notifications";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -22,8 +24,36 @@ function SignUp() {
     email: email,
   };
 
-  const handleCreateUser = () => {
-    const response = axios.post("http://127.0.0.1:8080/auth/register", data);
+  const handleCreateUser = async () => {
+    await axios
+      .patch("http://127.0.0.1:8080/auth/register", data)
+      .then((res) => {
+        if (res.data.error) {
+          alert(res.data.error);
+        } else {
+          localStorage.setItem("username", res.data.username);
+          notifications.show({
+            withCloseButton: true,
+            autoClose: 2000,
+            message: `Đăng ký thành công tài khoản: ${res.data.username}`,
+            color: "teal",
+            icon: <IconCheck />,
+            className: "my-notification-class",
+            loading: false,
+          });
+        }
+      })
+      .catch((e) => {
+        notifications.show({
+          withCloseButton: true,
+          autoClose: 2000,
+          message: "Thông tin đăng ký không hợp lệ",
+          color: "red",
+          icon: <IconX />,
+          className: "my-notification-class",
+          loading: false,
+        });
+      });
   };
 
   const inputUsernameHandle = (e: string) => {

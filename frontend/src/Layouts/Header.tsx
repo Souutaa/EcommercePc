@@ -18,6 +18,7 @@ import { useState } from "react";
 import UserInfor from "../Components/UserInfor/UserInfor";
 import UserOder from "../Components/UserOrder/UserOrder";
 import Seaparator from "../Components/Seaparator/Seaparator";
+
 const Header = () => {
   const [opened, setOpened] = useState(false);
   const authContext = useAuthContext();
@@ -63,7 +64,7 @@ const Header = () => {
                 <Menu.Dropdown>
                   <UserInfor />
                   <Seaparator />
-                  <UserOder />
+                  {authContext.auth.aud === "USER" ? <UserOder /> : null}
                   <Seaparator />
 
                   <Menu.Item

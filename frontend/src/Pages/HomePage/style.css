@@ -989,7 +989,7 @@ footer {
 
 .productcart-left {
   width: 924px;
-  height: 493px;
+  height: auto;
   background: var(--gray-50, #f9fafb);
   padding: 12px 32px;
 

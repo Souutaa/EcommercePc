@@ -1,4 +1,3 @@
-
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import axios from "axios";
@@ -9,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 export interface Auth {
   aud: string | null;
+  mail: string | null;
   sub: string | null;
   iat: string | number | null;
   exp: string | number | null;
@@ -43,6 +43,7 @@ type Role = {
 const AuthProvider = ({ children }: ChildrenProps) => {
   const [auth, setAuth] = useState<Auth>({
     aud: null,
+    mail: null,
     sub: null,
     exp: null,
     iat: null,
@@ -62,8 +63,10 @@ const AuthProvider = ({ children }: ChildrenProps) => {
 
           const res = await axios.get("http://localhost:8080/user/getAccount");
 
+          console.log(res);
           setAuth({
             aud: res.data.role ?? "USER",
+            mail: res.data.email ?? "",
             sub: data.sub ?? "",
             iat: data.iat ?? "",
             exp: data.exp ?? "",
@@ -97,6 +100,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
     localStorage.removeItem("accessToken");
     setAuth({
       aud: null,
+      mail: null,
       sub: null,
       iat: null,
       exp: null,
@@ -113,7 +117,6 @@ const AuthProvider = ({ children }: ChildrenProps) => {
       className: "my-notification-class",
       loading: false,
     });
-
   };
 
   const checkSession = async (callback?: () => void) => {
@@ -124,6 +127,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
       const res = await axios.get("http://localhost:8080/user/getAccount");
       setAuth({
         aud: res.data.role ?? "USER",
+        mail: res.data.email ?? "",
         sub: data.sub ?? "",
         iat: data.iat ?? "",
         exp: data.exp ?? "",

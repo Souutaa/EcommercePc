@@ -39,11 +39,18 @@ function ProductSearch() {
       <div className="container">
         <Breadcrumbs />
         {/* <FilterSection /> */}
-        {products &&
-          products.map((product) => <ProductSearchs product={product} />)}
-        <div className="pagination-center">
-          <Pagination total={10} />
-        </div>
+        {products?.length > 0 ? (
+          <>
+            {products.map((product, index) => (
+              <ProductSearchs key={index} product={product} />
+            ))}
+            <div className="pagination-center">
+              <Pagination total={10} />
+            </div>
+          </>
+        ) : (
+          <p>Không có sản phẩm nào</p>
+        )}
       </div>
     </>
   );
