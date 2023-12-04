@@ -942,6 +942,7 @@ footer {
   align-items: flex-start;
   margin-bottom: 16px;
 }
+
 .product-detail-warranty {
   font-size: 30px;
   margin-bottom: 12px;
@@ -1417,11 +1418,16 @@ footer {
   line-height: 125%;
 }
 
+.productsearch-content {
+  width: 100%;
+  margin: 0 20px;
+}
+
 .productsearch-info {
   display: flex;
   gap: 10px;
   align-self: stretch;
-  margin-top: 90px;
+  margin-top: 70px;
   justify-content: space-between;
 }
 
@@ -1433,6 +1439,19 @@ footer {
   font-style: normal;
   font-weight: 700;
   line-height: 125%;
+}
+
+.productsearch-img {
+  width: 240px;
+  height: 160px;
+}
+
+.productsearch-text {
+  display: block;
+  width: 100%;
+  height: auto;
+  text-align: left;
+  margin-top: 10px;
 }
 
 .pagination-center {

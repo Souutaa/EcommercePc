@@ -2,10 +2,9 @@ import { Button, MantineProvider } from "@mantine/core";
 import { ModalsProvider, modals } from "@mantine/modals";
 import React from "react";
 import { Notifications } from "@mantine/notifications";
-import FormCategory from "../FormCategory/FormCategory";
 import FormWarrantyPeriod from "../FormWarrantyPeriod/FormWarrantyPeriod";
 
-const ButtonAddWarrantyPeriod = (props: {onFinish: () => void}) => {
+const ButtonAddWarrantyPeriod = (props: { onFinish: () => void }) => {
   return (
     <MantineProvider>
       <ModalsProvider>
@@ -17,7 +16,7 @@ const ButtonAddWarrantyPeriod = (props: {onFinish: () => void}) => {
               title: "Add New Period",
               children: (
                 <>
-                  <FormWarrantyPeriod onFinish={props.onFinish}/>
+                  <FormWarrantyPeriod onFinish={props.onFinish} />
                 </>
               ),
             });
