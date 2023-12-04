@@ -19,10 +19,11 @@ import {
   IconTruckDelivery,
   IconUser,
 } from "@tabler/icons-react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Context/AuthContext";
 import Seaparator from "../Components/Seaparator/Seaparator";
 import AdminInfor from "../Components/AdminInfo/AdminInfo";
+import { PATHS } from "../Constants/path";
 
 function AdminLayouts() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
@@ -30,9 +31,13 @@ function AdminLayouts() {
   const [opened, setOpened] = useState(false);
   const authContext = useAuthContext();
   const location = useLocation();
+  const navigate = useNavigate();
+  console.log(authContext.auth)
   useEffect(() => {
     console.log("check-session");
-    authContext.checkSession();
+    authContext.checkSession(() => {
+      navigate(PATHS.HOME)
+    });
   }, [location.key]);
   return (
     <AppShell

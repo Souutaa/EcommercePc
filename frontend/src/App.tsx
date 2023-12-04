@@ -1,16 +1,19 @@
 import {
   BrowserRouter,
-  Outlet,
   Route,
-  Routes,
-  useLocation,
+  Routes
 } from "react-router-dom";
 import "./App.css";
-import OderUser from "./Pages/OrderUser/OrderUser";
 import { PATHS } from "./Constants/path";
+import OderUser from "./Pages/OrderUser/OrderUser";
 
 import MainLayout from "./Layouts/Index";
+import AdminLayouts from "./LayoutsAdmin/AdminLayouts";
+import ChangeMailUser from "./Pages/ChangeMailUser/ChangeMailUser";
+import ChangePassUser from "./Pages/ChangePassUser/ChangePassUser";
 import Home from "./Pages/HomePage";
+import InfoOrder from "./Pages/InfoOrder/InfoOrder";
+import AddNewInfo from "./Pages/InfoUser/AddNewInfo";
 import InfoUser from "./Pages/InfoUser/InfoUser";
 import LoginPage from "./Pages/LoginPage";
 import ChangePassword from "./Pages/LoginPage/ChangePassword";
@@ -24,26 +27,16 @@ import ProductDetail from "./Pages/ProductDetail/ProductDetail";
 import ProductMore from "./Pages/ProductMore/ProductMore";
 import ProductOdered from "./Pages/ProductOdered/ProductOdered";
 import ProductSearch from "./Pages/ProductSearch/ProductSearch";
-import InfoOrder from "./Pages/InfoOrder/InfoOrder";
-import AdminLayouts from "./LayoutsAdmin/AdminLayouts";
-import ProductAdmin from "./PagesAdmin/ProductAdmin";
-import Dashborad from "./PagesAdmin/Dashboard";
 import BrandAdmin from "./PagesAdmin/BrandAdmin";
 import CategoriesAdmin from "./PagesAdmin/CategoriesAdmin";
+import Dashborad from "./PagesAdmin/Dashboard";
 import OrderAdmin from "./PagesAdmin/OrderAdmin";
-import UserAdmin from "./PagesAdmin/UserAdmin";
+import ProductAdmin from "./PagesAdmin/ProductAdmin";
 import RolesAdmin from "./PagesAdmin/RolesAdmin";
-import AddNewInfo from "./Pages/InfoUser/AddNewInfo";
-import ChangePassUser from "./Pages/ChangePassUser/ChangePassUser";
-import ChangeMailUser from "./Pages/ChangeMailUser/ChangeMailUser";
+import UserAdmin from "./PagesAdmin/UserAdmin";
 import WarrantyPeriodsAdmin from "./PagesAdmin/WarrantyPeriods";
-import { useAuthContext } from "./Context/AuthContext";
-import { useEffect } from "react";
 
 function App() {
-  const useContext = useAuthContext();
-  useEffect(() => {}, [useContext.auth.aud]);
-  console.log(useContext.auth.aud);
   return (
     <div className="App">
       <BrowserRouter>
@@ -94,21 +87,19 @@ function App() {
             <Route path={PATHS.CHANGEPASSUSER} element={<ChangePassUser />} />
             <Route path={PATHS.CHANGEMAILUSER} element={<ChangeMailUser />} />
           </Route>
-          {useContext.auth.aud === "ADMIN" ? (
-            <Route path="/admin" element={<AdminLayouts />}>
-              <Route index element={<Dashborad />} />
-              <Route path="/admin/product" element={<ProductAdmin />} />
-              <Route path="/admin/brands" element={<BrandAdmin />} />
-              <Route path="/admin/category" element={<CategoriesAdmin />} />
-              <Route path="/admin/order" element={<OrderAdmin />} />
-              <Route path="/admin/user" element={<UserAdmin />} />
-              <Route path="/admin/role" element={<RolesAdmin />} />
-              <Route
-                path="/admin/warranty-periods"
-                element={<WarrantyPeriodsAdmin />}
-              />
-            </Route>
-          ) : null}
+          <Route path="/admin" element={<AdminLayouts />}>
+            <Route index element={<Dashborad />} />
+            <Route path="/admin/product" element={<ProductAdmin />} />
+            <Route path="/admin/brands" element={<BrandAdmin />} />
+            <Route path="/admin/category" element={<CategoriesAdmin />} />
+            <Route path="/admin/order" element={<OrderAdmin />} />
+            <Route path="/admin/user" element={<UserAdmin />} />
+            <Route path="/admin/role" element={<RolesAdmin />} />
+            <Route
+              path="/admin/warranty-periods"
+              element={<WarrantyPeriodsAdmin />}
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

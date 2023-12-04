@@ -49,14 +49,15 @@ public class SecurityConfiguration {
         "/user/update-role", "/user/delete", "/user/*/active",
         "/warranty-period/create", "/warranty-period/*/update", "/warranty-period/delete", "/warranty-period/*/active"
         ).hasAuthority("ADMIN")
-        .requestMatchers("/order/getMonthlyRevenue", "/order/getTrustedBuyers", "/order/getAllOrder", 
-        "/brand/create", "/brand/*/update",
-        "/category/create", "/category/*/update",
+        .requestMatchers("/order/export/excel", "/order/getMonthlyRevenue", "/order/getTrustedBuyers", "/order/getAllOrder", "/brand/create", 
+        "/brand/*/active", "/brand/delete", "/brand/*/update",
+        "/category/create", "/category/*/update", "/category/*/activeCategory", "/category/deleteCategory",
         "/product/create", "/product/update", "/product/delete", "/product/undo-delete", "/product/getTopSelling",
         "/product-info/add-info", "/product-info/update", "/product-info/delete",
         "/product-warranty/create",
+        "/user/update-role", "/user/delete", "/user/*/active",
         "/warranty-period/create", "/warranty-period/*/update", "/warranty-period/delete", "/warranty-period/*/active"
-        ).hasAuthority("MANAGER")
+        ).hasAuthority("ADMIN")
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()

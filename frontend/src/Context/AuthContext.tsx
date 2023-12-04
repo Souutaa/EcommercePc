@@ -21,7 +21,7 @@ export interface LoginInfo {
 export type AuthContextType = {
   auth: Auth;
   login: (loginInfo: LoginInfo) => void;
-  checkSession: () => void;
+  checkSession: (callback?: () => void) => void;
   logout: () => void;
 };
 
@@ -39,7 +39,6 @@ type Role = {
 };
 
 const AuthProvider = ({ children }: ChildrenProps) => {
-  const [userInfo, setUserInfo] = useState<Role>();
   const [auth, setAuth] = useState<Auth>({
     aud: null,
     sub: null,
@@ -47,7 +46,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
     iat: null,
     isAuthenticated: false,
   });
-  useEffect(() => {}, [userInfo]);
+
   const login = (loginInfo: LoginInfo) => {
     const data = { username: loginInfo.username, password: loginInfo.password };
     axios
@@ -60,14 +59,9 @@ const AuthProvider = ({ children }: ChildrenProps) => {
           let data = jwt.jwtDecode(response.data.token);
 
           const res = await axios.get("http://localhost:8080/user/getAccount");
-          try {
-            setUserInfo(res.data);
-          } catch (error) {
-            console.log(error);
-          }
 
           setAuth({
-            aud: res.data.role ?? "",
+            aud: res.data.role ?? "USER",
             sub: data.sub ?? "",
             iat: data.iat ?? "",
             exp: data.exp ?? "",
@@ -119,18 +113,22 @@ const AuthProvider = ({ children }: ChildrenProps) => {
     });
   };
 
-  const checkSession = () => {
+  const checkSession = async (callback?: () => void) => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       let data = jwt.jwtDecode(accessToken);
       if (data.exp && data.iat) if (Date.now() >= data.exp * 1000) logout();
+      const res = await axios.get("http://localhost:8080/user/getAccount");
       setAuth({
-        aud: userInfo?.role ?? "",
+        aud: res.data.role ?? "USER",
         sub: data.sub ?? "",
         iat: data.iat ?? "",
         exp: data.exp ?? "",
         isAuthenticated: true,
       });
+      if (callback && res.data.role === "USER") {
+        callback();
+      }
     }
   };
 
@@ -150,3 +148,7 @@ export const useAuthContext = () => {
 };
 
 export default AuthProvider;
+function useCallBack(arg0: () => Promise<void>, arg1: never[]) {
+  throw new Error("Function not implemented.");
+}
+
