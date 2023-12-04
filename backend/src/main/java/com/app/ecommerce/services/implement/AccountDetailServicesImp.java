@@ -112,14 +112,17 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
 
     @Override
     public AccountDetail activeAccountDetailDefault(int id, String username) {
-        Optional<AccountDetail> accountFound = repo.findById(id);
-        if (accountFound.isPresent()) {
-            this.repo.removAccountDetailsDefault(this.accountRepo.findByUsername(username).get().getId());
-            var accountDetail = repo.findById(id).get();
-            accountDetail.setDefault(true);
-            return repo.save(accountDetail);
-        } else {
-            throw new ResourceNotFoundException("Invoice with Id : " + accountFound + " Not Found");
+        List<AccountDetail> test = this.getAllAccountDetail(username);
+        if (test.size() > 0) {
+            Optional<AccountDetail> accountFound = repo.findById(id);
+            if (accountFound.isPresent()) {
+                this.repo.removAccountDetailsDefault(this.accountRepo.findByUsername(username).get().getId());
+                var accountDetail = repo.findById(id).get();
+                accountDetail.setDefault(true);
+                return repo.save(accountDetail);
+            } else {
+                throw new ResourceNotFoundException("Invoice with Id : " + accountFound + " Not Found");
+            }
         }
     }
 
