@@ -1,4 +1,5 @@
 
+import { modals } from "@mantine/modals";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import axios from "axios";
@@ -102,16 +103,18 @@ const AuthProvider = ({ children }: ChildrenProps) => {
       exp: null,
       isAuthenticated: false,
     });
-    //window.location.replace("/");
     notifications.show({
       withCloseButton: true,
-      autoClose: 2500,
+      autoClose: 1500,
       message:
         "Tài khoản đã đăng xuất hoặc hết phiên đăng nhập, vui lòng đăng nhập lại",
       color: "red",
       icon: <IconX />,
       className: "my-notification-class",
       loading: false,
+      onClose: () => {
+        window.location.replace('/')
+      }
     });
 
   };
