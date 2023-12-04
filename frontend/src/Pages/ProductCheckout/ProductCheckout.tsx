@@ -64,7 +64,6 @@ function ProductCheckout() {
   }, []);
   const handleSubmitForm = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(address?.length)
     await axios.post("http://127.0.0.1:8080/order/create", {
       firstName: userInfo?.accountDetail.firstName,
       lastName: userInfo?.accountDetail.lastName,

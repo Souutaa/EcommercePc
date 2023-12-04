@@ -16,6 +16,7 @@ import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
 import { PATHS } from "../../Constants/path";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import { UserInformation } from "./InfoUser";
 
 interface NewUserInfo {
   firstName: string;
@@ -29,9 +30,21 @@ interface NewUserInfo {
 }
 
 function AddNewInfo() {
+  const [address, setAddress] = useState<UserInformation[] | null>();
   const [division, setDivision] = useState<Division[]>([]);
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
+  useEffect(() => {
+    const getAllUserInfo = async () => {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:8080/userDetail/all"
+        );
+        setAddress(response.data);
+      } catch {}
+    };
+    getAllUserInfo();
+  }, []);
   useEffect(() => {
     const provinceAxios = axios.create({});
     const fetchProvices = async () => {
@@ -70,7 +83,7 @@ function AddNewInfo() {
       district: userInfo.district,
       detailedAddress: userInfo.detailedAddress,
     });
-    if (userInfo.isDefault) {
+    if (userInfo.isDefault || address?.length === 0) {
       await axios.patch(`http://127.0.0.1:8080/userDetail/${response.data.id}/default`);
     }
     return navigate(PATHS.USERINFO);
