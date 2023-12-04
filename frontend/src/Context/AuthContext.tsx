@@ -1,3 +1,4 @@
+
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import axios from "axios";
@@ -112,6 +113,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
       className: "my-notification-class",
       loading: false,
     });
+
   };
 
   const checkSession = async (callback?: () => void) => {
