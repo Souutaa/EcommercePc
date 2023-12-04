@@ -1,5 +1,9 @@
 package com.app.ecommerce.services.implement;
 
+import java.util.Optional;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,13 +30,21 @@ public class AuthServicesImp implements IAuthServices {
   private final AuthenticationManager authenticationManager;
 
   public AuthenticationResponse register(RegisterRequest request) {
+    Optional<Account> optAccount = this.repository.findByUsername(request.getUsername());
+    if (optAccount.isPresent()) {
+      throw new DataIntegrityViolationException("user with current username is already exist");
+    }
     var account = Account.builder()
         .username(request.getUsername())
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
         .role(Role.USER)
         .build();
-    repository.save(account);
+        try {
+          repository.save(account);
+        } catch(DataIntegrityViolationException ex) {
+          throw new DataIntegrityViolationException("user with current email is already exist");
+        }
     var jwtToken = jwtService.generateToken(account);
     return AuthenticationResponse.builder()
         .token(jwtToken)

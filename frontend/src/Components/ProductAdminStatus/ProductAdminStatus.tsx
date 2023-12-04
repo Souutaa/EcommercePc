@@ -1,5 +1,5 @@
 import { modals } from "@mantine/modals";
-import { IconEye, IconPencil } from "@tabler/icons-react";
+import { IconEye, IconPencil, IconPlus } from "@tabler/icons-react";
 import formatPrice from "../../Helper/formatPrice";
 import { AdminProductInformation } from "../../PagesAdmin/ProductAdmin";
 import ButtonDelete from "../Button/button-delete";
@@ -9,6 +9,7 @@ import SeaparatorTable from "../Seaparator/SeaparatorTable";
 import { Switch } from "@mantine/core";
 import { useState } from "react";
 import axios from "axios";
+import FormProductWarranty from "../FormProductWarranty/FormProductWarranty";
 
 interface Props {
   product: AdminProductInformation;
@@ -93,6 +94,19 @@ const ProductAdminStatus = (props: Props) => {
               });
             }}
             style={{ marginRight: "5px" }}
+          />
+          <IconPlus
+            onClick={() => {
+              modals.open({
+                size: "xl",
+                title: "Add new product",
+                children: (
+                  <>
+                    <FormProductWarranty productId={props.product.id} productLine={props.product.productLine} />
+                  </>
+                ),
+              });
+            }}
           />
         </td>
       </tr>

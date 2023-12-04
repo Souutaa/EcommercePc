@@ -57,7 +57,7 @@ public class SecurityConfiguration {
         "/product-warranty/create",
         "/user/update-role", "/user/delete", "/user/*/active",
         "/warranty-period/create", "/warranty-period/*/update", "/warranty-period/delete", "/warranty-period/*/active"
-        ).hasAuthority("ADMIN")
+        ).hasAuthority("MANAGER")
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()

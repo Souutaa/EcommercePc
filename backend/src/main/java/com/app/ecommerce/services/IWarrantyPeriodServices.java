@@ -17,4 +17,5 @@ public interface IWarrantyPeriodServices {
   public void softDeleteWarrantyPeriod(int id);
 
   public List<WarrantyPeriod> getWarrantyPeriod();
+
 }

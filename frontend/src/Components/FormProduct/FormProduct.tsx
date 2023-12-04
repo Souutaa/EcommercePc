@@ -102,7 +102,6 @@ const FromProduct = (props: {
       categoryId: categoryId,
       warrantyPeriodId: warrantyPeriodId,
     });
-    console.log(newProduct);
     const blob = new Blob([newProduct], {
       type: "application/json",
     });
@@ -328,7 +327,7 @@ const FromProduct = (props: {
                       disabled: false,
                     };
                   })
-                : []
+                : [] 
             }
             onChange={(event) => {
               setCategoryId(+event.target.value);
@@ -376,7 +375,7 @@ const FromProduct = (props: {
                   title="info"
                   name="productInfo"
                   type="text"
-                  value={info[key]}
+                  value={serial[key]}
                   style={{ flex: "1 1 90%" }}
                   onChange={(e) => {
                     return infoDispatch({

@@ -1,8 +1,12 @@
-import { Button, Input, PasswordInput } from "@mantine/core";
+import { Button, Flex, Input, PasswordInput } from "@mantine/core";
 
 import "@mantine/carousel/styles.css";
 import { useState } from "react";
 import axios from "axios";
+import { IconChecklist, IconLoader, IconX } from "@tabler/icons-react";
+import { notifications } from "@mantine/notifications";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../Constants/path";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -14,7 +18,8 @@ function SignUp() {
   const [errorHandleInputPassConfirm, setErrorHandleInputPassConfirm] =
     useState("");
   const [errorHandleInputMail, setErrorHandleInputMail] = useState("");
-
+  const [errors, setErrors] = useState<string[]>([]);
+  const navigate = useNavigate();
   const data = {
     username: username,
     password: password,
@@ -22,8 +27,56 @@ function SignUp() {
     email: email,
   };
 
-  const handleCreateUser = () => {
-    const response = axios.post("http://127.0.0.1:8080/auth/register", data);
+  const handleCreateUser = async () => {
+    try {
+      notifications.show({
+        withCloseButton: true,
+        autoClose: 1500,
+        message: "Vui lòng đợi",
+        color: "teal",
+        icon: <IconLoader />,
+        className: "my-notification-class",
+        loading: true,
+      });
+      const response = await axios.post(
+        "http://127.0.0.1:8080/auth/register",
+        data
+      );
+      setTimeout(() => {
+        notifications.show({
+          withCloseButton: true,
+          autoClose: 1500,
+          message: "Đăng kí thành công!",
+          color: "green",
+          icon: <IconChecklist />,
+          className: "my-notification-class",
+          loading: false,
+          onClose: () => {
+            notifications.clean();
+            navigate(PATHS.LOGIN.INDEX);
+          },
+        });
+      }, 1000);
+    } catch (err: any) {
+      notifications.clean();
+      if (err.response.data.detail)
+        notifications.show({
+          withCloseButton: true,
+          autoClose: 3000,
+          message: err.response.data.detail,
+          color: "red",
+          icon: <IconX />,
+          className: "my-notification-class",
+          loading: false,
+        });
+      else {
+        setErrors(
+          Object.keys(err.response.data).map((key) => {
+            return key + ": " + err.response.data[key];
+          })
+        );
+      }
+    }
   };
 
   const inputUsernameHandle = (e: string) => {
@@ -62,6 +115,13 @@ function SignUp() {
     <>
       <form className="modal-form-signin" action="">
         <h2 className="text-signin">Đăng ký</h2>
+        {errors.length > 0 && (
+          <Flex direction={"column"} gap={"md"}>
+            {errors.map((error) => (
+              <div style={{ color: "red", width: "100%" }}>{error}</div>
+            ))}
+          </Flex>
+        )}
         <div className="form-signin">
           <div className="form-group">
             <label className="form-text" htmlFor="">
