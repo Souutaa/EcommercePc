@@ -9,6 +9,11 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [errorHandleInputUsername, setErrorHandleInputUsername] = useState("");
+  const [errorHandleInputPass, setErrorHandleInputPass] = useState("");
+  const [errorHandleInputPassConfirm, setErrorHandleInputPassConfirm] =
+    useState("");
+  const [errorHandleInputMail, setErrorHandleInputMail] = useState("");
 
   const data = {
     username: username,
@@ -21,6 +26,38 @@ function SignUp() {
     const response = axios.post("http://127.0.0.1:8080/auth/register", data);
   };
 
+  const inputUsernameHandle = (e: string) => {
+    if (!e) {
+      setErrorHandleInputUsername("Vui lòng nhập Username");
+    } else {
+      setErrorHandleInputUsername("");
+    }
+  };
+
+  const inputPassHandle = (e: string) => {
+    if (!e) {
+      setErrorHandleInputPass("Vui lòng nhập Password");
+    } else {
+      setErrorHandleInputPass("");
+    }
+  };
+
+  const inputPassConfirmHandle = (e: string) => {
+    if (!e) {
+      setErrorHandleInputPassConfirm("Vui lòng nhập lại Password");
+    } else {
+      setErrorHandleInputPassConfirm("");
+    }
+  };
+
+  const inputMailHandle = (e: string) => {
+    if (!e) {
+      setErrorHandleInputMail("Vui lòng nhập mail: ***@*mail.com");
+    } else {
+      setErrorHandleInputMail("");
+    }
+  };
+
   return (
     <>
       <form className="modal-form-signin" action="">
@@ -30,11 +67,15 @@ function SignUp() {
             <label className="form-text" htmlFor="">
               Username
             </label>
-            <Input.Wrapper>
+            <Input.Wrapper error={errorHandleInputUsername}>
               <Input
-                placeholder="Nguyễn Văn A"
+                error={errorHandleInputUsername}
+                placeholder="nguyenvana"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                  inputUsernameHandle(e.target.value);
+                  setUsername(e.target.value);
+                }}
               />
             </Input.Wrapper>
           </div>
@@ -42,11 +83,15 @@ function SignUp() {
             <label className="form-text" htmlFor="">
               Email
             </label>
-            <Input.Wrapper>
+            <Input.Wrapper error={errorHandleInputMail}>
               <Input
+                error={errorHandleInputMail}
                 placeholder="abc@gmail.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  inputMailHandle(e.target.value);
+                  setEmail(e.target.value);
+                }}
               />
             </Input.Wrapper>
           </div>
@@ -56,9 +101,13 @@ function SignUp() {
               Mật khẩu
             </label>
             <PasswordInput
+              error={errorHandleInputPass}
               placeholder="Nhập mật khẩu"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                inputPassHandle(e.target.value);
+                setPassword(e.target.value);
+              }}
             />
           </div>
           <div className="form-group">
@@ -66,9 +115,13 @@ function SignUp() {
               Nhập lại mật khẩu
             </label>
             <PasswordInput
+              error={errorHandleInputPassConfirm}
               placeholder="Nhập lại mật khẩu"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => {
+                inputPassConfirmHandle(e.target.value);
+                setConfirmPassword(e.target.value);
+              }}
             />
           </div>
 
