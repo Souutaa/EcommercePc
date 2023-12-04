@@ -1,6 +1,8 @@
+
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import axios from "axios";
+import { error } from "console";
 import * as jwt from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -111,6 +113,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
       className: "my-notification-class",
       loading: false,
     });
+
   };
 
   const checkSession = async (callback?: () => void) => {
@@ -151,4 +154,3 @@ export default AuthProvider;
 function useCallBack(arg0: () => Promise<void>, arg1: never[]) {
   throw new Error("Function not implemented.");
 }
-

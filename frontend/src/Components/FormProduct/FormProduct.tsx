@@ -1,4 +1,4 @@
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import {
   Button,
@@ -13,6 +13,7 @@ import { modals } from "@mantine/modals";
 import React, { useEffect, useReducer, useState } from "react";
 import { Category, InfoInput, WarrantyPeriod } from "../FormChange/FormChange";
 import axios from "axios";
+import formatPrice from "../../Helper/formatPrice";
 
 function infoReducer(state: any, action: any) {
   let newState = { ...state };
@@ -40,7 +41,9 @@ function infoReducer(state: any, action: any) {
   }
 }
 
-const FromProduct = (props: {setNewProduct: (productLine: string) => void}) => {
+const FromProduct = (props: {
+  setNewProduct: (productLine: string) => void;
+}) => {
   const [productLine, setProductLine] = useState("");
   const [productName, setProductName] = useState("");
   const [brandId, setBrandId] = useState(-1);
@@ -57,6 +60,7 @@ const FromProduct = (props: {setNewProduct: (productLine: string) => void}) => {
   const initialArg: InfoInput = {};
   const [info, infoDispatch] = useReducer(infoReducer, initialArg);
   const [serial, serialDispatch] = useReducer(infoReducer, initialArg);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     if (newThumbnail) setNewThumbnailURL(URL.createObjectURL(newThumbnail));
@@ -119,8 +123,24 @@ const FromProduct = (props: {setNewProduct: (productLine: string) => void}) => {
           "Content-Type": "multipart/form-data",
         },
       });
-    } catch {
-      throw new Error("Create product failed");
+      notifications.show({
+        withCloseButton: true,
+        autoClose: 1500,
+        message: "Thêm sản phẩm thành công",
+        color: "teal",
+        icon: <IconCheck />,
+        className: "my-notification-class",
+        loading: false,
+      });
+      modals.closeAll();
+    } catch (error) {
+      setHasError(true);
+      notifications.show({
+        autoClose: 1500,
+        icon: <IconX />,
+        color: "red",
+        message: "Vui lòng điền đầy đủ thông tin",
+      });
     }
     try {
       const productInfos = Object.keys(info).map((key) => {
@@ -130,7 +150,7 @@ const FromProduct = (props: {setNewProduct: (productLine: string) => void}) => {
       const productSerials = Object.keys(serial).map((key) => {
         return serial[key];
       });
-      console.log(productInfos, productSerials)
+      console.log(productInfos, productSerials);
       await axios.post(`http://127.0.0.1:8080/product-info/add-info`, {
         infos: productInfos,
         productLine,
@@ -140,24 +160,69 @@ const FromProduct = (props: {setNewProduct: (productLine: string) => void}) => {
         productLine,
       });
       props.setNewProduct(productLine);
-    } catch {
-      throw new Error("failed to add product infos");
+    } catch (error) {}
+  };
+
+  const [errorHandle, setErrorHandle] = useState("");
+  const [errorHandleName, setErrorHandleName] = useState("");
+  const [errorHandlePrice, setErrorHandlePrice] = useState("");
+  const [errorHandleDiscount, setErrorHandleDiscount] = useState("");
+
+  const handleErrorInput = (e: string) => {
+    if (!e) {
+      setErrorHandle("Vui lòng không bỏ trống");
+    } else {
+      setErrorHandle("");
+    }
+  };
+
+  const handleErrorInputName = (e: string) => {
+    if (!e) {
+      setErrorHandleName("Vui lòng không bỏ trống");
+    } else {
+      setErrorHandleName("");
+    }
+  };
+  const handleErrorInputPrice = (e: string) => {
+    if (parseInt(e) === 0) {
+      setErrorHandlePrice("Vui lòng nhập giá > 0");
+    } else if (!e) {
+      setErrorHandlePrice("Vui lòng không bỏ trống");
+    } else {
+      setErrorHandlePrice("");
+    }
+  };
+  const handleErrorInputDiscount = (e: string) => {
+    if (parseInt(e) === 0) {
+      setErrorHandleDiscount("Vui lòng nhập discount > 0");
+    } else if (!e) {
+      setErrorHandleDiscount("Vui lòng không bỏ trống");
+    } else {
+      setErrorHandleDiscount("");
     }
   };
 
   return (
     <div>
       <div className="modal-body">
-        <Input.Wrapper className="mb-20" label="Line">
+        <Input.Wrapper className="mb-20" label="Line" error={errorHandle}>
           <Input
-            onChange={(e) => setProductLine(e.target.value)}
+            onChange={(e) => {
+              setProductLine(e.target.value);
+              handleErrorInput(e.target.value);
+            }}
             value={productLine}
+            error={errorHandle}
           />
         </Input.Wrapper>
-        <Input.Wrapper className="mb-20" label="Name">
+        <Input.Wrapper className="mb-20" label="Name" error={errorHandleName}>
           <Input
-            onChange={(e) => setProductName(e.target.value)}
+            onChange={(e) => {
+              setProductName(e.target.value);
+              handleErrorInputName(e.target.value);
+            }}
             value={productName}
+            error={errorHandleName}
           />
         </Input.Wrapper>
         <div className="product-thumbnail">
@@ -203,14 +268,28 @@ const FromProduct = (props: {setNewProduct: (productLine: string) => void}) => {
           <NumberInput
             style={{ width: "49%" }}
             label="Price"
+            suffix="đ"
+            defaultValue={0}
             value={price}
-            onChange={setPrice}
+            min={0}
+            onChange={(e) => {
+              handleErrorInputPrice(e.toString());
+              setPrice(e);
+            }}
+            error={errorHandlePrice}
           />
           <NumberInput
             style={{ width: "49%" }}
             label="Discount"
             value={discount}
-            onChange={setDiscount}
+            suffix="đ"
+            defaultValue={0}
+            min={0}
+            onChange={(e) => {
+              handleErrorInputDiscount(e.toString());
+              setDiscount(e);
+            }}
+            error={errorHandleDiscount}
           />
         </div>
         <NativeSelect
@@ -367,16 +446,6 @@ const FromProduct = (props: {setNewProduct: (productLine: string) => void}) => {
           mt="md"
           onClick={async () => {
             await handleAddProduct();
-            notifications.show({
-              withCloseButton: true,
-              autoClose: 1500,
-              message: "Thêm sản phẩm thành công",
-              color: "teal",
-              icon: <IconCheck />,
-              className: "my-notification-class",
-              loading: false,
-            });
-            modals.closeAll();
           }}
         >
           Add Product

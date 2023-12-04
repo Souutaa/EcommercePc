@@ -319,7 +319,7 @@ body {
   display: flex;
 }
 
-.breadcrumbs > * {
+.breadcrumbs>* {
   display: inline-block;
   margin-right: 10px;
 }
@@ -820,6 +820,7 @@ footer {
   height: 840px;
   margin-bottom: 72px;
 }
+
 .img-product {
   width: 100%;
   height: 100%;
@@ -941,6 +942,7 @@ footer {
   align-items: flex-start;
   margin-bottom: 16px;
 }
+
 .product-detail-warranty {
   font-size: 30px;
   margin-bottom: 12px;
@@ -1416,11 +1418,16 @@ footer {
   line-height: 125%;
 }
 
+.productsearch-content {
+  width: 100%;
+  margin: 0 20px;
+}
+
 .productsearch-info {
   display: flex;
   gap: 10px;
   align-self: stretch;
-  margin-top: 90px;
+  margin-top: 70px;
   justify-content: space-between;
 }
 
@@ -1432,6 +1439,19 @@ footer {
   font-style: normal;
   font-weight: 700;
   line-height: 125%;
+}
+
+.productsearch-img {
+  width: 240px;
+  height: 160px;
+}
+
+.productsearch-text {
+  display: block;
+  width: 100%;
+  height: auto;
+  text-align: left;
+  margin-top: 10px;
 }
 
 .pagination-center {
@@ -1627,10 +1647,8 @@ p {
   padding: 2rem;
   gap: 3rem;
   display: grid;
-  grid-template-columns: repeat(
-    8,
-    [col-start] minmax(min-content, 1fr) [col-end]
-  );
+  grid-template-columns: repeat(8,
+      [col-start] minmax(min-content, 1fr) [col-end]);
 }
 
 .infoorder-item-name {
@@ -1715,6 +1733,7 @@ p {
 .change-pass-content {
   padding: 30px 350px;
 }
+
 .pin-center {
   display: flex;
   align-items: center;
@@ -1929,6 +1948,9 @@ tr:hover {
 }
 
 .bg-success {
+  display: block;
+  width: 100px;
+  text-align: center;
   background-color: #0acf97 !important;
   color: var(--white-color);
   border-radius: 5px;
@@ -1999,6 +2021,7 @@ td {
 .text-hover:hover {
   background-color: #f1f3fa;
 }
+
 /*Order admin*/
 .order-total-admin {
   width: 300px;

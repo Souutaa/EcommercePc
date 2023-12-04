@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconLoader, IconX } from "@tabler/icons-react";
+
 function ForgotPassword() {
   const navigate = useNavigate();
   const [errorHandleInputMail, setErrorHandleInputMail] = useState("");
