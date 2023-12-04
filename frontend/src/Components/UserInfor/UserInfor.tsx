@@ -1,8 +1,7 @@
-import { Button, Divider, Menu, rem } from "@mantine/core";
-import { useAuthContext } from "../../Context/AuthContext";
+import { rem } from "@mantine/core";
+import { IconArrowBarRight } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
-import { IconArrowBarRight, IconUser } from "@tabler/icons-react";
-import Seaparator from "../Seaparator/Seaparator";
+import { useAuthContext } from "../../Context/AuthContext";
 
 function UserInfor() {
   const authContext = useAuthContext();
@@ -19,27 +18,13 @@ function UserInfor() {
             }}
             to={"/admin"}
           >
-            <Menu.Item
-              leftSection={
-                <IconUser
-                  style={{
-                    width: rem(14),
-                    height: rem(14),
-                  }}
-                />
-              }
-              rightSection={
-                <IconArrowBarRight
-                  style={{
-                    width: rem(14),
-                    height: rem(14),
-                  }}
-                />
-              }
-              style={{ fontSize: "16px" }}
-            >
-              Đi tới trang admin
-            </Menu.Item>
+            Đi tới trang admin
+            <IconArrowBarRight
+              style={{
+                width: rem(14),
+                height: rem(14),
+              }}
+            />
           </Link>
         ) : null}
       </div>

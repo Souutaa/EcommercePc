@@ -64,9 +64,8 @@ const Header = () => {
                 <Menu.Dropdown>
                   <UserInfor />
                   <Seaparator />
-                  {authContext.auth.aud === "USER" ? <UserOder /> : null}
+                  <UserOder />
                   <Seaparator />
-
                   <Menu.Item
                     color="red"
                     leftSection={
