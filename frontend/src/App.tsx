@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import "./App.css";
 import OderUser from "./Pages/OrderUser/OrderUser";
 import { PATHS } from "./Constants/path";
@@ -31,8 +37,13 @@ import AddNewInfo from "./Pages/InfoUser/AddNewInfo";
 import ChangePassUser from "./Pages/ChangePassUser/ChangePassUser";
 import ChangeMailUser from "./Pages/ChangeMailUser/ChangeMailUser";
 import WarrantyPeriodsAdmin from "./PagesAdmin/WarrantyPeriods";
+import { useAuthContext } from "./Context/AuthContext";
+import { useEffect } from "react";
 
 function App() {
+  const useContext = useAuthContext();
+  useEffect(() => {}, [useContext.auth.aud]);
+  console.log(useContext.auth.aud);
   return (
     <div className="App">
       <BrowserRouter>
@@ -83,19 +94,21 @@ function App() {
             <Route path={PATHS.CHANGEPASSUSER} element={<ChangePassUser />} />
             <Route path={PATHS.CHANGEMAILUSER} element={<ChangeMailUser />} />
           </Route>
-          <Route path="/admin" element={<AdminLayouts />}>
-            <Route index element={<Dashborad />} />
-            <Route path="/admin/product" element={<ProductAdmin />} />
-            <Route path="/admin/brands" element={<BrandAdmin />} />
-            <Route path="/admin/category" element={<CategoriesAdmin />} />
-            <Route path="/admin/order" element={<OrderAdmin />} />
-            <Route path="/admin/user" element={<UserAdmin />} />
-            <Route path="/admin/role" element={<RolesAdmin />} />
-            <Route
-              path="/admin/warranty-periods"
-              element={<WarrantyPeriodsAdmin />}
-            />
-          </Route>
+          {useContext.auth.aud === "ADMIN" ? (
+            <Route path="/admin" element={<AdminLayouts />}>
+              <Route index element={<Dashborad />} />
+              <Route path="/admin/product" element={<ProductAdmin />} />
+              <Route path="/admin/brands" element={<BrandAdmin />} />
+              <Route path="/admin/category" element={<CategoriesAdmin />} />
+              <Route path="/admin/order" element={<OrderAdmin />} />
+              <Route path="/admin/user" element={<UserAdmin />} />
+              <Route path="/admin/role" element={<RolesAdmin />} />
+              <Route
+                path="/admin/warranty-periods"
+                element={<WarrantyPeriodsAdmin />}
+              />
+            </Route>
+          ) : null}
         </Routes>
       </BrowserRouter>
     </div>

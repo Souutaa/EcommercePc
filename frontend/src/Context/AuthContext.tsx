@@ -6,7 +6,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export interface Auth {
-  aud: string[] | string | null;
+  aud: string | null;
   sub: string | null;
   iat: string | number | null;
   exp: string | number | null;
