@@ -36,6 +36,7 @@ root.render(
             position: "fixed",
             top: "2%",
             right: "2%",
+            marginBottom: "0.5rem",
             zIndex: 9999999,
           }}
         />

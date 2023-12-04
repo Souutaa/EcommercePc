@@ -3,9 +3,35 @@ import SeaparatorTable from "../Seaparator/SeaparatorTable";
 import ButtonChangeOrder from "../Button/button-change-order";
 import { AdminOrder } from "../../PagesAdmin/OrderAdmin";
 import formatPrice from "../../Helper/formatPrice";
+import { Button } from "@mantine/core";
 
 const OrderAdminStatus = (props: { order: AdminOrder }) => {
   const { order } = props;
+
+  let badgeColor = "dark";
+  switch (order.status) {
+    case "PENDING":
+      badgeColor = "yellow";
+      break;
+    case "CONFIRMED":
+      badgeColor = "lime";
+      break;
+    case "DELIVERING":
+      badgeColor = "blue";
+      break;
+    case "DELIVERED":
+      badgeColor = "grape";
+      break;
+    case "SUCCESS":
+      badgeColor = "teal";
+      break;
+    case "CANCELED":
+      badgeColor = "red";
+      break;
+    default:
+      badgeColor = "dark";
+  }
+
   return (
     <tbody>
       <tr>
@@ -14,10 +40,10 @@ const OrderAdminStatus = (props: { order: AdminOrder }) => {
         <td className="pd-20 text-left">{order.username}</td>
         <td className="pd-20 text-left">{formatPrice(order.total)}</td>
         <td className="pd-20 text-left">
-          <span className="badge bg-success">{order.status}</span>
+          <Button style={{cursor: "default"}} color={badgeColor}>{order.status}</Button>
         </td>
         <td className="table-action pd-20 text-left">
-          <ButtonChangeOrder orderId={order.id}/>
+          <ButtonChangeOrder orderId={order.id} />
         </td>
       </tr>
 

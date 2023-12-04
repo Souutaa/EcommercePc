@@ -97,7 +97,7 @@ public class CustomExceptionHandler {
   @ExceptionHandler(DataIntegrityViolationException.class)
   public ProblemDetail handleConflictException(RuntimeException ex) {
     ProblemDetail errorDetail = null;
-    errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Conflicted data, possible record duplication");
+    errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
     return errorDetail;
   }
 

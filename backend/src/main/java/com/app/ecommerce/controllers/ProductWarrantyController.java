@@ -41,6 +41,11 @@ public class ProductWarrantyController {
     return ResponseEntity.ok(this.productWarrantyServices.getAllProductWarrantiesByProductId(productId));
   }
 
+  @GetMapping(value = "/all")
+  public ResponseEntity<List<ProductWarranty>> getAllProductWarranties(@RequestParam("productId") int productId) {
+    return ResponseEntity.ok(this.productWarrantyServices.getWarrantyPeriodsByProductId(productId));
+  }
+
   @PostMapping(value = "/active-warranty")
   public ResponseEntity<ProductWarranty> activeProductWarranty(@RequestParam("productLine") String productLine)
       throws NumberFormatException, SQLException {

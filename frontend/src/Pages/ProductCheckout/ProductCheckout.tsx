@@ -19,9 +19,24 @@ import Total from "../../Components/Total/Total";
 import { PATHS } from "../../Constants/path";
 import { useShopingContext } from "../../Context/ShoppingContext";
 import { UserInformation } from "../InfoUser/InfoUser";
+import { useAuthContext } from "../../Context/AuthContext";
 
 function ProductCheckout() {
-  const [userInfo, setUserInfo] = useState<UserInformation | null>();
+  const auth = useAuthContext();
+  const [userInfo, setUserInfo] = useState<UserInformation>({
+    username: auth.auth.sub!,
+    accountDetail: {
+      city: "",
+      default: false,
+      detailedAddress: "",
+      district: "",
+      email: "",
+      firstName: "",
+      id: -1,
+      lastName: "",
+      phoneNumber: "",
+    },
+  });
   const [address, setAddress] = useState<UserInformation[] | null>();
   const [isAddingAddress, setIsAddingAddress] = useState(false);
   const [note, setNote] = useState("");
@@ -34,19 +49,22 @@ function ProductCheckout() {
           "http://127.0.0.1:8080/userDetail/all"
         );
         setAddress(response.data);
-        setUserInfo(
-          response.data.find(
-            (item: { accountDetail: { default: boolean } }) => {
-              return item.accountDetail.default === true;
-            }
-          )
-        );
+        if (response.data.length > 0) {
+          setUserInfo(
+            response.data.find(
+              (item: { accountDetail: { default: boolean } }) => {
+                return item.accountDetail.default === true;
+              }
+            )
+          );
+        }
       } catch {}
     };
     getAllUserInfo();
   }, []);
   const handleSubmitForm = async (e: FormEvent) => {
     e.preventDefault();
+    console.log(address?.length)
     await axios.post("http://127.0.0.1:8080/order/create", {
       firstName: userInfo?.accountDetail.firstName,
       lastName: userInfo?.accountDetail.lastName,
@@ -65,7 +83,7 @@ function ProductCheckout() {
       }),
     });
     if (userInfo?.accountDetail.id === -1) {
-      await axios.post("http://127.0.0.1:8080/userDetail/create", {
+      const response = await axios.post("http://127.0.0.1:8080/userDetail/create", {
         firstName: userInfo?.accountDetail.firstName,
         lastName: userInfo?.accountDetail.lastName,
         phoneNumber: userInfo?.accountDetail.phoneNumber,
@@ -74,6 +92,9 @@ function ProductCheckout() {
         district: userInfo?.accountDetail.district,
         detailedAddress: userInfo?.accountDetail.detailedAddress,
       });
+      if (address?.length === 0) {
+        await axios.patch(`http://127.0.0.1:8080/userDetail/${response.data.id}/default`);
+      }
     }
     cartContext.clearCart();
     return navigate(PATHS.ORDERED);
@@ -87,82 +108,86 @@ function ProductCheckout() {
         </div>
         <div className="productcheckout-body">
           <div className="productcheckout-left">
-            <div style={{ width: "100%", display: "flex", columnGap: "5%" }}>
-              <div style={{ flex: "1 1 50%" }}>
-                <span className="productcheckput-text">Địa chỉ:</span>
-                <NativeSelect
-                  style={{ width: "100%" }}
-                  placeholder="Native select"
-                  data={address?.map((addr): ComboboxItem => {
-                    return {
-                      value: addr.accountDetail.id?.toString() ?? "",
-                      label: `${addr.accountDetail.detailedAddress} ${
-                        addr.accountDetail.district
-                      } ${addr.accountDetail.city}${
-                        addr.accountDetail.default === true ? " - Mặc định" : ""
-                      }`,
-                    };
-                  })}
-                  disabled={isAddingAddress ? true : false}
-                  onChange={(e) =>
-                    setUserInfo(
-                      address?.find(
-                        (addr) => +addr.accountDetail.id === +e.target.value
+            {address && address.length > 0 && (
+              <div style={{ width: "100%", display: "flex", columnGap: "5%" }}>
+                <div style={{ flex: "1 1 50%" }}>
+                  <span className="productcheckput-text">Địa chỉ:</span>
+                  <NativeSelect
+                    style={{ width: "100%" }}
+                    placeholder="Native select"
+                    data={address?.map((addr): ComboboxItem => {
+                      return {
+                        value: addr.accountDetail.id?.toString() ?? "",
+                        label: `${addr.accountDetail.detailedAddress} ${
+                          addr.accountDetail.district
+                        } ${addr.accountDetail.city}${
+                          addr.accountDetail.default === true
+                            ? " - Mặc định"
+                            : ""
+                        }`,
+                      };
+                    })}
+                    disabled={isAddingAddress ? true : false}
+                    onChange={(e) =>
+                      setUserInfo(
+                        address.find(
+                          (addr) => +addr.accountDetail.id === +e.target.value
+                        )!
                       )
-                    )
-                  }
-                />
+                    }
+                  />
+                </div>
+                <Flex>
+                  {!isAddingAddress && (
+                    <Btn
+                      maintine="a"
+                      customStyle={{
+                        alignSelf: "flex-end",
+                        justifySelf: "flex-end",
+                      }}
+                      onClick={() => {
+                        setIsAddingAddress(true);
+                        setUserInfo((prevState: any) => {
+                          if (prevState) {
+                            let newState = { ...prevState };
+                            newState.accountDetail = {
+                              city: "",
+                              default: false,
+                              detailedAddress: "",
+                              district: "",
+                              email: "",
+                              firstName: "",
+                              id: -1,
+                              lastName: "",
+                              phoneNumber: "",
+                            };
+                            return newState;
+                          }
+                        });
+                      }}
+                    >
+                      Thêm địa chỉ mới
+                    </Btn>
+                  )}
+                  {isAddingAddress && (
+                    <Btn
+                      maintine="a"
+                      customStyle={{
+                        alignSelf: "flex-end",
+                        justifySelf: "flex-end",
+                      }}
+                      color="#f03a17"
+                      onClick={() => {
+                        setIsAddingAddress(false);
+                        if (address) setUserInfo(address[0]);
+                      }}
+                    >
+                      Hủy
+                    </Btn>
+                  )}
+                </Flex>
               </div>
-              <Flex>
-                {!isAddingAddress && (
-                  <Btn
-                    maintine="a"
-                    customStyle={{
-                      alignSelf: "flex-end",
-                      justifySelf: "flex-end",
-                    }}
-                    onClick={() => {
-                      setIsAddingAddress(true);
-                      setUserInfo((prevState) => {
-                        if (prevState) {
-                          let newState = { ...prevState };
-                          newState.accountDetail = {
-                            city: "",
-                            default: false,
-                            detailedAddress: "",
-                            district: "",
-                            email: "",
-                            firstName: "",
-                            id: -1,
-                            lastName: "",
-                            phoneNumber: "",
-                          };
-                          return newState;
-                        }
-                      });
-                    }}
-                  >
-                    Thêm địa chỉ mới
-                  </Btn>
-                )}
-                {isAddingAddress && (
-                  <Btn
-                    maintine="a"
-                    customStyle={{
-                      alignSelf: "flex-end",
-                      justifySelf: "flex-end",
-                    }}
-                    color="#f03a17"
-                    onClick={() => {
-                      setIsAddingAddress(false);
-                      if (address) setUserInfo(address[0]);
-                    }}
-                  >
-                    Hủy
-                  </Btn>
-                )}
-              </Flex>
-            </div>
+            )}
             <form action="" onSubmit={handleSubmitForm}>
               <div className="productcheckout-grid">
                 <div className="productcheckout-grid-input">
@@ -204,14 +229,16 @@ function ProductCheckout() {
                   </Input.Wrapper>
                 </div>
               </div>
-              <InputGrib4
-                provinceCode={userInfo?.accountDetail.city ?? ""}
-                districtCode={userInfo?.accountDetail.district ?? ""}
-                phoneNumber={userInfo?.accountDetail.phoneNumber ?? ""}
-                userInfo={userInfo ?? undefined}
-                setUserInfo={setUserInfo}
-                isEditing={true}
-              />
+              {userInfo && (
+                <InputGrib4
+                  provinceCode={userInfo.accountDetail.city}
+                  districtCode={userInfo.accountDetail.district}
+                  phoneNumber={userInfo.accountDetail.phoneNumber}
+                  setUserInfo={setUserInfo}
+                  userInfo={userInfo}
+                  isEditing={true}
+                />
+              )}
               <div className="productcheckout-input">
                 <span className="productcheckput-text">Địa chỉ chi tiết:</span>
                 <Input.Wrapper>

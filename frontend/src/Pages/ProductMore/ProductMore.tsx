@@ -38,7 +38,6 @@ function ProductMore() {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          // "http://localhost:8080/category/allOfCategory"
           `http://localhost:8080/category/${name}`
         );
         setCategory(res.data);
@@ -138,7 +137,6 @@ function ProductMore() {
   };
 
   const numberOfPageComboBox = (e: ProductItem[]) => {
-    console.log("bao nehiu a ", e);
     if (e.length) setNumberOfPage(Math.ceil(e.length / infoPerPage));
   };
   const valueLabelFormat = useDebounce<number[]>(

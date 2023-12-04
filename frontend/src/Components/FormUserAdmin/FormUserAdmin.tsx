@@ -1,8 +1,7 @@
 import { Button, Input, PasswordInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { modals } from "@mantine/modals";
 import { notifications } from "@mantine/notifications";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { IconChecklist, IconLoader, IconX } from "@tabler/icons-react";
 import axios from "axios";
 import { useState } from "react";
 
@@ -56,12 +55,62 @@ const FormUserAdmin = () => {
     email: email,
   };
 
-  // const handleCreateUser = async () => {
-  //   const response = await axios.post(
-  //     "http://127.0.0.1:8080/auth/register",
-  //     data
-  //   );
-  // };
+  const handleCreateUser = async () => {
+    try {
+      notifications.show({
+        withCloseButton: true,
+        autoClose: 1500,
+        message: "Vui lòng đợi",
+        color: "teal",
+        icon: <IconLoader />,
+        className: "my-notification-class",
+        loading: true,
+      });
+      const response = await axios.post(
+        "http://127.0.0.1:8080/auth/register",
+        data
+      );
+      setTimeout(() => {
+        notifications.show({
+          withCloseButton: true,
+          autoClose: 1500,
+          message: "Đăng kí thành công!",
+          color: "green",
+          icon: <IconChecklist />,
+          className: "my-notification-class",
+          loading: false,
+          onClose: () => {
+            notifications.clean();
+          },
+        });
+      }, 1000);
+    } catch (err: any) {
+      notifications.clean();
+      if (err.response.data.detail)
+        notifications.show({
+          withCloseButton: true,
+          autoClose: 3000,
+          message: err.response.data.detail,
+          color: "red",
+          icon: <IconX />,
+          className: "my-notification-class",
+          loading: false,
+        });
+      else {
+        Object.keys(err.response.data).forEach((key) => {
+          notifications.show({
+            withCloseButton: true,
+            autoClose: 3000,
+            message: key + ": " + err.response.data[key],
+            color: "red",
+            icon: <IconX />,
+            className: "my-notification-class",
+            loading: false,
+          });
+        })
+      }
+    }
+  };
   return (
     <div>
       <div className="modal-body">
@@ -124,36 +173,10 @@ const FormUserAdmin = () => {
         <Button
           mt="md"
           onClick={async () => {
-            await axios
-              .post("http://127.0.0.1:8080/author/register", data)
-              .then((req) => {
-                notifications.show({
-                  withCloseButton: true,
-                  autoClose: 1500,
-                  message: `Thêm thành công tài khoản: ${username} `,
-                  color: "teal",
-                  icon: <IconCheck />,
-                  className: "my-notification-class",
-                  loading: false,
-                });
-              })
-              .catch((e) => {
-                notifications.show({
-                  withCloseButton: true,
-                  autoClose: 1500,
-                  message: `Thêm không thành công tài khoản`,
-                  color: "red",
-                  icon: <IconX />,
-                  className: "my-notification-class",
-                  loading: false,
-                });
-              });
-
-            modals.closeAll();
-            // await handleCreateUser();
+            handleCreateUser();
           }}
         >
-          Đăng ký
+          Tạo
         </Button>
       </div>
     </div>

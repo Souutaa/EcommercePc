@@ -26,6 +26,9 @@ function Product(props: { products: ProductItems[] }) {
   return (
     <Flex gap={'md'} wrap={'wrap'}>
       {products.map((e) => {
+        // if (e.stock === 0) {
+        //   return <></>
+        // }
         return (
           <div key={e.id} className="product-item"  style={{flex: "1 1 25%"}}>
             <Link

@@ -65,7 +65,19 @@ public class UserController {
         }
     }
 
-    // @GetMapping(value = "/{username}")
+    @GetMapping(value = "/{username}")
+    public @ResponseBody ResponseEntity<Object> findAccount(@PathVariable String username) {
+        try {
+            Account user = accountServices.getAccountByUserName(username);
+            SimpleAccountDTO simpleUser = SimpleAccountDTO.builder().id(user.getId()).username(user.getUsername())
+                    .role(user.getRole()).createdAt(user.getCreatedAt()).deletedAt(user.getDeletedAt())
+                    .email(user.getEmail()).build();
+            return new ResponseEntity<>(simpleUser, HttpStatus.OK);
+        } catch (ResourceNotFoundException ex) {
+            throw new ResourceNotFoundException("user not found");
+        }
+    }
+
     @GetMapping(value = "/getAccount")
     public @ResponseBody ResponseEntity<Object> getAccount(@RequestHeader("Authorization") String authorization) {
         try {
