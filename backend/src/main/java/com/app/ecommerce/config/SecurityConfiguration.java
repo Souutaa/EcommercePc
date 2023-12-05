@@ -40,7 +40,7 @@ public class SecurityConfiguration {
         .authorizeHttpRequests()
         .requestMatchers("/user/*/updatepassword", "/auth/**", "/brand/**", "/category/**", "/product/**", "/product-info/**", "/product-warranty/**", "/mail/**", "/warranty-period/**").permitAll()
         .requestMatchers("/order/getOrder", "/order/update-status", "/order/getOrderDetail", "/order/create", "/orderinformation/**", "/user/**", "/userDetail/**").authenticated()
-        .requestMatchers("/order/export/excel", "/order/getMonthlyRevenue", "/order/getTrustedBuyers", "/order/getAllOrder", "/brand/create", 
+        .requestMatchers("/order/export/excel", "/order/getMonthlyRevenue", "/order/getTrustedBuyers", "/order/getTopEmployees", "/order/getAllOrder", "/brand/create", 
         "/brand/*/active", "/brand/delete", "/brand/*/update",
         "/category/create", "/category/*/update", "/category/*/activeCategory", "/category/deleteCategory",
         "/product/create", "/product/update", "/product/delete", "/product/undo-delete", "/product/getTopSelling",
@@ -49,7 +49,7 @@ public class SecurityConfiguration {
         "/user/update-role", "/user/delete", "/user/*/active",
         "/warranty-period/create", "/warranty-period/*/update", "/warranty-period/delete", "/warranty-period/*/active"
         ).hasAuthority("ADMIN")
-        .requestMatchers("/order/export/excel", "/order/getMonthlyRevenue", "/order/getTrustedBuyers", "/order/getAllOrder", "/brand/create", 
+        .requestMatchers("/order/export/excel", "/order/getMonthlyRevenue", "/order/getTrustedBuyers", "/order/getTopEmployees", "/order/getAllOrder", "/brand/create", 
         "/brand/*/active", "/brand/delete", "/brand/*/update",
         "/category/create", "/category/*/update", "/category/*/activeCategory", "/category/deleteCategory",
         "/product/create", "/product/update", "/product/delete", "/product/undo-delete", "/product/getTopSelling",

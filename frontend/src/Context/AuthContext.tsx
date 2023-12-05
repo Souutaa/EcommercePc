@@ -89,6 +89,18 @@ const AuthProvider = ({ children }: ChildrenProps) => {
         }
       })
       .catch((e) => {
+        if (e.response.data.status === 401) {
+          notifications.show({
+            withCloseButton: true,
+            autoClose: 2500,
+            message: e.response.data.detail,
+            color: "red",
+            icon: <IconX />,
+            className: "my-notification-class",
+            loading: false,
+          });
+          return
+        }
         notifications.show({
           withCloseButton: true,
           autoClose: 2500,

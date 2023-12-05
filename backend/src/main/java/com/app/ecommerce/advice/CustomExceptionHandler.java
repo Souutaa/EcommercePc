@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.app.ecommerce.exceptions.UnauthorizedException;
+
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.persistence.EntityExistsException;
@@ -122,6 +124,14 @@ public class CustomExceptionHandler {
   public ProblemDetail handleMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
     ProblemDetail errorDetail = null;
     errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+    return errorDetail;
+  }
+
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  @ExceptionHandler(UnauthorizedException.class)
+  public ProblemDetail handleUnauthorizedException(UnauthorizedException ex) {
+    ProblemDetail errorDetail = null;
+    errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
     return errorDetail;
   }
 

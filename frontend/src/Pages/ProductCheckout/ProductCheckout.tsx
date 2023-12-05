@@ -20,9 +20,12 @@ import { PATHS } from "../../Constants/path";
 import { useShopingContext } from "../../Context/ShoppingContext";
 import { UserInformation } from "../InfoUser/InfoUser";
 import { useAuthContext } from "../../Context/AuthContext";
+import { IconCheck, IconLoader } from "@tabler/icons-react";
+import { notifications } from "@mantine/notifications";
 
 function ProductCheckout() {
   const auth = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInformation>({
     username: auth.auth.sub!,
     accountDetail: {
@@ -64,6 +67,16 @@ function ProductCheckout() {
   }, []);
   const handleSubmitForm = async (e: FormEvent) => {
     e.preventDefault();
+    setIsLoading(true)
+    notifications.show({
+      withCloseButton: true,
+      autoClose: 3000,
+      message: `Đang xử lý`,
+      color: "teal",
+      icon: <IconLoader />,
+      className: "my-notification-class",
+      loading: true,
+    });
     await axios.post("http://127.0.0.1:8080/order/create", {
       firstName: userInfo?.accountDetail.firstName,
       lastName: userInfo?.accountDetail.lastName,
@@ -95,8 +108,18 @@ function ProductCheckout() {
         await axios.patch(`http://127.0.0.1:8080/userDetail/${response.data.id}/default`);
       }
     }
-    cartContext.clearCart();
-    return navigate(PATHS.ORDERED);
+    notifications.show({
+      withCloseButton: true,
+      autoClose: 1000,
+      message: `Đặt hàng thành công!`,
+      color: "teal",
+      icon: <IconCheck />,
+      className: "my-notification-class",
+      onClose: () => {
+        cartContext.clearCart();
+        return navigate(PATHS.ORDERED);
+      }
+    });
   };
   return (
     <>
@@ -283,11 +306,11 @@ function ProductCheckout() {
               <Divider my="sm" />
               <div className="productcheckout-button">
                 <Link to={PATHS.CART}>
-                  <Btn maintine="a" variant="default" color="#f03a17">
+                  <Btn maintine="a" variant="default" color="#f03a17" disabled = {isLoading ? true : false}>
                     Sửa sản phẩm
                   </Btn>
                 </Link>
-                <Btn fullWidth type="submit" maintine="a">
+                <Btn fullWidth type="submit" maintine="a" disabled = {isLoading ? true : false}>
                   Đặt hàng
                 </Btn>
               </div>

@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-import ButtonDelete from "../Button/button-delete";
-import SeaparatorTable from "../Seaparator/SeaparatorTable";
-import ButtonChangeUser from "../Button/button-change-user";
-import { User } from "../../PagesAdmin/UserAdmin";
 import { Switch } from "@mantine/core";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { User } from "../../PagesAdmin/UserAdmin";
+import ButtonChangeUser from "../Button/button-change-user";
+import SeaparatorTable from "../Seaparator/SeaparatorTable";
 
 const UserAdminStatus = (props: { user: User }) => {
   const { user } = props;
-  const [checked, setChecked] = useState(user.deletedAt === null);
+  const [checked, setChecked] = useState(true);
+
+  useEffect(() => {
+    setChecked(user.deletedAt === null)
+  }, [user])
 
   const handleUnlockUser = async () => {
     const response = await axios.patch(

@@ -15,6 +15,8 @@ import com.app.ecommerce.DTO.order.CreateOrderRequest;
 import com.app.ecommerce.DTO.order.MonthlyRevenue;
 import com.app.ecommerce.DTO.order.OrderDetailResponse;
 import com.app.ecommerce.DTO.order.OrderItemDTO;
+import com.app.ecommerce.DTO.order.TopEmployee;
+import com.app.ecommerce.DTO.order.TopEmployeeDTO;
 import com.app.ecommerce.DTO.order.TrustedBuyer;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
@@ -174,5 +176,18 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
   @Override
   public List<TrustedBuyer> getTrustedBuyers() {
     return this.accountOrderRepository.getTrustedBuyers();
+  }
+
+  @Override
+  public List<TopEmployeeDTO> getTopEmployees() {
+    List<TopEmployee> topEmployees = this.accountOrderRepository.getTopEmployees();
+    List<TopEmployeeDTO> topEmployeesResponse = new ArrayList<TopEmployeeDTO>();
+    for (TopEmployee employee : topEmployees) {
+      topEmployeesResponse
+          .add(TopEmployeeDTO.builder().employeeId(employee.getEmployId())
+              .employeeName(this.accountRepository.findById(employee.getEmployId()).get().getUsername())
+              .totalConfirmedOrder(employee.getTotalConfirmedOrder()).subTotalOrder(employee.getSubTotalOrder()).build());
+    }
+    return topEmployeesResponse;
   }
 }

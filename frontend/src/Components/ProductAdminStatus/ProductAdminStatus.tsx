@@ -7,7 +7,7 @@ import FormChange from "../FormChange/FormChange";
 import FormView from "../FormView/FormView";
 import SeaparatorTable from "../Seaparator/SeaparatorTable";
 import { Switch } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import FormProductWarranty from "../FormProductWarranty/FormProductWarranty";
 
@@ -18,7 +18,11 @@ interface Props {
 const ProductAdminStatus = (props: Props) => {
   const { product } = props;
 
-  const [checked, setChecked] = useState(product.deletedAt === null);
+  const [checked, setChecked] = useState(true);
+
+  useEffect(() => {
+    setChecked(product.deletedAt === null);
+  }, [product])
 
   const handleUnlockProduct = async () => {
     const response = await axios.patch(

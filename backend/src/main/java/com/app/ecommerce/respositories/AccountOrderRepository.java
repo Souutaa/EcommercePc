@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.app.ecommerce.DTO.order.MonthlyRevenue;
+import com.app.ecommerce.DTO.order.TopEmployee;
 import com.app.ecommerce.DTO.order.TrustedBuyer;
 import com.app.ecommerce.models.AccountOrder;
 
@@ -32,4 +33,13 @@ public interface AccountOrderRepository extends JpaRepository<AccountOrder, Inte
                         "ORDER BY totalOrder DESC, total DESC " + //
                         "LIMIT 5", nativeQuery = true)
         List<TrustedBuyer> getTrustedBuyers();
+
+        @Query(value = "SELECT COUNT(confirm_by_id) as totalConfirmedOrder, confirm_by_id as employId, SUM(total) as subTotalOrder " + //
+                        "FROM account_order  " + //
+                        "WHERE status != 'PENDING' " + //
+                        "and status != 'CANCELED' " + //
+                        "GROUP BY confirm_by_id " + //                        
+                        "ORDER BY totalConfirmedOrder DESC, subTotalOrder DESC " + //
+                        "LIMIT 5", nativeQuery = true)
+        List<TopEmployee> getTopEmployees();
 }

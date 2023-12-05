@@ -32,7 +32,6 @@ export type Category = {
 
 function Content() {
   const [category, setCategory] = useState<Category[]>([]);
-
   useEffect(() => {
     console.log("get brands data from api");
     const fetchProducts = async () => {

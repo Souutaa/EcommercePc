@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.ecommerce.DTO.order.CreateOrderRequest;
 import com.app.ecommerce.DTO.order.MonthlyRevenue;
 import com.app.ecommerce.DTO.order.OrderDetailResponse;
+import com.app.ecommerce.DTO.order.TopEmployeeDTO;
 import com.app.ecommerce.DTO.order.TrustedBuyer;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.config.JwtService;
@@ -122,5 +123,10 @@ public class AccountOrderController {
   @GetMapping("/getTrustedBuyers")
   public ResponseEntity<List<TrustedBuyer>> getTrustedBuyers() {
     return ResponseEntity.ok(this.orderServices.getTrustedBuyers());
+  }
+
+  @GetMapping("/getTopEmployees")
+  public ResponseEntity<List<TopEmployeeDTO>> getTopEmployees() {
+    return ResponseEntity.ok(this.orderServices.getTopEmployees());
   }
 }

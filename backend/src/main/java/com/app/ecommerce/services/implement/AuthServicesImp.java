@@ -13,6 +13,7 @@ import com.app.ecommerce.DTO.auth.AuthenticationRequest;
 import com.app.ecommerce.DTO.auth.AuthenticationResponse;
 import com.app.ecommerce.DTO.auth.RegisterRequest;
 import com.app.ecommerce.config.JwtService;
+import com.app.ecommerce.exceptions.UnauthorizedException;
 import com.app.ecommerce.models.Account;
 import com.app.ecommerce.models.Role;
 import com.app.ecommerce.respositories.AccountRepository;
@@ -40,11 +41,11 @@ public class AuthServicesImp implements IAuthServices {
         .password(passwordEncoder.encode(request.getPassword()))
         .role(Role.USER)
         .build();
-        try {
-          repository.save(account);
-        } catch(DataIntegrityViolationException ex) {
-          throw new DataIntegrityViolationException("user with current email is already exist");
-        }
+    try {
+      repository.save(account);
+    } catch (DataIntegrityViolationException ex) {
+      throw new DataIntegrityViolationException("user with current email is already exist");
+    }
     var jwtToken = jwtService.generateToken(account);
     return AuthenticationResponse.builder()
         .token(jwtToken)
@@ -57,6 +58,10 @@ public class AuthServicesImp implements IAuthServices {
             request.getUsername(),
             request.getPassword()));
     var user = repository.findByUsername(request.getUsername()).orElseThrow();
+    if (user.getDeletedAt() != null) {
+      throw new UnauthorizedException(
+          "Current account has been locked, please contact web admin for further instruction");
+    }
     var jwtToken = jwtService.generateToken(user);
     return AuthenticationResponse.builder()
         .token(jwtToken)

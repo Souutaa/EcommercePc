@@ -9,6 +9,7 @@ import Cell from "../Components/Chart/Cell";
 import ProductSelling from "../Components/ProductSelling/ProductSelling";
 import Seaparator from "../Components/Seaparator/Seaparator";
 import TrustedCustomer from "../Components/TopUser/TopUser";
+import EmployeeOfTheMonth from "../Components/EmployeeOfTheMonth/EmployeeOfTheMonth";
 
 export interface TopProduct {
   createdAt: string;
@@ -30,11 +31,19 @@ export interface TopUser {
   username: string;
 }
 
+export interface TopEmployee {
+  employeeId: number;
+  employeeName: string;
+  totalConfirmedOrder: number;
+  subTotalOrder: number;
+}
+
 const Dashborad = () => {
   const [value, setValue] = useState<Date | null>(new Date());
   const [topProducts, setTopProducts] = useState<TopProduct[]>([]);
   const [monthlyRevenue, setMonthlyRevenue] = useState<MonthlyRevenue[]>([]);
   const [topUser, setTopUser] = useState<TopUser[]>([]);
+  const [topEmployee, setTopEmployee] = useState<TopEmployee[]>([]);
   const icon = (
     <IconCalendar style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
   );
@@ -79,11 +88,19 @@ const Dashborad = () => {
     setTopUser(response.data);
   }, []);
 
+  const fetchTopEmployee = useCallback(async () => {
+    const response = await axios.get(
+      "http://127.0.0.1:8080/order/getTopEmployees"
+    );
+    setTopEmployee(response.data);
+  }, []);
+
   useEffect(() => {
     fetchMonthlyRevenue();
     fetchTopProduct();
     fetchTopUser();
-  }, [fetchTopProduct, fetchMonthlyRevenue, fetchTopUser]);
+    fetchTopEmployee();
+  }, [fetchTopProduct, fetchMonthlyRevenue, fetchTopUser, fetchTopEmployee]);
 
   return (
     <>
@@ -127,6 +144,17 @@ const Dashborad = () => {
           {topUser.map((user) => (
             <div key={user.username}>
               <TrustedCustomer user={user} />
+              <Seaparator />
+            </div>
+          ))}
+        </div>
+      </Flex>
+      <Flex style={{ paddingTop: "1rem" }}>
+        <div className="order-total">
+          <h4 className="text-title">Top employees</h4>
+          {topEmployee.map((employee) => (
+            <div key={employee.employeeId}>
+              <EmployeeOfTheMonth employee={employee} />
               <Seaparator />
             </div>
           ))}
