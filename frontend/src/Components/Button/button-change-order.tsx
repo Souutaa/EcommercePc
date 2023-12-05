@@ -9,7 +9,7 @@ const ButtonChangeOrder = (props: {orderId: number}) => {
       onClick={() => {
         modals.open({
           size: "xl",
-          title: "Các sản phẩm từ hóa đơn # 18",
+          title: `Các sản phẩm từ hóa đơn # ${props.orderId}`,
           children: (
             <>
               <FromChangeOrder orderId={props.orderId}/>

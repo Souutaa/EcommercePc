@@ -281,14 +281,14 @@ const FromProduct = (props: {
             style={{ width: "49%" }}
             label="Discount"
             value={discount}
-            suffix="đ"
+            suffix="%"
             defaultValue={0}
             min={0}
             onChange={(e) => {
-              handleErrorInputDiscount(e.toString());
+              // handleErrorInputDiscount(e.toString());
               setDiscount(e);
             }}
-            error={errorHandleDiscount}
+            // error={errorHandleDiscount}
           />
         </div>
         <NativeSelect

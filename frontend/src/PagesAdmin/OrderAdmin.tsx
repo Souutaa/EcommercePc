@@ -38,7 +38,7 @@ const OrderAdmin = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, [fetchOrders]);
+  }, [fetchOrders()]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [infoPerPage, setInfoPerPage] = useState(5);
