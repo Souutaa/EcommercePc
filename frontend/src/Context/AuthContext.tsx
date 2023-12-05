@@ -1,4 +1,3 @@
-
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import axios from "axios";
@@ -59,30 +58,34 @@ const AuthProvider = ({ children }: ChildrenProps) => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          localStorage.setItem("accessToken", response.data.token);
-          let data = jwt.jwtDecode(response.data.token);
+          if (response.data.token) {
+            localStorage.setItem("accessToken", response.data.token);
+            let data = jwt.jwtDecode(response.data.token);
 
-          const res = await axios.get("http://localhost:8080/user/getAccount");
+            const res = await axios.get(
+              "http://localhost:8080/user/getAccount"
+            );
 
-          console.log(res);
-          setAuth({
-            aud: res.data.role ?? "USER",
-            mail: res.data.email ?? "",
-            sub: data.sub ?? "",
-            iat: data.iat ?? "",
-            exp: data.exp ?? "",
-            isAuthenticated: true,
-          });
+            console.log(res);
+            setAuth({
+              aud: res.data.role ?? "USER",
+              mail: res.data.email ?? "",
+              sub: data.sub ?? "",
+              iat: data.iat ?? "",
+              exp: data.exp ?? "",
+              isAuthenticated: true,
+            });
 
-          notifications.show({
-            withCloseButton: true,
-            autoClose: 2000,
-            message: `Đăng nhập thành công`,
-            color: "teal",
-            icon: <IconCheck />,
-            className: "my-notification-class",
-            loading: false,
-          });
+            notifications.show({
+              withCloseButton: true,
+              autoClose: 2000,
+              message: `Đăng nhập thành công`,
+              color: "teal",
+              icon: <IconCheck />,
+              className: "my-notification-class",
+              loading: false,
+            });
+          }
         }
       })
       .catch((e) => {
@@ -117,8 +120,8 @@ const AuthProvider = ({ children }: ChildrenProps) => {
       className: "my-notification-class",
       loading: false,
       onClose: () => {
-        window.location.replace('/')
-      }
+        window.location.replace("/");
+      },
     });
   };
 
