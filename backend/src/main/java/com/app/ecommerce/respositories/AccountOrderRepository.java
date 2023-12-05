@@ -34,11 +34,13 @@ public interface AccountOrderRepository extends JpaRepository<AccountOrder, Inte
                         "LIMIT 5", nativeQuery = true)
         List<TrustedBuyer> getTrustedBuyers();
 
-        @Query(value = "SELECT COUNT(confirm_by_id) as totalConfirmedOrder, confirm_by_id as employId, SUM(total) as subTotalOrder " + //
+        @Query(value = "SELECT COUNT(confirm_by_id) as totalConfirmedOrder, confirm_by_id as employId, SUM(total) as subTotalOrder "
+                        + //
                         "FROM account_order  " + //
                         "WHERE status != 'PENDING' " + //
                         "and status != 'CANCELED' " + //
-                        "GROUP BY confirm_by_id " + //                        
+                        "AND confirm_by_id IS NOT NULL  " + //
+                        "GROUP BY confirm_by_id " + //
                         "ORDER BY totalConfirmedOrder DESC, subTotalOrder DESC " + //
                         "LIMIT 5", nativeQuery = true)
         List<TopEmployee> getTopEmployees();
