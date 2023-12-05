@@ -35,18 +35,6 @@ function ProductMore() {
   const [numberOfPage, setNumberOfPage] = useState(0);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8080/category/${name}`
-        );
-        setCategory(res.data);
-        setProductMoreFollowBrand(res.data);
-        setProductMoreFollowBrandFilter(res.data.products);
-      } catch (error) {
-        console.log("error=> ", error);
-      }
-    };
     const fetchProductsBrand = async () => {
       try {
         const url =
@@ -54,6 +42,8 @@ function ProductMore() {
             ? `http://localhost:8080/category/${name}/${brandName}`
             : `http://localhost:8080/category/${name}`;
         const res = await axios.get(url);
+        setCategory(res.data);
+        setProductMoreFollowBrandFilter(res.data.products);
         console.log("products more follow brand based on Category=> ", res);
         setProductMoreFollowBrand(res.data);
         setNumberOfPage(Math.ceil(res.data.products.length / infoPerPage));
@@ -61,7 +51,6 @@ function ProductMore() {
         console.log("error=> ", error);
       }
     };
-    fetchProducts();
     fetchProductsBrand();
   }, []);
 

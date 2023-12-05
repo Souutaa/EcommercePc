@@ -51,19 +51,6 @@ const Cell = (props: { date: Date | null }) => {
   useEffect(() => {
     setPieChartData([
       {
-        name: "Đã giao",
-        now: orders.filter(
-          (item: AdminOrder) =>
-            item.status === "DELIVERED" &&
-            new Date(item.createdAt).toLocaleDateString() ===
-              (props.date
-                ? new Date(props.date).toLocaleDateString()
-                : new Date().toLocaleDateString())
-        ).length,
-        total: orders.length,
-        fill: "rgb(10, 207, 151)",
-      },
-      {
         name: "Đang xử lý",
         now: orders.filter(
           (item: AdminOrder) =>
@@ -101,6 +88,19 @@ const Cell = (props: { date: Date | null }) => {
         ).length,
         total: orders.length,
         fill: "#727cf5",
+      },
+      {
+        name: "Đã giao",
+        now: orders.filter(
+          (item: AdminOrder) =>
+            item.status === "SUCCESS" &&
+            new Date(item.createdAt).toLocaleDateString() ===
+              (props.date
+                ? new Date(props.date).toLocaleDateString()
+                : new Date().toLocaleDateString())
+        ).length,
+        total: orders.length,
+        fill: "rgb(10, 207, 151)",
       },
       {
         name: "Đã hủy",

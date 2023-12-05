@@ -19,9 +19,6 @@ const OrderAdminStatus = (props: { order: AdminOrder }) => {
     case "DELIVERING":
       badgeColor = "blue";
       break;
-    case "DELIVERED":
-      badgeColor = "grape";
-      break;
     case "SUCCESS":
       badgeColor = "teal";
       break;

@@ -120,7 +120,7 @@ function OderUser() {
                 },
                 {
                   value: "SUCCESS",
-                  label: "Hoàn thành",
+                  label: "Đã giao",
                 },
                 {
                   value: "CANCELED",

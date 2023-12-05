@@ -147,11 +147,6 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
       throw new ResourceNotFoundException("Order not found");
     }
     OrderInformation orderInformation = optionalOrderInfo.get();
-
-    if (!orderInformation.getUsername().equals(username)) {
-      throw new ForbiddenException("forbidden action");
-    }
-
     List<OrderDetail> orderDetails = this.orderDetailRepository.findAllByOrderId(orderId).get();
     List<OrderItemDTO> orderItems = new ArrayList<OrderItemDTO>();
     for (OrderDetail orderDetail : orderDetails) {

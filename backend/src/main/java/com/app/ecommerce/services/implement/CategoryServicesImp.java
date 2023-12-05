@@ -24,6 +24,7 @@ import com.app.ecommerce.respositories.CategoryRepository;
 import com.app.ecommerce.respositories.ProductWarrantyRepository;
 import com.app.ecommerce.services.ICategoryServices;
 import com.app.ecommerce.services.IProductServices;
+import com.app.ecommerce.services.IProductWarrantyServices;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +43,9 @@ public class CategoryServicesImp implements ICategoryServices {
 
     @Autowired
     private IProductServices productServices;
+
+     @Autowired
+    private IProductWarrantyServices productWarrantyServices;
 
     @Override
     public List<Category> getCategories(boolean active) {
@@ -144,6 +148,7 @@ public class CategoryServicesImp implements ICategoryServices {
                             .price(product.getPrice())
                             .discount(product.getDiscount())
                             .name(category.getName())
+                            .stock(this.productWarrantyServices.getProductStock(product.getId()))
                             .build());
             }
             bResponse.setName(category.getName());
@@ -181,6 +186,7 @@ public class CategoryServicesImp implements ICategoryServices {
                                 .price(product.getPrice())
                                 .discount(product.getDiscount())
                                 .brandName(brand.getBrandName())
+                                .stock(this.productWarrantyServices.getProductStock(product.getId()))
                                 .build());
                 }
                 bResponse.setBrandName(brand.getBrandName());

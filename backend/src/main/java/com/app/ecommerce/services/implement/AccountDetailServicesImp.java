@@ -116,8 +116,7 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
         if (accountFound.isPresent()) {
             this.repo.removAccountDetailsDefault(this.accountRepo.findByUsername(username).get().getId(), id);
             var accountDetail = repo.findById(id).get();
-            accountDetail.setDefault(true);
-            return repo.save(accountDetail);
+            return accountDetail;
         } else {
             throw new ResourceNotFoundException("Invoice with Id : " + accountFound + " Not Found");
         }

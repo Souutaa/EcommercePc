@@ -1,14 +1,9 @@
-import { Link, Navigate } from "react-router-dom";
+import { Flex } from "@mantine/core";
+import { Link } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
-import ButtonAdd from "../Button/button-add-to-cart";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useShopingContext } from "../../Context/ShoppingContext";
-import { Button, Flex, Text } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons-react";
-import { ProductItems } from "../../Pages/HomePage/Content";
 import formatPrice from "../../Helper/formatPrice";
+import { ProductItems } from "../../Pages/HomePage/Content";
+import ButtonAdd from "../Button/button-add-to-cart";
 
 export type ProductItem = {
   id: number;
@@ -26,9 +21,8 @@ function Product(props: { products: ProductItems[] }) {
   return (
     <Flex gap={'md'} wrap={'wrap'}>
       {products.map((e) => {
-        // if (e.stock === 0) {
-        //   return <></>
-        // }
+        if (e.stock === 0)
+          return <></>
         return (
           <div key={e.id} className="product-item"  style={{flex: "1 1 25%"}}>
             <Link

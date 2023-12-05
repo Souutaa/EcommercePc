@@ -138,7 +138,7 @@ const OrderAdmin = () => {
                   },
                   {
                     value: "SUCCESS",
-                    label: "Hoàn thành",
+                    label: "Đã giao",
                   },
                   {
                     value: "CANCELED",
