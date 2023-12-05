@@ -30,7 +30,7 @@ public class AccountOrder extends BaseEntity {
     @Column(name = "total", length = 20, nullable = false)
     private int total;
 
-    @OneToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "confirm_by_id", referencedColumnName = "id")
     @JsonBackReference
     private Account confirmedBy;
