@@ -29,7 +29,8 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-
+/src/main/resources/images
+/src/main/resources/thumbnails
 ### VS Code ###
 .vscode/
 main/resources/images/*
