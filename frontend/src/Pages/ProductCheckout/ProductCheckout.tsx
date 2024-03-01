@@ -67,7 +67,7 @@ function ProductCheckout() {
   }, []);
   const handleSubmitForm = async (e: FormEvent) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     notifications.show({
       withCloseButton: true,
       autoClose: 3000,
@@ -95,17 +95,22 @@ function ProductCheckout() {
       }),
     });
     if (userInfo?.accountDetail.id === -1) {
-      const response = await axios.post("http://127.0.0.1:8080/userDetail/create", {
-        firstName: userInfo?.accountDetail.firstName,
-        lastName: userInfo?.accountDetail.lastName,
-        phoneNumber: userInfo?.accountDetail.phoneNumber,
-        email: userInfo?.accountDetail.email,
-        city: userInfo?.accountDetail.city,
-        district: userInfo?.accountDetail.district,
-        detailedAddress: userInfo?.accountDetail.detailedAddress,
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8080/userDetail/create",
+        {
+          firstName: userInfo?.accountDetail.firstName,
+          lastName: userInfo?.accountDetail.lastName,
+          phoneNumber: userInfo?.accountDetail.phoneNumber,
+          email: userInfo?.accountDetail.email,
+          city: userInfo?.accountDetail.city,
+          district: userInfo?.accountDetail.district,
+          detailedAddress: userInfo?.accountDetail.detailedAddress,
+        }
+      );
       if (address?.length === 0) {
-        await axios.patch(`http://127.0.0.1:8080/userDetail/${response.data.id}/default`);
+        await axios.patch(
+          `http://127.0.0.1:8080/userDetail/${response.data.id}/default`
+        );
       }
     }
     notifications.show({
@@ -118,7 +123,7 @@ function ProductCheckout() {
       onClose: () => {
         cartContext.clearCart();
         return navigate(PATHS.ORDERED);
-      }
+      },
     });
   };
   return (
@@ -306,12 +311,30 @@ function ProductCheckout() {
               <Divider my="sm" />
               <div className="productcheckout-button">
                 <Link to={PATHS.CART}>
-                  <Btn maintine="a" variant="default" color="#f03a17" disabled = {isLoading ? true : false}>
+                  <Btn
+                    maintine="a"
+                    variant="default"
+                    color="#f03a17"
+                    disabled={isLoading ? true : false}
+                  >
                     Sửa sản phẩm
                   </Btn>
                 </Link>
-                <Btn fullWidth type="submit" maintine="a" disabled = {isLoading ? true : false}>
+                <Btn
+                  fullWidth
+                  type="submit"
+                  maintine="a"
+                  disabled={isLoading ? true : false}
+                >
                   Đặt hàng
+                </Btn>
+                <Btn
+                  fullWidth
+                  type="submit"
+                  maintine="a"
+                  disabled={isLoading ? true : false}
+                >
+                  Đặt hàng và thanh toán bằng momo
                 </Btn>
               </div>
             </form>

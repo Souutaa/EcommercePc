@@ -102,13 +102,14 @@ function InputGrib4(props: props) {
             placeholder="Chọn tỉnh, thành phố"
             value={selectedProvince}
             disabled={props.isEditing ? false : true}
-            data={division.map((division): ComboboxItem => {
-              return {
-                value: division.name,
-                label: division.name,
-                disabled: false,
-              };
-            })}
+            // data={division.map((division): ComboboxItem => {
+            //   return {
+            //     value: division.name,
+            //     label: division.name,
+            //     disabled: false,
+            //   };
+            // })}
+            data={["TPHCM"]}
             onChange={(e) => {
               if (props.userInfo && props.isEditing) {
                 setSelectedProvince(e.target.value);
@@ -130,17 +131,18 @@ function InputGrib4(props: props) {
             placeholder="Native select"
             value={selectedDistrict}
             disabled={props.isEditing ? false : true}
-            data={division
-              .find((division) => {
-                return division.name === selectedProvince;
-              })
-              ?.districts.map((e): ComboboxItem => {
-                return {
-                  value: e.name,
-                  label: e.name,
-                  disabled: false,
-                };
-              })}
+            // data={division
+            //   .find((division) => {
+            //     return division.name === selectedProvince;
+            //   })
+            //   ?.districts.map((e): ComboboxItem => {
+            //     return {
+            //       value: e.name,
+            //       label: e.name,
+            //       disabled: false,
+            //     };
+            //   })}
+            data={["Thu Duc"]}
             onChange={(e) => {
               if (props.userInfo && props.isEditing) {
                 setSelectedDistrict(e.target.value);
