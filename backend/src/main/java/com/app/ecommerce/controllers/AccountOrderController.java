@@ -1,6 +1,7 @@
 package com.app.ecommerce.controllers;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -69,7 +70,16 @@ public class AccountOrderController {
   @PostMapping("/create")
   public ResponseEntity<AccountOrder> create(
       @Valid @RequestBody CreateOrderRequest request, @RequestHeader("Authorization") String authorization)
-      throws NumberFormatException, SQLException, MessagingException {
+      throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException {
+    String token = authorization.split(" ")[1].trim();
+    String username = this.jwtService.extractUsername(token);
+    return ResponseEntity.ok(orderServices.createOrder(request, username));
+  }
+
+  @PostMapping("/createByVnpay")
+  public ResponseEntity<AccountOrder> createByVnpay(
+      @Valid @RequestBody CreateOrderRequest request, @RequestHeader("Authorization") String authorization)
+      throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException {
     String token = authorization.split(" ")[1].trim();
     String username = this.jwtService.extractUsername(token);
     return ResponseEntity.ok(orderServices.createOrder(request, username));

@@ -1,5 +1,6 @@
 package com.app.ecommerce.services;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -17,7 +18,10 @@ import jakarta.validation.Valid;
 
 public interface IAccountOrderServices {
   public AccountOrder createOrder(CreateOrderRequest request, String username)
-      throws NumberFormatException, SQLException, MessagingException;
+      throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException;
+
+  public AccountOrder createOrderUseVnpay(CreateOrderRequest request, String username)
+      throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException;
 
   public List<AccountOrder> getAllOrders();
 
