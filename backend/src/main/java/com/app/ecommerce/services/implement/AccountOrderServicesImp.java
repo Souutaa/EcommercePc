@@ -205,7 +205,8 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
     }
 
     return OrderDetailResponse.builder().orderInformation(orderInformation).orderItems(orderItems)
-        .orderStatus(orderInformation.getAccountOrder().getStatus()).build();
+        .orderStatus(orderInformation.getAccountOrder().getStatus())
+        .paymentStatus(orderInformation.getAccountOrder().getPaymentStatus()).build();
   }
 
   @Override

@@ -20,12 +20,13 @@ import { PATHS } from "../../Constants/path";
 import { useShopingContext } from "../../Context/ShoppingContext";
 import { UserInformation } from "../InfoUser/InfoUser";
 import { useAuthContext } from "../../Context/AuthContext";
-import { IconCheck, IconLoader } from "@tabler/icons-react";
+import { IconCheck, IconCross, IconLoader } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 
 function ProductCheckout() {
   const auth = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
+  const [orderId, setOrderId] = useState(null);
   const [userInfo, setUserInfo] = useState<UserInformation>({
     username: auth.auth.sub!,
     accountDetail: {
@@ -65,19 +66,20 @@ function ProductCheckout() {
     };
     getAllUserInfo();
   }, []);
+
   const handleSubmitForm = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     notifications.show({
-      withCloseButton: true,
-      autoClose: 3000,
       message: `Đang xử lý`,
       color: "teal",
       icon: <IconLoader />,
       className: "my-notification-class",
       loading: true,
     });
-    await axios.post("http://127.0.0.1:8080/order/create", {
+    const paymentResponse = await axios.post(
+      "http://127.0.0.1:8080/api/v1/pay", 
+    {
       firstName: userInfo?.accountDetail.firstName,
       lastName: userInfo?.accountDetail.lastName,
       phoneNumber: userInfo?.accountDetail.phoneNumber,
@@ -94,6 +96,9 @@ function ProductCheckout() {
         };
       }),
     });
+    setOrderId(paymentResponse.data.orderId)
+    localStorage.setItem('orderId', paymentResponse.data.orderId)
+    window.open(paymentResponse.data.url, '_blank')!!.focus();
     if (userInfo?.accountDetail.id === -1) {
       const response = await axios.post(
         "http://127.0.0.1:8080/userDetail/create",
@@ -113,37 +118,53 @@ function ProductCheckout() {
         );
       }
     }
-    notifications.show({
-      withCloseButton: true,
-      autoClose: 1000,
-      message: `Đặt hàng thành công!`,
-      color: "teal",
-      icon: <IconCheck />,
-      className: "my-notification-class",
-      onClose: () => {
-        cartContext.clearCart();
-        return navigate(PATHS.ORDERED);
-      },
-    });
   };
-  const handleSubmitFormVnPay = async (e: FormEvent) => {
-    e.preventDefault();
-    // setIsLoading(true);
-    // notifications.show({
-    //   withCloseButton: true,
-    //   autoClose: 3000,
-    //   message: `Đang xử lý`,
-    //   color: "teal",
-    //   icon: <IconLoader />,
-    //   className: "my-notification-class",
-    //   loading: true,
-    // });
-    await axios.get("http://127.0.0.1:8080/api/v1/pay", {
-      data: {
-        amount: cartContext.totalPrice - cartContext.totalDiscount,
-      },
-    });
-  };
+  useEffect(() => {
+    let timerId:NodeJS.Timer;
+    if (orderId) {
+      timerId = setInterval(async () => {
+        const paymentInfo = await axios.get(`http://localhost:8080/order/getOrderDetail?id=${orderId}`)
+        if (paymentInfo.data.paymentStatus !== "PENDING") {
+          clearInterval(timerId)
+          setIsLoading(false)
+          if (paymentInfo.data.paymentStatus === "SUCCESS") {
+              notifications.show({
+                withCloseButton: true,
+                autoClose: 1000,
+                message: `Đặt hàng thành công!`,
+                color: "teal",
+                icon: <IconCheck />,
+                className: "my-notification-class",
+                onClose: () => {
+                  cartContext.clearCart();
+                  localStorage.removeItem('orderId')
+                  return navigate(PATHS.ORDERED);
+                },
+              });
+          } else {
+            notifications.show({
+              withCloseButton: true,
+              autoClose: 1000,
+              message: `Thanh toán thất bại!`,
+              color: "red",
+              icon: <IconCross />,
+              className: "my-notification-class",
+              onClose: () => {
+                localStorage.removeItem('orderId')
+              }
+            });
+          }
+          
+        }
+      }, 2000)
+    }
+    return () => {
+      if (timerId) {
+        clearInterval(timerId)
+      }
+    }
+
+  }, [orderId, cartContext, navigate])
   return (
     <>
       <div className="container">
@@ -233,8 +254,7 @@ function ProductCheckout() {
                 </Flex>
               </div>
             )}
-            {/* <form action="" onSubmit={handleSubmitForm}> */}
-            <form action="" onSubmit={handleSubmitFormVnPay}>
+            <form action="" onSubmit={handleSubmitForm}>
               <div className="productcheckout-grid">
                 <div className="productcheckout-grid-input">
                   <span className="productcheckput-text">Họ và tên đệm:</span>

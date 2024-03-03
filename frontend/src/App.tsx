@@ -30,12 +30,16 @@ import OrderAdmin from "./PagesAdmin/OrderAdmin";
 import ProductAdmin from "./PagesAdmin/ProductAdmin";
 import UserAdmin from "./PagesAdmin/UserAdmin";
 import WarrantyPeriodsAdmin from "./PagesAdmin/WarrantyPeriods";
+import PaymentStatus from "./Pages/Payment/PaymentStatus";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/payment-status" element={<PaymentStatus/>}>
+
+          </Route>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path={PATHS.LOGIN.INDEX} element={<LoginPage />}>

@@ -95,27 +95,14 @@ public class AccountOrderController {
   @PatchMapping("/update-payment-status")
   public ResponseEntity<AccountOrder> updatePaymentStatus(
       @Valid @RequestBody UpdatePaymentStatus request, @RequestHeader("Authorization") String authorization) {
-    String token = authorization.split(" ")[1].trim();
-    String username = this.jwtService.extractUsername(token);
-    if (request.getOrderPayment().equals(OrderPayment.FAIL)) {
-      return ResponseEntity.ok(orderServices.cancelOrder(request.getOrderId()));
-    }
-    if (request.getOrderPayment().equals(OrderPayment.SUCCESS)) {
-      return ResponseEntity.ok(orderServices.confirmOrder(request.getOrderId(), username));
-    }
     return ResponseEntity.ok(orderServices.updateOrderPaymentStatus(request));
   }
 
   @GetMapping("/export/excel")
   public void exportToExcel(HttpServletResponse response) throws IOException {
     response.setContentType("application/octet-stream");
-    // java.util.Date date = new java.util.Date();
-    // DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-    // String currentDateTime = dateFormatter.format(date);
 
     String headerKey = "Content-Disposition";
-    // String headerValue = "attachment; filename=users_" + currentDateTime +
-    // ".xlsx";
     String headerValue = "attachment; filename=users_" + ".xlsx";
     response.setHeader(headerKey, headerValue);
 

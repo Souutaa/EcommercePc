@@ -43,7 +43,6 @@ public class SecurityConfiguration {
             "/order/create", "/order/update-payment-status")
         .permitAll()
         .requestMatchers("/order/getOrder", "/order/update-status", "/order/getOrderDetail",
-
             "/orderinformation/**", "/user/**", "/userDetail/**")
         .authenticated()
         .requestMatchers("/order/export/excel", "/order/getMonthlyRevenue", "/order/getTrustedBuyers",

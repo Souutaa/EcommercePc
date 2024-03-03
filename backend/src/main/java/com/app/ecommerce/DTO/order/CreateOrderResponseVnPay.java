@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class CreateOrderResponseVnPay {
   private String username;
   private String status;
+  private int orderId;
   private int total;
   private String paymentStatus;
   private String message;
