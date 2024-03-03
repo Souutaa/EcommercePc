@@ -27,6 +27,10 @@ public class AccountOrder extends BaseEntity {
     @Column(name = "status", length = 11, columnDefinition = "varchar(32) default 'PENDING'", nullable = false)
     private OrderStatus status;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status", length = 11, columnDefinition = "varchar(32)", nullable = true)
+    private OrderPayment paymentStatus;
+
     @Column(name = "total", length = 20, nullable = false)
     private int total;
 

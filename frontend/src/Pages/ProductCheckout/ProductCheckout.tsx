@@ -126,6 +126,24 @@ function ProductCheckout() {
       },
     });
   };
+  const handleSubmitFormVnPay = async (e: FormEvent) => {
+    e.preventDefault();
+    // setIsLoading(true);
+    // notifications.show({
+    //   withCloseButton: true,
+    //   autoClose: 3000,
+    //   message: `Đang xử lý`,
+    //   color: "teal",
+    //   icon: <IconLoader />,
+    //   className: "my-notification-class",
+    //   loading: true,
+    // });
+    await axios.get("http://127.0.0.1:8080/api/v1/pay", {
+      data: {
+        amount: cartContext.totalPrice - cartContext.totalDiscount,
+      },
+    });
+  };
   return (
     <>
       <div className="container">
@@ -215,7 +233,8 @@ function ProductCheckout() {
                 </Flex>
               </div>
             )}
-            <form action="" onSubmit={handleSubmitForm}>
+            {/* <form action="" onSubmit={handleSubmitForm}> */}
+            <form action="" onSubmit={handleSubmitFormVnPay}>
               <div className="productcheckout-grid">
                 <div className="productcheckout-grid-input">
                   <span className="productcheckput-text">Họ và tên đệm:</span>

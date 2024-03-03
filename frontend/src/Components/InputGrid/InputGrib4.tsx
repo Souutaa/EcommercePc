@@ -2,6 +2,7 @@ import { NativeSelect, Input, ComboboxItem } from "@mantine/core";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { UserInformation } from "../../Pages/InfoUser/InfoUser";
+import data from "./provinces.json"
 
 type Districts = {
   name: string;
@@ -34,14 +35,22 @@ function InputGrib4(props: props) {
   const [selectedProvince, setSelectedProvince] = useState(props.provinceCode);
   const [selectedDistrict, setSelectedDistrict] = useState(props.districtCode);
   useEffect(() => {
-    const provinceAxios = axios.create({});
+    // const provinceAxios = axios.create({
+    // });
     const fetchProvices = async () => {
       try {
-        const res = await provinceAxios.get(
-          "http://provinces.open-api.vn/api/?depth=2"
-        );
-        const data = await res.data;
-        setDivision(data);
+        // const res = await provinceAxios.get(
+        //   "http://127.0.0.1:8000/api/?depth=2"
+        // );
+        // const data = await res.data;
+        // const res = await fetch("http://localhost:8000/api/?depth=2")
+        const res = await fetch("./provinces.json")
+          .then(response => {
+            return response.json();
+          }
+          )
+        console.log(res)
+        setDivision([]);
       } catch (error) {
         console.log("error=> ", error);
       }
@@ -109,7 +118,13 @@ function InputGrib4(props: props) {
             //     disabled: false,
             //   };
             // })}
-            data={["TPHCM"]}
+            data={data.map((division): ComboboxItem => {
+              return {
+                value: division.name,
+                label: division.name,
+                disabled: false,
+              };
+            })}
             onChange={(e) => {
               if (props.userInfo && props.isEditing) {
                 setSelectedProvince(e.target.value);
@@ -131,18 +146,17 @@ function InputGrib4(props: props) {
             placeholder="Native select"
             value={selectedDistrict}
             disabled={props.isEditing ? false : true}
-            // data={division
-            //   .find((division) => {
-            //     return division.name === selectedProvince;
-            //   })
-            //   ?.districts.map((e): ComboboxItem => {
-            //     return {
-            //       value: e.name,
-            //       label: e.name,
-            //       disabled: false,
-            //     };
-            //   })}
-            data={["Thu Duc"]}
+            data={data
+              .find((division) => {
+                return division.name === selectedProvince;
+              })
+              ?.districts.map((e): ComboboxItem => {
+                return {
+                  value: e.name,
+                  label: e.name,
+                  disabled: false,
+                };
+              })}
             onChange={(e) => {
               if (props.userInfo && props.isEditing) {
                 setSelectedDistrict(e.target.value);

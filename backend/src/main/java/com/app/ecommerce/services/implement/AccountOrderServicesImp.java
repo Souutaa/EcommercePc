@@ -20,6 +20,7 @@ import com.app.ecommerce.DTO.order.OrderItemDTO;
 import com.app.ecommerce.DTO.order.TopEmployee;
 import com.app.ecommerce.DTO.order.TopEmployeeDTO;
 import com.app.ecommerce.DTO.order.TrustedBuyer;
+import com.app.ecommerce.DTO.order.UpdatePaymentStatus;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.controllers.VnpayController;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
@@ -27,6 +28,7 @@ import com.app.ecommerce.models.AccountOrder;
 import com.app.ecommerce.models.Brand;
 import com.app.ecommerce.models.OrderDetail;
 import com.app.ecommerce.models.OrderInformation;
+import com.app.ecommerce.models.OrderPayment;
 import com.app.ecommerce.models.OrderStatus;
 import com.app.ecommerce.models.Product;
 import com.app.ecommerce.models.ProductWarranty;
@@ -102,36 +104,27 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
   }
 
   @Override
-  public AccountOrder createOrderUseVnpay(CreateOrderRequest request, String username)
+  public AccountOrder createOrderPayment(CreateOrderRequest request, String username)
       throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException {
     AccountOrder newOrder = AccountOrder.builder().username(username).total(request.getTotal())
         .status(OrderStatus.PENDING)
+        .paymentStatus(OrderPayment.PENDING)
         .account(this.accountRepository.findByUsername(username).get())
         .build();
-    try {
-      this.iVnPayServices.paymentResDTO(newOrder.getTotal());
-    } catch (Exception e) {
-      System.out.println("error when getTotal to use VnpayServices");
-    }
-
-    if (this.iVnPayServices.paymentResDTO(newOrder.getTotal()) == null) {
-      throw new ResourceAccessException("VnPayservice has some error");
-    } else {
-      AccountOrder createdOrder = this.accountOrderRepository.save(newOrder);
-      this.orderDetailServices.createOrderDetail(request.getCartItems(), createdOrder);
-      OrderInformation orderInformation = OrderInformation.builder()
-          .address(request.getFullAddress())
-          .fullname(request.getFullName())
-          .email(request.getEmail())
-          .phoneNumber(request.getPhoneNumber())
-          .note(request.getNote())
-          .accountOrder(createdOrder)
-          .username(username)
-          .build();
-      this.orderInformationServices.createOrderInformation(orderInformation);
-      emailServices.sendOrderUser(request, username);
-      return createdOrder;
-    }
+    AccountOrder createdOrder = this.accountOrderRepository.save(newOrder);
+    this.orderDetailServices.createOrderDetail(request.getCartItems(), createdOrder);
+    OrderInformation orderInformation = OrderInformation.builder()
+        .address(request.getFullAddress())
+        .fullname(request.getFullName())
+        .email(request.getEmail())
+        .phoneNumber(request.getPhoneNumber())
+        .note(request.getNote())
+        .accountOrder(createdOrder)
+        .username(username)
+        .build();
+    this.orderInformationServices.createOrderInformation(orderInformation);
+    emailServices.sendOrderUser(request, username);
+    return createdOrder;
   }
 
   @Override
@@ -159,6 +152,13 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
   public AccountOrder updateOrderStatus(@Valid UpdateStatusRequest request) {
     AccountOrder fetchedOrder = this.accountOrderRepository.findById(request.getOrderId()).get();
     fetchedOrder.setStatus(request.getOrderStatus());
+    return this.accountOrderRepository.save(fetchedOrder);
+  }
+
+  @Override
+  public AccountOrder updateOrderPaymentStatus(@Valid UpdatePaymentStatus request) {
+    AccountOrder fetchedOrder = this.accountOrderRepository.findById(request.getOrderId()).get();
+    fetchedOrder.setPaymentStatus(request.getOrderPayment());
     return this.accountOrderRepository.save(fetchedOrder);
   }
 

@@ -39,10 +39,11 @@ public class SecurityConfiguration {
         .disable()
         .authorizeHttpRequests()
         .requestMatchers("/user/*/updatepassword", "/auth/**", "/brand/**", "/category/**", "/product/**",
-            "/product-info/**", "/product-warranty/**", "/mail/**", "/warranty-period/**", "/api/v1/**")
+            "/product-info/**", "/product-warranty/**", "/mail/**", "/warranty-period/**", "/api/v1/**",
+            "/order/create", "/order/update-payment-status")
         .permitAll()
-        .requestMatchers("/order/getOrder", "/order/update-status", "/order/getOrderDetail", "/order/create",
-            "/order/createByVnpay",
+        .requestMatchers("/order/getOrder", "/order/update-status", "/order/getOrderDetail",
+
             "/orderinformation/**", "/user/**", "/userDetail/**")
         .authenticated()
         .requestMatchers("/order/export/excel", "/order/getMonthlyRevenue", "/order/getTrustedBuyers",

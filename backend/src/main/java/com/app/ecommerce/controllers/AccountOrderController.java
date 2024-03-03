@@ -24,9 +24,11 @@ import com.app.ecommerce.DTO.order.MonthlyRevenue;
 import com.app.ecommerce.DTO.order.OrderDetailResponse;
 import com.app.ecommerce.DTO.order.TopEmployeeDTO;
 import com.app.ecommerce.DTO.order.TrustedBuyer;
+import com.app.ecommerce.DTO.order.UpdatePaymentStatus;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.config.JwtService;
 import com.app.ecommerce.models.AccountOrder;
+import com.app.ecommerce.models.OrderPayment;
 import com.app.ecommerce.models.OrderStatus;
 import com.app.ecommerce.respositories.AccountOrderRepository;
 import com.app.ecommerce.services.IAccountOrderServices;
@@ -76,15 +78,6 @@ public class AccountOrderController {
     return ResponseEntity.ok(orderServices.createOrder(request, username));
   }
 
-  @PostMapping("/createByVnpay")
-  public ResponseEntity<AccountOrder> createByVnpay(
-      @Valid @RequestBody CreateOrderRequest request, @RequestHeader("Authorization") String authorization)
-      throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException {
-    String token = authorization.split(" ")[1].trim();
-    String username = this.jwtService.extractUsername(token);
-    return ResponseEntity.ok(orderServices.createOrder(request, username));
-  }
-
   @PatchMapping("/update-status")
   public ResponseEntity<AccountOrder> updateStatus(
       @Valid @RequestBody UpdateStatusRequest request, @RequestHeader("Authorization") String authorization) {
@@ -97,6 +90,20 @@ public class AccountOrderController {
       return ResponseEntity.ok(orderServices.confirmOrder(request.getOrderId(), username));
     }
     return ResponseEntity.ok(orderServices.updateOrderStatus(request));
+  }
+
+  @PatchMapping("/update-payment-status")
+  public ResponseEntity<AccountOrder> updatePaymentStatus(
+      @Valid @RequestBody UpdatePaymentStatus request, @RequestHeader("Authorization") String authorization) {
+    String token = authorization.split(" ")[1].trim();
+    String username = this.jwtService.extractUsername(token);
+    if (request.getOrderPayment().equals(OrderPayment.FAIL)) {
+      return ResponseEntity.ok(orderServices.cancelOrder(request.getOrderId()));
+    }
+    if (request.getOrderPayment().equals(OrderPayment.SUCCESS)) {
+      return ResponseEntity.ok(orderServices.confirmOrder(request.getOrderId(), username));
+    }
+    return ResponseEntity.ok(orderServices.updateOrderPaymentStatus(request));
   }
 
   @GetMapping("/export/excel")

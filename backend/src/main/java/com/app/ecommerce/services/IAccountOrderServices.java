@@ -10,6 +10,7 @@ import com.app.ecommerce.DTO.order.OrderDetailResponse;
 import com.app.ecommerce.DTO.order.TopEmployee;
 import com.app.ecommerce.DTO.order.TopEmployeeDTO;
 import com.app.ecommerce.DTO.order.TrustedBuyer;
+import com.app.ecommerce.DTO.order.UpdatePaymentStatus;
 import com.app.ecommerce.DTO.order.UpdateStatusRequest;
 import com.app.ecommerce.models.AccountOrder;
 
@@ -17,29 +18,31 @@ import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 
 public interface IAccountOrderServices {
-  public AccountOrder createOrder(CreateOrderRequest request, String username)
-      throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException;
+    public AccountOrder createOrder(CreateOrderRequest request, String username)
+            throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException;
 
-  public AccountOrder createOrderUseVnpay(CreateOrderRequest request, String username)
-      throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException;
+    public AccountOrder createOrderPayment(CreateOrderRequest request, String username)
+            throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException;
 
-  public List<AccountOrder> getAllOrders();
+    public List<AccountOrder> getAllOrders();
 
-  public List<AccountOrder> getOrders(String username);
+    public List<AccountOrder> getOrders(String username);
 
-  public AccountOrder getOrderByUsername(String username);
+    public AccountOrder getOrderByUsername(String username);
 
-  public AccountOrder updateOrderStatus(@Valid UpdateStatusRequest request);
+    public AccountOrder updateOrderStatus(@Valid UpdateStatusRequest request);
 
-  public AccountOrder cancelOrder(Integer orderId);
+    public AccountOrder updateOrderPaymentStatus(@Valid UpdatePaymentStatus request);
 
-  public AccountOrder confirmOrder(Integer orderId, String username);
+    public AccountOrder cancelOrder(Integer orderId);
 
-  public OrderDetailResponse getOrderDetail(String username, Integer orderId);
+    public AccountOrder confirmOrder(Integer orderId, String username);
 
-  public List<MonthlyRevenue> getMongMonthlyRevenues();
+    public OrderDetailResponse getOrderDetail(String username, Integer orderId);
 
-  public List<TrustedBuyer> getTrustedBuyers();
+    public List<MonthlyRevenue> getMongMonthlyRevenues();
 
-  public List<TopEmployeeDTO> getTopEmployees();
+    public List<TrustedBuyer> getTrustedBuyers();
+
+    public List<TopEmployeeDTO> getTopEmployees();
 }
