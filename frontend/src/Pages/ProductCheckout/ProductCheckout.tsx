@@ -1,4 +1,6 @@
 import {
+  ClassNames,
+  ClassNamesArray,
   ComboboxItem,
   Divider,
   Flex,
@@ -71,15 +73,15 @@ function ProductCheckout() {
     e.preventDefault();
     setIsLoading(true);
     notifications.show({
+      withCloseButton: true,
+      autoClose: 3000,
       message: `Đang xử lý`,
       color: "teal",
       icon: <IconLoader />,
       className: "my-notification-class",
       loading: true,
     });
-    const paymentResponse = await axios.post(
-      "http://127.0.0.1:8080/api/v1/pay", 
-    {
+    await axios.post("http://127.0.0.1:8080/order/create", {
       firstName: userInfo?.accountDetail.firstName,
       lastName: userInfo?.accountDetail.lastName,
       phoneNumber: userInfo?.accountDetail.phoneNumber,
@@ -96,9 +98,72 @@ function ProductCheckout() {
         };
       }),
     });
-    setOrderId(paymentResponse.data.orderId)
-    localStorage.setItem('orderId', paymentResponse.data.orderId)
-    window.open(paymentResponse.data.url, '_blank')!!.focus();
+    if (userInfo?.accountDetail.id === -1) {
+      const response = await axios.post(
+        "http://127.0.0.1:8080/userDetail/create",
+        {
+          firstName: userInfo?.accountDetail.firstName,
+          lastName: userInfo?.accountDetail.lastName,
+          phoneNumber: userInfo?.accountDetail.phoneNumber,
+          email: userInfo?.accountDetail.email,
+          city: userInfo?.accountDetail.city,
+          district: userInfo?.accountDetail.district,
+          detailedAddress: userInfo?.accountDetail.detailedAddress,
+        }
+      );
+      if (address?.length === 0) {
+        await axios.patch(
+          `http://127.0.0.1:8080/userDetail/${response.data.id}/default`
+        );
+      }
+    }
+    notifications.show({
+      withCloseButton: true,
+      autoClose: 1000,
+      message: `Đặt hàng thành công!`,
+      color: "teal",
+      icon: <IconCheck />,
+      className: "my-notification-class",
+      onClose: () => {
+        cartContext.clearCart();
+        return navigate(PATHS.ORDERED);
+      },
+    });
+  };
+
+  const handleSubmitFormVnPay = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    notifications.show({
+      message: `Đang xử lý`,
+      color: "teal",
+      icon: <IconLoader />,
+      className: "my-notification-class",
+      loading: true,
+    });
+    const paymentResponse = await axios.post(
+      "http://127.0.0.1:8080/api/v1/pay",
+      {
+        firstName: userInfo?.accountDetail.firstName,
+        lastName: userInfo?.accountDetail.lastName,
+        phoneNumber: userInfo?.accountDetail.phoneNumber,
+        email: userInfo?.accountDetail.email,
+        city: userInfo?.accountDetail.city,
+        district: userInfo?.accountDetail.district,
+        detailedAddress: userInfo?.accountDetail.detailedAddress,
+        note: note,
+        total: cartContext.totalPrice - cartContext.totalDiscount,
+        cartItems: cartContext.cartItems.map((cartItem) => {
+          return {
+            productLine: cartItem.productLine,
+            quantity: cartItem.quantity,
+          };
+        }),
+      }
+    );
+    setOrderId(paymentResponse.data.orderId);
+    localStorage.setItem("orderId", paymentResponse.data.orderId);
+    window.open(paymentResponse.data.url, "_blank")!!.focus();
     if (userInfo?.accountDetail.id === -1) {
       const response = await axios.post(
         "http://127.0.0.1:8080/userDetail/create",
@@ -120,27 +185,29 @@ function ProductCheckout() {
     }
   };
   useEffect(() => {
-    let timerId:NodeJS.Timer;
+    let timerId: NodeJS.Timer;
     if (orderId) {
       timerId = setInterval(async () => {
-        const paymentInfo = await axios.get(`http://localhost:8080/order/getOrderDetail?id=${orderId}`)
+        const paymentInfo = await axios.get(
+          `http://localhost:8080/order/getOrderDetail?id=${orderId}`
+        );
         if (paymentInfo.data.paymentStatus !== "PENDING") {
-          clearInterval(timerId)
-          setIsLoading(false)
+          clearInterval(timerId);
+          setIsLoading(false);
           if (paymentInfo.data.paymentStatus === "SUCCESS") {
-              notifications.show({
-                withCloseButton: true,
-                autoClose: 1000,
-                message: `Đặt hàng thành công!`,
-                color: "teal",
-                icon: <IconCheck />,
-                className: "my-notification-class",
-                onClose: () => {
-                  cartContext.clearCart();
-                  localStorage.removeItem('orderId')
-                  return navigate(PATHS.ORDERED);
-                },
-              });
+            notifications.show({
+              withCloseButton: true,
+              autoClose: 500,
+              message: `Đặt hàng thành công!`,
+              color: "teal",
+              icon: <IconCheck />,
+              className: "my-notification-class",
+              onClose: () => {
+                cartContext.clearCart();
+                localStorage.removeItem("orderId");
+                return navigate(PATHS.ORDERED);
+              },
+            });
           } else {
             notifications.show({
               withCloseButton: true,
@@ -150,21 +217,32 @@ function ProductCheckout() {
               icon: <IconCross />,
               className: "my-notification-class",
               onClose: () => {
-                localStorage.removeItem('orderId')
-              }
+                localStorage.removeItem("orderId");
+              },
             });
           }
-          
         }
-      }, 2000)
+      }, 2000);
     }
     return () => {
       if (timerId) {
-        clearInterval(timerId)
+        clearInterval(timerId);
       }
-    }
+    };
+  }, [orderId, cartContext, navigate]);
 
-  }, [orderId, cartContext, navigate])
+  const handleSubmit = async (e: FormEvent) => {
+    let elements: HTMLElement | null = document.getElementById("paymentType");
+
+    if (elements?.getElementsByClassName("default")) {
+      handleSubmitForm(e);
+    }
+    if (elements?.getElementsByClassName("vnpay")) {
+      handleSubmitFormVnPay(e);
+    }
+    /* Your multiple functions here */
+  };
+
   return (
     <>
       <div className="container">
@@ -254,7 +332,7 @@ function ProductCheckout() {
                 </Flex>
               </div>
             )}
-            <form action="" onSubmit={handleSubmitForm}>
+            <form action="">
               <div className="productcheckout-grid">
                 <div className="productcheckout-grid-input">
                   <span className="productcheckput-text">Họ và tên đệm:</span>
@@ -359,22 +437,33 @@ function ProductCheckout() {
                     Sửa sản phẩm
                   </Btn>
                 </Link>
-                <Btn
-                  fullWidth
-                  type="submit"
-                  maintine="a"
-                  disabled={isLoading ? true : false}
+                <div
+                  id="paymentType"
+                  style={{
+                    display: "flex",
+                    gap: "20px",
+                    minWidth: "100%",
+                  }}
                 >
-                  Đặt hàng
-                </Btn>
-                <Btn
-                  fullWidth
-                  type="submit"
-                  maintine="a"
-                  disabled={isLoading ? true : false}
-                >
-                  Đặt hàng và thanh toán bằng momo
-                </Btn>
+                  <Btn
+                    onClick={handleSubmitForm}
+                    clsName="default"
+                    type="submit"
+                    maintine="a"
+                    disabled={isLoading ? true : false}
+                  >
+                    Đặt hàng
+                  </Btn>
+                  <Btn
+                    onClick={handleSubmitFormVnPay}
+                    clsName="vnpay"
+                    type="submit"
+                    maintine="a"
+                    disabled={isLoading ? true : false}
+                  >
+                    Đặt hàng và thanh toán bằng vnpay
+                  </Btn>
+                </div>
               </div>
             </form>
           </div>

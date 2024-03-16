@@ -105,6 +105,23 @@ public class ProductServicesImp implements IProductServices {
   }
 
   @Override
+  public List<ProductCardResponse> getProductsRandom(Integer categoryId) {
+    List<Product> products = productRepository.RandomProductOfCategory(categoryId);
+    List<ProductCardResponse> productsReponse = new ArrayList<ProductCardResponse>();
+    for (Product product : products) {
+      productsReponse.add(ProductCardResponse.builder().id(product.getId()).productLine(product.getProductLine())
+          .productName(product.getProductName()).price(product.getPrice()).discount(product.getDiscount())
+          .thumbnailUri(this.getProductThumbnail(product.getProductLine()))
+          .stock(this.productWarrantyService.getProductStock(product.getId())).deletedAt(product.getDeletedAt())
+          .brandName(product.getBrand().getBrandName())
+          .categoryName(product.getCategory().getName())
+          .createdAt(product.getCreatedAt())
+          .build());
+    }
+    return productsReponse;
+  }
+
+  @Override
   public List<ProductCardResponse> getProducts() {
     List<Product> products = productRepository.findAll();
     List<ProductCardResponse> productsReponse = new ArrayList<ProductCardResponse>();

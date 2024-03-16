@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.app.ecommerce.DTO.product.ProductCardResponse;
 import com.app.ecommerce.DTO.product.TopSellingProduct;
 import com.app.ecommerce.models.Product;
 
@@ -34,4 +35,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
       "UPPER(brand.brand_name) LIKE UPPER(?1) " + //
       "GROUP BY product.id;", nativeQuery = true)
   List<Product> searchProducts(String searchString);
+
+  @Query(value = "SELECT * FROM public.product WHERE category_id=?1 ORDER BY RANDOM() LIMIT 5;", nativeQuery = true)
+  List<Product> RandomProductOfCategory(Integer categoryId);
 }
