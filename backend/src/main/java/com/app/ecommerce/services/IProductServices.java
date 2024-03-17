@@ -21,6 +21,8 @@ public interface IProductServices {
 
   public Product getProduct(String productLine);
 
+  public List<ProductCardResponse> getProductsRandom(Integer categoryId, Integer number);
+
   public List<ProductCardResponse> getProducts();
 
   public List<ProductCardOfBrandResponse> getProductsOfBrand();

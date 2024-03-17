@@ -1,5 +1,5 @@
 import { Button } from "@mantine/core";
-import React, { ReactNode, CSSProperties } from "react";
+import React, { ReactNode, CSSProperties, FormEvent } from "react";
 interface ButtonProps {
   type?: "button" | "reset" | "submit" | undefined;
   variant?: string;
@@ -9,6 +9,7 @@ interface ButtonProps {
   customStyle?: CSSProperties;
   color?: string;
   [key: string]: any;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const Btn: React.FC<ButtonProps> = ({
@@ -16,6 +17,7 @@ const Btn: React.FC<ButtonProps> = ({
   variant = "",
   children,
   maintine,
+  onClick,
   clsName = "",
   customStyle,
   color,
@@ -26,6 +28,7 @@ const Btn: React.FC<ButtonProps> = ({
       type={type}
       variant=""
       color={color}
+      onClick={onClick}
       style={{ ...customStyle }}
       className={`${clsName ? clsName : ""}`}
       {...rest}
