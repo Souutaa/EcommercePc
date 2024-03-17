@@ -105,8 +105,8 @@ public class ProductServicesImp implements IProductServices {
   }
 
   @Override
-  public List<ProductCardResponse> getProductsRandom(Integer categoryId) {
-    List<Product> products = productRepository.RandomProductOfCategory(categoryId);
+  public List<ProductCardResponse> getProductsRandom(Integer categoryId, Integer number) {
+    List<Product> products = productRepository.RandomProductOfCategory(categoryId, number);
     List<ProductCardResponse> productsReponse = new ArrayList<ProductCardResponse>();
     for (Product product : products) {
       productsReponse.add(ProductCardResponse.builder().id(product.getId()).productLine(product.getProductLine())

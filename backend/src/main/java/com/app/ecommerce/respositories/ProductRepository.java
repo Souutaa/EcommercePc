@@ -36,6 +36,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
       "GROUP BY product.id;", nativeQuery = true)
   List<Product> searchProducts(String searchString);
 
-  @Query(value = "SELECT * FROM public.product WHERE category_id=?1 ORDER BY RANDOM() LIMIT 5;", nativeQuery = true)
-  List<Product> RandomProductOfCategory(Integer categoryId);
+  @Query(value = "SELECT * FROM public.product WHERE category_id=?1 ORDER BY RANDOM() LIMIT (?2);", nativeQuery = true)
+  List<Product> RandomProductOfCategory(Integer categoryId, Integer number);
 }
