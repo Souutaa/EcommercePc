@@ -19,14 +19,12 @@ export type ProductItems = {
 export type Brand = {
   id: number;
   brandName: string;
-  // name: string;
   products: ProductItems[];
 };
 
 export type Category = {
   id: number;
   name: string;
-  //products: ProductItems[];
   brands: Brand[];
 };
 
@@ -48,25 +46,23 @@ function Content() {
     fetchProducts();
   }, []);
 
-  const [test, setTest] = useState(true);
-  const onChangeTest = (e: string) => {
-    if (e === "ALL") setTest(true);
-    else setTest(false);
+  const [allCategory, setAllCategory] = useState(true);
+  const onChangeAllCategory = (e: string) => {
+    if (e === "ALL") setAllCategory(true);
+    else setAllCategory(false);
   };
 
   return (
     <>
       <div className="container">
         <div className="products">
-          <TabProduct onChange={onChangeTest} />
+          <TabProduct onChange={onChangeAllCategory} />
           {category.map((item) => {
-            console.log("item", item.brands.length);
-            if (test === true)
+            if (allCategory === true)
               return (
                 <>
                   {item.brands.length > 0 ? (
                     <div key={item.id}>
-                      {/* <div className="title">{item.brandName}</div> */}
                       <div className="title">{item.name}</div>
                       <ProductList brands={item.brands} name={item.name} />
                     </div>

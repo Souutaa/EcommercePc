@@ -2,7 +2,6 @@ import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import "@mantine/core/styles.css";
 import "./style.css";
-import classes from "./Demo.module.css";
 import SideBar from "../../Components/SideBar/sidebar";
 
 function BannerSection() {
@@ -14,7 +13,9 @@ function BannerSection() {
   const slides = images.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
-        <img alt="" src={url} />
+        <div style={{overflow: "hidden"}}>
+          <img alt="" src={url} style={{width: "100%"}} />
+        </div>
       </Carousel.Slide>
     );
   });
@@ -22,9 +23,7 @@ function BannerSection() {
     <>
       <div className="container">
         <div className="banner">
-          <div className="category">
-            <SideBar></SideBar>
-          </div>
+          <SideBar></SideBar>
           <div className="carousel">
             <Carousel withIndicators>{slides}</Carousel>
           </div>

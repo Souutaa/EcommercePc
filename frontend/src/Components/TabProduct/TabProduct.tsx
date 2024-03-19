@@ -10,9 +10,6 @@ function TabProduct({ onChange }: any) {
     console.log("get category data from api");
     const fetchProducts = async () => {
       try {
-        // const res = await axios.get(
-        //   "http://localhost:8080/category/allOfCategory"
-        // );
         const res = await axios.get(
           "http://localhost:8080/category/allOfCategoryBrand"
         );
@@ -42,11 +39,16 @@ function TabProduct({ onChange }: any) {
   return (
     <>
       <SegmentedControl
-        style={{ background: "#FFF", marginTop: "20px" }}
-        color="blue"
+        style={{
+          "textDecoration": "none",
+          "alignSelf": "flex-end"
+        }}
+        className = "segment-control"
+        color="#1c64f2"
         size="lg"
         radius="md"
         defaultValue="ALL"
+
         data={[...dataFilterDefault, ...dataFilter]}
         onChange={(e) => {
           onChangeFilter(e);
@@ -58,14 +60,12 @@ function TabProduct({ onChange }: any) {
         if (e.name === currentFilter)
           return (
             <div key={e.id}>
-              {/* <div className="title">{item.brandName}</div> */}
               <ProductListNoButtonMore
                 brands={e.brands}
                 category={currentFilter}
               />
             </div>
           );
-        //if (e.name == "ALL") return null;
       })}
     </>
   );

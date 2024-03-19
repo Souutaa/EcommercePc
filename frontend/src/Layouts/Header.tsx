@@ -10,6 +10,7 @@ import {
   IconTrash,
   IconArrowsLeftRight,
   IconLogout,
+  IconArrowBarRight,
 } from "@tabler/icons-react";
 import InputSearch from "../Components/Input/input-search";
 import { PATHS } from "../Constants/path";
@@ -30,8 +31,7 @@ const Header = () => {
       <div className="container">
         <div className="navbar">
           <Link to="/" className="logo">
-            <img src="/img/logoipsum-247.png" alt="" />
-            <img src="/img/Techshop.png" alt="" />
+            <img src="/img/Logo.svg" alt="" />
           </Link>
 
           {slicedPath === "/login" ? null : <InputSearch />}
@@ -62,8 +62,25 @@ const Header = () => {
                   </div>
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <UserInfor />
+                <UserInfor />
                   <Seaparator />
+                {authContext.auth.aud === "ADMIN" ? (
+                  <>
+                    <div style={{padding: "14px 20px"}}>
+                      <Link
+                        style={{
+                          textDecoration: "none",
+                          color: "#333"
+                        }}
+                        to={"/admin"}
+                      >
+                        Đi tới trang admin
+                      </Link>
+                    </div>
+                    <Seaparator />
+                  </>
+                ) : null}
+                  
                   <UserOder />
                   <Seaparator />
                   <Menu.Item
