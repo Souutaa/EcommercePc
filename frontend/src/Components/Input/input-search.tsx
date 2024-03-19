@@ -1,13 +1,15 @@
 import { Autocomplete } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import Btn from "../Button";
-import { PATHS } from "../../Constants/path";
 import { useState } from "react";
+import { PATHS } from "../../Constants/path";
 
 function InputSearch() {
   const [search, setSearch] = useState("")
+
+  const navigate = useNavigate()
+
   return (
     <div className="search">
       <Autocomplete
@@ -18,11 +20,13 @@ function InputSearch() {
         placeholder="Search"
         value={search}
         onChange={setSearch}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            navigate(PATHS.SEARCH + `/${search}`)
+          }
+        }}
         data={["MSI", "Macbook", "Asus", "Acer"]}
       />
-      <Link to={PATHS.SEARCH + `/${search}`}>
-        <Btn maintine="a">Tìm kiếm</Btn>
-      </Link>
     </div>
   );
 }

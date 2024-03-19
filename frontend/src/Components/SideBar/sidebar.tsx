@@ -26,21 +26,22 @@ function SideBar() {
     fetchProducts();
   }, []);
   return (
-    <>
+    <div className="sidebar">
       {sideBarCategory.map((e) => {
         return (
-          <div
-            className="category-item"
-            onClick={() => {
-              LinkToProductMore(e.name);
-            }}
-          >
-            <img alt="" className="category-img" src="/img/laptop.png"></img>
-            <span className="category-text">{e.name}</span>
+          <div className="sidebar__item" onClick={() => {
+            LinkToProductMore(e.name);
+          }}>
+            <span
+              className="sidebar__link"
+            >
+              <img alt="" className="category-img" src="/img/laptop.png"></img>
+              <span className="category-text">{e.name}</span>
+            </span>
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
 

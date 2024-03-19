@@ -28,20 +28,23 @@ const Btn: React.FC<ButtonProps> = ({
       type={type}
       variant=""
       color={color}
-      onClick={onClick}
-      style={{ ...customStyle }}
+      style={{  ...customStyle,
+        borderRadius: "8px",
+        background: "#1c64f2",
+        color: "#ffffff",
+        border: "none", }}
       className={`${clsName ? clsName : ""}`}
       {...rest}
     >
       {children}
     </Button>
-  ) : (
+  ) :  (
     <button
       style={{
         ...customStyle,
         borderRadius: "8px",
-        background: "var(--color-primary)",
-        color: "var(--white-color)",
+        background: "#1c64f2",
+        color: "#ffffff",
         border: "none",
       }}
       className={`${clsName ? clsName : ""}`}

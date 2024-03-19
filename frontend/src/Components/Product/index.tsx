@@ -19,7 +19,7 @@ export type ProductItem = {
 function Product(props: { products: ProductItems[] }) {
   const products = props.products;
   return (
-    <Flex gap={'md'} wrap={'wrap'}>
+    <Flex gap={'md'}>
       {products.map((e) => {
         if (e.stock === 0)
           return <></>

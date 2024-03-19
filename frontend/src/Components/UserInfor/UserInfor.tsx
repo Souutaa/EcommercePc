@@ -10,23 +10,6 @@ function UserInfor() {
       <div className="user-info">
         <div className="user-name">{authContext.auth.sub}</div>
         <span className="user-email">{authContext.auth.mail}</span>
-        {authContext.auth.aud === "ADMIN" ? (
-          <Link
-            style={{
-              textDecoration: "none",
-              margin: "10px -10px 0 -10px",
-            }}
-            to={"/admin"}
-          >
-            Đi tới trang admin
-            <IconArrowBarRight
-              style={{
-                width: rem(14),
-                height: rem(14),
-              }}
-            />
-          </Link>
-        ) : null}
       </div>
     </>
   );

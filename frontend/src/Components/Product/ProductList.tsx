@@ -10,13 +10,10 @@ function ProductList(props: { brands: Brand[]; name: string }) {
 
   return (
     <>
-      <>
-        <div className="product-list-detail">
-
-          <Product products={categoryItems.flat()} />
-        </div>
-        <ButtonMore categoryName={props.name} />
-      </>
+      <div className="product-list-detail">
+        <Product products={categoryItems.flat()} />
+      </div>
+      <ButtonMore categoryName={props.name} />
     </>
   );
 }
