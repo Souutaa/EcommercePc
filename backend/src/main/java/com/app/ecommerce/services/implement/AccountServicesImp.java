@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.app.ecommerce.DTO.account.AdminUpdateUserDTO;
 import com.app.ecommerce.DTO.account.ChangePasswordDTO;
+import com.app.ecommerce.DTO.account.CheckOTP;
 import com.app.ecommerce.DTO.account.UpdateMailDTO;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
@@ -61,6 +62,21 @@ public class AccountServicesImp implements IAccountServices {
             return opt.get();
         } else {
             throw new ResourceNotFoundException("User with username : " + username + " Not Found");
+        }
+    }
+
+    @Override
+    public String checkOtp(String email, String verificationCode) {
+        Optional<Account> opt = repo.findByEmail(email);
+        if (opt.isPresent()) {
+            var user = opt.get();
+            if (verificationCode.compareTo(user.getVerificationCode()) == -1) {
+                throw new ResourceNotFoundException("OTP is not correct");
+            } else {
+                return "Sucessfully";
+            }
+        } else {
+            throw new ResourceNotFoundException("User with mail : " + email + " Not Found");
         }
     }
 

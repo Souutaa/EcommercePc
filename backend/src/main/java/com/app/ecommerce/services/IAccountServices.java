@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.app.ecommerce.DTO.account.AdminUpdateUserDTO;
 import com.app.ecommerce.DTO.account.ChangePasswordDTO;
+import com.app.ecommerce.DTO.account.CheckOTP;
 import com.app.ecommerce.DTO.account.UpdateMailDTO;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
 import com.app.ecommerce.models.Account;
@@ -12,9 +13,11 @@ import com.app.ecommerce.models.Role;
 public interface IAccountServices {
     public List<Account> getAccounts(boolean active);
 
-    public Account updatePassword(String id, UpdatePasswordDTO request);
+     public Account updatePassword(String id, UpdatePasswordDTO request);
 
     public Account changePassword(String ussername, ChangePasswordDTO request);
+
+    public String checkOtp(String email, String verificationCode);
 
     public Account updateMail(String mail, UpdateMailDTO request);
 
