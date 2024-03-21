@@ -1,9 +1,10 @@
-import { Flex } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import { Link } from "react-router-dom";
-import { PATHS } from "../../Constants/path";
-import formatPrice from "../../Helper/formatPrice";
-import { ProductItems } from "../../Pages/HomePage/Content";
-import ButtonAdd from "../Button/button-add-to-cart";
+import { PATHS } from "../../../Constants/path";
+import formatPrice from "../../../Helper/formatPrice";
+import { ProductItems } from "../../../Pages/HomePage/Content";
+import ButtonAdd from "../../Button/button-add-to-cart";
+import styled from ".//Product.module.css";
 
 export type ProductItem = {
   id: number;
@@ -19,18 +20,17 @@ export type ProductItem = {
 function Product(props: { products: ProductItems[] }) {
   const products = props.products;
   return (
-    <Flex gap={'md'}>
+    <Grid grow>
       {products.map((e) => {
-        if (e.stock === 0)
-          return <></>
+        if (e.stock === 0) return <></>;
         return (
-          <div key={e.id} className="product-item"  style={{flex: "1 1 25%"}}>
+          <Grid.Col span={3} key={e.id} className={styled["product-item"]}>
             <Link
               to={{
                 pathname: PATHS.PRODUCT + `/${e.productLine}`,
               }}
             >
-              <div className="product-img">
+              <div className={styled["product-img"]}>
                 <img
                   src={`http://127.0.0.1:8080/product/get-file?filePath=${e.thumbnailUri}`}
                   alt={e.productName}
@@ -38,10 +38,12 @@ function Product(props: { products: ProductItems[] }) {
                 />
               </div>
             </Link>
-            <div className="product-info">
-              <h4 className="product-name">{e.productName}</h4>
-              <div className="product-detail">
-                <span className="product-price">{formatPrice(e.price)}</span>
+            <div className={styled["product-info"]}>
+              <h4 className={styled["product-name"]}>{e.productName}</h4>
+              <div className={styled["product-detail"]}>
+                <span className={styled["product-price"]}>
+                  {formatPrice(e.price)}
+                </span>
                 <ButtonAdd
                   id={e.id}
                   price={e.price}
@@ -53,10 +55,10 @@ function Product(props: { products: ProductItems[] }) {
                 />
               </div>
             </div>
-          </div>
+          </Grid.Col>
         );
       })}
-    </Flex>
+    </Grid>
   );
 }
 

@@ -1,13 +1,8 @@
 import { Checkbox, NativeSelect } from "@mantine/core";
-import Slider from "../Slider/Slider";
 import { useEffect, useState } from "react";
+import styled from ".//FilterSection.module.css";
 
-function FilterSection({
-  onChange,
-  onChangFilterSlide,
-  onChangePrice,
-  onChangeNumberOfPage,
-}: any) {
+function FilterSection({ onChange, onChangePrice, onChangeNumberOfPage }: any) {
   const [checkedCheckbox, setCheckedCheckbox] = useState<
     (EventTarget & HTMLInputElement)[]
   >([]);
@@ -35,60 +30,52 @@ function FilterSection({
       return prevState;
     });
   }, [checkedCheckbox]);
-
   useEffect(() => {
     onChangePrice(priceRange[0], priceRange[1]);
   }, [priceRange]);
+
   return (
     <>
-      <div className="filter-section">
-        <div className="filter-product">
-          <div className="filter-price">
-            <Slider
-              onChange={onChangFilterSlide}
-              //onChangeNumberOfPage={onChangeNumberOfPage}
+      <div className={styled["filter-section"]}>
+        <div className={styled["filter-options"]}>
+          <label className={styled["filter-text"]} htmlFor="">
+            Filter:
+          </label>
+          <div className={styled["filter-select"]}>
+            <NativeSelect
+              placeholder="Chọn giá trị bạn muốn loc"
+              data={[
+                {
+                  label: "Sản phẩm nổi bật",
+                  value: "1",
+                },
+                {
+                  label: "Giá: Tăng dần",
+                  value: "2",
+                },
+                {
+                  label: "Giá: Giảm dần",
+                  value: "3",
+                },
+                {
+                  label: "Tên: A-Z",
+                  value: "4",
+                },
+                {
+                  label: "Tên: Z-A",
+                  value: "5",
+                },
+              ]}
+              defaultValue={"1"}
+              onChange={(e) => {
+                onChange(e.target.value);
+              }}
             />
           </div>
-          <div className="filter-options">
-            <label className="filter-text" htmlFor="">
-              Filter:
-            </label>
-            <div className="filter-select">
-              <NativeSelect
-                placeholder="Chọn giá trị bạn muốn loc"
-                data={[
-                  {
-                    label: "Sản phẩm nổi bật",
-                    value: "1",
-                  },
-                  {
-                    label: "Giá: Tăng dần",
-                    value: "2",
-                  },
-                  {
-                    label: "Giá: Giảm dần",
-                    value: "3",
-                  },
-                  {
-                    label: "Tên: A-Z",
-                    value: "4",
-                  },
-                  {
-                    label: "Tên: Z-A",
-                    value: "5",
-                  },
-                ]}
-                defaultValue={"1"}
-                onChange={(e) => {
-                  onChange(e.target.value);
-                }}
-              />
-            </div>
-          </div>
         </div>
-        <div className="filter-selection">
-          <h4 className="filter-selection-text">Giá:</h4>
-          <div className="filter-checkbox">
+        <div className={styled["filter-selection"]}>
+          <h4 className={styled["filter-text"]}>Giá:</h4>
+          <div className={styled["filter-checkbox"]}>
             <Checkbox
               className="m10"
               label="100.000đ - 500.000đ"

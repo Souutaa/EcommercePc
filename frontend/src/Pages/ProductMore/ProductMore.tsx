@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import FilterSection from "../../Components/FilterSection/FilterSection";
-import Product, { ProductItem } from "../../Components/Product";
+import Product, { ProductItem } from "../../Components/Product/Product";
 import ProductListFollowCategory from "../../Components/Product/ProductListFollowCategory";
 import formatPrice from "../../Helper/formatPrice";
 import { ProductItems } from "../HomePage/Content";
@@ -44,6 +44,7 @@ function ProductMore() {
         const res = await axios.get(url);
         setCategory(res.data);
         setProductMoreFollowBrandFilter(res.data.products);
+        console.log(res.data.products);
         console.log("products more follow brand based on Category=> ", res);
         setProductMoreFollowBrand(res.data);
         setNumberOfPage(Math.ceil(res.data.products.length / infoPerPage));
@@ -56,7 +57,7 @@ function ProductMore() {
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const infoPerPage = 2;
+  const infoPerPage = 8;
   const offset = (currentPage - 1) * infoPerPage;
 
   //filter

@@ -37,9 +37,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/payment-status" element={<PaymentStatus/>}>
-
-          </Route>
+          <Route path="/payment-status" element={<PaymentStatus />}></Route>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path={PATHS.LOGIN.INDEX} element={<LoginPage />}>
@@ -60,10 +58,10 @@ function App() {
             </Route>
             <Route path="/Home" element={<Home />} />
             <Route
-              path={PATHS.MORE + "/:name/:brandName"}
+              path={PATHS.HOME + "/:name/:brandName"}
               element={<ProductMore />}
             />
-            <Route path={PATHS.MORE + "/:name"} element={<ProductMore />} />
+            <Route path={PATHS.HOME + "/:name"} element={<ProductMore />} />
             <Route
               path={PATHS.PRODUCT + "/:productLine"}
               element={<ProductDetail />}

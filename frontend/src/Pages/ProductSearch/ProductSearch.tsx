@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import ProductSearchs from "../../Components/Product/ProductSearch";
 import { useCallback, useEffect, useState } from "react";
-import { ProductItem } from "../../Components/Product";
+import { ProductItem } from "../../Components/Product/Product";
 import axios from "axios";
 import FilterSection from "../../Components/FilterSection/FilterSection";
 import { useDebounce } from "../../Hooks/use-debounce";
@@ -128,11 +128,13 @@ function ProductSearch() {
           onChangFilterSlide={valueLabelFormat}
           onChangeNumberOfPage={numberOfPageComboBox}
         />
-        {filteredProducts.length === 0 &&  <p>Không có sản phẩm nào</p>}
+        {filteredProducts.length === 0 && <p>Không có sản phẩm nào</p>}
         {filteredProducts &&
           filteredProducts
             .slice(offset, offset + infoPerPage)
-            .map((product) => <ProductSearchs key={product.id} product={product} />)}
+            .map((product) => (
+              <ProductSearchs key={product.id} product={product} />
+            ))}
         <div className="pagination-center">
           <Pagination
             total={numberOfPage}

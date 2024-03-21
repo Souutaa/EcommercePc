@@ -8,11 +8,10 @@ function SideBar() {
   const [sideBarCategory, setSideBarCategory] = useState<Category[]>([]);
   const navigate = useNavigate();
   const LinkToProductMore = (e: string) => {
-    navigate(PATHS.MORE + `/${e}`);
+    navigate(PATHS.HOME + `/${e}`);
   };
 
   useEffect(() => {
-    console.log("get brands data from api");
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
@@ -29,12 +28,13 @@ function SideBar() {
     <div className="sidebar">
       {sideBarCategory.map((e) => {
         return (
-          <div className="sidebar__item" onClick={() => {
-            LinkToProductMore(e.name);
-          }}>
-            <span
-              className="sidebar__link"
-            >
+          <div
+            className="sidebar__item"
+            onClick={() => {
+              LinkToProductMore(e.name);
+            }}
+          >
+            <span className="sidebar__link">
               <img alt="" className="category-img" src="/img/laptop.png"></img>
               <span className="category-text">{e.name}</span>
             </span>

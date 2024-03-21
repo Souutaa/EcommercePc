@@ -1,0 +1,33 @@
+.filter-section {
+  background-color: var(--white-color);
+  border-radius: 8px;
+  padding: 10px 40px;
+}
+.filter-price {
+  width: 400px;
+}
+
+.filter-options {
+  display: flex;
+  align-items: center;
+}
+
+.filter-text {
+  margin-right: 20px;
+}
+
+.filter-select {
+  width: 530px;
+}
+
+.filter-selection {
+  display: flex;
+  align-items: center;
+}
+
+.filter-checkbox {
+  margin: 12px 0;
+  width: 1000px;
+  display: flex;
+  flex-wrap: wrap;
+}

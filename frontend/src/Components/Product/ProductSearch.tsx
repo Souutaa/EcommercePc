@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Btn from "../Button";
 import { PATHS } from "../../Constants/path";
-import { ProductItem } from ".";
+import { ProductItem } from "./Product";
 import formatPrice from "../../Helper/formatPrice";
 
 function ProductSearchs(props: { product: ProductItem }) {

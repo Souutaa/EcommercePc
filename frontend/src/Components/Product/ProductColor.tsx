@@ -1,6 +1,6 @@
 import { Group, ColorSwatch } from "@mantine/core";
 import { useState } from "react";
-import { ProductItem } from ".";
+import { ProductItem } from "./Product";
 import formatPrice from "../../Helper/formatPrice";
 import { ProductDetailType } from "../../Pages/ProductDetail/ProductDetail";
 

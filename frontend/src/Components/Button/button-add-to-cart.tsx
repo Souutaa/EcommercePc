@@ -3,7 +3,7 @@ import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import "react-toastify/dist/ReactToastify.css";
 import { useShopingContext } from "../../Context/ShoppingContext";
-import { ProductItem } from "../Product";
+import { ProductItem } from "../Product/Product";
 import { useAuthContext } from "../../Context/AuthContext";
 function ButtonAdd(item: ProductItem) {
   const { addCartItem, checkCart } = useShopingContext();

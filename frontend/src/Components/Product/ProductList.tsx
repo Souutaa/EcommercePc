@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Product from ".";
+import Product from "./Product/index";
 import { Brand, Category, ProductItems } from "../../Pages/HomePage/Content";
 import ButtonMore from "../Button/button-more";
 

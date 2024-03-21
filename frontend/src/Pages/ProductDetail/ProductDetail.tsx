@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import ButtonAdd from "../../Components/Button/button-add-to-cart";
-import { ProductItem } from "../../Components/Product";
+import { ProductItem } from "../../Components/Product/Product";
 import ProductColor from "../../Components/Product/ProductColor";
 import ProductInfo from "../../Components/Product/ProductInfo";
 import ProductListDetail from "../../Components/Product/ProductListDetail";

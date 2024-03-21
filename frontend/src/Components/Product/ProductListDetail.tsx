@@ -1,4 +1,4 @@
-import Product from ".";
+import Product from "./Product";
 import { Brand, ProductItems } from "../../Pages/HomePage/Content";
 import ButtonMore from "../Button/button-more";
 function ProductListDetail(props: { products: ProductItems[]; name: string }) {
@@ -6,7 +6,6 @@ function ProductListDetail(props: { products: ProductItems[]; name: string }) {
   return (
     <>
       <div className="product-list-detail">
-
         <Product products={props.products} />
       </div>
       <ButtonMore categoryName={props.name} />

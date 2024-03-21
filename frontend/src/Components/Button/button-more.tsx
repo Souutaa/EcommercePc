@@ -3,8 +3,8 @@ import Btn from "../../Components/Button";
 import { PATHS } from "../../Constants/path";
 function ButtonMore(props: { brandName?: string; categoryName: string }) {
   const url = props.brandName
-    ? PATHS.MORE + `/${props.categoryName}/${props.brandName}`
-    : PATHS.MORE + `/${props.categoryName}`;
+    ? PATHS.HOME + `/${props.categoryName}/${props.brandName}`
+    : PATHS.HOME + `/${props.categoryName}`;
   return (
     <>
       <Link to={url}>
