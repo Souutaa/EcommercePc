@@ -70,7 +70,7 @@ public class AccountServicesImp implements IAccountServices {
         Optional<Account> opt = repo.findByEmail(email);
         if (opt.isPresent()) {
             var user = opt.get();
-            if (verificationCode.compareTo(user.getVerificationCode()) == -1) {
+            if (!verificationCode.equals(user.getVerificationCode())) {
                 throw new ResourceNotFoundException("OTP is not correct");
             } else {
                 return "Sucessfully";
