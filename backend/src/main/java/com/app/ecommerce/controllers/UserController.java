@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecommerce.DTO.account.AdminUpdateUserDTO;
 import com.app.ecommerce.DTO.account.ChangePasswordDTO;
+import com.app.ecommerce.DTO.account.CheckOTP;
 import com.app.ecommerce.DTO.account.SimpleAccountDTO;
 import com.app.ecommerce.DTO.account.UpdateAccountRoleRequest;
 import com.app.ecommerce.DTO.account.UpdateMailDTO;
@@ -96,6 +97,17 @@ public class UserController {
     public ResponseEntity<Account> updatePasswordUser(@PathVariable("email") String email,
             @Valid @RequestBody UpdatePasswordDTO password) {
         return ResponseEntity.ok(accountServices.updatePassword(email, password));
+    }
+
+    // @GetMapping(value = "/checkotp")
+    // public ResponseEntity<CheckOTP> checkOtp(@Valid @RequestBody CheckOTP
+    // checkOTP) {
+    // return ResponseEntity.ok(accountServices.checkOtp(checkOTP));
+    // }
+
+    @GetMapping(value = "/checkotp")
+    public String checkOtp(@QueryParam("email") String email, @QueryParam("verificationCode") String verificationCode) {
+        return accountServices.checkOtp(email, verificationCode);
     }
 
     @PatchMapping(value = "/updatemail")
