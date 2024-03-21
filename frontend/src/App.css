@@ -1,5 +1,11 @@
-.App {
-  text-align: center;
+#app {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(6rem, 1.5fr) [app-start] repeat(
+      8,
+      [col-start] minmax(min-content, 1fr) [col-end]
+    )
+    [app-end] minmax(6rem, 1.5fr) [full-end];
 }
 
 .App-logo {
@@ -11,6 +17,29 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+.container {
+  display: grid;
+  grid-column: app-start / app-end;
+}
+
+.div-8-col {
+  display: grid;
+  grid-template-columns: repeat(
+    8,
+    [col-start] minmax(min-content, 1fr) [col-end]
+  );
+  align-items: center;
+  justify-items: center;
+}
+
+.div-16-col {
+  display: grid;
+  grid-template-columns: repeat(
+    16,
+    [col-start] minmax(min-content, 1fr) [col-end]
+  );
 }
 
 .App-header {

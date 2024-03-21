@@ -40,15 +40,15 @@ function TabProduct({ onChange }: any) {
     <>
       <SegmentedControl
         style={{
-          "textDecoration": "none",
-          "alignSelf": "flex-end"
+          textDecoration: "none",
+          alignSelf: "flex-end",
+          fontSize: "3.2rem",
         }}
-        className = "segment-control"
+        className="segment-control"
         color="#1c64f2"
         size="lg"
         radius="md"
         defaultValue="ALL"
-
         data={[...dataFilterDefault, ...dataFilter]}
         onChange={(e) => {
           onChangeFilter(e);

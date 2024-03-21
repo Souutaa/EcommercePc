@@ -1,0 +1,46 @@
+.header {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns:
+    minmax(6rem, 1.5fr) [app-start] repeat(
+      8,
+      [col-start] minmax(min-content, 1fr) [col-end]
+    )
+    [app-end] minmax(6rem, 1.5fr);
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0px 2px 4px -2px rgba(0, 0, 0, 0.05);
+  padding: 2.6rem 0;
+}
+
+.navbar {
+  display: grid;
+  grid-column: app-start / app-end;
+  grid-template-columns: repeat(
+    8,
+    [col-start] minmax(min-content, 1fr) [col-end]
+  );
+  height: 100%;
+  align-items: center;
+  justify-items: center;
+}
+
+.logo {
+  grid-column: 1 / 2;
+  justify-self: start;
+}
+
+.login_button,
+.user-login {
+  display: flex;
+  grid-column: 7 / 9;
+}
+
+.button-cart:hover {
+  cursor: pointer;
+}
+
+.button-cart {
+  border: none;
+  background-color: var(--white-color);
+}

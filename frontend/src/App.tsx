@@ -34,7 +34,7 @@ import PaymentStatus from "./Pages/Payment/PaymentStatus";
 
 function App() {
   return (
-    <div className="App">
+    <div id="App">
       <BrowserRouter>
         <Routes>
           <Route path="/payment-status" element={<PaymentStatus />}></Route>
