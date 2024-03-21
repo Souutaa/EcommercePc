@@ -23,6 +23,9 @@ public class Utils {
   public static String generateOTP() {
     int randomPin = (int) (Math.random() * 900000) + 1000;
     String otp = String.valueOf(randomPin);
+    if (otp.length() < 6) {
+      return otp.concat("0");
+    }
     return otp; // returning value of otp
   }
 }
