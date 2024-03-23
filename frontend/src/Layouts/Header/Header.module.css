@@ -33,7 +33,16 @@
 .login_button,
 .user-login {
   display: flex;
-  grid-column: 7 / 9;
+  grid-column: 8 / 10;
+  justify-self: end;
+  gap: 1.2rem;
+}
+.user-login {
+  align-items: center;
+  justify-content: end;
+}
+.user-login {
+  font-size: 1.6rem;
 }
 
 .button-cart:hover {
@@ -43,4 +52,6 @@
 .button-cart {
   border: none;
   background-color: var(--white-color);
+  display: flex;
+  align-items: center;
 }

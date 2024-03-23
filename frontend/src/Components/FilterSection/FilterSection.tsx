@@ -43,6 +43,8 @@ function FilterSection({ onChange, onChangePrice, onChangeNumberOfPage }: any) {
           </label>
           <div className={styled["filter-select"]}>
             <NativeSelect
+              size="lg"
+              radius={"md"}
               placeholder="Chọn giá trị bạn muốn loc"
               data={[
                 {
@@ -77,7 +79,9 @@ function FilterSection({ onChange, onChangePrice, onChangeNumberOfPage }: any) {
           <h4 className={styled["filter-text"]}>Giá:</h4>
           <div className={styled["filter-checkbox"]}>
             <Checkbox
-              className="m10"
+              size="md"
+              radius={"xl"}
+              className={styled["button__checkbox"]}
               label="100.000đ - 500.000đ"
               value={["100000", "500000"]}
               onChange={(e) => {
@@ -92,7 +96,9 @@ function FilterSection({ onChange, onChangePrice, onChangeNumberOfPage }: any) {
               }}
             />
             <Checkbox
-              className="m10"
+              size="md"
+              radius={"xl"}
+              className={styled["button__checkbox"]}
               label="500.000đ - 2.000.000đ"
               value={["500000", "2000000"]}
               onChange={(e) => {
@@ -107,7 +113,9 @@ function FilterSection({ onChange, onChangePrice, onChangeNumberOfPage }: any) {
               }}
             />
             <Checkbox
-              className="m10"
+              size="md"
+              radius={"xl"}
+              className={styled["button__checkbox"]}
               label="2.000.000đ - 10.000.000đ"
               value={["2000000", "10000000"]}
               onChange={(e) => {
@@ -122,7 +130,9 @@ function FilterSection({ onChange, onChangePrice, onChangeNumberOfPage }: any) {
               }}
             />
             <Checkbox
-              className="m10"
+              size="md"
+              radius={"xl"}
+              className={styled["button__checkbox"]}
               label="10.000.000đ - 20.000.000đ"
               value={["10000000", "20000000"]}
               onChange={(e) => {
@@ -137,7 +147,9 @@ function FilterSection({ onChange, onChangePrice, onChangeNumberOfPage }: any) {
               }}
             />
             <Checkbox
-              className="m10"
+              size="md"
+              radius={"xl"}
+              className={styled["button__checkbox"]}
               label="20.000.000đ - 50.000.000đ"
               value={["20000000", "50000000"]}
               onChange={(e) => {
@@ -152,7 +164,9 @@ function FilterSection({ onChange, onChangePrice, onChangeNumberOfPage }: any) {
               }}
             />
             <Checkbox
-              className="m10"
+              size="md"
+              radius={"xl"}
+              className={styled["button__checkbox"]}
               label="50.000.000đ - 75.000.000đ"
               value={["50000000", "75000000"]}
               onChange={(e) => {
@@ -167,7 +181,9 @@ function FilterSection({ onChange, onChangePrice, onChangeNumberOfPage }: any) {
               }}
             />
             <Checkbox
-              className="m10"
+              size="md"
+              radius={"xl"}
+              className={styled["button__checkbox"]}
               label="75.000.000đ - 100.000.000đ"
               value={["75000000", "100000000"]}
               onChange={(e) => {

@@ -19,6 +19,7 @@ import axios from "axios";
 import { PATHS } from "../../Constants/path";
 import { useAuthContext } from "../../Context/AuthContext";
 import ChangeMail from "../../Components/ChangeMail/ChangePass";
+import API_ADDRESS from "../../Api_Address";
 
 const ChangeMailUser = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const ChangeMailUser = () => {
   const senOTP = async () => {
     const data = { email: oldEmail };
     await axios
-      .patch("http://localhost:8080/mail/sendmail", data)
+      .patch(`http://${API_ADDRESS}:8080/mail/sendmail`, data)
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);
@@ -48,7 +49,7 @@ const ChangeMailUser = () => {
       verificationCode,
     };
     await axios
-      .patch(`http://localhost:8080/user/updatemail`, data)
+      .patch(`http://${API_ADDRESS}:8080/user/updatemail`, data)
       .then((res) => {
         if (res.data.error) {
           alert("đổi email không thành công " + res.data.error);

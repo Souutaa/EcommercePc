@@ -2,7 +2,7 @@ import { NativeSelect, Input, ComboboxItem } from "@mantine/core";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { UserInformation } from "../../Pages/InfoUser/InfoUser";
-import data from "./provinces.json"
+import data from "./provinces.json";
 
 type Districts = {
   name: string;
@@ -40,16 +40,14 @@ function InputGrib4(props: props) {
     const fetchProvices = async () => {
       try {
         // const res = await provinceAxios.get(
-        //   "http://127.0.0.1:8000/api/?depth=2"
+        //   "http://API_ADDRESS:8000/api/?depth=2"
         // );
         // const data = await res.data;
-        // const res = await fetch("http://localhost:8000/api/?depth=2")
-        const res = await fetch("./provinces.json")
-          .then(response => {
-            return response.json();
-          }
-          )
-        console.log(res)
+        // const res = await fetch("http://API_ADDRESS:8000/api/?depth=2")
+        const res = await fetch("./provinces.json").then((response) => {
+          return response.json();
+        });
+        console.log(res);
         setDivision([]);
       } catch (error) {
         console.log("error=> ", error);

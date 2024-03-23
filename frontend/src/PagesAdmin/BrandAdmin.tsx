@@ -4,12 +4,12 @@ import ButtonAddBrands from "../Components/Button/button-add-brands";
 import BrandAdminStatus from "../Components/BrandAdminStatus/BrandAdminStatus";
 import axios from "axios";
 import { Category } from "../Pages/HomePage/Content";
-
+import API_ADDRESS from "../Api_Address";
 const BrandAdmin = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const fetchCategories = useCallback(async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8080/category/all/simple?active=false"
+      `http://${API_ADDRESS}:8080/category/all/simple?active=false`
     );
     setCategories(response.data);
   }, []);
@@ -26,7 +26,7 @@ const BrandAdmin = () => {
       </div>
       <div className="body-content">
         <div className="button-admin">
-          <ButtonAddBrands onFinish={fetchCategories}/>
+          <ButtonAddBrands onFinish={fetchCategories} />
         </div>
         {categories.map((category) => (
           <table className="table-centered">

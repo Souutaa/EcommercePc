@@ -13,7 +13,7 @@ import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
 import OrderAdminStatus from "../Components/OrderAdminStatus/OrderAdminStatus";
 import OrderTitleAdmin from "../Components/OrderTitleAdmin/OrderTitleAdmin";
 import { useDebounce } from "../Hooks/use-debounce";
-
+import API_ADDRESS from "../Api_Address";
 export interface AdminOrder {
   id: number;
   username: string;
@@ -30,7 +30,9 @@ const OrderAdmin = () => {
     []
   );
   const fetchOrders = useCallback(async () => {
-    const response = await axios.get("http://127.0.0.1:8080/order/getAllOrder");
+    const response = await axios.get(
+      `http://${API_ADDRESS}:8080/order/getAllOrder`
+    );
     setOrders(response.data);
     setFilteredAdminOrder(response.data);
     setNumberOfPage(Math.ceil(response.data.length / infoPerPage));

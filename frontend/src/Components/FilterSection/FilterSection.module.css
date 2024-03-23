@@ -1,7 +1,11 @@
 .filter-section {
   background-color: var(--white-color);
   border-radius: 8px;
-  padding: 10px 40px;
+  padding: 1.6rem 4rem;
+  font-size: 1.6rem;
+  box-shadow: var(--box-shadow--1);
+  display: grid;
+  gap: 1.6rem;
 }
 .filter-price {
   width: 400px;
@@ -26,8 +30,16 @@
 }
 
 .filter-checkbox {
-  margin: 12px 0;
+  margin-top: 1.2rem;
   width: 1000px;
   display: flex;
   flex-wrap: wrap;
+  gap: 1.2rem 2.4rem;
+  align-items: center;
+}
+.button__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  height: 100%;
 }

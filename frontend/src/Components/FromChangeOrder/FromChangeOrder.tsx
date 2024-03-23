@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { OrderInformation, OrderItem } from "../../Pages/InfoOrder/InfoOrder";
 import formatPrice from "../../Helper/formatPrice";
-
+import API_ADDRESS from "../../Api_Address";
 interface Order {
   orderItems: OrderItem[];
   orderInformation: OrderInformation;
@@ -23,7 +23,7 @@ const FromChangeOrder = (props: { orderId: number }) => {
   const [order, setOrder] = useState<Order>();
   const fetchOrder = useCallback(async () => {
     const response = await axios.get(
-      `http://127.0.0.1:8080/order/getOrderDetail?id=${props.orderId}`
+      `http://${API_ADDRESS}:8080/order/getOrderDetail?id=${props.orderId}`
     );
     setOrder({
       orderInformation: response.data.orderInformation,
@@ -55,7 +55,9 @@ const FromChangeOrder = (props: { orderId: number }) => {
           <span className="text-status bg-warning">{order?.orderStatus}</span>
         </div>
         <br />
-        {!(order?.orderStatus === "CANCELED" || order?.orderStatus === "SUCCESS") && (
+        {!(
+          order?.orderStatus === "CANCELED" || order?.orderStatus === "SUCCESS"
+        ) && (
           <>
             <NativeSelect
               style={{ width: "50%", marginTop: "20px" }}
@@ -73,10 +75,13 @@ const FromChangeOrder = (props: { orderId: number }) => {
               style={{ marginBottom: "20px" }}
               mt="md"
               onClick={async () => {
-                await axios.patch("http://127.0.0.1:8080/order/update-status", {
-                  orderId: order?.orderInformation.id,
-                  orderStatus: orderStatus,
-                });
+                await axios.patch(
+                  `http://${API_ADDRESS}:8080/order/update-status`,
+                  {
+                    orderId: order?.orderInformation.id,
+                    orderStatus: orderStatus,
+                  }
+                );
                 setOrder((prevState) => {
                   if (prevState) {
                     const newState = { ...prevState };

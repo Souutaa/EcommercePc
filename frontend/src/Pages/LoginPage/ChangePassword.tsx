@@ -5,6 +5,8 @@ import axios from "axios";
 import { useState } from "react";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
+import API_ADDRESS from "../../Api_Address";
+
 function ChangePassword() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -25,7 +27,7 @@ function ChangePassword() {
       verificationCode: otp,
     };
     await axios
-      .patch(`http://localhost:8080/user/${mail}/updatepassword`, data)
+      .patch(`http://${API_ADDRESS}:8080/user/${mail}/updatepassword`, data)
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);

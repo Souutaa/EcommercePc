@@ -4,6 +4,7 @@ import { notifications } from "@mantine/notifications";
 import { IconChecklist, IconLoader, IconX } from "@tabler/icons-react";
 import axios from "axios";
 import { useState } from "react";
+import API_ADDRESS from "../../Api_Address";
 
 const FormUserAdmin = () => {
   const [visible, { toggle }] = useDisclosure(false);
@@ -67,7 +68,7 @@ const FormUserAdmin = () => {
         loading: true,
       });
       const response = await axios.post(
-        "http://127.0.0.1:8080/auth/register",
+        `http://${API_ADDRESS}:8080/auth/register`,
         data
       );
       setTimeout(() => {
@@ -107,7 +108,7 @@ const FormUserAdmin = () => {
             className: "my-notification-class",
             loading: false,
           });
-        })
+        });
       }
     }
   };

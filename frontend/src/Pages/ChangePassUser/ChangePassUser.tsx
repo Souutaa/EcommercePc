@@ -10,6 +10,7 @@ import axios from "axios";
 import { PATHS } from "../../Constants/path";
 import { useAuthContext } from "../../Context/AuthContext";
 import ChangeMail from "../../Components/ChangeMail/ChangePass";
+import API_ADDRESS from "../../Api_Address";
 
 const ChangePassUser = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const ChangePassUser = () => {
       confirmPassword,
     };
     await axios
-      .patch(`http://localhost:8080/user/changepassword`, data)
+      .patch(`http://${API_ADDRESS}:8080/user/changepassword`, data)
       .then((res) => {
         if (res.data.error) {
           alert("đổi mật khẩu không thành công " + res.data.error);

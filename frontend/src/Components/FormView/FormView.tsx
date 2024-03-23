@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ProductDetailType } from "../../Pages/ProductDetail/ProductDetail";
 import formatPrice from "../../Helper/formatPrice";
+import API_ADDRESS from "../../Api_Address";
 
 interface Props {
   productLine: string;
@@ -15,7 +16,7 @@ const FormView = (props: Props) => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8080/product/${props.productLine}`
+          `http://${API_ADDRESS}:8080/product/${props.productLine}`
         );
         setProduct(response.data);
       } catch {}
@@ -44,7 +45,7 @@ const FormView = (props: Props) => {
         <div className="product-thumbnail">
           <img
             style={{ width: "200px", height: "200px" }}
-            src={`http://127.0.0.1:8080/product/get-file?filePath=${product?.thumbnailUri}`}
+            src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${product?.thumbnailUri}`}
             alt=""
           />
         </div>
@@ -54,7 +55,7 @@ const FormView = (props: Props) => {
             product.imageUris.map((imageUri) => (
               <img
                 style={{ width: "200px", height: "200px" }}
-                src={`http://127.0.0.1:8080/product/get-file?filePath=${imageUri}`}
+                src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${imageUri}`}
                 alt=""
               />
             ))}
@@ -82,7 +83,9 @@ const FormView = (props: Props) => {
           label="Warranty Period"
         >
           <Input component="button" pointer>
-            <Input.Placeholder>{product?.warrantyPeriod} tháng</Input.Placeholder>
+            <Input.Placeholder>
+              {product?.warrantyPeriod} tháng
+            </Input.Placeholder>
           </Input>
         </Input.Wrapper>
         <div className="input-2  mb-20">

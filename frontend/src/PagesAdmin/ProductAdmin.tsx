@@ -12,7 +12,7 @@ import ButtonAddAdmin from "../Components/Button/button-add-product-admin";
 import SearchAdmin from "../Components/SearchAdmin/SearchAdmin";
 import axios from "axios";
 import { useDebounce } from "../Hooks/use-debounce";
-
+import API_ADDRESS from "../Api_Address";
 export interface AdminProductInformation {
   id: number;
   productLine: string;
@@ -37,7 +37,9 @@ const ProductAdmin = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8080/product/all");
+        const response = await axios.get(
+          `http://${API_ADDRESS}:8080/product/all`
+        );
         setProducts(response.data);
         setFilteredAdminProductInformation(response.data);
         setNumberOfPage(Math.ceil(response.data.length / infoPerPage));
@@ -56,8 +58,10 @@ const ProductAdmin = () => {
 
   const handleSearch = (search: string) => {
     if (search.trim().length !== 0) {
-      const filtered = products.filter(
-        (item) => item.productName.toLocaleUpperCase().includes(search.toLocaleUpperCase())
+      const filtered = products.filter((item) =>
+        item.productName
+          .toLocaleUpperCase()
+          .includes(search.toLocaleUpperCase())
       );
       setFilteredAdminProductInformation(filtered);
       setNumberOfPage(Math.ceil(filtered.length / infoPerPage));
@@ -117,7 +121,7 @@ const ProductAdmin = () => {
                     style={{ marginLeft: "10px" }}
                     value={search}
                     onChange={(e) => {
-                      setSearch(e.target.value)
+                      setSearch(e.target.value);
                       handleSearchDebounce(e.target.value);
                     }}
                   />

@@ -1,4 +1,9 @@
-import { Input, MantineProvider, NativeSelect, Pagination } from "@mantine/core";
+import {
+  Input,
+  MantineProvider,
+  NativeSelect,
+  Pagination,
+} from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import axios from "axios";
@@ -11,7 +16,7 @@ import SearchAdmin from "../Components/SearchAdmin/SearchAdmin";
 import UserAdminStatus from "../Components/UserAdminStatus/UserAdminStatus";
 import UserTitleAdmin from "../Components/UserTitleAdmin/UserTitleAdmin";
 import { useDebounce } from "../Hooks/use-debounce";
-
+import API_ADDRESS from "../Api_Address";
 export interface User {
   id: number;
   username: string;
@@ -28,7 +33,7 @@ const UserAdmin = () => {
   const [filteredUser, setFilteredUser] = useState<User[]>([]);
   const fetchUsers = useCallback(async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8080/user/all?active=false"
+      `http://${API_ADDRESS}:8080/user/all?active=false`
     );
     setUsers(response.data);
     setFilteredUser(response.data);

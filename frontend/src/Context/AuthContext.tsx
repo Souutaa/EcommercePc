@@ -5,7 +5,7 @@ import { error } from "console";
 import * as jwt from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import API_ADDRESS from "../Api_Address";
 export interface Auth {
   aud: string | null;
   mail: string | null;
@@ -53,7 +53,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
   const login = (loginInfo: LoginInfo) => {
     const data = { username: loginInfo.username, password: loginInfo.password };
     axios
-      .post("http://localhost:8080/auth/authenticate", data)
+      .post(`http://${API_ADDRESS}:8080/auth/authenticate`, data)
       .then(async (response) => {
         if (response.data.error) {
           alert(response.data.error);
@@ -63,7 +63,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
             let data = jwt.jwtDecode(response.data.token);
 
             const res = await axios.get(
-              "http://localhost:8080/user/getAccount"
+              `http://${API_ADDRESS}:8080/user/getAccount`
             );
 
             console.log(res);
@@ -99,7 +99,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
             className: "my-notification-class",
             loading: false,
           });
-          return
+          return;
         }
         notifications.show({
           withCloseButton: true,
@@ -142,7 +142,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
     if (accessToken) {
       let data = jwt.jwtDecode(accessToken);
       if (data.exp && data.iat) if (Date.now() >= data.exp * 1000) logout();
-      const res = await axios.get("http://localhost:8080/user/getAccount");
+      const res = await axios.get(`http://${API_ADDRESS}:8080/user/getAccount`);
       setAuth({
         aud: res.data.role ?? "USER",
         mail: res.data.email ?? "",

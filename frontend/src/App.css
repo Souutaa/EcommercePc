@@ -19,6 +19,7 @@
   }
 }
 
+.mantine-AppShell-section,
 .container {
   display: grid;
   grid-column: app-start / app-end;
@@ -40,6 +41,20 @@
     16,
     [col-start] minmax(min-content, 1fr) [col-end]
   );
+}
+.grid-full-app {
+  grid-column: 1 / -1;
+}
+
+.grid-4-col-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  width: 100%;
+}
+
+.grid-4-col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .App-header {

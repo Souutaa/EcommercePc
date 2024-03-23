@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
 import { Category } from "../FormChange/FormChange";
-
+import API_ADDRESS from "../../Api_Address";
 function SideBar() {
   const [sideBarCategory, setSideBarCategory] = useState<Category[]>([]);
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function SideBar() {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8080/category/allOfCategoryBrand"
+          `http://${API_ADDRESS}:8080/category/allOfCategoryBrand`
         );
         setSideBarCategory(res.data);
       } catch (error) {

@@ -14,11 +14,12 @@ function InputSearch() {
     <div className="search">
       <Autocomplete
         className="input-size"
-        size="md"
+        size="xl"
         leftSection={<IconSearch className="icon-search" />}
         radius="md"
         placeholder="Search"
         value={search}
+        style={{ fontSize: "1.6rem" }}
         onChange={setSearch}
         onKeyDown={(event) => {
           if (event.key === "Enter") {

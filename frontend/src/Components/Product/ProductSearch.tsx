@@ -3,7 +3,7 @@ import Btn from "../Button";
 import { PATHS } from "../../Constants/path";
 import { ProductItem } from "./Product";
 import formatPrice from "../../Helper/formatPrice";
-
+import API_ADDRESS from "../../Api_Address";
 function ProductSearchs(props: { product: ProductItem }) {
   const { product } = props;
 
@@ -13,7 +13,7 @@ function ProductSearchs(props: { product: ProductItem }) {
         <div className="productsearch-img">
           <img
             style={{ width: "100%", height: "100%" }}
-            src={`http://127.0.0.1:8080/product/get-file?filePath=${product.thumbnailUri}`}
+            src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${product.thumbnailUri}`}
             alt=""
           />
         </div>

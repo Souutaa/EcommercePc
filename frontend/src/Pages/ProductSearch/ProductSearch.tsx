@@ -7,7 +7,7 @@ import { ProductItem } from "../../Components/Product/Product";
 import axios from "axios";
 import FilterSection from "../../Components/FilterSection/FilterSection";
 import { useDebounce } from "../../Hooks/use-debounce";
-
+import API_ADDRESS from "../../Api_Address";
 function ProductSearch() {
   const { search } = useParams();
   const [products, setProducts] = useState<ProductItem[]>([]);
@@ -21,7 +21,7 @@ function ProductSearch() {
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "http://127.0.0.1:8080/product/search",
+        url: `http://${API_ADDRESS}:8080/product/search`,
         headers: {
           "Content-Type": "application/json",
         },

@@ -12,7 +12,7 @@ import { modals } from "@mantine/modals";
 import React, { useEffect, useReducer, useState } from "react";
 import { ProductDetailType } from "../../Pages/ProductDetail/ProductDetail";
 import axios from "axios";
-
+import API_ADDRESS from "../../Api_Address";
 interface Props {
   productLine: string;
 }
@@ -75,7 +75,7 @@ const FormChange = (props: Props) => {
   async function getProduct(proudctLine: string): Promise<any> {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8080/product/${proudctLine}`
+        `http://${API_ADDRESS}:8080/product/${proudctLine}`
       );
       return response.data;
     } catch {}
@@ -84,11 +84,11 @@ const FormChange = (props: Props) => {
   useEffect(() => {
     const handleGetBrandCategory = async () => {
       const categoryResponse = await axios.get(
-        `http://127.0.0.1:8080/category/all/simple?active=true`
+        `http://${API_ADDRESS}:8080/category/all/simple?active=true`
       );
       setCategories(categoryResponse.data);
       const productWarrantyPeriodResponse = await axios.get(
-        `http://127.0.0.1:8080/warranty-period`
+        `http://${API_ADDRESS}:8080/warranty-period`
       );
       setWarantyPeriods(productWarrantyPeriodResponse.data);
     };
@@ -134,7 +134,7 @@ const FormChange = (props: Props) => {
       form.append("thumbnail", newThumbnail);
     }
     const { data } = await axios.patch(
-      "http://127.0.0.1:8080/product/update",
+      `http://${API_ADDRESS}:8080/product/update`,
       form,
       {
         headers: {
@@ -153,7 +153,7 @@ const FormChange = (props: Props) => {
 
     try {
       const response = await axios.patch(
-        `http://127.0.0.1:8080/product-info/update`,
+        `http://${API_ADDRESS}:8080/product-info/update`,
         {
           productInfos,
           productLine: product?.product.productLine,
@@ -194,7 +194,7 @@ const FormChange = (props: Props) => {
             src={
               newThumbnail
                 ? URL.createObjectURL(newThumbnail)
-                : `http://127.0.0.1:8080/product/get-file?filePath=${product?.thumbnailUri}`
+                : `http://${API_ADDRESS}:8080/product/get-file?filePath=${product?.thumbnailUri}`
             }
             alt=""
           />
@@ -216,7 +216,7 @@ const FormChange = (props: Props) => {
                   width: "200px",
                   height: "200px",
                 }}
-                src={`http://127.0.0.1:8080/product/get-file?filePath=${image}`}
+                src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${image}`}
                 alt=""
                 onClick={(e) => {
                   if (product) {

@@ -10,7 +10,7 @@ import ProductListFollowCategory from "../../Components/Product/ProductListFollo
 import formatPrice from "../../Helper/formatPrice";
 import { ProductItems } from "../HomePage/Content";
 import { useDebounce } from "../../Hooks/use-debounce";
-
+import API_ADDRESS from "../../Api_Address";
 type CategoryProductMore = {
   id: number;
   name: string;
@@ -39,8 +39,8 @@ function ProductMore() {
       try {
         const url =
           name && brandName
-            ? `http://localhost:8080/category/${name}/${brandName}`
-            : `http://localhost:8080/category/${name}`;
+            ? `http://${API_ADDRESS}:8080/category/${name}/${brandName}`
+            : `http://${API_ADDRESS}:8080/category/${name}`;
         const res = await axios.get(url);
         setCategory(res.data);
         setProductMoreFollowBrandFilter(res.data.products);
@@ -176,10 +176,13 @@ function ProductMore() {
         </div>
         <div className="pagination">
           <Pagination
+            color="#1c64f2"
             total={numberOfPage}
             defaultValue={1}
             value={currentPage}
             onChange={onPageChange}
+            radius={"md"}
+            size={"xl"}
           />
         </div>
       </div>

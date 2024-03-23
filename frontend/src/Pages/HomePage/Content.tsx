@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ProductList from "../../Components/Product/ProductList";
 import TabProduct from "../../Components/TabProduct/TabProduct";
 import "./style.css";
-
+import API_ADDRESS from "../../Api_Address";
 export type ProductItems = {
   id: number;
   productName: string;
@@ -31,17 +31,14 @@ export type Category = {
 function Content() {
   const [category, setCategory] = useState<Category[]>([]);
   useEffect(() => {
-    console.log("get brands data from api");
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8080/category/allOfCategoryBrand"
+          `http://${API_ADDRESS}:8080/category/allOfCategoryBrand`
         );
-        console.log("products=> ", res);
+        console.log(res.data);
         setCategory(res.data);
-      } catch (error) {
-        console.log("error=> ", error);
-      }
+      } catch (error) {}
     };
     fetchProducts();
   }, []);
@@ -64,6 +61,7 @@ function Content() {
                   {item.brands.length > 0 ? (
                     <div key={item.id}>
                       <div className="title">{item.name}</div>
+
                       <ProductList brands={item.brands} name={item.name} />
                     </div>
                   ) : (

@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
 import ChangePass from "../../Components/ChangePass/ChangePass";
 import ChangeMail from "../../Components/ChangeMail/ChangePass";
-
+import API_ADDRESS from "../../Api_Address";
 export interface UserInformation {
   accountDetail: {
     city: string;
@@ -44,7 +44,7 @@ function InfoUser() {
     const getAllUserInfo = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8080/userDetail/all"
+          `http://${API_ADDRESS}:8080/userDetail/all`
         );
         setAddress(response.data);
         setUserInfo(
@@ -74,7 +74,7 @@ function InfoUser() {
           email: userInfo.accountDetail.email,
         };
         await axios.patch(
-          `http://127.0.0.1:8080/userDetail/${id}/update`,
+          `http://${API_ADDRESS}:8080/userDetail/${id}/update`,
           updatedInfo
         );
 
@@ -101,7 +101,7 @@ function InfoUser() {
 
   const handleSetDefaultAddress = async (id: number) => {
     try {
-      await axios.patch(`http://127.0.0.1:8080/userDetail/${id}/default`);
+      await axios.patch(`http://${API_ADDRESS}:8080/userDetail/${id}/default`);
       setAddress((prevState) => {
         let newState: UserInformation[] = [];
         if (Array.isArray(prevState)) {
@@ -118,7 +118,7 @@ function InfoUser() {
   };
 
   const handleDeleteUserDetail = async (id: number) => {
-    await axios.delete(`http://127.0.0.1:8080/userDetail/delete?id=${id}`);
+    await axios.delete(`http://${API_ADDRESS}:8080/userDetail/delete?id=${id}`);
     setAddress((prevState) => {
       let newState: UserInformation[] = [];
       if (Array.isArray(prevState)) {

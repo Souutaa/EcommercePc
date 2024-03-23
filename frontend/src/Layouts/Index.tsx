@@ -16,7 +16,7 @@ function MainLayout() {
     authContext.checkSession();
   }, [location.key]);
   return (
-    <AppShell className="App">
+    <AppShell id="app">
       <Header />
       <Outlet />
       <Footer />

@@ -7,7 +7,7 @@ import { IconChecklist, IconLoader, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
-
+import API_ADDRESS from "../../Api_Address";
 function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +39,7 @@ function SignUp() {
         loading: true,
       });
       const response = await axios.post(
-        "http://127.0.0.1:8080/auth/register",
+        `http://${API_ADDRESS}:8080/auth/register`,
         data
       );
       setTimeout(() => {

@@ -1,0 +1,12 @@
+.product-cart__text {
+  display: flex;
+  padding: 22px 0px;
+  align-items: flex-start;
+  gap: 12px;
+  align-self: stretch;
+  color: var(--gray-800, #1f2a37);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%;
+}

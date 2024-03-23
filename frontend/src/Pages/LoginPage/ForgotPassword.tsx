@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconLoader, IconX } from "@tabler/icons-react";
+import API_ADDRESS from "../../Api_Address";
 
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ function ForgotPassword() {
     setDisabled(true);
 
     await axios
-      .patch("http://localhost:8080/mail/sendmail", data)
+      .patch(`http://${API_ADDRESS}:8080/mail/sendmail`, data)
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);

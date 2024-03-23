@@ -24,7 +24,7 @@ import { UserInformation } from "../InfoUser/InfoUser";
 import { useAuthContext } from "../../Context/AuthContext";
 import { IconCheck, IconCross, IconLoader } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
-
+import API_ADDRESS from "../../Api_Address";
 function ProductCheckout() {
   const auth = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +52,7 @@ function ProductCheckout() {
     const getAllUserInfo = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8080/userDetail/all"
+          `http://${API_ADDRESS}:8080/userDetail/all`
         );
         setAddress(response.data);
         if (response.data.length > 0) {
@@ -81,7 +81,7 @@ function ProductCheckout() {
       className: "my-notification-class",
       loading: true,
     });
-    await axios.post("http://127.0.0.1:8080/order/create", {
+    await axios.post(`http://${API_ADDRESS}:8080/order/create`, {
       firstName: userInfo?.accountDetail.firstName,
       lastName: userInfo?.accountDetail.lastName,
       phoneNumber: userInfo?.accountDetail.phoneNumber,
@@ -100,7 +100,7 @@ function ProductCheckout() {
     });
     if (userInfo?.accountDetail.id === -1) {
       const response = await axios.post(
-        "http://127.0.0.1:8080/userDetail/create",
+        `http://${API_ADDRESS}:8080/userDetail/create`,
         {
           firstName: userInfo?.accountDetail.firstName,
           lastName: userInfo?.accountDetail.lastName,
@@ -113,7 +113,7 @@ function ProductCheckout() {
       );
       if (address?.length === 0) {
         await axios.patch(
-          `http://127.0.0.1:8080/userDetail/${response.data.id}/default`
+          `http://${API_ADDRESS}:8080/userDetail/${response.data.id}/default`
         );
       }
     }
@@ -142,7 +142,7 @@ function ProductCheckout() {
       loading: true,
     });
     const paymentResponse = await axios.post(
-      "http://127.0.0.1:8080/api/v1/pay",
+      `http://${API_ADDRESS}:8080/api/v1/pay`,
       {
         firstName: userInfo?.accountDetail.firstName,
         lastName: userInfo?.accountDetail.lastName,
@@ -166,7 +166,7 @@ function ProductCheckout() {
     window.open(paymentResponse.data.url, "_blank")!!.focus();
     if (userInfo?.accountDetail.id === -1) {
       const response = await axios.post(
-        "http://127.0.0.1:8080/userDetail/create",
+        `http://${API_ADDRESS}:8080/userDetail/create`,
         {
           firstName: userInfo?.accountDetail.firstName,
           lastName: userInfo?.accountDetail.lastName,
@@ -179,7 +179,7 @@ function ProductCheckout() {
       );
       if (address?.length === 0) {
         await axios.patch(
-          `http://127.0.0.1:8080/userDetail/${response.data.id}/default`
+          `http://${API_ADDRESS}:8080/userDetail/${response.data.id}/default`
         );
       }
     }
@@ -189,7 +189,7 @@ function ProductCheckout() {
     if (orderId) {
       timerId = setInterval(async () => {
         const paymentInfo = await axios.get(
-          `http://localhost:8080/order/getOrderDetail?id=${orderId}`
+          `http://${API_ADDRESS}:8080/order/getOrderDetail?id=${orderId}`
         );
         if (paymentInfo.data.paymentStatus !== "PENDING") {
           clearInterval(timerId);

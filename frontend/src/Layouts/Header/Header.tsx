@@ -47,20 +47,14 @@ const Header = () => {
         ) : (
           <div className={styled["user-login"]}>
             <Link to={PATHS.CART}>
-              <div className="cart">
-                <button
-                  title="cart-btn"
-                  type="button"
-                  className={styled["button-cart"]}
-                >
-                  <Avatar src="/img/Button.png" />
-                </button>
-              </div>
+              <button type="button" className={styled["button-cart"]}>
+                <Avatar src="/img/Button.png" size={"lg"} />
+              </button>
             </Link>
             <Menu opened={opened} onChange={setOpened}>
               <Menu.Target>
                 <div className={styled["logo-user"]}>
-                  <Avatar src="/img/Avatar.png" alt="it's me" />
+                  <Avatar src="/img/Avatar.png" alt="it's me" size={"lg"} />
                 </div>
               </Menu.Target>
               <Menu.Dropdown>

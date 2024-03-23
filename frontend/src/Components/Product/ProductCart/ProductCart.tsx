@@ -1,10 +1,11 @@
-import { Button, Text, rem } from "@mantine/core";
+import { Button, MantineProvider, Text, rem } from "@mantine/core";
 import { ModalsProvider, modals } from "@mantine/modals";
 import { IconMinus, IconPlus, IconX } from "@tabler/icons-react";
-import { CartItem, useShopingContext } from "../../Context/ShoppingContext";
-import formatPrice from "../../Helper/formatPrice";
+import { CartItem, useShopingContext } from "../../../Context/ShoppingContext";
+import formatPrice from "../../../Helper/formatPrice";
 import { notifications } from "@mantine/notifications";
-
+import API_ADDRESS from "../../../Api_Address";
+import styled from ".//ProductCart.module.css";
 function ProductCarts() {
   const { cartItems, increaseQty, decreaseQty, removeCartItem, checkCart } =
     useShopingContext();
@@ -29,25 +30,31 @@ function ProductCarts() {
     <>
       {cartItems.map((item) => {
         return (
-          <div key={item.id} className="productcart-item">
-            <div className="productcart-item-img">
+          <div key={item.id} className={styled["product-cart__item"]}>
+            <div className={styled["product-cart__item-img"]}>
               <img
                 style={{ width: "94px", height: "94px" }}
-                src={`http://127.0.0.1:8080/product/get-file?filePath=${item.thumbnailUri}`}
+                src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${item.thumbnailUri}`}
                 alt=""
               />
             </div>
-            <div className="productcart-info">
-              <div className="productcart-name">{item.productName}</div>
-              <span className="productcart-color">Màu sắc: Black</span>
-              <span className="productcart-fix">Sửa</span>
+            <div className={styled["product-cart__info"]}>
+              <div className={styled["product-cart__name"]}>
+                {item.productName}
+              </div>
+              <span className={styled["product-cart--color"]}>
+                Màu sắc: Black
+              </span>
+              <span className={styled["product-cart--fix"]}>Sửa</span>
             </div>
-            <span className="productcart-price">{formatPrice(item.price)}</span>
-            <div className="productcart">
+            <span className={styled["product-cart__price"]}>
+              {formatPrice(item.price)}
+            </span>
+            <div className={styled["product-cart"]}>
               <Button
                 style={{ width: "36px" }}
                 className="button-plus"
-                disabled = {!checkCart(item.id, item.stock) ? true : false}
+                disabled={!checkCart(item.id, item.stock) ? true : false}
                 onClick={() => {
                   increaseQty(item.id);
                 }}
@@ -60,7 +67,9 @@ function ProductCarts() {
                   />
                 }
               />
-              <div className="productcart-quality">{item.quantity}</div>
+              <div className={styled["product-cart__quality"]}>
+                {item.quantity}
+              </div>
               <Button
                 style={{ width: "36px" }}
                 className="button-minus"
@@ -72,20 +81,21 @@ function ProductCarts() {
                 }
               />
             </div>
-            <img
-              onClick={() => {
-                openDeleteModal(item);
-              }}
-              src="/img/delete.png"
-              alt=""
-              className="productcart-delete"
-            />
+            <MantineProvider>
+              <ModalsProvider>
+                <img
+                  onClick={() => {
+                    openDeleteModal(item);
+                  }}
+                  src="/img/delete.png"
+                  alt=""
+                  className={styled["product-cart__delete"]}
+                />
+              </ModalsProvider>
+            </MantineProvider>
           </div>
         );
       })}
-      <ModalsProvider>
-
-      </ModalsProvider>
     </>
   );
 }

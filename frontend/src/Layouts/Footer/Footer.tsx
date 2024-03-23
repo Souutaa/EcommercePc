@@ -11,7 +11,7 @@ function Footer() {
             <div className={styled["info-left"]}>
               <div className={styled["introduction"]}>
                 <div className={styled["introduction-logo"]}>
-                  <img src="./img/Logo.svg" alt="" />
+                  <img src="/img/logo.svg" alt="" />
                 </div>
                 <span className={styled["introduction-text"]}>
                   Lorem ipsum dolor sit amet consectetur. Id lobortis

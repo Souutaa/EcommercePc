@@ -12,7 +12,7 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import formatPrice from "../../Helper/formatPrice";
 import ChangeMail from "../../Components/ChangeMail/ChangePass";
-
+import API_ADDRESS from "../../Api_Address";
 export interface OrderItem {
   productName: string;
   productLine: string;
@@ -49,7 +49,7 @@ function InfoOrder() {
   useEffect(() => {
     const fetchOrder = async () => {
       const response = await axios.get(
-        `http://127.0.0.1:8080/order/getOrderDetail?id=${orderId}`
+        `http://${API_ADDRESS}:8080/order/getOrderDetail?id=${orderId}`
       );
       const data = await response.data;
       console.log(data);
@@ -73,7 +73,7 @@ function InfoOrder() {
   }, [orderId]);
 
   const handleCancelOrder = async () => {
-    await axios.patch("http://127.0.0.1:8080/order/update-status", {
+    await axios.patch(`http://${API_ADDRESS}:8080/order/update-status`, {
       orderId,
       orderStatus: "CANCELED",
     });

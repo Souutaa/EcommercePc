@@ -1,7 +1,8 @@
 import { useShopingContext } from "../../Context/ShoppingContext";
 import formatPrice from "../../Helper/formatPrice";
+import styled from ".//Total.module.css";
 
-function  Total() {
+function Total() {
   const {
     cartItems,
     totalPrice,
@@ -14,20 +15,33 @@ function  Total() {
   const total = totalPrice - totalDiscount;
   return (
     <>
-      <div className="productcart-detail">
-        <div className="productcart-total">
-          <span className="productcart-texts">Tổng</span>
-          <span className="productcart-number">{formatPrice(totalPrice)}</span>
+      <div className={styled["product-cart__detail"]}>
+        <div className={styled["product-cart__total"]}>
+          <span className={styled["product-cart__texts"]}>Tổng</span>
+          <span className={styled["product-cart__number"]}>
+            {formatPrice(totalPrice)}
+          </span>
         </div>
-        <div className="productcart-sale-all">
-          <span className="productcart-texts">Giảm giá</span>
-          <span className="productcart-number-sale">
+        <div className={styled["product-cart__sale-all"]}>
+          <span className={styled["product-cart__texts"]}>Giảm giá</span>
+          <span className={styled["product-cart__number--sale"]}>
             -{formatPrice(totalDiscount)}
           </span>
         </div>
-        <div className="productcart-total-all">
-          <span className="productcart-text">Tổng cộng:</span>
-          <span className="productcart-number-total">{formatPrice(total)}</span>
+        <div className={styled["product-cart__total--all"]}>
+          <span
+            className={styled["product-cart__texts"]}
+            style={{
+              fontSize: "2rem",
+              fontWeight: "700",
+              color: "var(--gray-800, #1f2a37)",
+            }}
+          >
+            Tổng cộng:
+          </span>
+          <span className={styled["product-cart__number--total"]}>
+            {formatPrice(total)}
+          </span>
         </div>
       </div>
     </>

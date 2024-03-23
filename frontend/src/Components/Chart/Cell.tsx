@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { Legend, RadialBar, RadialBarChart, Tooltip } from "recharts";
 import { AdminOrder } from "../../PagesAdmin/OrderAdmin";
+import API_ADDRESS from "../../Api_Address";
 const initPieChart = [
   {
     name: "Đã giao",
@@ -40,7 +41,9 @@ const Cell = (props: { date: Date | null }) => {
   const [pieChartData, setPieChartData] = useState(initPieChart);
 
   const fetchOrders = useCallback(async () => {
-    const response = await axios.get("http://127.0.0.1:8080/order/getAllOrder");
+    const response = await axios.get(
+      `http://${API_ADDRESS}:8080/order/getAllOrder`
+    );
     setOrders(response.data);
   }, []);
 
@@ -117,7 +120,7 @@ const Cell = (props: { date: Date | null }) => {
       },
     ]);
   }, [orders, props.date]);
-  
+
   return (
     <RadialBarChart
       width={400}

@@ -7,6 +7,7 @@ import { PATHS } from "../../Constants/path";
 import { useEffect, useRef, useState } from "react";
 import { useAuthContext } from "../../Context/AuthContext";
 import { useFocusTrap } from "@mantine/hooks";
+import styled from ".//LoginPage.module.css";
 
 const images = [
   "/img/Carousel1.png",
@@ -48,14 +49,16 @@ function SignIn() {
 
   return (
     <MantineProvider>
-      <div className="modal">
-        <div className="modal-carousel">
-          <Carousel withIndicators>{slides}</Carousel>
+      <div className={styled.modal}>
+        <div className={styled["modal-carousel"]}>
+          <Carousel withIndicators height={"65rem"}>
+            {slides}
+          </Carousel>
         </div>
-        <div className="modal-login">
-          <h2 className="login-text">Đăng Nhập</h2>
+        <div className={styled["modal-login"]}>
+          <h2 className={styled["login-text"]}>Đăng Nhập</h2>
 
-          <form className="modal-form-login" action="">
+          <form className={styled["modal-form-login"]} action="">
             <div className="form-group">
               <label className="form-text" htmlFor="">
                 Tài khoản
@@ -118,7 +121,9 @@ function SignIn() {
               </div>
             </div>
             <div className="form-group">
-              <h3 className="text-noaccount">Bạn chưa có tài khoản?</h3>
+              <h3 className={styled["text-noaccount"]}>
+                Bạn chưa có tài khoản?
+              </h3>
               <Link to={PATHS.LOGIN.SIGNUP}>
                 <Button className="button-signin" style={{ width: "100%" }}>
                   Đăng ký ngay
