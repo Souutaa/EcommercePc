@@ -19,6 +19,7 @@ import { PATHS } from "../../Constants/path";
 import ChangePass from "../../Components/ChangePass/ChangePass";
 import ChangeMail from "../../Components/ChangeMail/ChangePass";
 import API_ADDRESS from "../../Api_Address";
+import styled from ".//InfoUser.module.css";
 export interface UserInformation {
   accountDetail: {
     city: string;
@@ -136,34 +137,33 @@ function InfoUser() {
     <>
       <div className="container">
         <Breadcrumbs />
-        <div className="infouser-content">
+        <div className="infouser-content div-8-col" style={{ gap: "4rem" }}>
           <div className="infouser-sidebar">
             <div className="infouser-avatar">
-              <Avatar style={{ marginTop: "20px" }}></Avatar>
-              <div className="margin-right">
-                <UserInfor />
-              </div>
+              <Avatar size={"lg"} style={{ marginTop: "20px" }}></Avatar>
+              <UserInfor />
             </div>
             <UserOder />
             <ChangePass />
-            <div style={{ marginTop: "15px" }}>
-              <ChangeMail />
-            </div>
+            <ChangeMail />
           </div>
-          <div className="infouser-container">
-            <Flex style={{ width: "100%" }} justify={"space-between"}>
-              <h3 className="infouser-title mb-20">Hồ sơ của tôi</h3>
+          <div className={styled["info-user__container"]}>
+            <Flex
+              style={{ width: "100%", padding: "1.6rem 3rem " }}
+              justify={"space-between"}
+              align={"center"}
+            >
+              <h3 className="infouser-title">Hồ sơ của tôi</h3>
               <Btn
                 maintine="a"
                 customStyle={{
                   alignSelf: "center",
                   justifySelf: "flex-end",
                 }}
-                style={{
-                  margin: "20px 40px 10px 0",
-                }}
+                style={{}}
                 color="#12e17b"
                 onClick={() => {
+                  console.log(PATHS);
                   navigate(PATHS.ADDUSERINFO);
                 }}
               >
@@ -173,12 +173,14 @@ function InfoUser() {
             <Divider></Divider>
             <form action="" onSubmit={handleSubmitChange}>
               <div
-                className="infouser-input"
+                className={styled["info-user__wrapper"]}
                 style={{ width: "100%", display: "flex", columnGap: "5%" }}
               >
                 <div style={{ flex: "1 1 50%" }}>
-                  <span className="productcheckput-text">Địa chỉ:</span>
+                  <span className={styled["info-user__label"]}>Địa chỉ:</span>
                   <NativeSelect
+                    size="lg"
+                    radius={"md"}
                     style={{ width: "100%" }}
                     placeholder="Native select"
                     data={address?.map((addr): ComboboxItem => {
@@ -207,8 +209,10 @@ function InfoUser() {
                   <Btn
                     maintine="a"
                     customStyle={{
-                      alignSelf: "flex-end",
+                      alignSelf: "start",
                       justifySelf: "flex-end",
+                      padding: ".4rem .8rem",
+                      fontSize: "1.2rem",
                     }}
                     onClick={() => {
                       if (userInfo) {
@@ -220,53 +224,55 @@ function InfoUser() {
                   </Btn>
                 )}
               </div>
-              <div className="infouser-input">
-                <>
-                  <div className="productcheckout-grid">
-                    <div className="productcheckout-grid-input">
-                      <span className="productcheckput-text">
-                        Họ và tên đệm:
-                      </span>
-                      <Input.Wrapper style={{ marginRight: "8px" }}>
-                        <Input
-                          placeholder="Nguyễn"
-                          value={userInfo?.accountDetail.firstName}
-                          onChange={(e) => {
-                            if (userInfo)
-                              setUserInfo({
-                                accountDetail: {
-                                  ...userInfo.accountDetail,
-                                  firstName: e.target.value,
-                                },
-                                username: userInfo.username,
-                              });
-                          }}
-                          disabled={isEditing ? false : true}
-                        />
-                      </Input.Wrapper>
-                    </div>
-                    <div className="productcheckout-grid-input">
-                      <span className="productcheckput-text">Tên:</span>
-                      <Input.Wrapper style={{ marginLeft: "8px" }}>
-                        <Input
-                          placeholder="Lương"
-                          value={userInfo?.accountDetail.lastName}
-                          onChange={(e) => {
-                            if (userInfo)
-                              setUserInfo({
-                                accountDetail: {
-                                  ...userInfo.accountDetail,
-                                  lastName: e.target.value,
-                                },
-                                username: userInfo.username,
-                              });
-                          }}
-                          disabled={isEditing ? false : true}
-                        />
-                      </Input.Wrapper>
-                    </div>
+              <div className={styled["info-user__wrapper"]}>
+                <div className={styled["info-user__wrapper-2-col"]}>
+                  <div className={styled["info-user__form-group"]}>
+                    <span className={styled["info-user__label"]}>
+                      Họ và tên đệm:
+                    </span>
+                    <Input.Wrapper>
+                      <Input
+                        size="lg"
+                        radius={"md"}
+                        placeholder="Nguyễn"
+                        value={userInfo?.accountDetail.firstName}
+                        onChange={(e) => {
+                          if (userInfo)
+                            setUserInfo({
+                              accountDetail: {
+                                ...userInfo.accountDetail,
+                                firstName: e.target.value,
+                              },
+                              username: userInfo.username,
+                            });
+                        }}
+                        disabled={isEditing ? false : true}
+                      />
+                    </Input.Wrapper>
                   </div>
-                </>
+                  <div className={styled["info-user__form-group"]}>
+                    <span className={styled["info-user__label"]}>Tên:</span>
+                    <Input.Wrapper>
+                      <Input
+                        size="lg"
+                        radius={"md"}
+                        placeholder="Lương"
+                        value={userInfo?.accountDetail.lastName}
+                        onChange={(e) => {
+                          if (userInfo)
+                            setUserInfo({
+                              accountDetail: {
+                                ...userInfo.accountDetail,
+                                lastName: e.target.value,
+                              },
+                              username: userInfo.username,
+                            });
+                        }}
+                        disabled={isEditing ? false : true}
+                      />
+                    </Input.Wrapper>
+                  </div>
+                </div>
                 <InputGrib4
                   provinceCode={userInfo?.accountDetail.city ?? ""}
                   districtCode={userInfo?.accountDetail.district ?? ""}
@@ -275,27 +281,32 @@ function InfoUser() {
                   userInfo={userInfo}
                   isEditing={isEditing}
                 />
+                <div className={styled["info-user__form-group"]}>
+                  <span className={styled["info-user__label"]}>
+                    Địa chỉ chi tiết:
+                  </span>
+                  <Input.Wrapper>
+                    <Input
+                      size="lg"
+                      radius={"md"}
+                      placeholder="208 Trần Bình Trọng"
+                      value={userInfo?.accountDetail.detailedAddress}
+                      disabled={isEditing ? false : true}
+                      onChange={(e) => {
+                        if (userInfo)
+                          setUserInfo({
+                            accountDetail: {
+                              ...userInfo.accountDetail,
+                              detailedAddress: e.target.value,
+                            },
+                            username: userInfo.username,
+                          });
+                      }}
+                    />
+                  </Input.Wrapper>
+                </div>
               </div>
-              <div className="infouser-input">
-                <span className="infouser-text-input">Địa chỉ chi tiết:</span>
-                <Input.Wrapper>
-                  <Input
-                    placeholder="208 Trần Bình Trọng"
-                    value={userInfo?.accountDetail.detailedAddress}
-                    disabled={isEditing ? false : true}
-                    onChange={(e) => {
-                      if (userInfo)
-                        setUserInfo({
-                          accountDetail: {
-                            ...userInfo.accountDetail,
-                            detailedAddress: e.target.value,
-                          },
-                          username: userInfo.username,
-                        });
-                    }}
-                  />
-                </Input.Wrapper>
-              </div>
+
               {!isEditing ? (
                 <Button
                   onClick={(e) => {

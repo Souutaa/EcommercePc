@@ -68,10 +68,8 @@ const ChangeMailUser = () => {
       <div className="infouser-content">
         <div className="infouser-sidebar">
           <div className="infouser-avatar">
-            <Avatar style={{ marginTop: "20px" }}></Avatar>
-            <div className="margin-right">
-              <UserInfor />
-            </div>
+            <Avatar size={"lg"} style={{ marginTop: "20px" }}></Avatar>
+            <UserInfor />
           </div>
           <UserOder />
           <ChangePass />
@@ -79,7 +77,7 @@ const ChangeMailUser = () => {
             <ChangeMail />
           </div>
         </div>
-        <div className="infouser-container">
+        <div className="info-user__container">
           <h3 className="infouser-title mb-20">Thay đổi mail</h3>
           <Divider />
           <div className="change-pass-content">
@@ -89,6 +87,8 @@ const ChangeMailUser = () => {
               error="Vui lòng nhập ***@*mail.com"
             >
               <Input
+                size="lg"
+                radius={"md"}
                 placeholder="Nhập mail cũ"
                 inputMode="email"
                 onChange={(e) => {
@@ -111,6 +111,8 @@ const ChangeMailUser = () => {
               error="Vui lòng nhập ***@*mail.com"
             >
               <Input
+                size="lg"
+                radius={"md"}
                 placeholder="Nhập mail mới"
                 inputMode="email"
                 onChange={(e) => {
@@ -122,6 +124,8 @@ const ChangeMailUser = () => {
             <Input.Wrapper mt="md" label="Mã xác nhận">
               <div className="pin-center">
                 <PinInput
+                  size="lg"
+                  radius={"md"}
                   length={6}
                   mt="md"
                   onChange={(e) => {

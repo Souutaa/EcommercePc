@@ -15,10 +15,10 @@ function ProductCart() {
     <>
       {localStorage.getItem("shopping_cart")?.localeCompare("[]") ? (
         <>
-          <div className="container">
+          <div className="container ">
             <Breadcrumbs />
-            <div className={styled["product-cart"]}>
-              <div className={styled["product-cart--left"]}>
+            <div className={`${styled["product-cart"]} div-8-col`}>
+              <div className={`${styled["product-cart--left"]}`}>
                 <CartText />
                 <ProductCarts />
               </div>
@@ -31,7 +31,10 @@ function ProductCart() {
                   />
                   <Btn
                     maintine="a"
-                    customStyle={{ marginTop: "16px" }}
+                    customStyle={{
+                      padding: "0 1.2rem ",
+                      lineHeight: "3.2rem",
+                    }}
                     color="#E5E7EB"
                   >
                     Thêm
@@ -42,6 +45,7 @@ function ProductCart() {
                   <div className={styled["product-cart__provision"]}>
                     <Checkbox
                       defaultChecked
+                      size="md"
                       label="Tôi đã đọc và đồng ý với điều khoản và điều kiện của website"
                     />
                   </div>

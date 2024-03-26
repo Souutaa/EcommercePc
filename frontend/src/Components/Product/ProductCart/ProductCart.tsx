@@ -1,6 +1,6 @@
-import { Button, MantineProvider, Text, rem } from "@mantine/core";
+import { Button, Divider, MantineProvider, Text, rem } from "@mantine/core";
 import { ModalsProvider, modals } from "@mantine/modals";
-import { IconMinus, IconPlus, IconX } from "@tabler/icons-react";
+import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { CartItem, useShopingContext } from "../../../Context/ShoppingContext";
 import formatPrice from "../../../Helper/formatPrice";
 import { notifications } from "@mantine/notifications";
@@ -30,10 +30,13 @@ function ProductCarts() {
     <>
       {cartItems.map((item) => {
         return (
-          <div key={item.id} className={styled["product-cart__item"]}>
+          <div
+            key={item.id}
+            className={`${styled["product-cart__item"]} div-16-col`}
+          >
             <div className={styled["product-cart__item-img"]}>
               <img
-                style={{ width: "94px", height: "94px" }}
+                style={{ width: "100%", height: "auto", borderRadius: ".4rem" }}
                 src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${item.thumbnailUri}`}
                 alt=""
               />
@@ -45,34 +48,30 @@ function ProductCarts() {
               <span className={styled["product-cart--color"]}>
                 Màu sắc: Black
               </span>
-              <span className={styled["product-cart--fix"]}>Sửa</span>
             </div>
             <span className={styled["product-cart__price"]}>
               {formatPrice(item.price)}
             </span>
-            <div className={styled["product-cart"]}>
+            <div className={styled["product-cart__quality"]}>
               <Button
-                style={{ width: "36px" }}
+                style={{
+                  width: "2.4rem",
+                }}
                 className="button-plus"
+                radius={"sm"}
                 disabled={!checkCart(item.id, item.stock) ? true : false}
                 onClick={() => {
                   increaseQty(item.id);
                 }}
-                leftSection={
-                  <IconPlus
-                    style={{
-                      width: rem(12),
-                      height: rem(12),
-                    }}
-                  />
-                }
+                leftSection={<IconPlus size={12} />}
               />
-              <div className={styled["product-cart__quality"]}>
+              <div className={styled["product-cart__quality--number"]}>
                 {item.quantity}
               </div>
               <Button
-                style={{ width: "36px" }}
+                style={{ width: "2.4rem" }}
                 className="button-minus"
+                radius={"sm"}
                 onClick={() => {
                   decreaseQty(item.id);
                 }}
@@ -93,6 +92,7 @@ function ProductCarts() {
                 />
               </ModalsProvider>
             </MantineProvider>
+            <Divider style={{ gridColumn: "1/-1" }}></Divider>
           </div>
         );
       })}

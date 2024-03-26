@@ -1,13 +1,21 @@
 import styled from ".//CartText.module.css";
 function CartText() {
   return (
-    <div className={` ${styled["product-cart__text"]} grid-4-col`}>
-      <span style={{ width: "", textAlign: "left" }}>Hình ảnh</span>
-      <span style={{ width: "", textAlign: "left" }}>Tên sản phẩm</span>
-      <span style={{ width: "", textAlign: "left" }}>Giá bán</span>
-      <span style={{ width: "100px", textAlign: "left", marginRight: "70px" }}>
+    <div className={`${styled["product-cart__text"]} div-16-col`}>
+      <span style={{ textAlign: "left", gridColumn: "1/4" }}>Hình ảnh</span>
+      <span style={{ textAlign: "left", gridColumn: "4/10" }}>
+        Tên sản phẩm
+      </span>
+      <span style={{ textAlign: "left", gridColumn: "10/13" }}>Giá bán</span>
+      <span
+        style={{
+          textAlign: "left",
+          gridColumn: "13/16",
+        }}
+      >
         Số lượng
       </span>
+      <span style={{ textAlign: "left", gridColumn: "16/17" }}></span>
     </div>
   );
 }

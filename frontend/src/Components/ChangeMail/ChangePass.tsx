@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const ChangeMail = () => {
   return (
-    <div className="change-pass-user">
+    <div className="change-pass-user" style={{ marginTop: "1.2rem" }}>
       <Link
         className="change-pass-users"
         style={{ textDecoration: "none" }}

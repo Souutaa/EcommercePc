@@ -26,7 +26,11 @@ function SignIn() {
   const slides = images.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
-        <img alt="" src={url} />
+        <img
+          alt=""
+          src={url}
+          style={{ width: "100%", height: "auto", objectFit: "fill" }}
+        />
       </Carousel.Slide>
     );
   });
@@ -51,7 +55,13 @@ function SignIn() {
     <MantineProvider>
       <div className={styled.modal}>
         <div className={styled["modal-carousel"]}>
-          <Carousel withIndicators height={"65rem"}>
+          <Carousel
+            withIndicators
+            align={"center"}
+            height={"56rem"}
+            controlSize={56}
+            style={{ fontSize: "2.4rem", borderRadius: "1.2rem" }}
+          >
             {slides}
           </Carousel>
         </div>
@@ -65,6 +75,8 @@ function SignIn() {
               </label>
               <Input.Wrapper error={errorHandleInputUsername}>
                 <Input
+                  size="xl"
+                  radius={"lg"}
                   error={errorHandleInputUsername}
                   placeholder="abc@gmail.com"
                   onChange={(e) => {
@@ -80,6 +92,8 @@ function SignIn() {
                 Mật khẩu
               </label>
               <PasswordInput
+                size="xl"
+                radius={"lg"}
                 error={errorHandleInputPass}
                 placeholder="Nhập mật khẩu"
                 onChange={(e) => {
@@ -91,6 +105,8 @@ function SignIn() {
 
             <div className="form-group">
               <Button
+                size="xl"
+                radius={"lg"}
                 onClick={(e) => {
                   localStorage.removeItem("accessToken");
                   authContext.login({ username, password });
@@ -121,11 +137,16 @@ function SignIn() {
               </div>
             </div>
             <div className="form-group">
-              <h3 className={styled["text-noaccount"]}>
+              <h3 className={styled["text-no-account"]}>
                 Bạn chưa có tài khoản?
               </h3>
               <Link to={PATHS.LOGIN.SIGNUP}>
-                <Button className="button-signin" style={{ width: "100%" }}>
+                <Button
+                  className="button-signin"
+                  style={{ width: "100%" }}
+                  size="xl"
+                  radius={"lg"}
+                >
                   Đăng ký ngay
                 </Button>
               </Link>

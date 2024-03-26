@@ -67,6 +67,7 @@ const Header = () => {
                         style={{
                           textDecoration: "none",
                           color: "#333",
+                          fontSize: "1.4rem",
                         }}
                         to={"/admin"}
                       >
@@ -81,11 +82,15 @@ const Header = () => {
                 <Seaparator />
                 <Menu.Item
                   color="red"
+                  style={{
+                    fontSize: "1.4rem",
+                    lineHeight: "2.4rem",
+                  }}
                   leftSection={
                     <IconLogout
                       style={{
-                        width: rem(14),
-                        height: rem(14),
+                        width: "2rem",
+                        height: "2rem",
                       }}
                     />
                   }

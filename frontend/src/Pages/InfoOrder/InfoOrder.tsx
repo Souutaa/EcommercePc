@@ -13,6 +13,7 @@ import axios from "axios";
 import formatPrice from "../../Helper/formatPrice";
 import ChangeMail from "../../Components/ChangeMail/ChangePass";
 import API_ADDRESS from "../../Api_Address";
+import styled from ".//InfoOrder.module.css";
 export interface OrderItem {
   productName: string;
   productLine: string;
@@ -90,9 +91,9 @@ function InfoOrder() {
     <>
       <div className="container">
         <Breadcrumbs />
-        <div className="infouser-content">
-          <div className="infouser-sidebar">
-            <div className="infouser-avatar">
+        <div className="info-user__content">
+          <div className="info-user__sidebar">
+            <div className="info-user__avatar">
               <Avatar style={{ marginTop: "20px" }}></Avatar>
               <div className="margin-right">
                 <UserInfor />
@@ -104,8 +105,8 @@ function InfoOrder() {
               <ChangeMail />
             </div>
           </div>
-          <div className="infoorder-container">
-            <div className="infoorder-detail">
+          <div className={styled["info-order__container"]}>
+            <div className={styled["info-order__detail"]}>
               <Flex
                 align={"center"}
                 justify={"space-between"}

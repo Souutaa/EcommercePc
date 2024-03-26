@@ -31,7 +31,6 @@ const Btn: React.FC<ButtonProps> = ({
       size="md"
       radius={"lg"}
       style={{
-        ...customStyle,
         background: "#1c64f2",
         color: "#ffffff",
         border: "none",
@@ -39,6 +38,7 @@ const Btn: React.FC<ButtonProps> = ({
         padding: "1.2rem 1.4rem",
         lineHeight: "16px",
         height: "100%",
+        ...customStyle,
       }}
       className={`${clsName ? clsName : ""}`}
       {...rest}

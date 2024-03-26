@@ -6,7 +6,7 @@ import { useState } from "react";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import API_ADDRESS from "../../Api_Address";
-
+import styled from ".//LoginPage.module.css";
 function ChangePassword() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -81,14 +81,16 @@ function ChangePassword() {
 
   return (
     <>
-      <form className="modal-form-signin" action="">
-        <h2 className="text-signin">Đổi mật khẩu</h2>
-        <div className="form-signin">
+      <form className={styled["modal-form-sign-in"]} action="">
+        <h2 className={styled["text-sign-in"]}>Đổi mật khẩu</h2>
+        <div className={styled["form-sign-in"]}>
           <div className="form-group">
             <label className="form-text " htmlFor="">
               Mật khẩu mới
             </label>
             <PasswordInput
+              size="xl"
+              radius={"lg"}
               error={errorHandleInputPass}
               placeholder="Nhập mật khẩu mới"
               onChange={(e) => {
@@ -102,6 +104,8 @@ function ChangePassword() {
               Xác nhận mật khẩu mới
             </label>
             <PasswordInput
+              size="xl"
+              radius={"lg"}
               error={errorHandleInputPassConfirm}
               placeholder="Nhập lại mật khẩu mới"
               onChange={(e) => {
@@ -112,7 +116,13 @@ function ChangePassword() {
           </div>
 
           <div className="form-group margin-bottom">
-            <Button onClick={async () => forgetPassword()}>Xác nhận</Button>
+            <Button
+              size="xl"
+              radius={"lg"}
+              onClick={async () => forgetPassword()}
+            >
+              Xác nhận
+            </Button>
           </div>
         </div>
       </form>

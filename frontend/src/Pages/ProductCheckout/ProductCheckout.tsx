@@ -25,6 +25,8 @@ import { useAuthContext } from "../../Context/AuthContext";
 import { IconCheck, IconCross, IconLoader } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import API_ADDRESS from "../../Api_Address";
+import styled from ".//ProductCheckout.module.css";
+
 function ProductCheckout() {
   const auth = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
@@ -247,15 +249,17 @@ function ProductCheckout() {
     <>
       <div className="container">
         <Breadcrumbs />
-        <div className="productcheckout-title">
+        <div className={styled["product-checkout__title"]}>
           <h1> Thông tin thanh toán</h1>
         </div>
-        <div className="productcheckout-body">
-          <div className="productcheckout-left">
+        <div className={`${styled["product-checkout__body"]} div-8-col`}>
+          <div className={styled["product-checkout__left"]}>
             {address && address.length > 0 && (
               <div style={{ width: "100%", display: "flex", columnGap: "5%" }}>
                 <div style={{ flex: "1 1 50%" }}>
-                  <span className="productcheckput-text">Địa chỉ:</span>
+                  <span className={styled["product-checkout__text"]}>
+                    Địa chỉ:
+                  </span>
                   <NativeSelect
                     style={{ width: "100%" }}
                     placeholder="Native select"
@@ -332,12 +336,19 @@ function ProductCheckout() {
                 </Flex>
               </div>
             )}
-            <form action="">
-              <div className="productcheckout-grid">
-                <div className="productcheckout-grid-input">
-                  <span className="productcheckput-text">Họ và tên đệm:</span>
+            <form
+              action=""
+              style={{ width: "100%", display: "grid", gap: "1.2rem" }}
+            >
+              <div className={styled["product-checkout__grid"]}>
+                <div className={styled["product-checkout__grid-input"]}>
+                  <span className={styled["product-checkout__text"]}>
+                    Họ và tên đệm:
+                  </span>
                   <Input.Wrapper style={{ marginRight: "8px" }}>
                     <Input
+                      size="lg"
+                      radius={"md"}
                       placeholder="Nguyễn"
                       value={userInfo?.accountDetail.firstName}
                       onChange={(e) => {
@@ -353,10 +364,12 @@ function ProductCheckout() {
                     />
                   </Input.Wrapper>
                 </div>
-                <div className="productcheckout-grid-input">
-                  <span className="productcheckput-text">Tên:</span>
-                  <Input.Wrapper style={{ marginLeft: "8px" }}>
+                <div className={styled["product-checkout__grid-input"]}>
+                  <span className={styled["product-checkout__text"]}>Tên:</span>
+                  <Input.Wrapper>
                     <Input
+                      size="lg"
+                      radius={"md"}
                       placeholder="Lương"
                       value={userInfo?.accountDetail.lastName}
                       onChange={(e) => {
@@ -383,10 +396,14 @@ function ProductCheckout() {
                   isEditing={true}
                 />
               )}
-              <div className="productcheckout-input">
-                <span className="productcheckput-text">Địa chỉ chi tiết:</span>
+              <div className={styled["product-checkout__input"]}>
+                <span className={styled["product-checkout__text"]}>
+                  Địa chỉ chi tiết:
+                </span>
                 <Input.Wrapper>
                   <Input
+                    size="lg"
+                    radius={"md"}
                     placeholder="Số nhà, tên đường, xã, phường, thị trấn,..."
                     value={userInfo?.accountDetail.detailedAddress}
                     onChange={(e) => {
@@ -402,31 +419,35 @@ function ProductCheckout() {
                   />
                 </Input.Wrapper>
               </div>
-              <div className="productcheckout-input">
-                <span className="productcheckput-text">Ghi chú:</span>
+              <div className={styled["product-checkout__input"]}>
+                <span className={styled["product-checkout__text"]}>
+                  Ghi chú:
+                </span>
                 <Input.Wrapper>
                   <Input
+                    size="lg"
+                    radius={"md"}
                     placeholder="Ghi chú cho shipper"
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                   />
                 </Input.Wrapper>
               </div>
-              <div className="productcheckout-receive">
-                <span className="productcheckput-text">
+              <div className={styled["product-checkout__receive"]}>
+                <span className={styled["product-checkout__text"]}>
                   Hình thức nhận hàng:
                 </span>
-                <div className="productcheckout-radio">
+                <div className={styled["product-checkout__radio"]}>
                   <Radio.Group name="favoriteFramework" withAsterisk>
                     <Group mt="xs">
-                      <Radio value="" label="Nhận tại cửa hàng" />
-                      <Radio value="" label="Giao hàng tận nơi" />
+                      <Radio value="" label="Nhận tại cửa hàng" size="lg" />
+                      <Radio value="" label="Giao hàng tận nơi" size="lg" />
                     </Group>
                   </Radio.Group>
                 </div>
               </div>
               <Divider my="sm" />
-              <div className="productcheckout-button">
+              <div className={styled["product-checkout__button"]}>
                 <Link to={PATHS.CART}>
                   <Btn
                     maintine="a"
@@ -467,10 +488,12 @@ function ProductCheckout() {
               </div>
             </form>
           </div>
-          <div className="productcheckout-right">
+          <div className={styled["product-checkout__right"]}>
             <CheckoutText />
+            <Divider style={{ width: "100%" }}></Divider>
             <CheckoutContent />
-            <div className="productcheckout-padding">
+            <Divider style={{ width: "100%" }}></Divider>
+            <div className={styled["product-checkout__padding"]}>
               <Total />
             </div>
           </div>

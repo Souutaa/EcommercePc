@@ -41,25 +41,23 @@ const ChangePassUser = () => {
   return (
     <div className="container">
       <Breadcrumbs />
-      <div className="infouser-content">
+      <div className="infouser-content div-8-col" style={{ gap: "4rem" }}>
         <div className="infouser-sidebar">
           <div className="infouser-avatar">
-            <Avatar style={{ marginTop: "20px" }}></Avatar>
-            <div className="margin-right">
-              <UserInfor />
-            </div>
+            <Avatar size={"lg"} style={{ marginTop: "20px" }}></Avatar>
+            <UserInfor />
           </div>
           <UserOder />
           <ChangePass />
-          <div style={{ marginTop: "15px" }}>
-            <ChangeMail />
-          </div>
+          <ChangeMail />
         </div>
-        <div className="infouser-container">
-          <h3 className="infouser-title mb-20">Thay đổi mật khẩu</h3>
+        <div className="info-user__container">
+          <h3 className="infouser-title">Thay đổi mật khẩu</h3>
           <Divider />
           <div className="change-pass-content">
             <PasswordInput
+              size="lg"
+              radius={"md"}
               onChange={(e) => {
                 setOldPassword(e.target.value);
               }}
@@ -69,6 +67,8 @@ const ChangePassUser = () => {
             />
             <Stack>
               <PasswordInput
+                size="lg"
+                radius={"md"}
                 style={{ textAlign: "left" }}
                 label="Mật khẩu mới"
                 defaultValue=".........."
@@ -79,6 +79,8 @@ const ChangePassUser = () => {
                 }}
               />
               <PasswordInput
+                size="lg"
+                radius={"md"}
                 style={{ textAlign: "left" }}
                 label="Nhập lại mật khẩu mới"
                 defaultValue=".........."

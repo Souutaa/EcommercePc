@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { UserInformation } from "../../Pages/InfoUser/InfoUser";
 import data from "./provinces.json";
+import styled from ".//InpurGrid.module.css";
 
 type Districts = {
   name: string;
@@ -35,15 +36,8 @@ function InputGrib4(props: props) {
   const [selectedProvince, setSelectedProvince] = useState(props.provinceCode);
   const [selectedDistrict, setSelectedDistrict] = useState(props.districtCode);
   useEffect(() => {
-    // const provinceAxios = axios.create({
-    // });
     const fetchProvices = async () => {
       try {
-        // const res = await provinceAxios.get(
-        //   "http://API_ADDRESS:8000/api/?depth=2"
-        // );
-        // const data = await res.data;
-        // const res = await fetch("http://API_ADDRESS:8000/api/?depth=2")
         const res = await fetch("./provinces.json").then((response) => {
           return response.json();
         });
@@ -61,11 +55,15 @@ function InputGrib4(props: props) {
   }, [props]);
   return (
     <>
-      <div className="productcheckout-grid">
-        <div className="productcheckout-grid-input">
-          <span className="productcheckput-text">Số điện thoại:</span>
-          <Input.Wrapper style={{ marginRight: "8px" }}>
+      <div className={styled["product-checkout__grid"]}>
+        <div className={styled["product-checkout__grid-input"]}>
+          <span className={styled["product-checkout__text"]}>
+            Số điện thoại:
+          </span>
+          <Input.Wrapper>
             <Input
+              size="lg"
+              radius={"md"}
               placeholder="0xx xxx xxxx"
               value={props.phoneNumber}
               disabled={props.isEditing ? false : true}
@@ -82,10 +80,12 @@ function InputGrib4(props: props) {
             />
           </Input.Wrapper>
         </div>
-        <div className="productcheckout-grid-input">
-          <span className="productcheckput-text">Email:</span>
-          <Input.Wrapper style={{ marginLeft: "8px" }}>
+        <div className={styled["product-checkout__grid-input"]}>
+          <span className={styled["product-checkout__text"]}>Email:</span>
+          <Input.Wrapper>
             <Input
+              size="lg"
+              radius={"md"}
               placeholder="abc@gmail.com"
               value={props.userInfo?.accountDetail.email}
               disabled={props.isEditing ? false : true}
@@ -102,10 +102,13 @@ function InputGrib4(props: props) {
             />
           </Input.Wrapper>
         </div>
-        <div className="productcheckout-grid-input">
-          <span className="productcheckput-text">Tỉnh, thành phố:</span>
+        <div className={styled["product-checkout__grid-input"]}>
+          <span className={styled["product-checkout__text"]}>
+            Tỉnh, thành phố:
+          </span>
           <NativeSelect
-            style={{ marginRight: "8px" }}
+            size="lg"
+            radius={"md"}
             placeholder="Chọn tỉnh, thành phố"
             value={selectedProvince}
             disabled={props.isEditing ? false : true}
@@ -137,10 +140,11 @@ function InputGrib4(props: props) {
             }}
           />
         </div>
-        <div className="productcheckout-grid-input">
-          <span className="productcheckput-text">Quận, huyện:</span>
+        <div className={styled["product-checkout__grid-input"]}>
+          <span className={styled["product-checkout__text"]}>Quận, huyện:</span>
           <NativeSelect
-            style={{ marginLeft: "8px" }}
+            size="lg"
+            radius={"md"}
             placeholder="Native select"
             value={selectedDistrict}
             disabled={props.isEditing ? false : true}
