@@ -7,8 +7,7 @@ function Footer() {
             <div className="info-left">
               <div className="introduction">
                 <div className="introduction-logo">
-                  <img src="/img/logoipsum-247.png" alt="" />
-                  <img src="/img/Techshop.png" alt="" />
+                  <img src="/img/Logo.svg" alt="" />
                 </div>
                 <span className="introduction-text">
                   Lorem ipsum dolor sit amet consectetur. Id lobortis
