@@ -22,6 +22,8 @@ public interface IAccountOrderServices {
 
     public AccountOrder createOrderPayment(CreateOrderRequest request, String username)
             throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException;
+        public AccountOrder createOrderVNPay(CreateOrderRequest request, String username, String vnpOrderId)
+            throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException;
 
     public List<AccountOrder> getAllOrders();
 

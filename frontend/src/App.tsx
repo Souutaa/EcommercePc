@@ -37,9 +37,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/payment-status" element={<PaymentStatus/>}>
-
-          </Route>
+          <Route path="/payment-status" element={<PaymentStatus />}></Route>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path={PATHS.LOGIN.INDEX} element={<LoginPage />}>

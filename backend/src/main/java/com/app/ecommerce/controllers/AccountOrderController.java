@@ -94,7 +94,7 @@ public class AccountOrderController {
 
   @PatchMapping("/update-payment-status")
   public ResponseEntity<AccountOrder> updatePaymentStatus(
-      @Valid @RequestBody UpdatePaymentStatus request, @RequestHeader("Authorization") String authorization) {
+      @Valid @RequestBody UpdatePaymentStatus request) {
     return ResponseEntity.ok(orderServices.updateOrderPaymentStatus(request));
   }
 

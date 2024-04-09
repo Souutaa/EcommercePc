@@ -128,6 +128,31 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
   }
 
   @Override
+  public AccountOrder createOrderVNPay(CreateOrderRequest request, String username, String vnpOrderId)
+      throws NumberFormatException, SQLException, MessagingException, UnsupportedEncodingException {
+    AccountOrder newOrder = AccountOrder.builder().username(username).total(request.getTotal())
+        .status(OrderStatus.PENDING)
+        .vnpOrderId(vnpOrderId)
+        .paymentStatus(OrderPayment.PENDING)
+        .account(this.accountRepository.findByUsername(username).get())
+        .build();
+    AccountOrder createdOrder = this.accountOrderRepository.save(newOrder);
+    this.orderDetailServices.createOrderDetail(request.getCartItems(), createdOrder);
+    OrderInformation orderInformation = OrderInformation.builder()
+        .address(request.getFullAddress())
+        .fullname(request.getFullName())
+        .email(request.getEmail())
+        .phoneNumber(request.getPhoneNumber())
+        .note(request.getNote())
+        .accountOrder(createdOrder)
+        .username(username)
+        .build();
+    this.orderInformationServices.createOrderInformation(orderInformation);
+    emailServices.sendOrderUser(request, username);
+    return createdOrder;
+  }
+
+  @Override
   public List<AccountOrder> getAllOrders() {
     return accountOrderRepository.findAll();
   }
@@ -157,7 +182,7 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
 
   @Override
   public AccountOrder updateOrderPaymentStatus(@Valid UpdatePaymentStatus request) {
-    AccountOrder fetchedOrder = this.accountOrderRepository.findById(request.getOrderId()).get();
+    AccountOrder fetchedOrder = this.accountOrderRepository.findByVnpOrderId(request.getVnpOrderId().toString()).get();
     fetchedOrder.setPaymentStatus(request.getOrderPayment());
     return this.accountOrderRepository.save(fetchedOrder);
   }

@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UpdatePaymentStatus {
-    private Integer orderId;
+    private Integer vnpOrderId;
     private OrderPayment orderPayment;
 }

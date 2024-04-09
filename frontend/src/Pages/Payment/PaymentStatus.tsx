@@ -4,18 +4,23 @@ import { useEffect } from "react";
 const PaymentStatus = () => {
   const updateOrder = async () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const responseCode = urlParams.get('vnp_ResponseCode');
-    const orderId = localStorage.getItem('orderId')
-    await axios.patch('http://localhost:8080/order/update-payment-status', {
-      orderId: orderId,
+    const responseCode = urlParams.get("vnp_ResponseCode");
+    const vnpayOrderId = urlParams.get('vnp_TxnRef');
+    const _axios = axios.create({});
+    await _axios.patch('http://localhost:8080/order/update-payment-status', {
+      vnpOrderId: vnpayOrderId,
       orderPayment: responseCode === "00" ? "SUCCESS" : "FAIL"
     })
-    window.close()
-  }
+    setTimeout(() => {
+      window.close();
+    }, 5000);
+  };
   useEffect(() => {
-    updateOrder()
-  }, [])
-  return <></>;
-}
- 
+    updateOrder();
+  }, []);
+  return <>
+    Cửa sổ sẽ đóng lại sau 5s...
+  </>;
+};
+
 export default PaymentStatus;
