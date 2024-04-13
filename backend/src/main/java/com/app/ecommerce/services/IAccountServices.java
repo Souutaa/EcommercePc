@@ -13,13 +13,13 @@ import com.app.ecommerce.models.Role;
 public interface IAccountServices {
     public List<Account> getAccounts(boolean active);
 
-     public Account updatePassword(String id, UpdatePasswordDTO request);
+    public Account updatePassword(String id, UpdatePasswordDTO request);
 
     public Account changePassword(String ussername, ChangePasswordDTO request);
 
     public String checkOtp(String email, String verificationCode);
 
-    public Account updateMail(String mail, UpdateMailDTO request);
+    public Account updateMail(String username, UpdateMailDTO request);
 
     public Account updateRole(String username, Role role);
 
