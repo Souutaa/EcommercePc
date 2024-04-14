@@ -113,13 +113,9 @@ public class UserController {
     @PatchMapping(value = "/updatemail")
     public ResponseEntity<Account> updateMailUser(@RequestHeader("Authorization") String authorization,
             @Valid @RequestBody UpdateMailDTO password) {
-        try {
-            String token = authorization.split(" ")[1].trim();
-            String username = this.jwtService.extractUsername(token);
-            return ResponseEntity.ok(accountServices.updateMail(username, password));
-        } catch (ResourceNotFoundException ex) {
-            throw new ResourceNotFoundException("user not found");
-        }
+        String token = authorization.split(" ")[1].trim();
+        String username = this.jwtService.extractUsername(token);
+        return ResponseEntity.ok(accountServices.updateMail(username, password));
     }
 
     @PatchMapping(value = "/changepassword")

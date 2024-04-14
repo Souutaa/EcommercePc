@@ -121,11 +121,11 @@ public class AccountServicesImp implements IAccountServices {
             var oldMail = request.getOldEmail();
             var otp = request.getVerificationCode();
 
-            if (oldMail.compareTo(user.getEmail()) == -1) {
+            if (!oldMail.equals(user.getEmail())) {
                 throw new ResourceNotFoundException("Old Mail is not correct");
             }
 
-            if (otp.compareTo(user.getVerificationCode()) == -1) {
+            if (!otp.equals(user.getVerificationCode())) {
                 throw new ResourceNotFoundException("OTP is not correct");
             }
 
