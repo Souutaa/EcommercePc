@@ -88,10 +88,10 @@ public class ProductController {
     return new ResponseEntity<Object>(listProducts, HttpStatus.OK);
   }
 
-  @GetMapping(value = "randomProduct/{categoryId}")
-  public @ResponseBody ResponseEntity<Object> getRandomProducts(@PathVariable("categoryId") Integer categoryId,
+  @GetMapping(value = "randomProduct/{categoryName}")
+  public @ResponseBody ResponseEntity<Object> getRandomProducts(@PathVariable("categoryName") String categoryName,
       @QueryParam("num") Integer num) {
-    List<ProductCardResponse> listProducts = this.productServices.getProductsRandom(categoryId, num);
+    List<ProductCardResponse> listProducts = this.productServices.getProductsRandom(categoryName, num);
     return new ResponseEntity<Object>(listProducts, HttpStatus.OK);
   }
 
