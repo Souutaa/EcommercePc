@@ -35,7 +35,8 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
 
     @Override
     public AccountDetail getAccountDetailById(int accountId) {
-        Optional<AccountDetail> opt = repo.findByAccountId(accountId);
+        Optional<AccountDetail> opt = repo.findById(accountId);
+        //Optional<AccountDetail> opt = repo.findByAccountId(accountId);
         if (opt.isPresent()) {
             return opt.get();
         } else {
