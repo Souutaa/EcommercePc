@@ -28,6 +28,7 @@ import com.app.ecommerce.services.IVnPayServices;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import com.app.ecommerce.utils.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -77,12 +78,12 @@ public class VnpayController {
             transactionStatusDTO.setStatus("OK");
             transactionStatusDTO.setMessage("Successfully");
             transactionStatusDTO.setData("");
-            redirectView.setUrl("http://192.168.1.161:8000/order/create");
+            redirectView.setUrl("http://" + Constants.IPV4_ADDRESS + ":8000/order/create");
         } else {
             transactionStatusDTO.setStatus("No");
             transactionStatusDTO.setMessage("Failed");
             transactionStatusDTO.setData("");
-            redirectView.setUrl("http://192.168.1.161:3000/");
+            redirectView.setUrl("http://" + Constants.IPV4_ADDRESS + ":3000/");
         }
         return redirectView;
     }

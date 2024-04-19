@@ -184,6 +184,9 @@ public class AccountOrderServicesImp implements IAccountOrderServices {
   public AccountOrder updateOrderPaymentStatus(@Valid UpdatePaymentStatus request) {
     AccountOrder fetchedOrder = this.accountOrderRepository.findByVnpOrderId(request.getVnpOrderId()).get();
     fetchedOrder.setPaymentStatus(request.getOrderPayment());
+    if (request.getOrderPayment().equals(OrderPayment.FAIL)) {
+      return cancelOrder(fetchedOrder.getId());
+    }
     return this.accountOrderRepository.save(fetchedOrder);
   }
 
