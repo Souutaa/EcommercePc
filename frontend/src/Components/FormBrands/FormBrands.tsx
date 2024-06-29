@@ -5,7 +5,7 @@ import { modals } from "@mantine/modals";
 import React, { useCallback, useEffect, useState } from "react";
 import { Category } from "../FormChange/FormChange";
 import axios from "axios";
-
+import API_ADDRESS from "../../Api_Address";
 const FormBrands = (props: { onFinish: () => void }) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryId, setCategoryId] = useState(-1);
@@ -14,7 +14,7 @@ const FormBrands = (props: { onFinish: () => void }) => {
 
   const fetchCategories = useCallback(async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8080/category/all/simple?active=false"
+      `http://${API_ADDRESS}:8080/category/all/simple?active=false`
     );
     setCategories(response.data);
   }, []);
@@ -73,7 +73,7 @@ const FormBrands = (props: { onFinish: () => void }) => {
           mt="md"
           onClick={async () => {
             await axios
-              .post("http://127.0.0.1:8080/brand/create", {
+              .post(`http://${API_ADDRESS}:8080/brand/create`, {
                 brandName,
                 categoryId,
               })

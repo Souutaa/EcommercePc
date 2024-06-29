@@ -1,0 +1,12 @@
+.product-checkout__text {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.4rem;
+}
+
+.product-checkout__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+}

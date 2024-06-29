@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { notifications } from "@mantine/notifications";
 import { IconCheck, IconLoader, IconX } from "@tabler/icons-react";
+import API_ADDRESS from "../../Api_Address";
+import styled from ".//LoginPage.module.css";
 
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ function ForgotPassword() {
     setDisabled(true);
 
     await axios
-      .patch("http://localhost:8080/mail/sendmail", data)
+      .patch(`http://${API_ADDRESS}:8080/mail/sendmail`, data)
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);
@@ -71,15 +73,17 @@ function ForgotPassword() {
 
   return (
     <>
-      <form className="modal-form-signin" action="">
-        <h2 className="text-signin">Quên mật khẩu</h2>
-        <div className="form-signin">
+      <form className={styled["modal-form-sign-in"]} action="">
+        <h2 className={styled["text-sign-in"]}>Quên mật khẩu</h2>
+        <div className={styled["form-sign-in"]}>
           <div className="form-group">
             <label className="form-text" htmlFor="">
               Mail đăng kí
             </label>
             <Input.Wrapper error={errorHandleInputMail}>
               <Input
+                size="xl"
+                radius={"lg"}
                 error={errorHandleInputMail}
                 placeholder="abc@gmail.com"
                 onChange={(e) => {
@@ -93,6 +97,8 @@ function ForgotPassword() {
           <>
             <div className="form-group margin-bottom">
               <Button
+                size="xl"
+                radius={"lg"}
                 disabled={disabled}
                 onClick={() => {
                   forgetPassword();

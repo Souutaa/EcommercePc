@@ -17,7 +17,7 @@ const ButtonDelete = (props: Props) => {
       confirmProps: { color: "red" },
       onConfirm: async () => {
         await axios.delete(
-          `http://127.0.0.1:8080/product/delete?productLine=${props.productLine}`
+          `http://192.168.1.14:8080/product/delete?productLine=${props.productLine}`
         );
       },
     });

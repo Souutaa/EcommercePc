@@ -6,23 +6,24 @@ import { useState } from "react";
 import { PATHS } from "../../Constants/path";
 
 function InputSearch() {
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="search">
       <Autocomplete
         className="input-size"
-        size="sm"
+        size="xl"
         leftSection={<IconSearch className="icon-search" />}
         radius="md"
         placeholder="Search"
         value={search}
+        style={{ fontSize: "1.6rem" }}
         onChange={setSearch}
         onKeyDown={(event) => {
           if (event.key === "Enter") {
-            navigate(PATHS.SEARCH + `/${search}`)
+            navigate(PATHS.SEARCH + `/${search}`);
           }
         }}
         data={["MSI", "Macbook", "Asus", "Acer"]}

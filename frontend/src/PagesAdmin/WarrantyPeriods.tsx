@@ -5,7 +5,7 @@ import WarrantyPeriodAdminStatus from "../Components/WarrantyPeriodAdminStatus/W
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import ButtonAddWarrantyPeriod from "../Components/Button/button-add-warranty-period";
-
+import API_ADDRESS from "../Api_Address";
 interface WarrantyPeriod {
   id: string;
   months: number;
@@ -16,7 +16,7 @@ const WarrantyPeriodsAdmin = () => {
 
   const fetchWarrantyPeriods = useCallback(async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8080/warranty-period"
+      `http://${API_ADDRESS}:8080/warranty-period`
     );
     setWarrantyPeriods(response.data);
   }, []);
@@ -26,41 +26,39 @@ const WarrantyPeriodsAdmin = () => {
   }, [fetchWarrantyPeriods]);
 
   return (
-   
-      <MantineProvider>
-        <ModalsProvider>
-      <div className="header-content">
-        <h4 className="page-title">Warranty Period</h4>
-        <Breadcrumbs />
-      </div>
-      <div className="body-content">
-        <div className="button-admin">
-          <ButtonAddWarrantyPeriod onFinish={() => {}} />
+    <MantineProvider>
+      <ModalsProvider>
+        <div className="header-content">
+          <h4 className="page-title">Warranty Period</h4>
+          <Breadcrumbs />
         </div>
-        <table className="table-centered">
-          <thead className="table-light">
-            <tr>
-              <th className="sorting" style={{ width: "150px" }}>
-                ID
-              </th>
-              <th className="sorting">Months</th>
-              <th className="sorting" style={{ width: "150px" }}>
-                Action
-              </th>
-            </tr>
-          </thead>
-          {warrantyPeriods.map((warrantyPeriod) => (
-            <WarrantyPeriodAdminStatus
-              key={warrantyPeriod.id}
-              id={warrantyPeriod.id}
-              months={warrantyPeriod.months}
-            />
-          ))}
-        </table>
-      </div>
+        <div className="body-content">
+          <div className="button-admin">
+            <ButtonAddWarrantyPeriod onFinish={() => {}} />
+          </div>
+          <table className="table-centered">
+            <thead className="table-light">
+              <tr>
+                <th className="sorting" style={{ width: "150px" }}>
+                  ID
+                </th>
+                <th className="sorting">Months</th>
+                <th className="sorting" style={{ width: "150px" }}>
+                  Action
+                </th>
+              </tr>
+            </thead>
+            {warrantyPeriods.map((warrantyPeriod) => (
+              <WarrantyPeriodAdminStatus
+                key={warrantyPeriod.id}
+                id={warrantyPeriod.id}
+                months={warrantyPeriod.months}
+              />
+            ))}
+          </table>
+        </div>
       </ModalsProvider>
-      </MantineProvider>
-    
+    </MantineProvider>
   );
 };
 

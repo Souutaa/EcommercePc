@@ -1,0 +1,8 @@
+.product-cart__text {
+  gap: 2rem;
+  justify-items: start;
+  padding-bottom: 2rem;
+  color: var(--gray-800, #1f2a37);
+  font-size: 1.6rem;
+  font-weight: 600;
+}

@@ -1,14 +1,14 @@
-import Product from ".";
+import Product from "./Product";
 import { Brand } from "../../Pages/HomePage/Content";
 import ButtonMore from "../Button/button-more";
 
 function ProductListNoButtonMore(props: { brands: Brand[]; category: string }) {
   return (
     <>
-      <div className="product-list-detail" style={{ marginTop: "30px" }}>
+      <div style={{ margin: "2.4rem 0" }}>
         {props.brands.map((e) => {
           return (
-            <div>
+            <div style={{ textAlign: "center" }}>
               <div key={e.id} className="title">
                 {e.brandName}
               </div>

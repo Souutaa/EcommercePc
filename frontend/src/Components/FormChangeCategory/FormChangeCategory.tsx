@@ -6,14 +6,14 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
-
+import API_ADDRESS from "../../Api_Address";
 const FormChangeCategory = (props: { id: string }) => {
   const [nameCategory, setNameCategory] = useState("");
   const navigate = useNavigate();
   const updateCategory = async () => {
     const data = { nameCategory: nameCategory };
     await axios
-      .patch(`http://localhost:8080/category/${props.id}/update`, data)
+      .patch(`http://${API_ADDRESS}:8080/category/${props.id}/update`, data)
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);

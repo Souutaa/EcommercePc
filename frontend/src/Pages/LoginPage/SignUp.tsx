@@ -7,6 +7,8 @@ import { IconChecklist, IconLoader, IconX } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
+import API_ADDRESS from "../../Api_Address";
+import styled from ".//LoginPage.module.css";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -39,7 +41,7 @@ function SignUp() {
         loading: true,
       });
       const response = await axios.post(
-        "http://127.0.0.1:8080/auth/register",
+        `http://${API_ADDRESS}:8080/auth/register`,
         data
       );
       setTimeout(() => {
@@ -113,8 +115,8 @@ function SignUp() {
 
   return (
     <>
-      <form className="modal-form-signin" action="">
-        <h2 className="text-signin">Đăng ký</h2>
+      <form className={styled["modal-form-sign-in"]} action="">
+        <h2 className={styled["text-sign-in"]}>Đăng ký</h2>
         {errors.length > 0 && (
           <Flex direction={"column"} gap={"md"}>
             {errors.map((error) => (
@@ -122,13 +124,15 @@ function SignUp() {
             ))}
           </Flex>
         )}
-        <div className="form-signin">
+        <div className={styled["form-sign-in"]}>
           <div className="form-group">
             <label className="form-text" htmlFor="">
               Username
             </label>
             <Input.Wrapper error={errorHandleInputUsername}>
               <Input
+                size="xl"
+                radius={"lg"}
                 error={errorHandleInputUsername}
                 placeholder="nguyenvana"
                 value={username}
@@ -145,6 +149,8 @@ function SignUp() {
             </label>
             <Input.Wrapper error={errorHandleInputMail}>
               <Input
+                size="xl"
+                radius={"lg"}
                 error={errorHandleInputMail}
                 placeholder="abc@gmail.com"
                 value={email}
@@ -161,6 +167,8 @@ function SignUp() {
               Mật khẩu
             </label>
             <PasswordInput
+              size="xl"
+              radius={"lg"}
               error={errorHandleInputPass}
               placeholder="Nhập mật khẩu"
               value={password}
@@ -175,6 +183,8 @@ function SignUp() {
               Nhập lại mật khẩu
             </label>
             <PasswordInput
+              size="xl"
+              radius={"lg"}
               error={errorHandleInputPassConfirm}
               placeholder="Nhập lại mật khẩu"
               value={confirmPassword}
@@ -186,7 +196,9 @@ function SignUp() {
           </div>
 
           <div className="form-group margin-bottom">
-            <Button onClick={handleCreateUser}>Đăng ký</Button>
+            <Button size="xl" radius={"lg"} onClick={handleCreateUser}>
+              Đăng ký
+            </Button>
           </div>
         </div>
       </form>

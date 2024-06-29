@@ -34,7 +34,7 @@ import PaymentStatus from "./Pages/Payment/PaymentStatus";
 
 function App() {
   return (
-    <div className="App">
+    <>
       <BrowserRouter>
         <Routes>
           <Route path="/payment-status" element={<PaymentStatus />}></Route>
@@ -58,10 +58,10 @@ function App() {
             </Route>
             <Route path="/Home" element={<Home />} />
             <Route
-              path={PATHS.MORE + "/:name/:brandName"}
+              path={PATHS.HOME + "/:name/:brandName"}
               element={<ProductMore />}
             />
-            <Route path={PATHS.MORE + "/:name"} element={<ProductMore />} />
+            <Route path={PATHS.HOME + "/:name"} element={<ProductMore />} />
             <Route
               path={PATHS.PRODUCT + "/:productLine"}
               element={<ProductDetail />}
@@ -98,7 +98,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </div>
+    </>
   );
 }
 

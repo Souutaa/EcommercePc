@@ -5,6 +5,7 @@ import { IconCheck } from "@tabler/icons-react";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API_ADDRESS from "../../Api_Address";
 
 const FormChangeBrand = (props: { id: number }) => {
   const [brandName, setBrandName] = useState("");
@@ -12,7 +13,7 @@ const FormChangeBrand = (props: { id: number }) => {
   const updateBrand = async () => {
     const data = { brandName: brandName };
     await axios
-      .patch(`http://localhost:8080/brand/${props.id}/update`, data)
+      .patch(`http://${API_ADDRESS}:8080/brand/${props.id}/update`, data)
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);

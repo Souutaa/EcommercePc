@@ -1,0 +1,70 @@
+.text-no-account {
+  color: var(--gray-900, #111928);
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+}
+
+.button-signin {
+  color: black;
+  background: var(--gray-200, #e5e7eb);
+}
+
+.modal-form-sign-in {
+  width: 52rem;
+  height: auto;
+  margin: 5rem auto 8rem auto;
+}
+
+.text-sign-in {
+  color: var(--gray-800, #1f2a37);
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.form-sign-in {
+  background-color: var(--white-color);
+  padding: 20px;
+  position: relative;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.modal {
+  margin-top: 110px;
+  margin-bottom: 192px;
+  display: flex;
+  justify-content: space-around;
+  gap: 3.2rem;
+}
+
+.modal-carousel {
+  /* width: 100%; */
+}
+
+.modal-login {
+  width: 100%;
+  height: auto;
+}
+
+.login-text {
+  position: relative;
+  color: var(--gray-800, #1f2a37);
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%;
+  margin-bottom: 32px;
+}
+
+.modal-form-login {
+  background-color: var(--white-color);
+  padding: 20px;
+}

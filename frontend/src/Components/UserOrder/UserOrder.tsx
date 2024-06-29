@@ -5,7 +5,7 @@ function UserOder() {
     <div className="user-info">
       <Link
         to={PATHS.ORDER}
-        style={{ textDecoration: "none" }}
+        style={{ textDecoration: "none", fontSize: "1.6rem" }}
         className="user-order"
       >
         Đơn hàng
@@ -13,7 +13,7 @@ function UserOder() {
       <Link
         className="user-info-name"
         to={PATHS.USERINFO}
-        style={{ textDecoration: "none" }}
+        style={{ textDecoration: "none", fontSize: "1.6rem" }}
       >
         Thông tin cá nhân
       </Link>

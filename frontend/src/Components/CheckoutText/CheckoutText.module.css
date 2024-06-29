@@ -1,0 +1,13 @@
+.product-checkout__right-text {
+  color: var(--gray-800, #1f2a37);
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%;
+  justify-self: start;
+}
+
+.product-checkout__right-title {
+  justify-content: space-between;
+  width: 100%;
+}

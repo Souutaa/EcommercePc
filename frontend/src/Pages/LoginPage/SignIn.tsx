@@ -7,6 +7,7 @@ import { PATHS } from "../../Constants/path";
 import { useEffect, useRef, useState } from "react";
 import { useAuthContext } from "../../Context/AuthContext";
 import { useFocusTrap } from "@mantine/hooks";
+import styled from ".//LoginPage.module.css";
 
 const images = [
   "/img/Carousel1.png",
@@ -25,7 +26,11 @@ function SignIn() {
   const slides = images.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
-        <img alt="" src={url} />
+        <img
+          alt=""
+          src={url}
+          style={{ width: "100%", height: "auto", objectFit: "fill" }}
+        />
       </Carousel.Slide>
     );
   });
@@ -48,20 +53,30 @@ function SignIn() {
 
   return (
     <MantineProvider>
-      <div className="modal">
-        <div className="modal-carousel">
-          <Carousel withIndicators>{slides}</Carousel>
+      <div className={styled.modal}>
+        <div className={styled["modal-carousel"]}>
+          <Carousel
+            withIndicators
+            align={"center"}
+            height={"56rem"}
+            controlSize={56}
+            style={{ fontSize: "2.4rem", borderRadius: "1.2rem" }}
+          >
+            {slides}
+          </Carousel>
         </div>
-        <div className="modal-login">
-          <h2 className="login-text">Đăng Nhập</h2>
+        <div className={styled["modal-login"]}>
+          <h2 className={styled["login-text"]}>Đăng Nhập</h2>
 
-          <form className="modal-form-login" action="">
+          <form className={styled["modal-form-login"]} action="">
             <div className="form-group">
               <label className="form-text" htmlFor="">
                 Tài khoản
               </label>
               <Input.Wrapper error={errorHandleInputUsername}>
                 <Input
+                  size="xl"
+                  radius={"lg"}
                   error={errorHandleInputUsername}
                   placeholder="abc@gmail.com"
                   onChange={(e) => {
@@ -77,6 +92,8 @@ function SignIn() {
                 Mật khẩu
               </label>
               <PasswordInput
+                size="xl"
+                radius={"lg"}
                 error={errorHandleInputPass}
                 placeholder="Nhập mật khẩu"
                 onChange={(e) => {
@@ -88,6 +105,8 @@ function SignIn() {
 
             <div className="form-group">
               <Button
+                size="xl"
+                radius={"lg"}
                 onClick={(e) => {
                   localStorage.removeItem("accessToken");
                   authContext.login({ username, password });
@@ -118,9 +137,16 @@ function SignIn() {
               </div>
             </div>
             <div className="form-group">
-              <h3 className="text-noaccount">Bạn chưa có tài khoản?</h3>
+              <h3 className={styled["text-no-account"]}>
+                Bạn chưa có tài khoản?
+              </h3>
               <Link to={PATHS.LOGIN.SIGNUP}>
-                <Button className="button-signin" style={{ width: "100%" }}>
+                <Button
+                  className="button-signin"
+                  style={{ width: "100%" }}
+                  size="xl"
+                  radius={"lg"}
+                >
                   Đăng ký ngay
                 </Button>
               </Link>

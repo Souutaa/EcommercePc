@@ -1,0 +1,22 @@
+.segment-control {
+  width: 100%;
+  display: flex;
+}
+
+.segment-control > * {
+  max-width: 120px;
+  transition: all ease 0.5s;
+}
+
+.segment-control > *::before {
+  display: none;
+}
+
+.segment-control > * ~ * {
+  margin: 0 5px;
+}
+
+.segment-control > *:hover > * {
+  background: #1c64f2;
+  color: white;
+}

@@ -14,6 +14,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Category, InfoInput, WarrantyPeriod } from "../FormChange/FormChange";
 import axios from "axios";
 import formatPrice from "../../Helper/formatPrice";
+import API_ADDRESS from "../../Api_Address";
 
 function infoReducer(state: any, action: any) {
   let newState = { ...state };
@@ -80,11 +81,11 @@ const FromProduct = (props: {
   useEffect(() => {
     const handleGetBrandCategory = async () => {
       const categoryResponse = await axios.get(
-        `http://127.0.0.1:8080/category/all/simple?active=true`
+        `http://${API_ADDRESS}:8080/category/all/simple?active=true`
       );
       setCategories(categoryResponse.data);
       const productWarrantyPeriodResponse = await axios.get(
-        `http://127.0.0.1:8080/warranty-period`
+        `http://${API_ADDRESS}S:8080/warranty-period`
       );
       setWarantyPeriods(productWarrantyPeriodResponse.data);
     };
@@ -117,7 +118,7 @@ const FromProduct = (props: {
       form.append("thumbnail", newThumbnail);
     }
     try {
-      await axios.post("http://127.0.0.1:8080/product/create", form, {
+      await axios.post("http://${API_ADDRESS}:8080/product/create", form, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -150,11 +151,11 @@ const FromProduct = (props: {
         return serial[key];
       });
       console.log(productInfos, productSerials);
-      await axios.post(`http://127.0.0.1:8080/product-info/add-info`, {
+      await axios.post(`http://${API_ADDRESS}:8080/product-info/add-info`, {
         infos: productInfos,
         productLine,
       });
-      await axios.post(`http://127.0.0.1:8080/product-warranty/create`, {
+      await axios.post(`http://${API_ADDRESS}:8080/product-warranty/create`, {
         productWarranties: productSerials,
         productLine,
       });
@@ -327,7 +328,7 @@ const FromProduct = (props: {
                       disabled: false,
                     };
                   })
-                : [] 
+                : []
             }
             onChange={(event) => {
               setCategoryId(+event.target.value);

@@ -1,4 +1,4 @@
-import ProductCarts from "../../Components/Product/ProductCart";
+import ProductCarts from "../../Components/Product/ProductCart/ProductCart";
 import { Input, Checkbox } from "@mantine/core";
 import ProductList from "../../Components/Product/ProductList";
 import Total from "../../Components/Total/Total";
@@ -8,44 +8,49 @@ import { PATHS } from "../../Constants/path";
 import CartText from "../../Components/CartText/CartText";
 import NoProduct from "../NoProduct/NoProduct";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import styled from ".//ProductCart.module.css";
 
 function ProductCart() {
   return (
     <>
       {localStorage.getItem("shopping_cart")?.localeCompare("[]") ? (
         <>
-          <div className="container">
+          <div className="container ">
             <Breadcrumbs />
-            <div className="productcart">
-              <div className="productcart-left">
+            <div className={`${styled["product-cart"]} div-8-col`}>
+              <div className={`${styled["product-cart--left"]}`}>
                 <CartText />
                 <ProductCarts />
               </div>
-              <div className="productcart-right">
-                <div className="productcart-sale">
+              <div className={styled["product-cart--right"]}>
+                <div className={styled["product-cart__sale"]}>
                   <Input
                     size="md"
-                    className="productcart-input"
+                    className={styled["product-cart__input"]}
                     placeholder="Mã giảm giá"
                   />
                   <Btn
                     maintine="a"
-                    customStyle={{ marginTop: "16px" }}
+                    customStyle={{
+                      padding: "0 1.2rem ",
+                      lineHeight: "3.2rem",
+                    }}
                     color="#E5E7EB"
                   >
                     Thêm
                   </Btn>
                 </div>
-                <div className="productcart-body">
+                <div className={styled["product-cart__body"]}>
                   <Total />
-                  <div className="productcart-provision">
+                  <div className={styled["product-cart__provision"]}>
                     <Checkbox
                       defaultChecked
+                      size="md"
                       label="Tôi đã đọc và đồng ý với điều khoản và điều kiện của website"
                     />
                   </div>
                   <Link style={{ width: "100%" }} to={PATHS.PAYMENT}>
-                    <div className="productcart-payment">
+                    <div className={styled["product-cart__payment"]}>
                       <Btn maintine="a" customStyle={{ width: "100%" }}>
                         Thanh toán
                       </Btn>

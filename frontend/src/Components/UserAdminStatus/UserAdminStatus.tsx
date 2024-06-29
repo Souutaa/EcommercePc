@@ -4,24 +4,25 @@ import { useEffect, useState } from "react";
 import { User } from "../../PagesAdmin/UserAdmin";
 import ButtonChangeUser from "../Button/button-change-user";
 import SeaparatorTable from "../Seaparator/SeaparatorTable";
+import API_ADDRESS from "../../Api_Address";
 
 const UserAdminStatus = (props: { user: User }) => {
   const { user } = props;
   const [checked, setChecked] = useState(true);
 
   useEffect(() => {
-    setChecked(user.deletedAt === null)
-  }, [user])
+    setChecked(user.deletedAt === null);
+  }, [user]);
 
   const handleUnlockUser = async () => {
     const response = await axios.patch(
-      `http://127.0.0.1:8080/user/${user.id}/active`
+      `http://${API_ADDRESS}:8080/user/${user.id}/active`
     );
   };
 
   const handleLockUser = async () => {
     const response = await axios.delete(
-      `http://127.0.0.1:8080/user/delete?id=${user.id}`
+      `http://${API_ADDRESS}:8080/user/delete?id=${user.id}`
     );
   };
 

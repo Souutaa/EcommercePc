@@ -4,13 +4,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import ButtonAdd from "../../Components/Button/button-add-to-cart";
-import { ProductItem } from "../../Components/Product";
-import ProductColor from "../../Components/Product/ProductColor";
-import ProductInfo from "../../Components/Product/ProductInfo";
+import ButtonAddToCart from "../../Components/Button/ButtonAddToCart";
+import { ProductItem } from "../../Components/Product/Product";
+import ProductColor from "../../Components/Product/ProductColor/ProductColor";
+import ProductInfo from "../../Components/Product/ProductInfo/ProductInfo";
 import ProductListDetail from "../../Components/Product/ProductListDetail";
 import { ProductItems } from "../HomePage/Content";
 import { Button } from "@mantine/core";
+import API_ADDRESS from "../../Api_Address";
+import styled from ".//ProductDetail.module.css";
 
 export type ProductInfoType = {
   id: number;
@@ -54,14 +56,16 @@ function ProductDetail() {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://127.0.0.1:8080/product/${location.pathname.split("/")[3]}`
+          `http://${API_ADDRESS}:8080/product/${
+            location.pathname.split("/")[3]
+          }`
         );
         const data = res.data;
         console.log("dấd", data);
 
         try {
           const brandRes = await axios.get(
-            `http://127.0.0.1:8080/brand/getByIdOfBrand?id=${data.brandId}`
+            `http://${API_ADDRESS}:8080/brand/getByIdOfBrand?id=${data.brandId}`
           );
           setProductDetail(data);
           setProductsOfDetail(brandRes.data);
@@ -83,9 +87,16 @@ function ProductDetail() {
   const slides = productDetail?.imageUris.map((url, index) => (
     <Carousel.Slide key={index} onClick={() => handleThumbnailClick(url)}>
       <img
-        style={{ width: "120px", height: "120px", cursor: "pointer" }}
+        style={{
+          width: "12rem",
+          height: "100%",
+          cursor: "pointer",
+          objectFit: "cover",
+          borderRadius: ".8rem",
+          boxShadow: "var(--box-shadow--1)",
+        }}
         alt=""
-        src={`http://127.0.0.1:8080/product/get-file?filePath=${url}`}
+        src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${url}`}
       />
     </Carousel.Slide>
   ));
@@ -94,31 +105,37 @@ function ProductDetail() {
     <>
       <div className="container">
         <Breadcrumbs />
-        <div className="product-details">
+        <div className={styled["product-details"]}>
           {/* ... (existing code) */}
-          <div className="product-detail-left">
-            <div className="product-detail-main">
+          <div className={styled["product-detail-left"]}>
+            <div className={styled["product-detail-main"]}>
               <img
-                style={{ width: "100%", height: "670px" }}
-                src={`http://127.0.0.1:8080/product/get-file?filePath=${
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "fill",
+                  borderRadius: "1.2rem",
+                }}
+                src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${
                   selectedImage || productDetail?.thumbnailUri
                 }`}
                 alt=""
               />
             </div>
-            <div className="product-detail-carousel">
+            <div className={styled["product-detail-carousel"]}>
               <Carousel
                 slideSize="33,33%"
-                height={120}
+                height={"12rem"}
                 align="start"
-                slideGap="sm"
-                controlSize={25}
+                slideGap="xl"
+                controlSize={42}
+                controlsOffset="lg"
               >
                 {slides}
               </Carousel>
             </div>
           </div>
-          <div className="product-detail-right">
+          <div className={styled["product-detail-right"]}>
             {productDetail?.product.id && (
               <ProductInfo
                 brandId={productDetail?.brandId}
@@ -145,7 +162,7 @@ function ProductDetail() {
                 {productDetail.stock === 0 ? (
                   <Button disabled>Hết hàng</Button>
                 ) : (
-                  <ButtonAdd
+                  <ButtonAddToCart
                     discount={productDetail?.product.discount}
                     id={productDetail?.product.id}
                     price={productDetail?.product.price}
@@ -157,7 +174,6 @@ function ProductDetail() {
                 )}
               </div>
             )}
-            {/* </Btn> */}
           </div>
         </div>
         <div className="product-more">

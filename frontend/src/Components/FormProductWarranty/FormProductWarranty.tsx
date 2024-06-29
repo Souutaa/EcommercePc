@@ -1,12 +1,9 @@
-import {
-  Button,
-  Flex,
-  Input
-} from "@mantine/core";
+import { Button, Flex, Input } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import axios from "axios";
 import { useEffect, useReducer } from "react";
 import { InfoInput } from "../FormChange/FormChange";
+import API_ADDRESS from "../../Api_Address";
 
 function infoReducer(state: any, action: any) {
   let newState = { ...state };
@@ -34,7 +31,10 @@ function infoReducer(state: any, action: any) {
   }
 }
 
-const FormProductWarranty = (props: { productLine: string, productId: number }) => {
+const FormProductWarranty = (props: {
+  productLine: string;
+  productId: number;
+}) => {
   const initialArg: InfoInput = {};
   const [serial, serialDispatch] = useReducer(infoReducer, initialArg);
   const [newSerial, newSerialDispatch] = useReducer(infoReducer, initialArg);
@@ -42,8 +42,8 @@ const FormProductWarranty = (props: { productLine: string, productId: number }) 
   async function getProduct(productId: number): Promise<any> {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8080/product-warranty/all?productId=${productId}`
-      );  
+        `http://${API_ADDRESS}:8080/product-warranty/all?productId=${productId}`
+      );
       return response.data;
     } catch {}
   }
@@ -66,22 +66,18 @@ const FormProductWarranty = (props: { productLine: string, productId: number }) 
       const productSerials = Object.keys(newSerial).map((key) => {
         return newSerial[key];
       });
-      await axios.post(`http://127.0.0.1:8080/product-warranty/create`, {
+      await axios.post(`http://${API_ADDRESS}:8080/product-warranty/create`, {
         productWarranties: productSerials,
         productLine: props.productLine,
       });
     } catch (error) {}
   };
 
-
   return (
     <div>
       <div className="modal-body">
         <Input.Wrapper className="mb-20" label="Line">
-          <Input
-            disabled
-            value={props.productLine}
-          />
+          <Input disabled value={props.productLine} />
         </Input.Wrapper>
         <Input.Wrapper className="mb-20" label="Serial Number ">
           <span

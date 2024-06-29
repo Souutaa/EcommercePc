@@ -1,0 +1,16 @@
+.info-order__container {
+  background-color: transparent;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 1000px;
+}
+
+.info-order__detail {
+  align-items: start;
+  justify-items: start;
+  width: 100%;
+  padding: 2rem;
+  gap: 2rem;
+}

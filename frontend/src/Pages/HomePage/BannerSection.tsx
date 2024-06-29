@@ -13,8 +13,8 @@ function BannerSection() {
   const slides = images.map((url, index) => {
     return (
       <Carousel.Slide key={index}>
-        <div style={{overflow: "hidden"}}>
-          <img alt="" src={url} style={{width: "100%"}} />
+        <div style={{ overflow: "hidden" }}>
+          <img alt="" src={url} style={{ width: "100%", height: "100%" }} />
         </div>
       </Carousel.Slide>
     );
@@ -25,7 +25,14 @@ function BannerSection() {
         <div className="banner">
           <SideBar></SideBar>
           <div className="carousel">
-            <Carousel withIndicators>{slides}</Carousel>
+            <Carousel
+              height={"32rem"}
+              withIndicators
+              controlSize={42}
+              align={"start"}
+            >
+              {slides}
+            </Carousel>
           </div>
         </div>
       </div>

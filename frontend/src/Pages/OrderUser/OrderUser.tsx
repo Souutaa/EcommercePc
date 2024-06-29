@@ -7,7 +7,7 @@ import UserInfor from "../../Components/UserInfor/UserInfor";
 import UserOder from "../../Components/UserOrder/UserOrder";
 import ChangePass from "../../Components/ChangePass/ChangePass";
 import ChangeMail from "../../Components/ChangeMail/ChangePass";
-
+import API_ADDRESS from "../../Api_Address";
 export type AccountOrders = {
   id: number;
   username: string;
@@ -25,7 +25,9 @@ function OderUser() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/order/getOrder`);
+        const res = await axios.get(
+          `http://${API_ADDRESS}:8080/order/getOrder`
+        );
         setAccountOrder(res.data);
         setFilteredAccountOrder(res.data);
         setNumberOfPage(Math.ceil(res.data.length / infoPerPage));

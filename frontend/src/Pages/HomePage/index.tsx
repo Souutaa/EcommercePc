@@ -9,13 +9,10 @@ import { memo } from "react";
 
 const Home = () => {
   return (
-    // <AppShell>
     <AppShell.Section>
       <BannerSection />
       <Content />
     </AppShell.Section>
-
-    // </AppShell>
   );
 };
 export default memo(Home);

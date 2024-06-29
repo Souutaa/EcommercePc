@@ -1,0 +1,22 @@
+/*Product Detail*/
+.product-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6.4rem;
+  margin-bottom: 6.4rem;
+}
+.product-detail-left {
+  width: 100%;
+}
+.product-detail-main {
+  width: 52rem;
+  height: 52rem;
+}
+.product-detail-carousel {
+  width: 100%;
+  margin-top: 3.2rem;
+}
+
+.product-detail-right {
+  text-align: left;
+}

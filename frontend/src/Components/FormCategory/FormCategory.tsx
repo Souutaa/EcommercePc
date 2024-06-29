@@ -4,7 +4,7 @@ import { Button, Input } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import React, { useState } from "react";
 import axios from "axios";
-
+import API_ADDRESS from "../../Api_Address";
 const FormCategory = (props: { onFinish: () => void }) => {
   const [categoryName, setCategoryName] = useState("");
   const [errorHandle, setErrorHandle] = useState("");
@@ -38,7 +38,7 @@ const FormCategory = (props: { onFinish: () => void }) => {
           mt="md"
           onClick={async () => {
             await axios
-              .post("http://127.0.0.1:8080/category/create", {
+              .post(`http://${API_ADDRESS}:8080/category/create`, {
                 categoryName,
               })
               .then((req) => {

@@ -6,14 +6,18 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../Constants/path";
+import API_ADDRESS from "../../Api_Address";
 
-const FormChangeWarrantyPeriod = (props: { id: string, months: number }) => {
+const FormChangeWarrantyPeriod = (props: { id: string; months: number }) => {
   const [warrantyMonths, setWarrantyMonths] = useState(props.months);
   const navigate = useNavigate();
   const updateWarrantyPeriod = async () => {
     const data = { months: warrantyMonths };
     await axios
-      .patch(`http://localhost:8080/warranty-period/${props.id}/update`, data)
+      .patch(
+        `http://${API_ADDRESS}:8080/warranty-period/${props.id}/update`,
+        data
+      )
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);

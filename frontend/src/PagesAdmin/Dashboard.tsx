@@ -10,7 +10,7 @@ import ProductSelling from "../Components/ProductSelling/ProductSelling";
 import Seaparator from "../Components/Seaparator/Seaparator";
 import TrustedCustomer from "../Components/TopUser/TopUser";
 import EmployeeOfTheMonth from "../Components/EmployeeOfTheMonth/EmployeeOfTheMonth";
-
+import API_ADDRESS from "../Api_Address";
 export interface TopProduct {
   createdAt: string;
   productLine: string;
@@ -50,7 +50,7 @@ const Dashborad = () => {
 
   const handleExportExcel = async () => {
     axios
-      .get("http://127.0.0.1:8080/order/export/excel", {
+      .get(`http://${API_ADDRESS}:8080/order/export/excel`, {
         responseType: "blob",
       })
       .then((response) => {
@@ -69,28 +69,28 @@ const Dashborad = () => {
 
   const fetchTopProduct = useCallback(async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8080/product/getTopSelling"
+      `http://${API_ADDRESS}:8080/product/getTopSelling`
     );
     setTopProducts(response.data);
   }, []);
 
   const fetchMonthlyRevenue = useCallback(async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8080/order/getMonthlyRevenue"
+      `http://${API_ADDRESS}:8080/order/getMonthlyRevenue`
     );
     setMonthlyRevenue(response.data);
   }, []);
 
   const fetchTopUser = useCallback(async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8080/order/getTrustedBuyers"
+      `http://${API_ADDRESS}:8080/order/getTrustedBuyers`
     );
     setTopUser(response.data);
   }, []);
 
   const fetchTopEmployee = useCallback(async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8080/order/getTopEmployees"
+      `http://${API_ADDRESS}:8080/order/getTopEmployees`
     );
     setTopEmployee(response.data);
   }, []);

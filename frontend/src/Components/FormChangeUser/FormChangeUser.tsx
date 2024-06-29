@@ -5,14 +5,14 @@ import { IconCheck } from "@tabler/icons-react";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { User } from "../../PagesAdmin/UserAdmin";
-
+import API_ADDRESS from "../../Api_Address";
 const FormChangeUser = (props: { username: string }) => {
   const [user, setUser] = useState<User>();
   const [password, setPassword] = useState<string>("");
 
   const fetchUser = useCallback(async () => {
     const response = await axios.get(
-      `http://127.0.0.1:8080/user/${props.username}`
+      `http://${API_ADDRESS}:8080/user/${props.username}`
     );
     setUser(response.data);
   }, [props.username]);
@@ -21,16 +21,16 @@ const FormChangeUser = (props: { username: string }) => {
     fetchUser();
   }, [fetchUser]);
 
-  let data = ({
+  let data = {
     username: user?.username,
     password: password,
     email: user?.email,
     role: user?.role,
-  });
+  };
 
   const handleUpdateUser = async () => {
     const response = await axios.patch(
-      `http://127.0.0.1:8080/user/update-info`,
+      `http://${API_ADDRESS}:8080/user/update-info`,
       data
     );
     console.log(response);

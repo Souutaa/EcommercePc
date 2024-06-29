@@ -17,6 +17,7 @@ import UserOder from "../../Components/UserOrder/UserOrder";
 import { PATHS } from "../../Constants/path";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import { UserInformation } from "./InfoUser";
+import API_ADDRESS from "../../Api_Address";
 
 interface NewUserInfo {
   firstName: string;
@@ -62,17 +63,22 @@ function AddNewInfo() {
 
   const handleSubmitForm = async (e: FormEvent) => {
     e.preventDefault();
-    const response = await axios.post("http://127.0.0.1:8080/userDetail/create", {
-      firstName: userInfo.firstName,
-      lastName: userInfo.lastName,
-      phoneNumber: userInfo.phoneNumber,
-      email: userInfo.email,
-      city: userInfo.city,
-      district: userInfo.district,
-      detailedAddress: userInfo.detailedAddress,
-    });
+    const response = await axios.post(
+      `http://${API_ADDRESS}:8080/userDetail/create`,
+      {
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
+        phoneNumber: userInfo.phoneNumber,
+        email: userInfo.email,
+        city: userInfo.city,
+        district: userInfo.district,
+        detailedAddress: userInfo.detailedAddress,
+      }
+    );
     if (userInfo.isDefault) {
-      await axios.patch(`http://127.0.0.1:8080/userDetail/${response.data.id}/default`);
+      await axios.patch(
+        `http://${API_ADDRESS}:8080/userDetail/${response.data.id}/default`
+      );
     }
     return navigate(PATHS.USERINFO);
   };
@@ -260,9 +266,14 @@ function AddNewInfo() {
                 <Btn fullWidth type="submit" maintine="a">
                   Lưu
                 </Btn>
-                <Btn fullWidth maintine="a" color="#f03a17" onClick={() => {
-                  navigate('/Home/InfoUser')
-                }}>
+                <Btn
+                  fullWidth
+                  maintine="a"
+                  color="#f03a17"
+                  onClick={() => {
+                    navigate("/Home/InfoUser");
+                  }}
+                >
                   Hủy
                 </Btn>
               </div>

@@ -10,7 +10,7 @@ import { Switch } from "@mantine/core";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import FormProductWarranty from "../FormProductWarranty/FormProductWarranty";
-
+import API_ADDRESS from "../../Api_Address";
 interface Props {
   product: AdminProductInformation;
 }
@@ -22,17 +22,17 @@ const ProductAdminStatus = (props: Props) => {
 
   useEffect(() => {
     setChecked(product.deletedAt === null);
-  }, [product])
+  }, [product]);
 
   const handleUnlockProduct = async () => {
     const response = await axios.patch(
-      `http://127.0.0.1:8080/product/undo-delete?productLine=${product.productLine}`
+      `http://${API_ADDRESS}:8080/product/undo-delete?productLine=${product.productLine}`
     );
   };
 
   const handleLockProduct = async () => {
     const response = await axios.delete(
-      `http://127.0.0.1:8080/product/delete?productLine=${product.productLine}`
+      `http://${API_ADDRESS}API_ADDRESS:8080/product/delete?productLine=${product.productLine}`
     );
   };
   return (
@@ -45,7 +45,7 @@ const ProductAdminStatus = (props: Props) => {
               height: "48px",
               marginRight: "10px",
             }}
-            src={`http://127.0.0.1:8080/product/get-file?filePath=${product.thumbnailUri}`}
+            src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${product.thumbnailUri}`}
             alt=""
           />
           <p className="text-product-admin">{product.productName}</p>
@@ -106,7 +106,10 @@ const ProductAdminStatus = (props: Props) => {
                 title: "Add new product",
                 children: (
                   <>
-                    <FormProductWarranty productId={props.product.id} productLine={props.product.productLine} />
+                    <FormProductWarranty
+                      productId={props.product.id}
+                      productLine={props.product.productLine}
+                    />
                   </>
                 ),
               });

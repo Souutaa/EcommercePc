@@ -3,7 +3,7 @@ import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
 import ButtonAddCategory from "../Components/Button/button-add-category";
 import CategoryAdminStatus from "../Components/CategoryAdminStatus/CategoryAdminStatus";
 import axios from "axios";
-
+import API_ADDRESS from "../Api_Address";
 interface Category {
   id: string;
   name: string;
@@ -14,7 +14,7 @@ const CategoriesAdmin = () => {
 
   const fetchCategories = useCallback(async () => {
     const response = await axios.get(
-      "http://127.0.0.1:8080/category/all/simple?active=false"
+      `http://${API_ADDRESS}:8080/category/all/simple?active=false`
     );
     setCategories(response.data);
   }, []);

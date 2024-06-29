@@ -26,19 +26,26 @@ const Btn: React.FC<ButtonProps> = ({
   return maintine ? (
     <Button
       type={type}
-      variant=""
+      variant="filled"
       color={color}
-      style={{  ...customStyle,
-        borderRadius: "8px",
+      size="md"
+      radius={"lg"}
+      style={{
         background: "#1c64f2",
         color: "#ffffff",
-        border: "none", }}
+        border: "none",
+        fontSize: "1.6rem",
+        padding: "1.2rem 1.4rem",
+        lineHeight: "16px",
+        height: "100%",
+        ...customStyle,
+      }}
       className={`${clsName ? clsName : ""}`}
       {...rest}
     >
       {children}
     </Button>
-  ) :  (
+  ) : (
     <button
       style={{
         ...customStyle,
