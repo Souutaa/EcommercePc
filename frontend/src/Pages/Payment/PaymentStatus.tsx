@@ -5,20 +5,22 @@ const PaymentStatus = () => {
   const updateOrder = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const responseCode = urlParams.get("vnp_ResponseCode");
-    const orderId = localStorage.getItem("orderId");
-    await axios.patch(
-      `http://${API_ADDRESS}:8080/order/update-payment-status`,
-      {
-        orderId: orderId,
-        orderPayment: responseCode === "00" ? "SUCCESS" : "FAIL",
-      }
-    );
-    window.close();
+    const vnpayOrderId = urlParams.get('vnp_TxnRef')?.toString();
+    const _axios = axios.create({});
+    await _axios.patch(`http://10.65.15.69:8080/order/update-payment-status`, {
+      vnpOrderId: vnpayOrderId,
+      orderPayment: responseCode === "00" ? "SUCCESS" : "FAIL"
+    })
+    setTimeout(() => {
+      window.close();
+    }, 5000);
   };
   useEffect(() => {
     updateOrder();
   }, []);
-  return <></>;
+  return <>
+    Cửa sổ sẽ đóng lại sau 5s...
+  </>;
 };
 
 export default PaymentStatus;

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.app.ecommerce.DTO.order.MonthlyRevenue;
 import com.app.ecommerce.DTO.order.TopEmployee;
 import com.app.ecommerce.DTO.order.TrustedBuyer;
+import com.app.ecommerce.models.Account;
 import com.app.ecommerce.models.AccountOrder;
 
 public interface AccountOrderRepository extends JpaRepository<AccountOrder, Integer> {
@@ -44,4 +45,7 @@ public interface AccountOrderRepository extends JpaRepository<AccountOrder, Inte
                         "ORDER BY totalConfirmedOrder DESC, subTotalOrder DESC " + //
                         "LIMIT 5", nativeQuery = true)
         List<TopEmployee> getTopEmployees();
+
+        @Query(value = "SELECT * from account_order where vnp_order_id = ?1", nativeQuery = true)
+        Optional<AccountOrder> findByVnpOrderId(String vnpOrderId);
 }

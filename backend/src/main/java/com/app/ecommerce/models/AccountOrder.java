@@ -34,6 +34,9 @@ public class AccountOrder extends BaseEntity {
     @Column(name = "total", length = 20, nullable = false)
     private int total;
 
+    @Column(name = "vnp_order_id", columnDefinition = "varchar", nullable = true)
+    private String vnpOrderId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "confirm_by_id", referencedColumnName = "id")
     @JsonBackReference

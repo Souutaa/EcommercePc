@@ -38,9 +38,9 @@ public class SecurityConfiguration {
         .csrf()
         .disable()
         .authorizeHttpRequests()
-        .requestMatchers("/user/*/updatepassword", "/auth/**", "/brand/**", "/category/**", "/product/**",
+        .requestMatchers("/.well-known/assetlinks.json", "/user/*/updatepassword", "/auth/**", "/brand/**", "/category/**", "/product/**",
             "/product-info/**", "/product-warranty/**", "/mail/**", "/warranty-period/**", "/api/v1/**",
-            "/order/create", "/order/update-payment-status")
+            "/order/create", "/order/update-payment-status", "/user/checkotp")
         .permitAll()
         .requestMatchers("/order/getOrder", "/order/update-status", "/order/getOrderDetail",
             "/orderinformation/**", "/user/**", "/userDetail/**")

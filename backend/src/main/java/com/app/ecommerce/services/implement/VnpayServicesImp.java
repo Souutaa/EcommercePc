@@ -32,7 +32,7 @@ public class VnpayServicesImp implements IVnPayServices {
         String orderType = "other";
         String vnp_TxnRef = VnpayConfig.getRandomNumber(8);
         // String vnp_IpAddr = VnpayConfig.getIpAddress(req);
-        String vnp_IpAddr = "127.0.0.1";
+        String vnp_IpAddr = "10.65.15.98";
         String vnp_TmnCode = VnpayConfig.vnp_TmnCode;
 
         Map<String, String> vnp_Params = new HashMap<>();
@@ -42,6 +42,7 @@ public class VnpayServicesImp implements IVnPayServices {
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
         vnp_Params.put("vnp_BankCode", bankCode);
+        // vnp_Params.put("vnp_OrderId", String.valueOf(orderId));
 
         // if (bankCode != null && !bankCode.isEmpty()) {
         // vnp_Params.put("vnp_BankCode", bankCode);
@@ -110,6 +111,7 @@ public class VnpayServicesImp implements IVnPayServices {
         paymentResDTO.setStatus("OK");
         paymentResDTO.setMessage("Successfully");
         paymentResDTO.setURL(paymentUrl);
+        paymentResDTO.setOrderInfor(vnp_TxnRef);
 
         return paymentResDTO;
 

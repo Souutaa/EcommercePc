@@ -6,5 +6,4 @@ import com.app.ecommerce.DTO.VNPAY.PaymentResDTO;
 
 public interface IVnPayServices {
     public PaymentResDTO paymentResDTO(long total) throws UnsupportedEncodingException;
-
 }

@@ -4,9 +4,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import javax.swing.text.html.Option;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +35,8 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
 
     @Override
     public AccountDetail getAccountDetailById(int accountId) {
-        Optional<AccountDetail> opt = repo.findByAccountId(accountId);
+        Optional<AccountDetail> opt = repo.findById(accountId);
+        //Optional<AccountDetail> opt = repo.findByAccountId(accountId);
         if (opt.isPresent()) {
             return opt.get();
         } else {
@@ -112,13 +110,16 @@ public class AccountDetailServicesImp implements IAccountDetailServices {
 
     @Override
     public AccountDetail activeAccountDetailDefault(int id, String username) {
-        Optional<AccountDetail> accountFound = repo.findById(id);
-        if (accountFound.isPresent()) {
-            this.repo.removAccountDetailsDefault(this.accountRepo.findByUsername(username).get().getId(), id);
+        Optional<Account> accountOpt = accountRepo.findByUsername(username);
+        if (accountOpt.isPresent()) {
+            var account = accountOpt.get();
+            var accountId = account.getId();
+            repo.removeAccountDetailsDefaultByAccountId(accountId);
+            repo.setAccountDetailAsDefault(id);
             var accountDetail = repo.findById(id).get();
             return accountDetail;
         } else {
-            throw new ResourceNotFoundException("Invoice with Id : " + accountFound + " Not Found");
+            throw new ResourceNotFoundException("Account with username : " + accountOpt + " Not Found");
         }
     }
 

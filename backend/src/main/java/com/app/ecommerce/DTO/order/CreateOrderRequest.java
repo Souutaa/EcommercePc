@@ -2,6 +2,8 @@ package com.app.ecommerce.DTO.order;
 
 import java.util.List;
 
+import org.springframework.lang.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

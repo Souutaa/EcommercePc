@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.app.ecommerce.DTO.account.AdminUpdateUserDTO;
 import com.app.ecommerce.DTO.account.ChangePasswordDTO;
+import com.app.ecommerce.DTO.account.CheckOTP;
 import com.app.ecommerce.DTO.account.UpdateMailDTO;
 import com.app.ecommerce.DTO.account.UpdatePasswordDTO;
 import com.app.ecommerce.exceptions.ResourceNotFoundException;
@@ -65,12 +66,27 @@ public class AccountServicesImp implements IAccountServices {
     }
 
     @Override
+    public String checkOtp(String email, String verificationCode) {
+        Optional<Account> opt = repo.findByEmail(email);
+        if (opt.isPresent()) {
+            var user = opt.get();
+            if (!verificationCode.equals(user.getVerificationCode())) {
+                throw new ResourceNotFoundException("OTP is not correct");
+            } else {
+                return "Sucessfully";
+            }
+        } else {
+            throw new ResourceNotFoundException("User with mail : " + email + " Not Found");
+        }
+    }
+
+    @Override
     public Account updatePassword(String email, UpdatePasswordDTO request) {
         Optional<Account> opt = repo.findByEmail(email);
         if (opt.isPresent()) {
             var user = opt.get();
             var otp = request.getVerificationCode();
-            if (otp.compareTo(user.getVerificationCode()) == -1) {
+            if (!otp.equals(user.getVerificationCode())) {
                 throw new ResourceNotFoundException("OTP is not correct");
             }
             user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -87,7 +103,7 @@ public class AccountServicesImp implements IAccountServices {
         if (opt.isPresent()) {
             var user = opt.get();
             var oldpassword = request.getOldpassword();
-            if (oldpassword.compareTo(user.getPassword()) == -1) {
+            if (!oldpassword.equals(user.getPassword())) {
                 throw new ResourceNotFoundException("Old Password is not correct");
             }
             user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -98,18 +114,18 @@ public class AccountServicesImp implements IAccountServices {
     }
 
     @Override
-    public Account updateMail(String email, UpdateMailDTO request) {
-        Optional<Account> opt = repo.findByEmail(email);
+    public Account updateMail(String username, UpdateMailDTO request) {
+        Optional<Account> opt = repo.findByUsername(username);
         if (opt.isPresent()) {
             var user = opt.get();
             var oldMail = request.getOldEmail();
             var otp = request.getVerificationCode();
 
-            if (oldMail.compareTo(user.getEmail()) == -1) {
+            if (!oldMail.equals(user.getEmail())) {
                 throw new ResourceNotFoundException("Old Mail is not correct");
             }
 
-            if (otp.compareTo(user.getVerificationCode()) == -1) {
+            if (!otp.equals(user.getVerificationCode())) {
                 throw new ResourceNotFoundException("OTP is not correct");
             }
 
@@ -117,7 +133,7 @@ public class AccountServicesImp implements IAccountServices {
             user.setVerificationCode(null);
             return repo.save(user);
         } else {
-            throw new ResourceNotFoundException("User with mail : " + email + " Not Found");
+            throw new ResourceNotFoundException("User" + username + "with mail : " + request.getEmail() + " Not Found");
         }
     }
 

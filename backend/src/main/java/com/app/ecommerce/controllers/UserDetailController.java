@@ -44,6 +44,14 @@ public class UserDetailController {
     @Autowired
     private JwtService jwtService;
 
+    @PatchMapping(value = "/{id}/default")
+    public ResponseEntity<AccountDetail> updateDefaultAccountDetail(
+            @PathVariable String id, @RequestHeader("Authorization") String authorization) {
+        String token = authorization.split(" ")[1].trim();
+        String username = this.jwtService.extractUsername(token);
+        return ResponseEntity.ok(accountDetailServices.activeAccountDetailDefault(Integer.parseInt(id), username));
+    }
+
     @GetMapping(value = "/{id}")
     public @ResponseBody ResponseEntity<Object> getAccountDetail(@PathVariable String id) {
         AccountDetail accountDetail = accountDetailServices.getAccountDetailById(Integer.parseInt(id));
@@ -85,13 +93,6 @@ public class UserDetailController {
         return ResponseEntity.ok(accountDetailServices.saveAccountDetail(createAccountDetailDTO, username));
     }
 
-    @PatchMapping(value = "/{id}/default")
-    public ResponseEntity<AccountDetail> updateDefaultAccountDetail(
-            @PathVariable String id, @RequestHeader("Authorization") String authorization) {
-        String token = authorization.split(" ")[1].trim();
-        String username = this.jwtService.extractUsername(token);
-        return ResponseEntity.ok(accountDetailServices.activeAccountDetailDefault(Integer.parseInt(id), username));
-    }
 
     @PatchMapping(value = "/{id}/update")
     public ResponseEntity<AccountDetail> UpdateAccountDetailDTO(
