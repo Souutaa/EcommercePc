@@ -40,7 +40,7 @@ function SignUp() {
         className: 'my-notification-class',
         loading: true,
       });
-      await axios.post(`${BASE_URL}:8080/auth/register`, data);
+      await axios.post(`${BASE_URL}/auth/register`, data);
       setTimeout(() => {
         notifications.show({
           withCloseButton: true,
