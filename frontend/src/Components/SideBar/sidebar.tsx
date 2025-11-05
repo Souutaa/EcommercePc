@@ -1,9 +1,10 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { PATHS } from "../../Constants/path";
-import { Category } from "../FormChange/FormChange";
-import API_ADDRESS from "../../Api_Address";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PATHS } from '../../Constants/path';
+import { Category } from '../FormChange/FormChange';
+import { BASE_URL } from '../../App';
+
 function SideBar() {
   const [sideBarCategory, setSideBarCategory] = useState<Category[]>([]);
   const navigate = useNavigate();
@@ -12,14 +13,13 @@ function SideBar() {
   };
 
   useEffect(() => {
+    console.log('get brands data from api');
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(
-          `http://${API_ADDRESS}:8080/category/allOfCategoryBrand`
-        );
+        const res = await axios.get(`${BASE_URL}/category/allOfCategoryBrand`);
         setSideBarCategory(res.data);
       } catch (error) {
-        console.log("error=> ", error);
+        console.log('error=> ', error);
       }
     };
     fetchProducts();

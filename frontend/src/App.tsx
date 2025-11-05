@@ -1,36 +1,39 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
-import { PATHS } from "./Constants/path";
-import OderUser from "./Pages/OrderUser/OrderUser";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import { PATHS } from './Constants/path';
+import OderUser from './Pages/OrderUser/OrderUser';
 
-import MainLayout from "./Layouts/Index";
-import AdminLayouts from "./LayoutsAdmin/AdminLayouts";
-import ChangeMailUser from "./Pages/ChangeMailUser/ChangeMailUser";
-import ChangePassUser from "./Pages/ChangePassUser/ChangePassUser";
-import Home from "./Pages/HomePage";
-import InfoOrder from "./Pages/InfoOrder/InfoOrder";
-import AddNewInfo from "./Pages/InfoUser/AddNewInfo";
-import InfoUser from "./Pages/InfoUser/InfoUser";
-import LoginPage from "./Pages/LoginPage";
-import ChangePassword from "./Pages/LoginPage/ChangePassword";
-import ForgotPassword from "./Pages/LoginPage/ForgotPassword";
-import ForgotPasswordVerification from "./Pages/LoginPage/ForgotPasswordVerification";
-import SignIn from "./Pages/LoginPage/SignIn";
-import SignUp from "./Pages/LoginPage/SignUp";
-import ProductCart from "./Pages/ProductCart/ProductCart";
-import ProductCheckout from "./Pages/ProductCheckout/ProductCheckout";
-import ProductDetail from "./Pages/ProductDetail/ProductDetail";
-import ProductMore from "./Pages/ProductMore/ProductMore";
-import ProductOdered from "./Pages/ProductOdered/ProductOdered";
-import ProductSearch from "./Pages/ProductSearch/ProductSearch";
-import BrandAdmin from "./PagesAdmin/BrandAdmin";
-import CategoriesAdmin from "./PagesAdmin/CategoriesAdmin";
-import Dashborad from "./PagesAdmin/Dashboard";
-import OrderAdmin from "./PagesAdmin/OrderAdmin";
-import ProductAdmin from "./PagesAdmin/ProductAdmin";
-import UserAdmin from "./PagesAdmin/UserAdmin";
-import WarrantyPeriodsAdmin from "./PagesAdmin/WarrantyPeriods";
-import PaymentStatus from "./Pages/Payment/PaymentStatus";
+import MainLayout from './Layouts/Index';
+import AdminLayouts from './LayoutsAdmin/AdminLayouts';
+import ChangeMailUser from './Pages/ChangeMailUser/ChangeMailUser';
+import ChangePassUser from './Pages/ChangePassUser/ChangePassUser';
+import Home from './Pages/HomePage';
+import InfoOrder from './Pages/InfoOrder/InfoOrder';
+import AddNewInfo from './Pages/InfoUser/AddNewInfo';
+import InfoUser from './Pages/InfoUser/InfoUser';
+import LoginPage from './Pages/LoginPage';
+import ChangePassword from './Pages/LoginPage/ChangePassword';
+import ForgotPassword from './Pages/LoginPage/ForgotPassword';
+import ForgotPasswordVerification from './Pages/LoginPage/ForgotPasswordVerification';
+import SignIn from './Pages/LoginPage/SignIn';
+import SignUp from './Pages/LoginPage/SignUp';
+import ProductCart from './Pages/ProductCart/ProductCart';
+import ProductCheckout from './Pages/ProductCheckout/ProductCheckout';
+import ProductDetail from './Pages/ProductDetail/ProductDetail';
+import ProductMore from './Pages/ProductMore/ProductMore';
+import ProductOdered from './Pages/ProductOdered/ProductOdered';
+import ProductSearch from './Pages/ProductSearch/ProductSearch';
+import BrandAdmin from './PagesAdmin/BrandAdmin';
+import CategoriesAdmin from './PagesAdmin/CategoriesAdmin';
+import Dashborad from './PagesAdmin/Dashboard';
+import OrderAdmin from './PagesAdmin/OrderAdmin';
+import ProductAdmin from './PagesAdmin/ProductAdmin';
+import UserAdmin from './PagesAdmin/UserAdmin';
+import WarrantyPeriodsAdmin from './PagesAdmin/WarrantyPeriods';
+import PaymentStatus from './Pages/Payment/PaymentStatus';
+
+export const BASE_URL =
+  process.env.REACT_APP_BE_HOST || 'http://127.0.0.1:8080';
 
 function App() {
   return (
@@ -58,19 +61,19 @@ function App() {
             </Route>
             <Route path="/Home" element={<Home />} />
             <Route
-              path={PATHS.HOME + "/:name/:brandName"}
+              path={PATHS.HOME + '/:name/:brandName'}
               element={<ProductMore />}
             />
-            <Route path={PATHS.HOME + "/:name"} element={<ProductMore />} />
+            <Route path={PATHS.HOME + '/:name'} element={<ProductMore />} />
             <Route
-              path={PATHS.PRODUCT + "/:productLine"}
+              path={PATHS.PRODUCT + '/:productLine'}
               element={<ProductDetail />}
             />
 
             <Route path={PATHS.CART} element={<ProductCart />} />
             <Route path={PATHS.PAYMENT} element={<ProductCheckout />} />
             <Route
-              path={PATHS.SEARCH + "/:search"}
+              path={PATHS.SEARCH + '/:search'}
               element={<ProductSearch />}
             />
             <Route path={PATHS.ORDERED} element={<ProductOdered />} />
@@ -78,7 +81,7 @@ function App() {
             <Route path={PATHS.USERINFO} element={<InfoUser />} />
             <Route path={PATHS.ADDUSERINFO} element={<AddNewInfo />} />
             <Route
-              path={PATHS.INFORDER + "/:orderId"}
+              path={PATHS.INFORDER + '/:orderId'}
               element={<InfoOrder />}
             />
             <Route path={PATHS.CHANGEPASSUSER} element={<ChangePassUser />} />

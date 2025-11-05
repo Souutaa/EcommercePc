@@ -1,13 +1,14 @@
-import { Avatar, Pagination, SegmentedControl } from "@mantine/core";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import OderUserStatus from "../../Components/OrderUserStatus/OderUserStatus";
-import UserInfor from "../../Components/UserInfor/UserInfor";
-import UserOder from "../../Components/UserOrder/UserOrder";
-import ChangePass from "../../Components/ChangePass/ChangePass";
-import ChangeMail from "../../Components/ChangeMail/ChangePass";
-import API_ADDRESS from "../../Api_Address";
+import { Avatar, Pagination, SegmentedControl } from '@mantine/core';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { BASE_URL } from '../../App';
+import Breadcrumbs from '../../Components/Breadcrumbs/Breadcrumbs';
+import ChangeMail from '../../Components/ChangeMail/ChangePass';
+import ChangePass from '../../Components/ChangePass/ChangePass';
+import OderUserStatus from '../../Components/OrderUserStatus/OderUserStatus';
+import UserInfor from '../../Components/UserInfor/UserInfor';
+import UserOder from '../../Components/UserOrder/UserOrder';
+
 export type AccountOrders = {
   id: number;
   username: string;
@@ -25,9 +26,7 @@ function OderUser() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get(
-          `http://${API_ADDRESS}:8080/order/getOrder`
-        );
+        const res = await axios.get(`${BASE_URL}/order/getOrder`);
         setAccountOrder(res.data);
         setFilteredAccountOrder(res.data);
         setNumberOfPage(Math.ceil(res.data.length / infoPerPage));
@@ -42,10 +41,10 @@ function OderUser() {
   const offset = (currentPage - 1) * infoPerPage;
 
   //Filter
-  const [currentFilter, setCurrentFilter] = useState("ALL");
+  const [currentFilter, setCurrentFilter] = useState('ALL');
   const onChangeFilter = (index: string) => {
     setCurrentFilter(index);
-    if (index === "ALL") {
+    if (index === 'ALL') {
       setFilteredAccountOrder(accountOrder);
       setNumberOfPage(Math.ceil(accountOrder.length / infoPerPage));
     } else {
@@ -84,49 +83,49 @@ function OderUser() {
         <div className="infouser-content">
           <div className="infouser-sidebar">
             <div className="infouser-avatar">
-              <Avatar style={{ marginTop: "20px" }}></Avatar>
+              <Avatar style={{ marginTop: '20px' }}></Avatar>
               <div className="margin-right">
                 <UserInfor />
               </div>
             </div>
             <UserOder />
             <ChangePass />
-            <div style={{ marginTop: "15px" }}>
+            <div style={{ marginTop: '15px' }}>
               <ChangeMail />
             </div>
           </div>
 
           <div className="orderuser-container">
             <SegmentedControl
-              style={{ backgroundColor: "#fff" }}
+              style={{ backgroundColor: '#fff' }}
               fullWidth
               color="blue"
               size="md"
               radius="lg"
               data={[
                 {
-                  value: "ALL",
-                  label: "Tất cả",
+                  value: 'ALL',
+                  label: 'Tất cả',
                 },
                 {
-                  value: "PENDING",
-                  label: "Đang xử lý",
+                  value: 'PENDING',
+                  label: 'Đang xử lý',
                 },
                 {
-                  value: "CONFIRMED",
-                  label: "Đã xác nhận",
+                  value: 'CONFIRMED',
+                  label: 'Đã xác nhận',
                 },
                 {
-                  value: "DELIVERING",
-                  label: "Đang giao",
+                  value: 'DELIVERING',
+                  label: 'Đang giao',
                 },
                 {
-                  value: "SUCCESS",
-                  label: "Đã giao",
+                  value: 'SUCCESS',
+                  label: 'Đã giao',
                 },
                 {
-                  value: "CANCELED",
-                  label: "Đã hủy",
+                  value: 'CANCELED',
+                  label: 'Đã hủy',
                 },
               ]}
               value={currentFilter}
@@ -137,7 +136,7 @@ function OderUser() {
               {displayInfo}
               <Pagination
                 className="pagination-center"
-                style={{ marginBottom: "-20px", marginTop: "30px" }}
+                style={{ marginBottom: '-20px', marginTop: '30px' }}
                 total={numberOfPage}
                 defaultValue={1}
                 value={currentPage}

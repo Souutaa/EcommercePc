@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
-import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
-import axios from "axios";
-import WarrantyPeriodAdminStatus from "../Components/WarrantyPeriodAdminStatus/WarrantyPeriodAdminStatus";
-import { MantineProvider } from "@mantine/core";
-import { ModalsProvider } from "@mantine/modals";
-import ButtonAddWarrantyPeriod from "../Components/Button/button-add-warranty-period";
-import API_ADDRESS from "../Api_Address";
+import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { BASE_URL } from '../App';
+import Breadcrumbs from '../Components/Breadcrumbs/Breadcrumbs';
+import ButtonAddWarrantyPeriod from '../Components/Button/button-add-warranty-period';
+import WarrantyPeriodAdminStatus from '../Components/WarrantyPeriodAdminStatus/WarrantyPeriodAdminStatus';
+
 interface WarrantyPeriod {
   id: string;
   months: number;
@@ -15,9 +16,7 @@ const WarrantyPeriodsAdmin = () => {
   const [warrantyPeriods, setWarrantyPeriods] = useState<WarrantyPeriod[]>([]);
 
   const fetchWarrantyPeriods = useCallback(async () => {
-    const response = await axios.get(
-      `http://${API_ADDRESS}:8080/warranty-period`
-    );
+    const response = await axios.get(`${BASE_URL}/warranty-period`);
     setWarrantyPeriods(response.data);
   }, []);
 
@@ -39,11 +38,11 @@ const WarrantyPeriodsAdmin = () => {
           <table className="table-centered">
             <thead className="table-light">
               <tr>
-                <th className="sorting" style={{ width: "150px" }}>
+                <th className="sorting" style={{ width: '150px' }}>
                   ID
                 </th>
                 <th className="sorting">Months</th>
-                <th className="sorting" style={{ width: "150px" }}>
+                <th className="sorting" style={{ width: '150px' }}>
                   Action
                 </th>
               </tr>

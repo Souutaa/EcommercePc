@@ -1,16 +1,16 @@
-import { Pagination, isNumberLike } from "@mantine/core";
+import { Pagination } from '@mantine/core';
 
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import FilterSection from "../../Components/FilterSection/FilterSection";
-import Product, { ProductItem } from "../../Components/Product/Product";
-import ProductListFollowCategory from "../../Components/Product/ProductListFollowCategory";
-import formatPrice from "../../Helper/formatPrice";
-import { ProductItems } from "../HomePage/Content";
-import { useDebounce } from "../../Hooks/use-debounce";
-import API_ADDRESS from "../../Api_Address";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { BASE_URL } from '../../App';
+import Breadcrumbs from '../../Components/Breadcrumbs/Breadcrumbs';
+import FilterSection from '../../Components/FilterSection/FilterSection';
+import { ProductItem } from '../../Components/Product/Product';
+import ProductListFollowCategory from '../../Components/Product/ProductListFollowCategory';
+import { useDebounce } from '../../Hooks/use-debounce';
+import { ProductItems } from '../HomePage/Content';
+
 type CategoryProductMore = {
   id: number;
   name: string;
@@ -39,17 +39,16 @@ function ProductMore() {
       try {
         const url =
           name && brandName
-            ? `http://${API_ADDRESS}:8080/category/${name}/${brandName}`
-            : `http://${API_ADDRESS}:8080/category/${name}`;
+            ? `${BASE_URL}/category/${name}/${brandName}`
+            : `${BASE_URL}/category/${name}`;
         const res = await axios.get(url);
         setCategory(res.data);
         setProductMoreFollowBrandFilter(res.data.products);
-        console.log(res.data.products);
-        console.log("products more follow brand based on Category=> ", res);
+        console.log('products more follow brand based on Category=> ', res);
         setProductMoreFollowBrand(res.data);
         setNumberOfPage(Math.ceil(res.data.products.length / infoPerPage));
       } catch (error) {
-        console.log("error=> ", error);
+        console.log('error=> ', error);
       }
     };
     fetchProductsBrand();
@@ -61,12 +60,12 @@ function ProductMore() {
   const offset = (currentPage - 1) * infoPerPage;
 
   //filter
-  const [currentFilter, setCurrentFilter] = useState("1");
+  const [currentFilter, setCurrentFilter] = useState('1');
   const onChangeFilter = (index: string) => {
     setCurrentFilter(index);
     if (productMorefollowBrand)
       switch (index) {
-        case "2": {
+        case '2': {
           setProductMoreFollowBrandFilter(
             productMorefollowBrand.products.sort(
               (a: ProductItem, b: ProductItem) => a.price - b.price
@@ -77,7 +76,7 @@ function ProductMore() {
           );
           break;
         }
-        case "3": {
+        case '3': {
           setProductMoreFollowBrandFilter(
             productMorefollowBrand.products.sort(
               (a: ProductItem, b: ProductItem) => b.price - a.price
@@ -88,7 +87,7 @@ function ProductMore() {
           );
           break;
         }
-        case "4": {
+        case '4': {
           setProductMoreFollowBrandFilter((prevState) => {
             return productMorefollowBrand.products.sort(
               (a: ProductItem, b: ProductItem) =>
@@ -100,7 +99,7 @@ function ProductMore() {
           );
           break;
         }
-        case "5": {
+        case '5': {
           setProductMoreFollowBrandFilter(() => {
             return productMorefollowBrand.products.sort(
               (a: ProductItem, b: ProductItem) =>
@@ -181,8 +180,8 @@ function ProductMore() {
             defaultValue={1}
             value={currentPage}
             onChange={onPageChange}
-            radius={"md"}
-            size={"xl"}
+            radius={'md'}
+            size={'xl'}
           />
         </div>
       </div>

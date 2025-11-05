@@ -1,18 +1,17 @@
-import { Button } from "@mantine/core";
-import { Input } from "@mantine/core";
-import { Link, useNavigate } from "react-router-dom";
-import { PATHS } from "../../Constants/path";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { notifications } from "@mantine/notifications";
-import { IconCheck, IconLoader, IconX } from "@tabler/icons-react";
-import API_ADDRESS from "../../Api_Address";
-import styled from ".//LoginPage.module.css";
+import { Button, Input } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconLoader, IconX } from '@tabler/icons-react';
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../App';
+import { PATHS } from '../../Constants/path';
+import styled from './/LoginPage.module.css';
 
 function ForgotPassword() {
   const navigate = useNavigate();
-  const [errorHandleInputMail, setErrorHandleInputMail] = useState("");
-  const [email, setEmail] = useState("");
+  const [errorHandleInputMail, setErrorHandleInputMail] = useState('');
+  const [email, setEmail] = useState('');
   const [disabled, setDisabled] = useState(false);
 
   const forgetPassword = async () => {
@@ -20,29 +19,29 @@ function ForgotPassword() {
       withCloseButton: true,
       autoClose: 1000,
       message: `Đang kiểm tra mail: ${email}`,
-      color: "teal",
+      color: 'teal',
       icon: <IconLoader />,
-      className: "my-notification-class",
+      className: 'my-notification-class',
       loading: true,
     });
-    localStorage.removeItem("mail");
+    localStorage.removeItem('mail');
     const data = { email: email };
     setDisabled(true);
 
     await axios
-      .patch(`http://${API_ADDRESS}:8080/mail/sendmail`, data)
+      .patch(`${BASE_URL}/mail/sendmail`, data)
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);
         } else {
-          localStorage.setItem("mail", res.data.email);
+          localStorage.setItem('mail', res.data.email);
           notifications.show({
             withCloseButton: true,
             autoClose: 2000,
             message: `Đã gửi mã OTP đến mail: ${res.data.email}`,
-            color: "teal",
+            color: 'teal',
             icon: <IconCheck />,
-            className: "my-notification-class",
+            className: 'my-notification-class',
             loading: false,
           });
           setDisabled(false);
@@ -53,10 +52,10 @@ function ForgotPassword() {
         notifications.show({
           withCloseButton: true,
           autoClose: 2000,
-          message: "Mail không tồn tại, vui lòng kiểm tra lại",
-          color: "red",
+          message: 'Mail không tồn tại, vui lòng kiểm tra lại',
+          color: 'red',
           icon: <IconX />,
-          className: "my-notification-class",
+          className: 'my-notification-class',
           loading: false,
         });
         setDisabled(false);
@@ -65,17 +64,17 @@ function ForgotPassword() {
 
   const inputMailHandle = (e: string) => {
     if (!e) {
-      setErrorHandleInputMail("Vui lòng nhập mail: *****@*mail.com");
+      setErrorHandleInputMail('Vui lòng nhập mail: *****@*mail.com');
     } else {
-      setErrorHandleInputMail("");
+      setErrorHandleInputMail('');
     }
   };
 
   return (
     <>
-      <form className={styled["modal-form-sign-in"]} action="">
-        <h2 className={styled["text-sign-in"]}>Quên mật khẩu</h2>
-        <div className={styled["form-sign-in"]}>
+      <form className={styled['modal-form-sign-in']} action="">
+        <h2 className={styled['text-sign-in']}>Quên mật khẩu</h2>
+        <div className={styled['form-sign-in']}>
           <div className="form-group">
             <label className="form-text" htmlFor="">
               Mail đăng kí
@@ -83,7 +82,7 @@ function ForgotPassword() {
             <Input.Wrapper error={errorHandleInputMail}>
               <Input
                 size="xl"
-                radius={"lg"}
+                radius={'lg'}
                 error={errorHandleInputMail}
                 placeholder="abc@gmail.com"
                 onChange={(e) => {
@@ -98,7 +97,7 @@ function ForgotPassword() {
             <div className="form-group margin-bottom">
               <Button
                 size="xl"
-                radius={"lg"}
+                radius={'lg'}
                 disabled={disabled}
                 onClick={() => {
                   forgetPassword();

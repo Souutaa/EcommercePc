@@ -1,5 +1,5 @@
-import { IconCheck } from "@tabler/icons-react";
-import { notifications } from "@mantine/notifications";
+import { IconCheck } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
 import {
   Button,
   FileInput,
@@ -7,12 +7,13 @@ import {
   Input,
   NativeSelect,
   ComboboxItem,
-} from "@mantine/core";
-import { modals } from "@mantine/modals";
-import React, { useEffect, useReducer, useState } from "react";
-import { ProductDetailType } from "../../Pages/ProductDetail/ProductDetail";
-import axios from "axios";
-import API_ADDRESS from "../../Api_Address";
+} from '@mantine/core';
+import { modals } from '@mantine/modals';
+import React, { useEffect, useReducer, useState } from 'react';
+import { ProductDetailType } from '../../Pages/ProductDetail/ProductDetail';
+import axios from 'axios';
+import { BASE_URL } from '../../App';
+
 interface Props {
   productLine: string;
 }
@@ -20,23 +21,23 @@ interface Props {
 function infoReducer(state: any, action: any) {
   let newState = { ...state };
   switch (action.type) {
-    case "UPDATE":
+    case 'UPDATE':
       newState[action.payload.id] = action.payload.info;
       return newState;
-    case "ADD":
-      newState[Math.floor(Math.random() * 100000000)] = "";
+    case 'ADD':
+      newState[Math.floor(Math.random() * 100000000)] = '';
       return newState;
-    case "DELETE":
+    case 'DELETE':
       delete newState[action.payload.id];
       return newState;
-    case "LOAD":
+    case 'LOAD':
       action.payload.infos.forEach(
         (info: { id: number; productInformation: string }) => {
           newState[info.id] = info.productInformation;
         }
       );
       return newState;
-    case "SAVE":
+    case 'SAVE':
       return state;
     default:
       return state;
@@ -75,7 +76,7 @@ const FormChange = (props: Props) => {
   async function getProduct(proudctLine: string): Promise<any> {
     try {
       const response = await axios.get(
-        `http://${API_ADDRESS}:8080/product/${proudctLine}`
+        `${BASE_URL}:8080/product/${proudctLine}`
       );
       return response.data;
     } catch {}
@@ -84,11 +85,11 @@ const FormChange = (props: Props) => {
   useEffect(() => {
     const handleGetBrandCategory = async () => {
       const categoryResponse = await axios.get(
-        `http://${API_ADDRESS}:8080/category/all/simple?active=true`
+        `${BASE_URL}:8080/category/all/simple?active=true`
       );
       setCategories(categoryResponse.data);
       const productWarrantyPeriodResponse = await axios.get(
-        `http://${API_ADDRESS}:8080/warranty-period`
+        `${BASE_URL}:8080/warranty-period`
       );
       setWarantyPeriods(productWarrantyPeriodResponse.data);
     };
@@ -100,7 +101,7 @@ const FormChange = (props: Props) => {
       const response = await getProduct(props.productLine);
       setProduct(response);
       infoDispatch({
-        type: "LOAD",
+        type: 'LOAD',
         payload: {
           infos: response.productInfos,
         },
@@ -122,23 +123,23 @@ const FormChange = (props: Props) => {
       imageUris: product?.imageUris,
     });
     const blob = new Blob([updatedProduct], {
-      type: "application/json",
+      type: 'application/json',
     });
-    form.append("data", blob);
+    form.append('data', blob);
     if (newImages) {
       [].forEach.call(newImages, (image) => {
-        form.append("images", image);
+        form.append('images', image);
       });
     }
     if (newThumbnail) {
-      form.append("thumbnail", newThumbnail);
+      form.append('thumbnail', newThumbnail);
     }
     const { data } = await axios.patch(
-      `http://${API_ADDRESS}:8080/product/update`,
+      `${BASE_URL}:8080/product/update`,
       form,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       }
     );
@@ -153,7 +154,7 @@ const FormChange = (props: Props) => {
 
     try {
       const response = await axios.patch(
-        `http://${API_ADDRESS}:8080/product-info/update`,
+        `${BASE_URL}:8080/product-info/update`,
         {
           productInfos,
           productLine: product?.product.productLine,
@@ -190,11 +191,11 @@ const FormChange = (props: Props) => {
         <span className="text-label">Thumbnail</span>
         <div className="product-thumbnail">
           <img
-            style={{ width: "200px", height: "200px" }}
+            style={{ width: '200px', height: '200px' }}
             src={
               newThumbnail
                 ? URL.createObjectURL(newThumbnail)
-                : `http://${API_ADDRESS}:8080/product/get-file?filePath=${product?.thumbnailUri}`
+                : `${BASE_URL}:8080/product/get-file?filePath=${product?.thumbnailUri}`
             }
             alt=""
           />
@@ -213,10 +214,10 @@ const FormChange = (props: Props) => {
               <img
                 key={image}
                 style={{
-                  width: "200px",
-                  height: "200px",
+                  width: '200px',
+                  height: '200px',
                 }}
-                src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${image}`}
+                src={`${BASE_URL}:8080/product/get-file?filePath=${image}`}
                 alt=""
                 onClick={(e) => {
                   if (product) {
@@ -238,8 +239,8 @@ const FormChange = (props: Props) => {
               <img
                 key={index}
                 style={{
-                  width: "200px",
-                  height: "200px",
+                  width: '200px',
+                  height: '200px',
                 }}
                 src={URL.createObjectURL(image)}
                 alt=""
@@ -255,11 +256,11 @@ const FormChange = (props: Props) => {
           value={newImages}
           onChange={setNewImages}
         />
-        <Flex columnGap={"md"}>
+        <Flex columnGap={'md'}>
           <Input.Wrapper
             className="mb-20"
             label="Price"
-            style={{ flex: "1 1 50%" }}
+            style={{ flex: '1 1 50%' }}
           >
             <Input
               value={product && product.product.price}
@@ -280,7 +281,7 @@ const FormChange = (props: Props) => {
           <Input.Wrapper
             className="mb-20"
             label="Discount"
-            style={{ flex: "1 1 50%" }}
+            style={{ flex: '1 1 50%' }}
           >
             <Input
               value={product && product.product.discount}
@@ -301,7 +302,7 @@ const FormChange = (props: Props) => {
         </Flex>
         <NativeSelect
           className="mb-20"
-          style={{ width: "50%" }}
+          style={{ width: '50%' }}
           label="Warranty Period"
           placeholder="Không có bảo hành"
           value={product?.warrantyPeriodId}
@@ -310,7 +311,7 @@ const FormChange = (props: Props) => {
               ? warantyPeriods.map((item): ComboboxItem => {
                   return {
                     value: item.id,
-                    label: item.months + " tháng",
+                    label: item.months + ' tháng',
                     disabled: false,
                   };
                 })
@@ -319,7 +320,7 @@ const FormChange = (props: Props) => {
         />
         <div className="input-2 mb-20">
           <NativeSelect
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             label="Category"
             defaultValue={product?.categoryId}
             data={
@@ -351,7 +352,7 @@ const FormChange = (props: Props) => {
             }}
           />
           <NativeSelect
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             label="Brand"
             defaultValue={product?.brandId}
             data={
@@ -381,22 +382,22 @@ const FormChange = (props: Props) => {
         <Input.Wrapper className="mb-20" label="Information">
           <span
             className="moreinfo-text"
-            onClick={() => infoDispatch({ type: "ADD" })}
+            onClick={() => infoDispatch({ type: 'ADD' })}
           >
             More Info
           </span>
-          <Flex rowGap={"sm"} direction={"column"}>
+          <Flex rowGap={'sm'} direction={'column'}>
             {Object.keys(info).map((key) => (
-              <Flex key={key} columnGap={"sm"}>
+              <Flex key={key} columnGap={'sm'}>
                 <Input
                   title="info"
                   name="productInfo"
                   type="text"
                   value={info[key]}
-                  style={{ flex: "1 1 90%" }}
+                  style={{ flex: '1 1 90%' }}
                   onChange={(e) => {
                     return infoDispatch({
-                      type: "UPDATE",
+                      type: 'UPDATE',
                       payload: {
                         id: key,
                         info: e.target.value,
@@ -407,7 +408,7 @@ const FormChange = (props: Props) => {
                 <Button
                   type="button"
                   onClick={() =>
-                    infoDispatch({ type: "DELETE", payload: { id: key } })
+                    infoDispatch({ type: 'DELETE', payload: { id: key } })
                   }
                   color="#f03a17"
                 >
@@ -427,10 +428,10 @@ const FormChange = (props: Props) => {
             notifications.show({
               withCloseButton: true,
               autoClose: 1500,
-              message: "Cập nhật sản phẩm thành công",
-              color: "teal",
+              message: 'Cập nhật sản phẩm thành công',
+              color: 'teal',
               icon: <IconCheck />,
-              className: "my-notification-class",
+              className: 'my-notification-class',
               loading: false,
             });
             modals.closeAll();
@@ -439,7 +440,7 @@ const FormChange = (props: Props) => {
           Save and change
         </Button>
         <Button
-          style={{ backgroundColor: "#eef2f7", color: "black" }}
+          style={{ backgroundColor: '#eef2f7', color: 'black' }}
           onClick={() => modals.closeAll()}
           mt="md"
         >

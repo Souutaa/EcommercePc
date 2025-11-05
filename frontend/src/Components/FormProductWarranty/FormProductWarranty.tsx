@@ -1,30 +1,30 @@
-import { Button, Flex, Input } from "@mantine/core";
-import { modals } from "@mantine/modals";
-import axios from "axios";
-import { useEffect, useReducer } from "react";
-import { InfoInput } from "../FormChange/FormChange";
-import API_ADDRESS from "../../Api_Address";
+import { Button, Flex, Input } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import axios from 'axios';
+import { useEffect, useReducer } from 'react';
+import { BASE_URL } from '../../App';
+import { InfoInput } from '../FormChange/FormChange';
 
 function infoReducer(state: any, action: any) {
   let newState = { ...state };
   switch (action.type) {
-    case "UPDATE":
+    case 'UPDATE':
       newState[action.payload.id] = action.payload.info;
       return newState;
-    case "ADD":
-      newState[Math.floor(Math.random() * 100000000)] = "";
+    case 'ADD':
+      newState[Math.floor(Math.random() * 100000000)] = '';
       return newState;
-    case "DELETE":
+    case 'DELETE':
       delete newState[action.payload.id];
       return newState;
-    case "LOAD":
+    case 'LOAD':
       action.payload.infos.forEach(
         (info: { id: number; productWarrantyId: string }) => {
           newState[info.id] = info.productWarrantyId;
         }
       );
       return newState;
-    case "SAVE":
+    case 'SAVE':
       return state;
     default:
       return state;
@@ -42,7 +42,7 @@ const FormProductWarranty = (props: {
   async function getProduct(productId: number): Promise<any> {
     try {
       const response = await axios.get(
-        `http://${API_ADDRESS}:8080/product-warranty/all?productId=${productId}`
+        `${BASE_URL}/product-warranty/all?productId=${productId}`
       );
       return response.data;
     } catch {}
@@ -52,7 +52,7 @@ const FormProductWarranty = (props: {
     const handleGetProduct = async () => {
       const response = await getProduct(props.productId);
       serialDispatch({
-        type: "LOAD",
+        type: 'LOAD',
         payload: {
           infos: response,
         },
@@ -66,7 +66,7 @@ const FormProductWarranty = (props: {
       const productSerials = Object.keys(newSerial).map((key) => {
         return newSerial[key];
       });
-      await axios.post(`http://${API_ADDRESS}:8080/product-warranty/create`, {
+      await axios.post(`${BASE_URL}/product-warranty/create`, {
         productWarranties: productSerials,
         productLine: props.productLine,
       });
@@ -82,34 +82,34 @@ const FormProductWarranty = (props: {
         <Input.Wrapper className="mb-20" label="Serial Number ">
           <span
             className="moreinfo-text"
-            onClick={() => newSerialDispatch({ type: "ADD" })}
+            onClick={() => newSerialDispatch({ type: 'ADD' })}
           >
             More S/N
           </span>
-          <Flex rowGap={"sm"} direction={"column"}>
+          <Flex rowGap={'sm'} direction={'column'}>
             {Object.keys(serial).map((key) => (
-              <Flex key={key} columnGap={"sm"}>
+              <Flex key={key} columnGap={'sm'}>
                 <Input
                   title="info"
                   name="productInfo"
                   type="text"
                   value={serial[key]}
                   disabled
-                  style={{ flex: "1 1 90%" }}
+                  style={{ flex: '1 1 90%' }}
                 />
               </Flex>
             ))}
             {Object.keys(newSerial).map((key) => (
-              <Flex key={key} columnGap={"sm"}>
+              <Flex key={key} columnGap={'sm'}>
                 <Input
                   title="info"
                   name="productInfo"
                   type="text"
                   value={newSerial[key]}
-                  style={{ flex: "1 1 90%" }}
+                  style={{ flex: '1 1 90%' }}
                   onChange={(e) => {
                     return newSerialDispatch({
-                      type: "UPDATE",
+                      type: 'UPDATE',
                       payload: {
                         id: key,
                         info: e.target.value,
@@ -120,7 +120,7 @@ const FormProductWarranty = (props: {
                 <Button
                   type="button"
                   onClick={() =>
-                    newSerialDispatch({ type: "DELETE", payload: { id: key } })
+                    newSerialDispatch({ type: 'DELETE', payload: { id: key } })
                   }
                   color="#f03a17"
                 >
@@ -141,7 +141,7 @@ const FormProductWarranty = (props: {
           Add Warranty
         </Button>
         <Button
-          style={{ backgroundColor: "#eef2f7", color: "black" }}
+          style={{ backgroundColor: '#eef2f7', color: 'black' }}
           onClick={() => modals.closeAll()}
           mt="md"
         >

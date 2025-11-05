@@ -1,18 +1,20 @@
-import { Input, NativeSelect, Pagination, Select } from "@mantine/core";
-import React, { useEffect, useState } from "react";
-import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
-import PagiProductAdmin from "../Components/PaginationProductAdmin/PagiProductAdmin";
-import ProductAdminStatus from "../Components/ProductAdminStatus/ProductAdminStatus";
-import ProductTitleAdmin from "../Components/ProductTitleAdmin/ProductTitleAdmin";
-import LengthProduct from "../Components/LengthProduct/LengthProduct";
-import { MantineProvider } from "@mantine/core";
-import { ModalsProvider } from "@mantine/modals";
-import { Notifications } from "@mantine/notifications";
-import ButtonAddAdmin from "../Components/Button/button-add-product-admin";
-import SearchAdmin from "../Components/SearchAdmin/SearchAdmin";
-import axios from "axios";
-import { useDebounce } from "../Hooks/use-debounce";
-import API_ADDRESS from "../Api_Address";
+import {
+  Input,
+  MantineProvider,
+  NativeSelect,
+  Pagination,
+} from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { BASE_URL } from '../App';
+import Breadcrumbs from '../Components/Breadcrumbs/Breadcrumbs';
+import ButtonAddAdmin from '../Components/Button/button-add-product-admin';
+import ProductAdminStatus from '../Components/ProductAdminStatus/ProductAdminStatus';
+import ProductTitleAdmin from '../Components/ProductTitleAdmin/ProductTitleAdmin';
+import { useDebounce } from '../Hooks/use-debounce';
+
 export interface AdminProductInformation {
   id: number;
   productLine: string;
@@ -29,17 +31,15 @@ export interface AdminProductInformation {
 
 const ProductAdmin = () => {
   const [products, setProducts] = useState<AdminProductInformation[]>([]);
-  const [newProduct, setNewProduct] = useState<string>("");
-  const [search, setSearch] = useState<string>("");
+  const [newProduct, setNewProduct] = useState<string>('');
+  const [search, setSearch] = useState<string>('');
   const [numberOfPage, setNumberOfPage] = useState(0);
   const [filteredAdminProductInformation, setFilteredAdminProductInformation] =
     useState<AdminProductInformation[]>([]);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          `http://${API_ADDRESS}:8080/product/all`
-        );
+        const response = await axios.get(`${BASE_URL}/product/all`);
         setProducts(response.data);
         setFilteredAdminProductInformation(response.data);
         setNumberOfPage(Math.ceil(response.data.length / infoPerPage));
@@ -94,11 +94,11 @@ const ProductAdmin = () => {
                 <label htmlFor="" className="form-lable">
                   Display
                   <NativeSelect
-                    style={{ width: "100px", margin: "0 10px" }}
-                    data={["5", "10", "20", "All"]}
+                    style={{ width: '100px', margin: '0 10px' }}
+                    data={['5', '10', '20', 'All']}
                     defaultValue={infoPerPage}
                     onChange={(e) => {
-                      if (e.target.value === "All") {
+                      if (e.target.value === 'All') {
                         setInfoPerPage(Number.MAX_VALUE);
                         setNumberOfPage(
                           Math.ceil(products.length / Number.MAX_VALUE)
@@ -118,7 +118,7 @@ const ProductAdmin = () => {
                 <label htmlFor="" className="form-lable">
                   Search
                   <Input
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: '10px' }}
                     value={search}
                     onChange={(e) => {
                       setSearch(e.target.value);

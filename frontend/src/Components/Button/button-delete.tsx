@@ -1,7 +1,8 @@
-import { Text } from "@mantine/core";
-import { modals } from "@mantine/modals";
-import { IconTrash } from "@tabler/icons-react";
-import axios from "axios";
+import { Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { IconTrash } from '@tabler/icons-react';
+import axios from 'axios';
+import { BASE_URL } from '../../App';
 
 interface Props {
   productLine?: string;
@@ -10,14 +11,14 @@ interface Props {
 const ButtonDelete = (props: Props) => {
   const openDeleteModal = () =>
     modals.openConfirmModal({
-      title: "Delete ",
+      title: 'Delete ',
       centered: true,
       children: <Text size="sm">Do you want to delete ?</Text>,
-      labels: { confirm: "Delete ", cancel: "No don't delete it" },
-      confirmProps: { color: "red" },
+      labels: { confirm: 'Delete ', cancel: "No don't delete it" },
+      confirmProps: { color: 'red' },
       onConfirm: async () => {
         await axios.delete(
-          `http://192.168.1.14:8080/product/delete?productLine=${props.productLine}`
+          `${BASE_URL}/product/delete?productLine=${props.productLine}`
         );
       },
     });

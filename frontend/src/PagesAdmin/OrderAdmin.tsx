@@ -4,16 +4,17 @@ import {
   NativeSelect,
   Pagination,
   SegmentedControl,
-} from "@mantine/core";
-import { ModalsProvider } from "@mantine/modals";
-import { Notifications } from "@mantine/notifications";
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
-import OrderAdminStatus from "../Components/OrderAdminStatus/OrderAdminStatus";
-import OrderTitleAdmin from "../Components/OrderTitleAdmin/OrderTitleAdmin";
-import { useDebounce } from "../Hooks/use-debounce";
-import API_ADDRESS from "../Api_Address";
+} from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { BASE_URL } from '../App';
+import Breadcrumbs from '../Components/Breadcrumbs/Breadcrumbs';
+import OrderAdminStatus from '../Components/OrderAdminStatus/OrderAdminStatus';
+import OrderTitleAdmin from '../Components/OrderTitleAdmin/OrderTitleAdmin';
+import { useDebounce } from '../Hooks/use-debounce';
+
 export interface AdminOrder {
   id: number;
   username: string;
@@ -24,15 +25,13 @@ export interface AdminOrder {
 
 const OrderAdmin = () => {
   const [orders, setOrders] = useState<AdminOrder[]>([]);
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>('');
   const [numberOfPage, setNumberOfPage] = useState(0);
   const [filteredAdminOrder, setFilteredAdminOrder] = useState<AdminOrder[]>(
     []
   );
   const fetchOrders = useCallback(async () => {
-    const response = await axios.get(
-      `http://${API_ADDRESS}:8080/order/getAllOrder`
-    );
+    const response = await axios.get(`${BASE_URL}/order/getAllOrder`);
     setOrders(response.data);
     setFilteredAdminOrder(response.data);
     setNumberOfPage(Math.ceil(response.data.length / infoPerPage));
@@ -66,10 +65,10 @@ const OrderAdmin = () => {
     1000
   );
 
-  const [currentFilter, setCurrentFilter] = useState("ALL");
+  const [currentFilter, setCurrentFilter] = useState('ALL');
   const onChangeFilter = (index: string) => {
     setCurrentFilter(index);
-    if (index === "ALL") {
+    if (index === 'ALL') {
       setFilteredAdminOrder(orders);
       setNumberOfPage(Math.ceil(orders.length / infoPerPage));
     } else {
@@ -95,11 +94,11 @@ const OrderAdmin = () => {
                 <label htmlFor="" className="form-lable">
                   Display
                   <NativeSelect
-                    style={{ width: "100px", margin: "0 10px" }}
-                    data={["5", "10", "20", "All"]}
+                    style={{ width: '100px', margin: '0 10px' }}
+                    data={['5', '10', '20', 'All']}
                     defaultValue={infoPerPage}
                     onChange={(e) => {
-                      if (e.target.value === "All") {
+                      if (e.target.value === 'All') {
                         setInfoPerPage(Number.MAX_VALUE);
                         setNumberOfPage(
                           Math.ceil(orders.length / Number.MAX_VALUE)
@@ -116,35 +115,35 @@ const OrderAdmin = () => {
                 </label>
               </div>
               <SegmentedControl
-                style={{ backgroundColor: "#fff" }}
+                style={{ backgroundColor: '#fff' }}
                 fullWidth
                 color="blue"
                 size="md"
                 radius="lg"
                 data={[
                   {
-                    value: "ALL",
-                    label: "Tất cả",
+                    value: 'ALL',
+                    label: 'Tất cả',
                   },
                   {
-                    value: "PENDING",
-                    label: "Đang xử lý",
+                    value: 'PENDING',
+                    label: 'Đang xử lý',
                   },
                   {
-                    value: "CONFIRMED",
-                    label: "Đã xác nhận",
+                    value: 'CONFIRMED',
+                    label: 'Đã xác nhận',
                   },
                   {
-                    value: "DELIVERING",
-                    label: "Đang giao",
+                    value: 'DELIVERING',
+                    label: 'Đang giao',
                   },
                   {
-                    value: "SUCCESS",
-                    label: "Đã giao",
+                    value: 'SUCCESS',
+                    label: 'Đã giao',
                   },
                   {
-                    value: "CANCELED",
-                    label: "Đã hủy",
+                    value: 'CANCELED',
+                    label: 'Đã hủy',
                   },
                 ]}
                 value={currentFilter}
@@ -154,7 +153,7 @@ const OrderAdmin = () => {
                 <label htmlFor="" className="form-lable">
                   Search
                   <Input
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: '10px' }}
                     value={search}
                     onChange={(e) => {
                       setSearch(e.target.value);

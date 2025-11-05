@@ -1,19 +1,19 @@
-import { Button, Input } from "@mantine/core";
-import { modals } from "@mantine/modals";
-import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons-react";
-import axios from "axios";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { PATHS } from "../../Constants/path";
-import API_ADDRESS from "../../Api_Address";
+import { Button, Input } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../App';
+
 const FormChangeCategory = (props: { id: string }) => {
-  const [nameCategory, setNameCategory] = useState("");
+  const [nameCategory, setNameCategory] = useState('');
   const navigate = useNavigate();
   const updateCategory = async () => {
     const data = { nameCategory: nameCategory };
     await axios
-      .patch(`http://${API_ADDRESS}:8080/category/${props.id}/update`, data)
+      .patch(`${BASE_URL}/category/${props.id}/update`, data)
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);
@@ -25,13 +25,13 @@ const FormChangeCategory = (props: { id: string }) => {
     notifications.show({
       withCloseButton: true,
       autoClose: 1500,
-      message: "Cập nhật category thành công",
-      color: "teal",
+      message: 'Cập nhật category thành công',
+      color: 'teal',
       icon: <IconCheck />,
-      className: "my-notification-class",
+      className: 'my-notification-class',
       loading: false,
     });
-    navigate("/admin/category");
+    navigate('/admin/category');
   };
 
   return (
@@ -62,7 +62,7 @@ const FormChangeCategory = (props: { id: string }) => {
           Save and change
         </Button>
         <Button
-          style={{ backgroundColor: "#eef2f7", color: "black" }}
+          style={{ backgroundColor: '#eef2f7', color: 'black' }}
           onClick={() => {
             modals.closeAll();
           }}

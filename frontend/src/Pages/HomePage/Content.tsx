@@ -1,12 +1,12 @@
-import "@mantine/carousel/styles.css";
-import { SegmentedControlItem } from "@mantine/core";
-import "@mantine/core/styles.css";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import ProductList from "../../Components/Product/ProductList";
-import TabProduct from "../../Components/TabProduct/TabProduct";
-import "./style.css";
-import API_ADDRESS from "../../Api_Address";
+import '@mantine/carousel/styles.css';
+import '@mantine/core/styles.css';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { BASE_URL } from '../../App';
+import ProductList from '../../Components/Product/ProductList';
+import TabProduct from '../../Components/TabProduct/TabProduct';
+import './style.css';
+
 export type ProductItems = {
   id: number;
   productName: string;
@@ -31,21 +31,22 @@ export type Category = {
 function Content() {
   const [category, setCategory] = useState<Category[]>([]);
   useEffect(() => {
+    console.log('get brands data from api');
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(
-          `http://${API_ADDRESS}:8080/category/allOfCategoryBrand`
-        );
-        console.log(res.data);
+        const res = await axios.get(`${BASE_URL}/category/allOfCategoryBrand`);
+        console.log('products=> ', res);
         setCategory(res.data);
-      } catch (error) {}
+      } catch (error) {
+        console.log('error=> ', error);
+      }
     };
     fetchProducts();
   }, []);
 
   const [allCategory, setAllCategory] = useState(true);
   const onChangeAllCategory = (e: string) => {
-    if (e === "ALL") setAllCategory(true);
+    if (e === 'ALL') setAllCategory(true);
     else setAllCategory(false);
   };
 
@@ -65,7 +66,7 @@ function Content() {
                       <ProductList brands={item.brands} name={item.name} />
                     </div>
                   ) : (
-                    ""
+                    ''
                   )}
                 </>
               );

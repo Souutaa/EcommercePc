@@ -1,19 +1,20 @@
-import { Avatar, Button, Flex } from "@mantine/core";
+import { Avatar, Button, Flex } from '@mantine/core';
 
-import { useParams } from "react-router-dom";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import OrderWrapper from "../../Components/OrderWrapper/OrderWrapper";
-import ShipInfo from "../../Components/ShipInfo/ShipInfo";
-import ChangePass from "../../Components/ChangePass/ChangePass";
-import Total from "../../Components/Total/Total";
-import UserInfor from "../../Components/UserInfor/UserInfor";
-import UserOder from "../../Components/UserOrder/UserOrder";
-import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
-import formatPrice from "../../Helper/formatPrice";
-import ChangeMail from "../../Components/ChangeMail/ChangePass";
-import API_ADDRESS from "../../Api_Address";
-import styled from ".//InfoOrder.module.css";
+import { useParams } from 'react-router-dom';
+import Breadcrumbs from '../../Components/Breadcrumbs/Breadcrumbs';
+import OrderWrapper from '../../Components/OrderWrapper/OrderWrapper';
+import ShipInfo from '../../Components/ShipInfo/ShipInfo';
+import ChangePass from '../../Components/ChangePass/ChangePass';
+import Total from '../../Components/Total/Total';
+import UserInfor from '../../Components/UserInfor/UserInfor';
+import UserOder from '../../Components/UserOrder/UserOrder';
+import { useCallback, useEffect, useState } from 'react';
+import axios from 'axios';
+import formatPrice from '../../Helper/formatPrice';
+import ChangeMail from '../../Components/ChangeMail/ChangePass';
+import { BASE_URL } from '../../App';
+import styled from './/InfoOrder.module.css';
+
 export interface OrderItem {
   productName: string;
   productLine: string;
@@ -50,7 +51,7 @@ function InfoOrder() {
   useEffect(() => {
     const fetchOrder = async () => {
       const response = await axios.get(
-        `http://${API_ADDRESS}:8080/order/getOrderDetail?id=${orderId}`
+        `${BASE_URL}/order/getOrderDetail?id=${orderId}`
       );
       const data = await response.data;
       console.log(data);
@@ -74,14 +75,14 @@ function InfoOrder() {
   }, [orderId]);
 
   const handleCancelOrder = async () => {
-    await axios.patch(`http://${API_ADDRESS}:8080/order/update-status`, {
+    await axios.patch('${BASE_URL}/order/update-status', {
       orderId,
-      orderStatus: "CANCELED",
+      orderStatus: 'CANCELED',
     });
     setOrder((prevState) => {
       if (prevState) {
         let newState = { ...prevState };
-        return { ...newState, orderStatus: "CANCELED" };
+        return { ...newState, orderStatus: 'CANCELED' };
       }
       return prevState;
     });
@@ -91,32 +92,32 @@ function InfoOrder() {
     <>
       <div className="container">
         <Breadcrumbs />
-        <div className="info-user__content">
-          <div className="info-user__sidebar">
-            <div className="info-user__avatar">
-              <Avatar style={{ marginTop: "20px" }}></Avatar>
+        <div className="infouser-content">
+          <div className="infouser-sidebar">
+            <div className="infouser-avatar">
+              <Avatar style={{ marginTop: '20px' }}></Avatar>
               <div className="margin-right">
                 <UserInfor />
               </div>
             </div>
             <UserOder />
             <ChangePass />
-            <div style={{ marginTop: "15px" }}>
+            <div style={{ marginTop: '15px' }}>
               <ChangeMail />
             </div>
           </div>
-          <div className={styled["info-order__container"]}>
-            <div className={styled["info-order__detail"]}>
+          <div className={styled['info-order__container']}>
+            <div className={styled['info-order__detail']}>
               <Flex
-                align={"center"}
-                justify={"space-between"}
-                style={{ paddingBottom: "1rem" }}
+                align={'center'}
+                justify={'space-between'}
+                style={{ paddingBottom: '1rem' }}
               >
                 <h4 className="heading-territory">
                   Thông tin hóa đơn
                   <span className="oder-id">#{order?.orderInformation.id}</span>
                 </h4>
-                {order?.orderStatus === "PENDING" && (
+                {order?.orderStatus === 'PENDING' && (
                   <Button color="#f03a17" onClick={handleCancelOrder}>
                     Hủy đơn hàng
                   </Button>

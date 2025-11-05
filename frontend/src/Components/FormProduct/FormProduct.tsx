@@ -1,5 +1,3 @@
-import { IconCheck, IconX } from "@tabler/icons-react";
-import { notifications } from "@mantine/notifications";
 import {
   Button,
   ComboboxItem,
@@ -8,34 +6,35 @@ import {
   Input,
   NativeSelect,
   NumberInput,
-} from "@mantine/core";
-import { modals } from "@mantine/modals";
-import React, { useEffect, useReducer, useState } from "react";
-import { Category, InfoInput, WarrantyPeriod } from "../FormChange/FormChange";
-import axios from "axios";
-import formatPrice from "../../Helper/formatPrice";
-import API_ADDRESS from "../../Api_Address";
+} from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconX } from '@tabler/icons-react';
+import axios from 'axios';
+import { useEffect, useReducer, useState } from 'react';
+import { BASE_URL } from '../../App';
+import { Category, InfoInput, WarrantyPeriod } from '../FormChange/FormChange';
 
 function infoReducer(state: any, action: any) {
   let newState = { ...state };
   switch (action.type) {
-    case "UPDATE":
+    case 'UPDATE':
       newState[action.payload.id] = action.payload.info;
       return newState;
-    case "ADD":
-      newState[Math.floor(Math.random() * 100000000)] = "";
+    case 'ADD':
+      newState[Math.floor(Math.random() * 100000000)] = '';
       return newState;
-    case "DELETE":
+    case 'DELETE':
       delete newState[action.payload.id];
       return newState;
-    case "LOAD":
+    case 'LOAD':
       action.payload.infos.forEach(
         (info: { id: number; productInformation: string }) => {
           newState[info.id] = info.productInformation;
         }
       );
       return newState;
-    case "SAVE":
+    case 'SAVE':
       return state;
     default:
       return state;
@@ -45,16 +44,16 @@ function infoReducer(state: any, action: any) {
 const FromProduct = (props: {
   setNewProduct: (productLine: string) => void;
 }) => {
-  const [productLine, setProductLine] = useState("");
-  const [productName, setProductName] = useState("");
+  const [productLine, setProductLine] = useState('');
+  const [productName, setProductName] = useState('');
   const [brandId, setBrandId] = useState(-1);
   const [warrantyPeriodId, setWarrantyPeriodId] = useState(-1);
   const [categoryId, setCategoryId] = useState(-1);
-  const [price, setPrice] = useState<string | number>("");
-  const [discount, setDiscount] = useState<string | number>("");
+  const [price, setPrice] = useState<string | number>('');
+  const [discount, setDiscount] = useState<string | number>('');
   const [newImages, setNewImages] = useState<File[]>([]);
   const [newThumbnail, setNewThumbnail] = useState<File | null>(null);
-  const [newThumbnailURL, setNewThumbnailURL] = useState<string>("");
+  const [newThumbnailURL, setNewThumbnailURL] = useState<string>('');
   const [newImageURLs, setNewImageURLs] = useState<string[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [warantyPeriods, setWarantyPeriods] = useState<WarrantyPeriod[]>([]);
@@ -81,11 +80,11 @@ const FromProduct = (props: {
   useEffect(() => {
     const handleGetBrandCategory = async () => {
       const categoryResponse = await axios.get(
-        `http://${API_ADDRESS}:8080/category/all/simple?active=true`
+        `${BASE_URL}/category/all/simple?active=true`
       );
       setCategories(categoryResponse.data);
       const productWarrantyPeriodResponse = await axios.get(
-        `http://${API_ADDRESS}S:8080/warranty-period`
+        `${BASE_URL}/warranty-period`
       );
       setWarantyPeriods(productWarrantyPeriodResponse.data);
     };
@@ -104,32 +103,32 @@ const FromProduct = (props: {
       warrantyPeriodId: warrantyPeriodId,
     });
     const blob = new Blob([newProduct], {
-      type: "application/json",
+      type: 'application/json',
     });
 
-    form.append("json", blob);
+    form.append('json', blob);
 
     if (newImages) {
       [].forEach.call(newImages, (image) => {
-        form.append("images", image);
+        form.append('images', image);
       });
     }
     if (newThumbnail) {
-      form.append("thumbnail", newThumbnail);
+      form.append('thumbnail', newThumbnail);
     }
     try {
-      await axios.post("http://${API_ADDRESS}:8080/product/create", form, {
+      await axios.post('${BASE_URL}/product/create', form, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       });
       notifications.show({
         withCloseButton: true,
         autoClose: 1500,
-        message: "Thêm sản phẩm thành công",
-        color: "teal",
+        message: 'Thêm sản phẩm thành công',
+        color: 'teal',
         icon: <IconCheck />,
-        className: "my-notification-class",
+        className: 'my-notification-class',
         loading: false,
       });
       modals.closeAll();
@@ -138,8 +137,8 @@ const FromProduct = (props: {
       notifications.show({
         autoClose: 1500,
         icon: <IconX />,
-        color: "red",
-        message: "Vui lòng điền đầy đủ thông tin",
+        color: 'red',
+        message: 'Vui lòng điền đầy đủ thông tin',
       });
     }
     try {
@@ -151,11 +150,11 @@ const FromProduct = (props: {
         return serial[key];
       });
       console.log(productInfos, productSerials);
-      await axios.post(`http://${API_ADDRESS}:8080/product-info/add-info`, {
+      await axios.post(`${BASE_URL}/product-info/add-info`, {
         infos: productInfos,
         productLine,
       });
-      await axios.post(`http://${API_ADDRESS}:8080/product-warranty/create`, {
+      await axios.post(`${BASE_URL}/product-warranty/create`, {
         productWarranties: productSerials,
         productLine,
       });
@@ -163,42 +162,42 @@ const FromProduct = (props: {
     } catch (error) {}
   };
 
-  const [errorHandle, setErrorHandle] = useState("");
-  const [errorHandleName, setErrorHandleName] = useState("");
-  const [errorHandlePrice, setErrorHandlePrice] = useState("");
-  const [errorHandleDiscount, setErrorHandleDiscount] = useState("");
+  const [errorHandle, setErrorHandle] = useState('');
+  const [errorHandleName, setErrorHandleName] = useState('');
+  const [errorHandlePrice, setErrorHandlePrice] = useState('');
+  const [errorHandleDiscount, setErrorHandleDiscount] = useState('');
 
   const handleErrorInput = (e: string) => {
     if (!e) {
-      setErrorHandle("Vui lòng không bỏ trống");
+      setErrorHandle('Vui lòng không bỏ trống');
     } else {
-      setErrorHandle("");
+      setErrorHandle('');
     }
   };
 
   const handleErrorInputName = (e: string) => {
     if (!e) {
-      setErrorHandleName("Vui lòng không bỏ trống");
+      setErrorHandleName('Vui lòng không bỏ trống');
     } else {
-      setErrorHandleName("");
+      setErrorHandleName('');
     }
   };
   const handleErrorInputPrice = (e: string) => {
     if (parseInt(e) === 0) {
-      setErrorHandlePrice("Vui lòng nhập giá > 0");
+      setErrorHandlePrice('Vui lòng nhập giá > 0');
     } else if (!e) {
-      setErrorHandlePrice("Vui lòng không bỏ trống");
+      setErrorHandlePrice('Vui lòng không bỏ trống');
     } else {
-      setErrorHandlePrice("");
+      setErrorHandlePrice('');
     }
   };
   const handleErrorInputDiscount = (e: string) => {
     if (parseInt(e) === 0) {
-      setErrorHandleDiscount("Vui lòng nhập discount > 0");
+      setErrorHandleDiscount('Vui lòng nhập discount > 0');
     } else if (!e) {
-      setErrorHandleDiscount("Vui lòng không bỏ trống");
+      setErrorHandleDiscount('Vui lòng không bỏ trống');
     } else {
-      setErrorHandleDiscount("");
+      setErrorHandleDiscount('');
     }
   };
 
@@ -228,7 +227,7 @@ const FromProduct = (props: {
         <div className="product-thumbnail">
           {newThumbnailURL && (
             <img
-              style={{ width: "200px", height: "200px" }}
+              style={{ width: '200px', height: '200px' }}
               src={newThumbnailURL}
               alt=""
             />
@@ -247,8 +246,8 @@ const FromProduct = (props: {
               <img
                 key={index}
                 style={{
-                  width: "200px",
-                  height: "200px",
+                  width: '200px',
+                  height: '200px',
                 }}
                 src={image}
                 alt=""
@@ -266,7 +265,7 @@ const FromProduct = (props: {
         />
         <div className="input-2  mb-20">
           <NumberInput
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             label="Price"
             suffix="đ"
             defaultValue={0}
@@ -279,7 +278,7 @@ const FromProduct = (props: {
             error={errorHandlePrice}
           />
           <NumberInput
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             label="Discount"
             value={discount}
             suffix="%"
@@ -294,7 +293,7 @@ const FromProduct = (props: {
         </div>
         <NativeSelect
           className="mb-20"
-          style={{ width: "49%" }}
+          style={{ width: '49%' }}
           label="Warranty Period"
           placeholder="Không có bảo hành"
           data={
@@ -303,7 +302,7 @@ const FromProduct = (props: {
                   if (warrantyPeriodId === -1) setWarrantyPeriodId(+item.id);
                   return {
                     value: item.id,
-                    label: item.months + " tháng",
+                    label: item.months + ' tháng',
                     disabled: false,
                   };
                 })
@@ -315,7 +314,7 @@ const FromProduct = (props: {
         />
         <div className="input-2 mb-20">
           <NativeSelect
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             label="Category"
             value={categoryId}
             data={
@@ -341,7 +340,7 @@ const FromProduct = (props: {
             }}
           />
           <NativeSelect
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             label="Brand"
             data={
               categories
@@ -365,22 +364,22 @@ const FromProduct = (props: {
         <Input.Wrapper className="mb-20" label="Information">
           <span
             className="moreinfo-text"
-            onClick={() => infoDispatch({ type: "ADD" })}
+            onClick={() => infoDispatch({ type: 'ADD' })}
           >
             More Info
           </span>
-          <Flex rowGap={"sm"} direction={"column"}>
+          <Flex rowGap={'sm'} direction={'column'}>
             {Object.keys(info).map((key) => (
-              <Flex key={key} columnGap={"sm"}>
+              <Flex key={key} columnGap={'sm'}>
                 <Input
                   title="info"
                   name="productInfo"
                   type="text"
                   value={serial[key]}
-                  style={{ flex: "1 1 90%" }}
+                  style={{ flex: '1 1 90%' }}
                   onChange={(e) => {
                     return infoDispatch({
-                      type: "UPDATE",
+                      type: 'UPDATE',
                       payload: {
                         id: key,
                         info: e.target.value,
@@ -391,7 +390,7 @@ const FromProduct = (props: {
                 <Button
                   type="button"
                   onClick={() =>
-                    infoDispatch({ type: "DELETE", payload: { id: key } })
+                    infoDispatch({ type: 'DELETE', payload: { id: key } })
                   }
                   color="#f03a17"
                 >
@@ -404,22 +403,22 @@ const FromProduct = (props: {
         <Input.Wrapper className="mb-20" label="Serial Number ">
           <span
             className="moreinfo-text"
-            onClick={() => serialDispatch({ type: "ADD" })}
+            onClick={() => serialDispatch({ type: 'ADD' })}
           >
             More S/N
           </span>
-          <Flex rowGap={"sm"} direction={"column"}>
+          <Flex rowGap={'sm'} direction={'column'}>
             {Object.keys(serial).map((key) => (
-              <Flex key={key} columnGap={"sm"}>
+              <Flex key={key} columnGap={'sm'}>
                 <Input
                   title="info"
                   name="productInfo"
                   type="text"
                   value={info[key]}
-                  style={{ flex: "1 1 90%" }}
+                  style={{ flex: '1 1 90%' }}
                   onChange={(e) => {
                     return serialDispatch({
-                      type: "UPDATE",
+                      type: 'UPDATE',
                       payload: {
                         id: key,
                         info: e.target.value,
@@ -430,7 +429,7 @@ const FromProduct = (props: {
                 <Button
                   type="button"
                   onClick={() =>
-                    serialDispatch({ type: "DELETE", payload: { id: key } })
+                    serialDispatch({ type: 'DELETE', payload: { id: key } })
                   }
                   color="#f03a17"
                 >
@@ -451,7 +450,7 @@ const FromProduct = (props: {
           Add Product
         </Button>
         <Button
-          style={{ backgroundColor: "#eef2f7", color: "black" }}
+          style={{ backgroundColor: '#eef2f7', color: 'black' }}
           onClick={() => modals.closeAll()}
           mt="md"
         >

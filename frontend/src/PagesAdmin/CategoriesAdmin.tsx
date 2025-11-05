@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
-import ButtonAddCategory from "../Components/Button/button-add-category";
-import CategoryAdminStatus from "../Components/CategoryAdminStatus/CategoryAdminStatus";
-import axios from "axios";
-import API_ADDRESS from "../Api_Address";
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { BASE_URL } from '../App';
+import Breadcrumbs from '../Components/Breadcrumbs/Breadcrumbs';
+import ButtonAddCategory from '../Components/Button/button-add-category';
+import CategoryAdminStatus from '../Components/CategoryAdminStatus/CategoryAdminStatus';
+
 interface Category {
   id: string;
   name: string;
@@ -14,7 +15,7 @@ const CategoriesAdmin = () => {
 
   const fetchCategories = useCallback(async () => {
     const response = await axios.get(
-      `http://${API_ADDRESS}:8080/category/all/simple?active=false`
+      `${BASE_URL}/category/all/simple?active=false`
     );
     setCategories(response.data);
   }, []);
@@ -36,11 +37,11 @@ const CategoriesAdmin = () => {
         <table className="table-centered">
           <thead className="table-light">
             <tr>
-              <th className="sorting" style={{ width: "150px" }}>
+              <th className="sorting" style={{ width: '150px' }}>
                 ID Category
               </th>
               <th className="sorting">Name Category</th>
-              <th className="sorting" style={{ width: "150px" }}>
+              <th className="sorting" style={{ width: '150px' }}>
                 Action
               </th>
             </tr>

@@ -1,13 +1,14 @@
-import { Button, NativeSelect } from "@mantine/core";
-import { modals } from "@mantine/modals";
-import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons-react";
-import Seaparator from "../Seaparator/Seaparator";
-import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
-import { OrderInformation, OrderItem } from "../../Pages/InfoOrder/InfoOrder";
-import formatPrice from "../../Helper/formatPrice";
-import API_ADDRESS from "../../Api_Address";
+import { Button, NativeSelect } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
+import Seaparator from '../Seaparator/Seaparator';
+import { useCallback, useEffect, useState } from 'react';
+import axios from 'axios';
+import { OrderInformation, OrderItem } from '../../Pages/InfoOrder/InfoOrder';
+import formatPrice from '../../Helper/formatPrice';
+import { BASE_URL } from '../../App';
+
 interface Order {
   orderItems: OrderItem[];
   orderInformation: OrderInformation;
@@ -15,7 +16,7 @@ interface Order {
 }
 
 const FromChangeOrder = (props: { orderId: number }) => {
-  const [orderStatus, setOrderStatus] = useState("");
+  const [orderStatus, setOrderStatus] = useState('');
   const [orderTotal, setOrderTotal] = useState({
     total: 0,
     discount: 0,
@@ -23,7 +24,7 @@ const FromChangeOrder = (props: { orderId: number }) => {
   const [order, setOrder] = useState<Order>();
   const fetchOrder = useCallback(async () => {
     const response = await axios.get(
-      `http://${API_ADDRESS}:8080/order/getOrderDetail?id=${props.orderId}`
+      `${BASE_URL}/order/getOrderDetail?id=${props.orderId}`
     );
     setOrder({
       orderInformation: response.data.orderInformation,
@@ -56,32 +57,29 @@ const FromChangeOrder = (props: { orderId: number }) => {
         </div>
         <br />
         {!(
-          order?.orderStatus === "CANCELED" || order?.orderStatus === "SUCCESS"
+          order?.orderStatus === 'CANCELED' || order?.orderStatus === 'SUCCESS'
         ) && (
           <>
             <NativeSelect
-              style={{ width: "50%", marginTop: "20px" }}
+              style={{ width: '50%', marginTop: '20px' }}
               value={orderStatus}
               onChange={(e) => setOrderStatus(e.target.value)}
               data={[
-                { label: "Đang xử lý", value: "PENDING" },
-                { label: "Đã xác nhận", value: "CONFIRMED" },
-                { label: "Đang giao", value: "DELIVERING" },
-                { label: "Đã giao", value: "SUCCESS" },
-                { label: "Đã hủy", value: "CANCELED" },
+                { label: 'Đang xử lý', value: 'PENDING' },
+                { label: 'Đã xác nhận', value: 'CONFIRMED' },
+                { label: 'Đang giao', value: 'DELIVERING' },
+                { label: 'Đã giao', value: 'SUCCESS' },
+                { label: 'Đã hủy', value: 'CANCELED' },
               ]}
             />
             <Button
-              style={{ marginBottom: "20px" }}
+              style={{ marginBottom: '20px' }}
               mt="md"
               onClick={async () => {
-                await axios.patch(
-                  `http://${API_ADDRESS}:8080/order/update-status`,
-                  {
-                    orderId: order?.orderInformation.id,
-                    orderStatus: orderStatus,
-                  }
-                );
+                await axios.patch('${BASE_URL}/order/update-status', {
+                  orderId: order?.orderInformation.id,
+                  orderStatus: orderStatus,
+                });
                 setOrder((prevState) => {
                   if (prevState) {
                     const newState = { ...prevState };
@@ -93,10 +91,10 @@ const FromChangeOrder = (props: { orderId: number }) => {
                 notifications.show({
                   withCloseButton: true,
                   autoClose: 1500,
-                  message: "Cập nhật trạng thái thành công",
-                  color: "teal",
+                  message: 'Cập nhật trạng thái thành công',
+                  color: 'teal',
                   icon: <IconCheck />,
-                  className: "my-notification-class",
+                  className: 'my-notification-class',
                   loading: false,
                 });
               }}
@@ -122,7 +120,7 @@ const FromChangeOrder = (props: { orderId: number }) => {
                 <br />
                 S/N: {item.productSN}
                 <span className="infoorder-item-warranty">
-                  Bảo hành đến:{" "}
+                  Bảo hành đến:{' '}
                   {new Date(item.warrantyDate).toLocaleDateString()}
                 </span>
               </div>
@@ -162,7 +160,7 @@ const FromChangeOrder = (props: { orderId: number }) => {
       </div>
       <div className="shipinfo-admin">
         <div
-          style={{ paddingLeft: "0" }}
+          style={{ paddingLeft: '0' }}
           className="infoorder-ship-information"
         >
           <h2 className="infoorder-text ">

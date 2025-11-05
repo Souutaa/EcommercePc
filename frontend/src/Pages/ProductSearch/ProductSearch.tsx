@@ -1,13 +1,14 @@
-import { Pagination } from "@mantine/core";
-import { useParams } from "react-router-dom";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import ProductSearchs from "../../Components/Product/ProductSearch";
-import { useCallback, useEffect, useState } from "react";
-import { ProductItem } from "../../Components/Product/Product";
-import axios from "axios";
-import FilterSection from "../../Components/FilterSection/FilterSection";
-import { useDebounce } from "../../Hooks/use-debounce";
-import API_ADDRESS from "../../Api_Address";
+import { Pagination } from '@mantine/core';
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { BASE_URL } from '../../App';
+import Breadcrumbs from '../../Components/Breadcrumbs/Breadcrumbs';
+import FilterSection from '../../Components/FilterSection/FilterSection';
+import { ProductItem } from '../../Components/Product/Product';
+import ProductSearchs from '../../Components/Product/ProductSearch';
+import { useDebounce } from '../../Hooks/use-debounce';
+
 function ProductSearch() {
   const { search } = useParams();
   const [products, setProducts] = useState<ProductItem[]>([]);
@@ -15,15 +16,15 @@ function ProductSearch() {
   const fetchProducts = useCallback(async () => {
     if (search) {
       let data = JSON.stringify({
-        search: "%" + search.split(" ").join("%") + "%",
+        search: '%' + search.split(' ').join('%') + '%',
       });
 
       let config = {
-        method: "post",
+        method: 'post',
         maxBodyLength: Infinity,
-        url: `http://${API_ADDRESS}:8080/product/search`,
+        url: `${BASE_URL}/product/search`,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         data: data,
       };
@@ -46,26 +47,26 @@ function ProductSearch() {
   const [numberOfPage, setNumberOfPage] = useState(0);
 
   //filter
-  const [currentFilter, setCurrentFilter] = useState("1");
+  const [currentFilter, setCurrentFilter] = useState('1');
   const onChangeFilter = (index: string) => {
     setCurrentFilter(index);
     if (products)
       switch (index) {
-        case "2": {
+        case '2': {
           setFilteredProducts(
             products.sort((a: ProductItem, b: ProductItem) => a.price - b.price)
           );
           setNumberOfPage(Math.ceil(products.length / infoPerPage));
           break;
         }
-        case "3": {
+        case '3': {
           setFilteredProducts(
             products.sort((a: ProductItem, b: ProductItem) => b.price - a.price)
           );
           setNumberOfPage(Math.ceil(products.length / infoPerPage));
           break;
         }
-        case "4": {
+        case '4': {
           setFilteredProducts((prevState) => {
             return products.sort((a: ProductItem, b: ProductItem) =>
               a.productName > b.productName ? 1 : -1
@@ -74,7 +75,7 @@ function ProductSearch() {
           setNumberOfPage(Math.ceil(products.length / infoPerPage));
           break;
         }
-        case "5": {
+        case '5': {
           setFilteredProducts(() => {
             return products.sort((a: ProductItem, b: ProductItem) =>
               a.productName > b.productName ? -1 : 1

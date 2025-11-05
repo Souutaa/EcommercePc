@@ -1,10 +1,10 @@
-import { Switch } from "@mantine/core";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { User } from "../../PagesAdmin/UserAdmin";
-import ButtonChangeUser from "../Button/button-change-user";
-import SeaparatorTable from "../Seaparator/SeaparatorTable";
-import API_ADDRESS from "../../Api_Address";
+import { Switch } from '@mantine/core';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { User } from '../../PagesAdmin/UserAdmin';
+import ButtonChangeUser from '../Button/button-change-user';
+import SeaparatorTable from '../Seaparator/SeaparatorTable';
+import { BASE_URL } from '../../App';
 
 const UserAdminStatus = (props: { user: User }) => {
   const { user } = props;
@@ -15,14 +15,12 @@ const UserAdminStatus = (props: { user: User }) => {
   }, [user]);
 
   const handleUnlockUser = async () => {
-    const response = await axios.patch(
-      `http://${API_ADDRESS}:8080/user/${user.id}/active`
-    );
+    const response = await axios.patch(`${BASE_URL}/user/${user.id}/active`);
   };
 
   const handleLockUser = async () => {
     const response = await axios.delete(
-      `http://${API_ADDRESS}:8080/user/delete?id=${user.id}`
+      `${BASE_URL}/user/delete?id=${user.id}`
     );
   };
 

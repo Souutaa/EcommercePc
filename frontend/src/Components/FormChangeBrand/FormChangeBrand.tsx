@@ -1,19 +1,19 @@
-import { Button, Input } from "@mantine/core";
-import { modals } from "@mantine/modals";
-import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons-react";
-import axios from "axios";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import API_ADDRESS from "../../Api_Address";
+import { Button, Input } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../App';
 
 const FormChangeBrand = (props: { id: number }) => {
-  const [brandName, setBrandName] = useState("");
+  const [brandName, setBrandName] = useState('');
   const navigate = useNavigate();
   const updateBrand = async () => {
     const data = { brandName: brandName };
     await axios
-      .patch(`http://${API_ADDRESS}:8080/brand/${props.id}/update`, data)
+      .patch(`${BASE_URL}/brand/${props.id}/update`, data)
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);
@@ -25,13 +25,13 @@ const FormChangeBrand = (props: { id: number }) => {
     notifications.show({
       withCloseButton: true,
       autoClose: 1500,
-      message: "Cập nhật category thành công",
-      color: "teal",
+      message: 'Cập nhật category thành công',
+      color: 'teal',
       icon: <IconCheck />,
-      className: "my-notification-class",
+      className: 'my-notification-class',
       loading: false,
     });
-    navigate("/admin/category");
+    navigate('/admin/category');
   };
 
   return (
@@ -63,7 +63,7 @@ const FormChangeBrand = (props: { id: number }) => {
           Save and change
         </Button>
         <Button
-          style={{ backgroundColor: "#eef2f7", color: "black" }}
+          style={{ backgroundColor: '#eef2f7', color: 'black' }}
           onClick={() => modals.closeAll()}
           mt="md"
         >

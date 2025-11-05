@@ -1,51 +1,51 @@
-import { Button, Input, PasswordInput } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { notifications } from "@mantine/notifications";
-import { IconChecklist, IconLoader, IconX } from "@tabler/icons-react";
-import axios from "axios";
-import { useState } from "react";
-import API_ADDRESS from "../../Api_Address";
+import { Button, Input, PasswordInput } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import { IconChecklist, IconLoader, IconX } from '@tabler/icons-react';
+import axios from 'axios';
+import { useState } from 'react';
+import { BASE_URL } from '../../App';
 
 const FormUserAdmin = () => {
   const [visible, { toggle }] = useDisclosure(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [errorHandleInputUsername, setErrorHandleInputUsername] = useState("");
-  const [errorHandleInputPass, setErrorHandleInputPass] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [errorHandleInputUsername, setErrorHandleInputUsername] = useState('');
+  const [errorHandleInputPass, setErrorHandleInputPass] = useState('');
   const [errorHandleInputPassConfirm, setErrorHandleInputPassConfirm] =
-    useState("");
-  const [errorHandleInputMail, setErrorHandleInputMail] = useState("");
+    useState('');
+  const [errorHandleInputMail, setErrorHandleInputMail] = useState('');
   const inputUsernameHandle = (e: string) => {
     if (!e) {
-      setErrorHandleInputUsername("Vui lòng nhập Username");
+      setErrorHandleInputUsername('Vui lòng nhập Username');
     } else {
-      setErrorHandleInputUsername("");
+      setErrorHandleInputUsername('');
     }
   };
 
   const inputPassHandle = (e: string) => {
     if (!e) {
-      setErrorHandleInputPass("Vui lòng nhập Password");
+      setErrorHandleInputPass('Vui lòng nhập Password');
     } else {
-      setErrorHandleInputPass("");
+      setErrorHandleInputPass('');
     }
   };
 
   const inputPassConfirmHandle = (e: string) => {
     if (!e) {
-      setErrorHandleInputPassConfirm("Vui lòng nhập lại Password");
+      setErrorHandleInputPassConfirm('Vui lòng nhập lại Password');
     } else {
-      setErrorHandleInputPassConfirm("");
+      setErrorHandleInputPassConfirm('');
     }
   };
 
   const inputMailHandle = (e: string) => {
     if (!e) {
-      setErrorHandleInputMail("Vui lòng nhập mail: ***@*mail.com");
+      setErrorHandleInputMail('Vui lòng nhập mail: ***@*mail.com');
     } else {
-      setErrorHandleInputMail("");
+      setErrorHandleInputMail('');
     }
   };
 
@@ -61,24 +61,21 @@ const FormUserAdmin = () => {
       notifications.show({
         withCloseButton: true,
         autoClose: 1500,
-        message: "Vui lòng đợi",
-        color: "teal",
+        message: 'Vui lòng đợi',
+        color: 'teal',
         icon: <IconLoader />,
-        className: "my-notification-class",
+        className: 'my-notification-class',
         loading: true,
       });
-      const response = await axios.post(
-        `http://${API_ADDRESS}:8080/auth/register`,
-        data
-      );
+      const response = await axios.post(`${BASE_URL}/auth/register`, data);
       setTimeout(() => {
         notifications.show({
           withCloseButton: true,
           autoClose: 1500,
-          message: "Đăng kí thành công!",
-          color: "green",
+          message: 'Đăng kí thành công!',
+          color: 'green',
           icon: <IconChecklist />,
-          className: "my-notification-class",
+          className: 'my-notification-class',
           loading: false,
           onClose: () => {
             notifications.clean();
@@ -92,9 +89,9 @@ const FormUserAdmin = () => {
           withCloseButton: true,
           autoClose: 3000,
           message: err.response.data.detail,
-          color: "red",
+          color: 'red',
           icon: <IconX />,
-          className: "my-notification-class",
+          className: 'my-notification-class',
           loading: false,
         });
       else {
@@ -102,10 +99,10 @@ const FormUserAdmin = () => {
           notifications.show({
             withCloseButton: true,
             autoClose: 3000,
-            message: key + ": " + err.response.data[key],
-            color: "red",
+            message: key + ': ' + err.response.data[key],
+            color: 'red',
             icon: <IconX />,
-            className: "my-notification-class",
+            className: 'my-notification-class',
             loading: false,
           });
         });
@@ -148,7 +145,7 @@ const FormUserAdmin = () => {
         <div className="input-2">
           <PasswordInput
             error={errorHandleInputPass}
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             label="Password"
             onVisibilityChange={toggle}
             value={password}
@@ -158,7 +155,7 @@ const FormUserAdmin = () => {
             }}
           />
           <PasswordInput
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             error={errorHandleInputPassConfirm}
             label="Confirm password"
             onVisibilityChange={toggle}

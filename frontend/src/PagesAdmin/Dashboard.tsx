@@ -1,16 +1,17 @@
-import { Button, Flex, rem } from "@mantine/core";
-import { DatePickerInput } from "@mantine/dates";
-import "@mantine/dates/styles.css";
-import { IconCalendar, IconDownload, IconMenu } from "@tabler/icons-react";
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import AreaCharts from "../Components/Chart/AreaChart";
-import Cell from "../Components/Chart/Cell";
-import ProductSelling from "../Components/ProductSelling/ProductSelling";
-import Seaparator from "../Components/Seaparator/Seaparator";
-import TrustedCustomer from "../Components/TopUser/TopUser";
-import EmployeeOfTheMonth from "../Components/EmployeeOfTheMonth/EmployeeOfTheMonth";
-import API_ADDRESS from "../Api_Address";
+import { Button, Flex, rem } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
+import '@mantine/dates/styles.css';
+import { IconCalendar, IconDownload, IconMenu } from '@tabler/icons-react';
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { BASE_URL } from '../App';
+import AreaCharts from '../Components/Chart/AreaChart';
+import Cell from '../Components/Chart/Cell';
+import EmployeeOfTheMonth from '../Components/EmployeeOfTheMonth/EmployeeOfTheMonth';
+import ProductSelling from '../Components/ProductSelling/ProductSelling';
+import Seaparator from '../Components/Seaparator/Seaparator';
+import TrustedCustomer from '../Components/TopUser/TopUser';
+
 export interface TopProduct {
   createdAt: string;
   productLine: string;
@@ -50,15 +51,15 @@ const Dashborad = () => {
 
   const handleExportExcel = async () => {
     axios
-      .get(`http://${API_ADDRESS}:8080/order/export/excel`, {
-        responseType: "blob",
+      .get(`${BASE_URL}/order/export/excel`, {
+        responseType: 'blob',
       })
       .then((response) => {
         const href = URL.createObjectURL(response.data);
         // create "a" HTML element with href to file & click
-        const link = document.createElement("a");
+        const link = document.createElement('a');
         link.href = href;
-        link.setAttribute("download", "day_report.xlsx"); //or any other extension
+        link.setAttribute('download', 'day_report.xlsx'); //or any other extension
         document.body.appendChild(link);
         link.click();
         // clean up "a" element & remove ObjectURL
@@ -68,30 +69,22 @@ const Dashborad = () => {
   };
 
   const fetchTopProduct = useCallback(async () => {
-    const response = await axios.get(
-      `http://${API_ADDRESS}:8080/product/getTopSelling`
-    );
+    const response = await axios.get(`${BASE_URL}/product/getTopSelling`);
     setTopProducts(response.data);
   }, []);
 
   const fetchMonthlyRevenue = useCallback(async () => {
-    const response = await axios.get(
-      `http://${API_ADDRESS}:8080/order/getMonthlyRevenue`
-    );
+    const response = await axios.get(`${BASE_URL}/order/getMonthlyRevenue`);
     setMonthlyRevenue(response.data);
   }, []);
 
   const fetchTopUser = useCallback(async () => {
-    const response = await axios.get(
-      `http://${API_ADDRESS}:8080/order/getTrustedBuyers`
-    );
+    const response = await axios.get(`${BASE_URL}/order/getTrustedBuyers`);
     setTopUser(response.data);
   }, []);
 
   const fetchTopEmployee = useCallback(async () => {
-    const response = await axios.get(
-      `http://${API_ADDRESS}:8080/order/getTopEmployees`
-    );
+    const response = await axios.get(`${BASE_URL}/order/getTopEmployees`);
     setTopEmployee(response.data);
   }, []);
 
@@ -107,7 +100,7 @@ const Dashborad = () => {
       <div className="page-title-box">
         <div className="page-title-right">
           <DatePickerInput
-            style={{ width: "200px" }}
+            style={{ width: '200px' }}
             leftSection={icon}
             leftSectionPointerEvents="none"
             placeholder="Pick date"
@@ -138,7 +131,7 @@ const Dashborad = () => {
           <Cell date={value} />
         </div>
       </div>
-      <Flex style={{ paddingTop: "1rem" }}>
+      <Flex style={{ paddingTop: '1rem' }}>
         <div className="order-total">
           <h4 className="text-title">Top users</h4>
           {topUser.map((user) => (
@@ -149,7 +142,7 @@ const Dashborad = () => {
           ))}
         </div>
       </Flex>
-      <Flex style={{ paddingTop: "1rem" }}>
+      <Flex style={{ paddingTop: '1rem' }}>
         <div className="order-total">
           <h4 className="text-title">Top employees</h4>
           {topEmployee.map((employee) => (

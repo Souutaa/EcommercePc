@@ -3,20 +3,18 @@ import {
   MantineProvider,
   NativeSelect,
   Pagination,
-} from "@mantine/core";
-import { ModalsProvider } from "@mantine/modals";
-import { Notifications } from "@mantine/notifications";
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
-import ButtonAddUsers from "../Components/Button/button-add-users";
-import LengthProduct from "../Components/LengthProduct/LengthProduct";
-import PagiProductAdmin from "../Components/PaginationProductAdmin/PagiProductAdmin";
-import SearchAdmin from "../Components/SearchAdmin/SearchAdmin";
-import UserAdminStatus from "../Components/UserAdminStatus/UserAdminStatus";
-import UserTitleAdmin from "../Components/UserTitleAdmin/UserTitleAdmin";
-import { useDebounce } from "../Hooks/use-debounce";
-import API_ADDRESS from "../Api_Address";
+} from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { BASE_URL } from '../App';
+import Breadcrumbs from '../Components/Breadcrumbs/Breadcrumbs';
+import ButtonAddUsers from '../Components/Button/button-add-users';
+import UserAdminStatus from '../Components/UserAdminStatus/UserAdminStatus';
+import UserTitleAdmin from '../Components/UserTitleAdmin/UserTitleAdmin';
+import { useDebounce } from '../Hooks/use-debounce';
+
 export interface User {
   id: number;
   username: string;
@@ -28,13 +26,11 @@ export interface User {
 
 const UserAdmin = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>('');
   const [numberOfPage, setNumberOfPage] = useState(0);
   const [filteredUser, setFilteredUser] = useState<User[]>([]);
   const fetchUsers = useCallback(async () => {
-    const response = await axios.get(
-      `http://${API_ADDRESS}:8080/user/all?active=false`
-    );
+    const response = await axios.get(`${BASE_URL}/user/all?active=false`);
     setUsers(response.data);
     setFilteredUser(response.data);
     setNumberOfPage(Math.ceil(response.data.length / infoPerPage));
@@ -88,11 +84,11 @@ const UserAdmin = () => {
                 <label htmlFor="" className="form-lable">
                   Display
                   <NativeSelect
-                    style={{ width: "100px", margin: "0 10px" }}
-                    data={["5", "10", "20", "All"]}
+                    style={{ width: '100px', margin: '0 10px' }}
+                    data={['5', '10', '20', 'All']}
                     defaultValue={infoPerPage}
                     onChange={(e) => {
-                      if (e.target.value === "All") {
+                      if (e.target.value === 'All') {
                         setInfoPerPage(Number.MAX_VALUE);
                         setNumberOfPage(
                           Math.ceil(users.length / Number.MAX_VALUE)
@@ -112,7 +108,7 @@ const UserAdmin = () => {
                 <label htmlFor="" className="form-lable">
                   Search
                   <Input
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: '10px' }}
                     value={search}
                     onChange={(e) => {
                       setSearch(e.target.value);

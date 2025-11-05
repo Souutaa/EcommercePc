@@ -1,11 +1,10 @@
-import { notifications } from "@mantine/notifications";
-import { IconCheck, IconX } from "@tabler/icons-react";
-import axios from "axios";
-import { error } from "console";
-import * as jwt from "jwt-decode";
-import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import API_ADDRESS from "../Api_Address";
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconX } from '@tabler/icons-react';
+import axios from 'axios';
+import * as jwt from 'jwt-decode';
+import { createContext, useContext, useState } from 'react';
+import { BASE_URL } from '../App';
+
 export interface Auth {
   aud: string | null;
   mail: string | null;
@@ -53,26 +52,24 @@ const AuthProvider = ({ children }: ChildrenProps) => {
   const login = (loginInfo: LoginInfo) => {
     const data = { username: loginInfo.username, password: loginInfo.password };
     axios
-      .post(`http://${API_ADDRESS}:8080/auth/authenticate`, data)
+      .post(`${BASE_URL}/auth/authenticate`, data)
       .then(async (response) => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
           if (response.data.token) {
-            localStorage.setItem("accessToken", response.data.token);
+            localStorage.setItem('accessToken', response.data.token);
             let data = jwt.jwtDecode(response.data.token);
 
-            const res = await axios.get(
-              `http://${API_ADDRESS}:8080/user/getAccount`
-            );
+            const res = await axios.get(`${BASE_URL}/user/getAccount`);
 
             console.log(res);
             setAuth({
-              aud: res.data.role ?? "USER",
-              mail: res.data.email ?? "",
-              sub: data.sub ?? "",
-              iat: data.iat ?? "",
-              exp: data.exp ?? "",
+              aud: res.data.role ?? 'USER',
+              mail: res.data.email ?? '',
+              sub: data.sub ?? '',
+              iat: data.iat ?? '',
+              exp: data.exp ?? '',
               isAuthenticated: true,
             });
 
@@ -80,9 +77,9 @@ const AuthProvider = ({ children }: ChildrenProps) => {
               withCloseButton: true,
               autoClose: 2000,
               message: `Đăng nhập thành công`,
-              color: "teal",
+              color: 'teal',
               icon: <IconCheck />,
-              className: "my-notification-class",
+              className: 'my-notification-class',
               loading: false,
             });
           }
@@ -94,9 +91,9 @@ const AuthProvider = ({ children }: ChildrenProps) => {
             withCloseButton: true,
             autoClose: 2500,
             message: e.response.data.detail,
-            color: "red",
+            color: 'red',
             icon: <IconX />,
-            className: "my-notification-class",
+            className: 'my-notification-class',
             loading: false,
           });
           return;
@@ -104,16 +101,16 @@ const AuthProvider = ({ children }: ChildrenProps) => {
         notifications.show({
           withCloseButton: true,
           autoClose: 2500,
-          message: "Tài khoản hoặc mật khẩu không chính xác",
-          color: "red",
+          message: 'Tài khoản hoặc mật khẩu không chính xác',
+          color: 'red',
           icon: <IconX />,
-          className: "my-notification-class",
+          className: 'my-notification-class',
           loading: false,
         });
       });
   };
   const logout = async () => {
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem('accessToken');
     setAuth({
       aud: null,
       mail: null,
@@ -126,32 +123,32 @@ const AuthProvider = ({ children }: ChildrenProps) => {
       withCloseButton: true,
       autoClose: 1500,
       message:
-        "Tài khoản đã đăng xuất hoặc hết phiên đăng nhập, vui lòng đăng nhập lại",
-      color: "red",
+        'Tài khoản đã đăng xuất hoặc hết phiên đăng nhập, vui lòng đăng nhập lại',
+      color: 'red',
       icon: <IconX />,
-      className: "my-notification-class",
+      className: 'my-notification-class',
       loading: false,
       onClose: () => {
-        window.location.replace("/");
+        window.location.replace('/');
       },
     });
   };
 
   const checkSession = async (callback?: () => void) => {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       let data = jwt.jwtDecode(accessToken);
       if (data.exp && data.iat) if (Date.now() >= data.exp * 1000) logout();
-      const res = await axios.get(`http://${API_ADDRESS}:8080/user/getAccount`);
+      const res = await axios.get(`${BASE_URL}/user/getAccount`);
       setAuth({
-        aud: res.data.role ?? "USER",
-        mail: res.data.email ?? "",
-        sub: data.sub ?? "",
-        iat: data.iat ?? "",
-        exp: data.exp ?? "",
+        aud: res.data.role ?? 'USER',
+        mail: res.data.email ?? '',
+        sub: data.sub ?? '',
+        iat: data.iat ?? '',
+        exp: data.exp ?? '',
         isAuthenticated: true,
       });
-      if (callback && res.data.role === "USER") {
+      if (callback && res.data.role === 'USER') {
         callback();
       }
     }
@@ -167,12 +164,12 @@ const AuthProvider = ({ children }: ChildrenProps) => {
 export const useAuthContext = () => {
   const object = useContext(AuthContext);
   if (!object) {
-    throw new Error("useGetComplexObject must be used within a Provider");
+    throw new Error('useGetComplexObject must be used within a Provider');
   }
   return object;
 };
 
 export default AuthProvider;
 function useCallBack(arg0: () => Promise<void>, arg1: never[]) {
-  throw new Error("Function not implemented.");
+  throw new Error('Function not implemented.');
 }

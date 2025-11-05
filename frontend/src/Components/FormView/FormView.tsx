@@ -1,10 +1,10 @@
-import { Button, Input } from "@mantine/core";
-import { modals } from "@mantine/modals";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { ProductDetailType } from "../../Pages/ProductDetail/ProductDetail";
-import formatPrice from "../../Helper/formatPrice";
-import API_ADDRESS from "../../Api_Address";
+import { Button, Input } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { BASE_URL } from '../../App';
+import formatPrice from '../../Helper/formatPrice';
+import { ProductDetailType } from '../../Pages/ProductDetail/ProductDetail';
 
 interface Props {
   productLine: string;
@@ -16,7 +16,7 @@ const FormView = (props: Props) => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://${API_ADDRESS}:8080/product/${props.productLine}`
+          `${BASE_URL}/product/${props.productLine}`
         );
         setProduct(response.data);
       } catch {}
@@ -44,8 +44,8 @@ const FormView = (props: Props) => {
         <span className="text-label">Thumbnail</span>
         <div className="product-thumbnail">
           <img
-            style={{ width: "200px", height: "200px" }}
-            src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${product?.thumbnailUri}`}
+            style={{ width: '200px', height: '200px' }}
+            src={`${BASE_URL}/product/get-file?filePath=${product?.thumbnailUri}`}
             alt=""
           />
         </div>
@@ -54,22 +54,22 @@ const FormView = (props: Props) => {
           {product &&
             product.imageUris.map((imageUri) => (
               <img
-                style={{ width: "200px", height: "200px" }}
-                src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${imageUri}`}
+                style={{ width: '200px', height: '200px' }}
+                src={`${BASE_URL}/product/get-file?filePath=${imageUri}`}
                 alt=""
               />
             ))}
         </div>
 
         <div className="input-2  mb-20">
-          <Input.Wrapper style={{ width: "49%" }} label="Price">
+          <Input.Wrapper style={{ width: '49%' }} label="Price">
             <Input component="button" pointer>
               <Input.Placeholder>
                 {product && formatPrice(product.product.price)}
               </Input.Placeholder>
             </Input>
           </Input.Wrapper>
-          <Input.Wrapper style={{ width: "49%" }} label="NameDiscount(%)">
+          <Input.Wrapper style={{ width: '49%' }} label="NameDiscount(%)">
             <Input component="button" pointer>
               <Input.Placeholder>
                 {product && product.product.discount}%
@@ -78,7 +78,7 @@ const FormView = (props: Props) => {
           </Input.Wrapper>
         </div>
         <Input.Wrapper
-          style={{ width: "49%" }}
+          style={{ width: '49%' }}
           className="mb-20"
           label="Warranty Period"
         >
@@ -89,12 +89,12 @@ const FormView = (props: Props) => {
           </Input>
         </Input.Wrapper>
         <div className="input-2  mb-20">
-          <Input.Wrapper style={{ width: "49%" }} label="Category">
+          <Input.Wrapper style={{ width: '49%' }} label="Category">
             <Input component="button" pointer>
               <Input.Placeholder>{product?.categoryName}</Input.Placeholder>
             </Input>
           </Input.Wrapper>
-          <Input.Wrapper style={{ width: "49%" }} label="Brand">
+          <Input.Wrapper style={{ width: '49%' }} label="Brand">
             <Input component="button" pointer>
               <Input.Placeholder>{product?.brandName}</Input.Placeholder>
             </Input>
@@ -113,7 +113,7 @@ const FormView = (props: Props) => {
       </div>
       <div className="modal-footer">
         <Button
-          style={{ backgroundColor: "#eef2f7", color: "black" }}
+          style={{ backgroundColor: '#eef2f7', color: 'black' }}
           onClick={() => modals.closeAll()}
           mt="md"
         >

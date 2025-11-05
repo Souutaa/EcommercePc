@@ -1,19 +1,18 @@
-import { Button, Input, NativeSelect, PasswordInput } from "@mantine/core";
-import { modals } from "@mantine/modals";
-import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons-react";
-import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
-import { User } from "../../PagesAdmin/UserAdmin";
-import API_ADDRESS from "../../Api_Address";
+import { Button, Input, NativeSelect, PasswordInput } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
+import axios from 'axios';
+import React, { useCallback, useEffect, useState } from 'react';
+import { User } from '../../PagesAdmin/UserAdmin';
+import { BASE_URL } from '../../App';
+
 const FormChangeUser = (props: { username: string }) => {
   const [user, setUser] = useState<User>();
-  const [password, setPassword] = useState<string>("");
+  const [password, setPassword] = useState<string>('');
 
   const fetchUser = useCallback(async () => {
-    const response = await axios.get(
-      `http://${API_ADDRESS}:8080/user/${props.username}`
-    );
+    const response = await axios.get(`${BASE_URL}/user/${props.username}`);
     setUser(response.data);
   }, [props.username]);
 
@@ -29,10 +28,7 @@ const FormChangeUser = (props: { username: string }) => {
   };
 
   const handleUpdateUser = async () => {
-    const response = await axios.patch(
-      `http://${API_ADDRESS}:8080/user/update-info`,
-      data
-    );
+    const response = await axios.patch(`${BASE_URL}/user/update-info`, data);
     console.log(response);
   };
 
@@ -41,7 +37,7 @@ const FormChangeUser = (props: { username: string }) => {
       <div className="modal-body">
         <div className="input-2">
           <Input.Wrapper
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             className="mb-20"
             label="Username"
           >
@@ -54,7 +50,7 @@ const FormChangeUser = (props: { username: string }) => {
         </div>
         <div className="input-2">
           <Input.Wrapper
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             className="mb-20"
             label="Email"
           >
@@ -74,14 +70,14 @@ const FormChangeUser = (props: { username: string }) => {
             />
           </Input.Wrapper>
           <PasswordInput
-            style={{ width: "49%" }}
+            style={{ width: '49%' }}
             label="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <NativeSelect
-          style={{ width: "49%" }}
+          style={{ width: '49%' }}
           label="Role"
           value={user?.role}
           onChange={(e) => {
@@ -95,9 +91,9 @@ const FormChangeUser = (props: { username: string }) => {
             });
           }}
           data={[
-            { value: "ADMIN", label: "Quản trị viên" },
-            { value: "USER", label: "Người dùng" },
-            { value: "MANAGER", label: "Nhân viên" },
+            { value: 'ADMIN', label: 'Quản trị viên' },
+            { value: 'USER', label: 'Người dùng' },
+            { value: 'MANAGER', label: 'Nhân viên' },
           ]}
         />
       </div>
@@ -109,10 +105,10 @@ const FormChangeUser = (props: { username: string }) => {
             notifications.show({
               withCloseButton: true,
               autoClose: 1500,
-              message: "Cập nhật thông tin tài khoản thành công",
-              color: "teal",
+              message: 'Cập nhật thông tin tài khoản thành công',
+              color: 'teal',
               icon: <IconCheck />,
-              className: "my-notification-class",
+              className: 'my-notification-class',
               loading: false,
             });
             modals.closeAll();
@@ -121,7 +117,7 @@ const FormChangeUser = (props: { username: string }) => {
           Save and change
         </Button>
         <Button
-          style={{ backgroundColor: "#eef2f7", color: "black" }}
+          style={{ backgroundColor: '#eef2f7', color: 'black' }}
           onClick={() => modals.closeAll()}
           mt="md"
         >

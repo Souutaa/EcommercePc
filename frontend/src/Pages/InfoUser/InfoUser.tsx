@@ -6,20 +6,20 @@ import {
   Flex,
   Input,
   NativeSelect,
-} from "@mantine/core";
-import UserInfor from "../../Components/UserInfor/UserInfor";
-import UserOder from "../../Components/UserOrder/UserOrder";
-import InputGrib4 from "../../Components/InputGrid/InputGrib4";
-import { FormEvent, useEffect, useState } from "react";
-import axios from "axios";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import Btn from "../../Components/Button";
-import { useNavigate } from "react-router-dom";
-import { PATHS } from "../../Constants/path";
-import ChangePass from "../../Components/ChangePass/ChangePass";
-import ChangeMail from "../../Components/ChangeMail/ChangePass";
-import API_ADDRESS from "../../Api_Address";
-import styled from ".//InfoUser.module.css";
+} from '@mantine/core';
+import axios from 'axios';
+import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../App';
+import Breadcrumbs from '../../Components/Breadcrumbs/Breadcrumbs';
+import Btn from '../../Components/Button';
+import ChangeMail from '../../Components/ChangeMail/ChangePass';
+import ChangePass from '../../Components/ChangePass/ChangePass';
+import InputGrib4 from '../../Components/InputGrid/InputGrib4';
+import UserInfor from '../../Components/UserInfor/UserInfor';
+import UserOder from '../../Components/UserOrder/UserOrder';
+import { PATHS } from '../../Constants/path';
+
 export interface UserInformation {
   accountDetail: {
     city: string;
@@ -44,9 +44,7 @@ function InfoUser() {
   useEffect(() => {
     const getAllUserInfo = async () => {
       try {
-        const response = await axios.get(
-          `http://${API_ADDRESS}:8080/userDetail/all`
-        );
+        const response = await axios.get(`${BASE_URL}/userDetail/all`);
         setAddress(response.data);
         setUserInfo(
           response.data.find(
@@ -74,10 +72,7 @@ function InfoUser() {
           phoneNumber: userInfo.accountDetail.phoneNumber,
           email: userInfo.accountDetail.email,
         };
-        await axios.patch(
-          `http://${API_ADDRESS}:8080/userDetail/${id}/update`,
-          updatedInfo
-        );
+        await axios.patch(`${BASE_URL}/userDetail/${id}/update`, updatedInfo);
 
         setAddress((prevState) => {
           let newState: UserInformation[] = [];
@@ -102,7 +97,7 @@ function InfoUser() {
 
   const handleSetDefaultAddress = async (id: number) => {
     try {
-      await axios.patch(`http://${API_ADDRESS}:8080/userDetail/${id}/default`);
+      await axios.patch(`${BASE_URL}/userDetail/${id}/default`);
       setAddress((prevState) => {
         let newState: UserInformation[] = [];
         if (Array.isArray(prevState)) {
@@ -119,7 +114,7 @@ function InfoUser() {
   };
 
   const handleDeleteUserDetail = async (id: number) => {
-    await axios.delete(`http://${API_ADDRESS}:8080/userDetail/delete?id=${id}`);
+    await axios.delete(`${BASE_URL}/userDetail/delete?id=${id}`);
     setAddress((prevState) => {
       let newState: UserInformation[] = [];
       if (Array.isArray(prevState)) {
@@ -140,27 +135,29 @@ function InfoUser() {
         <div className="infouser-content div-8-col" style={{ gap: "4rem" }}>
           <div className="infouser-sidebar">
             <div className="infouser-avatar">
-              <Avatar size={"lg"} style={{ marginTop: "20px" }}></Avatar>
-              <UserInfor />
+              <Avatar style={{ marginTop: '20px' }}></Avatar>
+              <div className="margin-right">
+                <UserInfor />
+              </div>
             </div>
             <UserOder />
             <ChangePass />
-            <ChangeMail />
+            <div style={{ marginTop: '15px' }}>
+              <ChangeMail />
+            </div>
           </div>
-          <div className={styled["info-user__container"]}>
-            <Flex
-              style={{ width: "100%", padding: "1.6rem 3rem " }}
-              justify={"space-between"}
-              align={"center"}
-            >
-              <h3 className="infouser-title">Hồ sơ của tôi</h3>
+          <div className="infouser-container">
+            <Flex style={{ width: '100%' }} justify={'space-between'}>
+              <h3 className="infouser-title mb-20">Hồ sơ của tôi</h3>
               <Btn
                 maintine="a"
                 customStyle={{
-                  alignSelf: "center",
-                  justifySelf: "flex-end",
+                  alignSelf: 'center',
+                  justifySelf: 'flex-end',
                 }}
-                style={{}}
+                style={{
+                  margin: '20px 40px 10px 0',
+                }}
                 color="#12e17b"
                 onClick={() => {
                   console.log(PATHS);
@@ -173,25 +170,23 @@ function InfoUser() {
             <Divider></Divider>
             <form action="" onSubmit={handleSubmitChange}>
               <div
-                className={styled["info-user__wrapper"]}
-                style={{ width: "100%", display: "flex", columnGap: "5%" }}
+                className="infouser-input"
+                style={{ width: '100%', display: 'flex', columnGap: '5%' }}
               >
-                <div style={{ flex: "1 1 50%" }}>
-                  <span className={styled["info-user__label"]}>Địa chỉ:</span>
+                <div style={{ flex: '1 1 50%' }}>
+                  <span className="productcheckput-text">Địa chỉ:</span>
                   <NativeSelect
-                    size="lg"
-                    radius={"md"}
-                    style={{ width: "100%" }}
+                    style={{ width: '100%' }}
                     placeholder="Native select"
                     data={address?.map((addr): ComboboxItem => {
                       return {
-                        value: addr.accountDetail.id?.toString() ?? "",
+                        value: addr.accountDetail.id?.toString() ?? '',
                         label: `${addr.accountDetail.detailedAddress} ${
                           addr.accountDetail.district
                         } ${addr.accountDetail.city}${
                           addr.accountDetail.default === true
-                            ? " - Mặc định"
-                            : ""
+                            ? ' - Mặc định'
+                            : ''
                         }`,
                         disabled: false,
                       };
@@ -209,10 +204,8 @@ function InfoUser() {
                   <Btn
                     maintine="a"
                     customStyle={{
-                      alignSelf: "start",
-                      justifySelf: "flex-end",
-                      padding: ".4rem .8rem",
-                      fontSize: "1.2rem",
+                      alignSelf: 'flex-end',
+                      justifySelf: 'flex-end',
                     }}
                     onClick={() => {
                       if (userInfo) {
@@ -224,31 +217,51 @@ function InfoUser() {
                   </Btn>
                 )}
               </div>
-              <div className={styled["info-user__wrapper"]}>
-                <div className={styled["info-user__wrapper-2-col"]}>
-                  <div className={styled["info-user__form-group"]}>
-                    <span className={styled["info-user__label"]}>
-                      Họ và tên đệm:
-                    </span>
-                    <Input.Wrapper>
-                      <Input
-                        size="lg"
-                        radius={"md"}
-                        placeholder="Nguyễn"
-                        value={userInfo?.accountDetail.firstName}
-                        onChange={(e) => {
-                          if (userInfo)
-                            setUserInfo({
-                              accountDetail: {
-                                ...userInfo.accountDetail,
-                                firstName: e.target.value,
-                              },
-                              username: userInfo.username,
-                            });
-                        }}
-                        disabled={isEditing ? false : true}
-                      />
-                    </Input.Wrapper>
+              <div className="infouser-input">
+                <>
+                  <div className="productcheckout-grid">
+                    <div className="productcheckout-grid-input">
+                      <span className="productcheckput-text">
+                        Họ và tên đệm:
+                      </span>
+                      <Input.Wrapper style={{ marginRight: '8px' }}>
+                        <Input
+                          placeholder="Nguyễn"
+                          value={userInfo?.accountDetail.firstName}
+                          onChange={(e) => {
+                            if (userInfo)
+                              setUserInfo({
+                                accountDetail: {
+                                  ...userInfo.accountDetail,
+                                  firstName: e.target.value,
+                                },
+                                username: userInfo.username,
+                              });
+                          }}
+                          disabled={isEditing ? false : true}
+                        />
+                      </Input.Wrapper>
+                    </div>
+                    <div className="productcheckout-grid-input">
+                      <span className="productcheckput-text">Tên:</span>
+                      <Input.Wrapper style={{ marginLeft: '8px' }}>
+                        <Input
+                          placeholder="Lương"
+                          value={userInfo?.accountDetail.lastName}
+                          onChange={(e) => {
+                            if (userInfo)
+                              setUserInfo({
+                                accountDetail: {
+                                  ...userInfo.accountDetail,
+                                  lastName: e.target.value,
+                                },
+                                username: userInfo.username,
+                              });
+                          }}
+                          disabled={isEditing ? false : true}
+                        />
+                      </Input.Wrapper>
+                    </div>
                   </div>
                   <div className={styled["info-user__form-group"]}>
                     <span className={styled["info-user__label"]}>Tên:</span>
@@ -274,9 +287,9 @@ function InfoUser() {
                   </div>
                 </div>
                 <InputGrib4
-                  provinceCode={userInfo?.accountDetail.city ?? ""}
-                  districtCode={userInfo?.accountDetail.district ?? ""}
-                  phoneNumber={userInfo?.accountDetail.phoneNumber ?? ""}
+                  provinceCode={userInfo?.accountDetail.city ?? ''}
+                  districtCode={userInfo?.accountDetail.district ?? ''}
+                  phoneNumber={userInfo?.accountDetail.phoneNumber ?? ''}
                   setUserInfo={setUserInfo}
                   userInfo={userInfo}
                   isEditing={isEditing}
@@ -313,7 +326,7 @@ function InfoUser() {
                     setPreserveValue(userInfo);
                     setIsEditing(true);
                   }}
-                  style={{ display: "flex", margin: "6px 40px 40px 40px" }}
+                  style={{ display: 'flex', margin: '6px 40px 40px 40px' }}
                 >
                   Thay đổi
                 </Button>
@@ -321,7 +334,7 @@ function InfoUser() {
                 <Flex>
                   <Button
                     type="submit"
-                    style={{ display: "flex", margin: "6px 40px 40px 40px" }}
+                    style={{ display: 'flex', margin: '6px 40px 40px 40px' }}
                   >
                     Lưu
                   </Button>
@@ -330,12 +343,12 @@ function InfoUser() {
                       setUserInfo(preserveValue);
                       setIsEditing(false);
                     }}
-                    style={{ display: "flex", margin: "6px 40px 40px 40px" }}
+                    style={{ display: 'flex', margin: '6px 40px 40px 40px' }}
                   >
                     Hủy
                   </Button>
                   <Button
-                    style={{ display: "flex", margin: "6px 40px 40px auto" }}
+                    style={{ display: 'flex', margin: '6px 40px 40px auto' }}
                     onClick={() => {
                       if (userInfo)
                         handleDeleteUserDetail(userInfo.accountDetail.id);

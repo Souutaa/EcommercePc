@@ -1,23 +1,22 @@
-import { PasswordInput, Button } from "@mantine/core";
-import { Link, useNavigate } from "react-router-dom";
-import { PATHS } from "../../Constants/path";
-import axios from "axios";
-import { useState } from "react";
-import { notifications } from "@mantine/notifications";
-import { IconCheck, IconX } from "@tabler/icons-react";
-import API_ADDRESS from "../../Api_Address";
-import styled from ".//LoginPage.module.css";
+import { Button, PasswordInput } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconX } from '@tabler/icons-react';
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../App';
+import { PATHS } from '../../Constants/path';
 function ChangePassword() {
   const navigate = useNavigate();
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [errorHandleInputPassConfirm, setErrorHandleInputPassConfirm] =
-    useState("");
-  const [errorHandleInputPass, setErrorHandleInputPass] = useState("");
+    useState('');
+  const [errorHandleInputPass, setErrorHandleInputPass] = useState('');
 
   const forgetPassword = async () => {
-    const otp = await localStorage.getItem("otp");
-    const mail = await localStorage.getItem("mail");
+    const otp = await localStorage.getItem('otp');
+    const mail = await localStorage.getItem('mail');
     console.log(otp);
     console.log(mail);
 
@@ -27,7 +26,7 @@ function ChangePassword() {
       verificationCode: otp,
     };
     await axios
-      .patch(`http://${API_ADDRESS}:8080/user/${mail}/updatepassword`, data)
+      .patch(`${BASE_URL}/user/${mail}/updatepassword`, data)
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);
@@ -38,13 +37,13 @@ function ChangePassword() {
             withCloseButton: true,
             autoClose: 1500,
             message: `Đổi mật khẩu thành công`,
-            color: "teal",
+            color: 'teal',
             icon: <IconCheck />,
-            className: "my-notification-class",
+            className: 'my-notification-class',
             loading: false,
           });
-          localStorage.removeItem("mail");
-          localStorage.removeItem("otp");
+          localStorage.removeItem('mail');
+          localStorage.removeItem('otp');
           navigate(PATHS.LOGIN.INDEX);
         }
       })
@@ -53,10 +52,10 @@ function ChangePassword() {
           withCloseButton: true,
           autoClose: 2500,
           message:
-            "OTP sai hoặc mật khẩu mới và mật khẩu nhập lại không giống nhau, vui lòng kiểm tra lại",
-          color: "red",
+            'OTP sai hoặc mật khẩu mới và mật khẩu nhập lại không giống nhau, vui lòng kiểm tra lại',
+          color: 'red',
           icon: <IconX />,
-          className: "my-notification-class",
+          className: 'my-notification-class',
           loading: false,
         });
         navigate(PATHS.LOGIN.FPVERIFI);
@@ -65,32 +64,32 @@ function ChangePassword() {
 
   const inputPassConfirmHandle = (e: string) => {
     if (!e) {
-      setErrorHandleInputPassConfirm("Vui lòng nhập lại Password");
+      setErrorHandleInputPassConfirm('Vui lòng nhập lại Password');
     } else {
-      setErrorHandleInputPassConfirm("");
+      setErrorHandleInputPassConfirm('');
     }
   };
 
   const inputPassHandle = (e: string) => {
     if (!e) {
-      setErrorHandleInputPass("Vui lòng nhập Password");
+      setErrorHandleInputPass('Vui lòng nhập Password');
     } else {
-      setErrorHandleInputPass("");
+      setErrorHandleInputPass('');
     }
   };
 
   return (
     <>
-      <form className={styled["modal-form-sign-in"]} action="">
-        <h2 className={styled["text-sign-in"]}>Đổi mật khẩu</h2>
-        <div className={styled["form-sign-in"]}>
+      <form className={styled['modal-form-sign-in']} action="">
+        <h2 className={styled['text-sign-in']}>Đổi mật khẩu</h2>
+        <div className={styled['form-sign-in']}>
           <div className="form-group">
             <label className="form-text " htmlFor="">
               Mật khẩu mới
             </label>
             <PasswordInput
               size="xl"
-              radius={"lg"}
+              radius={'lg'}
               error={errorHandleInputPass}
               placeholder="Nhập mật khẩu mới"
               onChange={(e) => {
@@ -105,7 +104,7 @@ function ChangePassword() {
             </label>
             <PasswordInput
               size="xl"
-              radius={"lg"}
+              radius={'lg'}
               error={errorHandleInputPassConfirm}
               placeholder="Nhập lại mật khẩu mới"
               onChange={(e) => {
@@ -118,7 +117,7 @@ function ChangePassword() {
           <div className="form-group margin-bottom">
             <Button
               size="xl"
-              radius={"lg"}
+              radius={'lg'}
               onClick={async () => forgetPassword()}
             >
               Xác nhận

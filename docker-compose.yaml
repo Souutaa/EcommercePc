@@ -1,28 +1,95 @@
 services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    container_name: postgres-ecommerce
+    volumes:
+      - ./backend/pgdata:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+    networks:
+      - spring-postgres
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    container_name: pgadmin4-ecommerce
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin4
+      - PGADMIN_CONFIG_PROXY_X_HOST_COUNT= 1
+      - PGADMIN_CONFIG_PROXY_X_PREFIX_COUNT= 1
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - spring-postgres
+
   backend:
     container_name: backend-ecommerce
+    depends_on:
+      - db
     build:
       context: ./backend/
       dockerfile: Dockerfile
     environment:
-      DB_HOST: "dpg-co16e8ol6cac73cq45g0-a.singapore-postgres.render.com/"
+      DB_HOST: "db"
       DB_PORT: 5432
-      DB_NAME: "techshopdb_isr7"
-      DB_USERNAME: "admin"
-      DB_PASSWORD: "aDD11la8bNZ4qS7IUHEUIrGeavBNn416"
+      DB_NAME: "postgres"
+      DB_USERNAME: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_PASSWORD_FILE: /run/secrets/db_password
     volumes:
       - ./backend/:/app
       - ./backend/.m2:/root/.m2
     networks:
-      - default
-      - database-nw
+      - spring-postgres
     working_dir: /app
     command: sh run.sh
-    ports:
-      - 8080:8080
-      - 5005:5005
-      - 35729:35729
-networks:
-  database-nw:
-    external: true
+    expose:
+      - "8080"
+      - "5005"
+      - "35729"
 
+  frontend:
+    container_name: frontend-ecommerce
+    depends_on:
+      - backend
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    env_file:
+      - ./frontend/.env
+    # volumes:
+    #   - ./frontend/:/frontend
+    #   - /frontend/node_modules
+    networks:
+      - spring-postgres
+    expose:
+      - "3000"
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - ./data/nginx/data:/data
+      - ./data/nginx/letsencrypt:/etc/letsencrypt
+
+    networks:
+      - spring-postgres
+
+volumes:
+  db: {}
+secrets:
+  db-password:
+    file: db/password.txt
+networks:
+  spring-postgres:

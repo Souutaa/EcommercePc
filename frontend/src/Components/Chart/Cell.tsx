@@ -1,38 +1,38 @@
-import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
-import { Legend, RadialBar, RadialBarChart, Tooltip } from "recharts";
-import { AdminOrder } from "../../PagesAdmin/OrderAdmin";
-import API_ADDRESS from "../../Api_Address";
+import axios from 'axios';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Legend, RadialBar, RadialBarChart, Tooltip } from 'recharts';
+import { AdminOrder } from '../../PagesAdmin/OrderAdmin';
+import { BASE_URL } from '../../App';
 const initPieChart = [
   {
-    name: "Đã giao",
+    name: 'Đã giao',
     now: 0,
     total: 0,
-    fill: "rgb(10, 207, 151)",
+    fill: 'rgb(10, 207, 151)',
   },
   {
-    name: "Đang xử lý",
+    name: 'Đang xử lý',
     now: 0,
     total: 0,
-    fill: "rgba(255, 195, 66, 1)",
+    fill: 'rgba(255, 195, 66, 1)',
   },
   {
-    name: "Đã xác nhận",
+    name: 'Đã xác nhận',
     now: 0,
     total: 0,
-    fill: "rgb(18,225,123)",
+    fill: 'rgb(18,225,123)',
   },
   {
-    name: "Đang giao",
+    name: 'Đang giao',
     now: 0,
     total: 0,
-    fill: "#727cf5",
+    fill: '#727cf5',
   },
   {
-    name: "Đã hủy",
+    name: 'Đã hủy',
     now: 0,
     total: 0,
-    fill: "rgba(255, 66, 66, 1)",
+    fill: 'rgba(255, 66, 66, 1)',
   },
 ];
 
@@ -41,9 +41,7 @@ const Cell = (props: { date: Date | null }) => {
   const [pieChartData, setPieChartData] = useState(initPieChart);
 
   const fetchOrders = useCallback(async () => {
-    const response = await axios.get(
-      `http://${API_ADDRESS}:8080/order/getAllOrder`
-    );
+    const response = await axios.get(`${BASE_URL}/order/getAllOrder`);
     setOrders(response.data);
   }, []);
 
@@ -54,69 +52,69 @@ const Cell = (props: { date: Date | null }) => {
   useEffect(() => {
     setPieChartData([
       {
-        name: "Đang xử lý",
+        name: 'Đang xử lý',
         now: orders.filter(
           (item: AdminOrder) =>
-            item.status === "PENDING" &&
+            item.status === 'PENDING' &&
             new Date(item.createdAt).toLocaleDateString() ===
               (props.date
                 ? new Date(props.date).toLocaleDateString()
                 : new Date().toLocaleDateString())
         ).length,
         total: orders.length,
-        fill: "rgba(255, 195, 66, 1)",
+        fill: 'rgba(255, 195, 66, 1)',
       },
       {
-        name: "Đã xác nhận",
+        name: 'Đã xác nhận',
         now: orders.filter(
           (item: AdminOrder) =>
-            item.status === "CONFIRMED" &&
+            item.status === 'CONFIRMED' &&
             new Date(item.createdAt).toLocaleDateString() ===
               (props.date
                 ? new Date(props.date).toLocaleDateString()
                 : new Date().toLocaleDateString())
         ).length,
         total: orders.length,
-        fill: "rgb(18,225,123)",
+        fill: 'rgb(18,225,123)',
       },
       {
-        name: "Đang giao",
+        name: 'Đang giao',
         now: orders.filter(
           (item: AdminOrder) =>
-            item.status === "DELIVERING" &&
+            item.status === 'DELIVERING' &&
             new Date(item.createdAt).toLocaleDateString() ===
               (props.date
                 ? new Date(props.date).toLocaleDateString()
                 : new Date().toLocaleDateString())
         ).length,
         total: orders.length,
-        fill: "#727cf5",
+        fill: '#727cf5',
       },
       {
-        name: "Đã giao",
+        name: 'Đã giao',
         now: orders.filter(
           (item: AdminOrder) =>
-            item.status === "SUCCESS" &&
+            item.status === 'SUCCESS' &&
             new Date(item.createdAt).toLocaleDateString() ===
               (props.date
                 ? new Date(props.date).toLocaleDateString()
                 : new Date().toLocaleDateString())
         ).length,
         total: orders.length,
-        fill: "rgb(10, 207, 151)",
+        fill: 'rgb(10, 207, 151)',
       },
       {
-        name: "Đã hủy",
+        name: 'Đã hủy',
         now: orders.filter(
           (item: AdminOrder) =>
-            item.status === "CANCELED" &&
+            item.status === 'CANCELED' &&
             new Date(item.createdAt).toLocaleDateString() ===
               (props.date
                 ? new Date(props.date).toLocaleDateString()
                 : new Date().toLocaleDateString())
         ).length,
         total: orders.length,
-        fill: "rgba(255, 66, 66, 1)",
+        fill: 'rgba(255, 66, 66, 1)',
       },
     ]);
   }, [orders, props.date]);
@@ -132,7 +130,7 @@ const Cell = (props: { date: Date | null }) => {
       endAngle={360}
     >
       <RadialBar
-        label={{ fill: "", position: "insideStart" }}
+        label={{ fill: '', position: 'insideStart' }}
         background
         dataKey="now"
       />

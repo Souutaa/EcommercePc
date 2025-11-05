@@ -1,18 +1,18 @@
-import { Carousel } from "@mantine/carousel";
-import "@mantine/carousel/styles.css";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import ButtonAddToCart from "../../Components/Button/ButtonAddToCart";
-import { ProductItem } from "../../Components/Product/Product";
-import ProductColor from "../../Components/Product/ProductColor/ProductColor";
-import ProductInfo from "../../Components/Product/ProductInfo/ProductInfo";
-import ProductListDetail from "../../Components/Product/ProductListDetail";
-import { ProductItems } from "../HomePage/Content";
-import { Button } from "@mantine/core";
-import API_ADDRESS from "../../Api_Address";
-import styled from ".//ProductDetail.module.css";
+import { Carousel } from '@mantine/carousel';
+import '@mantine/carousel/styles.css';
+import { Button } from '@mantine/core';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { BASE_URL } from '../../App';
+import Breadcrumbs from '../../Components/Breadcrumbs/Breadcrumbs';
+import ButtonAddToCart from '../../Components/Button/ButtonAddToCart';
+import { ProductItem } from '../../Components/Product/Product';
+import ProductColor from '../../Components/Product/ProductColor/ProductColor';
+import ProductInfo from '../../Components/Product/ProductInfo/ProductInfo';
+import ProductListDetail from '../../Components/Product/ProductListDetail';
+import { ProductItems } from '../HomePage/Content';
+import styled from './/ProductDetail.module.css';
 
 export type ProductInfoType = {
   id: number;
@@ -56,24 +56,22 @@ function ProductDetail() {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://${API_ADDRESS}:8080/product/${
-            location.pathname.split("/")[3]
-          }`
+          `${BASE_URL}/product/${location.pathname.split('/')[3]}`
         );
         const data = res.data;
-        console.log("dấd", data);
+        console.log('dấd', data);
 
         try {
           const brandRes = await axios.get(
-            `http://${API_ADDRESS}:8080/brand/getByIdOfBrand?id=${data.brandId}`
+            `${BASE_URL}/brand/getByIdOfBrand?id=${data.brandId}`
           );
           setProductDetail(data);
           setProductsOfDetail(brandRes.data);
         } catch (error) {
-          console.log("error in fetching brand data => ", error);
+          console.log('error in fetching brand data => ', error);
         }
       } catch (error) {
-        console.log("error in fetching product data => ", error);
+        console.log('error in fetching product data => ', error);
       }
     };
 
@@ -87,16 +85,9 @@ function ProductDetail() {
   const slides = productDetail?.imageUris.map((url, index) => (
     <Carousel.Slide key={index} onClick={() => handleThumbnailClick(url)}>
       <img
-        style={{
-          width: "12rem",
-          height: "100%",
-          cursor: "pointer",
-          objectFit: "cover",
-          borderRadius: ".8rem",
-          boxShadow: "var(--box-shadow--1)",
-        }}
+        style={{ width: '120px', height: '120px', cursor: 'pointer' }}
         alt=""
-        src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${url}`}
+        src={`${BASE_URL}/product/get-file?filePath=${url}`}
       />
     </Carousel.Slide>
   ));
@@ -105,27 +96,22 @@ function ProductDetail() {
     <>
       <div className="container">
         <Breadcrumbs />
-        <div className={styled["product-details"]}>
+        <div className={styled['product-details']}>
           {/* ... (existing code) */}
-          <div className={styled["product-detail-left"]}>
-            <div className={styled["product-detail-main"]}>
+          <div className={styled['product-detail-left']}>
+            <div className={styled['product-detail-main']}>
               <img
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "fill",
-                  borderRadius: "1.2rem",
-                }}
-                src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${
+                style={{ width: '100%', height: '670px' }}
+                src={`${BASE_URL}/product/get-file?filePath=${
                   selectedImage || productDetail?.thumbnailUri
                 }`}
                 alt=""
               />
             </div>
-            <div className={styled["product-detail-carousel"]}>
+            <div className={styled['product-detail-carousel']}>
               <Carousel
                 slideSize="33,33%"
-                height={"12rem"}
+                height={'12rem'}
                 align="start"
                 slideGap="xl"
                 controlSize={42}
@@ -135,7 +121,7 @@ function ProductDetail() {
               </Carousel>
             </div>
           </div>
-          <div className={styled["product-detail-right"]}>
+          <div className={styled['product-detail-right']}>
             {productDetail?.product.id && (
               <ProductInfo
                 brandId={productDetail?.brandId}

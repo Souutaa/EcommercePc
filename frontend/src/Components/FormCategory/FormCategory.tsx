@@ -1,18 +1,19 @@
-import { IconCheck, IconX } from "@tabler/icons-react";
-import { notifications } from "@mantine/notifications";
-import { Button, Input } from "@mantine/core";
-import { modals } from "@mantine/modals";
-import React, { useState } from "react";
-import axios from "axios";
-import API_ADDRESS from "../../Api_Address";
+import { IconCheck, IconX } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
+import { Button, Input } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { BASE_URL } from '../../App';
+
 const FormCategory = (props: { onFinish: () => void }) => {
-  const [categoryName, setCategoryName] = useState("");
-  const [errorHandle, setErrorHandle] = useState("");
+  const [categoryName, setCategoryName] = useState('');
+  const [errorHandle, setErrorHandle] = useState('');
   const handleErrorInput = (e: string) => {
     if (!e) {
-      setErrorHandle("Vui lòng nhập tên category muốn tạo");
+      setErrorHandle('Vui lòng nhập tên category muốn tạo');
     } else {
-      setErrorHandle("");
+      setErrorHandle('');
     }
   };
   return (
@@ -38,7 +39,7 @@ const FormCategory = (props: { onFinish: () => void }) => {
           mt="md"
           onClick={async () => {
             await axios
-              .post(`http://${API_ADDRESS}:8080/category/create`, {
+              .post(`${BASE_URL}/category/create`, {
                 categoryName,
               })
               .then((req) => {
@@ -46,9 +47,9 @@ const FormCategory = (props: { onFinish: () => void }) => {
                   withCloseButton: true,
                   autoClose: 1500,
                   message: `Thêm thành công category: ${categoryName} `,
-                  color: "teal",
+                  color: 'teal',
                   icon: <IconCheck />,
-                  className: "my-notification-class",
+                  className: 'my-notification-class',
                   loading: false,
                 });
               })
@@ -57,9 +58,9 @@ const FormCategory = (props: { onFinish: () => void }) => {
                   withCloseButton: true,
                   autoClose: 1500,
                   message: `Thêm không thành công category`,
-                  color: "red",
+                  color: 'red',
                   icon: <IconX />,
-                  className: "my-notification-class",
+                  className: 'my-notification-class',
                   loading: false,
                 });
               });
@@ -71,7 +72,7 @@ const FormCategory = (props: { onFinish: () => void }) => {
           Add Category
         </Button>
         <Button
-          style={{ backgroundColor: "#eef2f7", color: "black" }}
+          style={{ backgroundColor: '#eef2f7', color: 'black' }}
           onClick={() => modals.closeAll()}
           mt="md"
         >

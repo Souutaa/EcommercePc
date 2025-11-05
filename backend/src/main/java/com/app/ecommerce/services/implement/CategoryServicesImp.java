@@ -44,7 +44,7 @@ public class CategoryServicesImp implements ICategoryServices {
     @Autowired
     private IProductServices productServices;
 
-     @Autowired
+    @Autowired
     private IProductWarrantyServices productWarrantyServices;
 
     @Override

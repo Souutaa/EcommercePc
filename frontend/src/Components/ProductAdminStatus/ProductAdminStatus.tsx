@@ -1,16 +1,17 @@
-import { modals } from "@mantine/modals";
-import { IconEye, IconPencil, IconPlus } from "@tabler/icons-react";
-import formatPrice from "../../Helper/formatPrice";
-import { AdminProductInformation } from "../../PagesAdmin/ProductAdmin";
-import ButtonDelete from "../Button/button-delete";
-import FormChange from "../FormChange/FormChange";
-import FormView from "../FormView/FormView";
-import SeaparatorTable from "../Seaparator/SeaparatorTable";
-import { Switch } from "@mantine/core";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import FormProductWarranty from "../FormProductWarranty/FormProductWarranty";
-import API_ADDRESS from "../../Api_Address";
+import { modals } from '@mantine/modals';
+import { IconEye, IconPencil, IconPlus } from '@tabler/icons-react';
+import formatPrice from '../../Helper/formatPrice';
+import { AdminProductInformation } from '../../PagesAdmin/ProductAdmin';
+import ButtonDelete from '../Button/button-delete';
+import FormChange from '../FormChange/FormChange';
+import FormView from '../FormView/FormView';
+import SeaparatorTable from '../Seaparator/SeaparatorTable';
+import { Switch } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import FormProductWarranty from '../FormProductWarranty/FormProductWarranty';
+import { BASE_URL } from '../../App';
+
 interface Props {
   product: AdminProductInformation;
 }
@@ -26,13 +27,13 @@ const ProductAdminStatus = (props: Props) => {
 
   const handleUnlockProduct = async () => {
     const response = await axios.patch(
-      `http://${API_ADDRESS}:8080/product/undo-delete?productLine=${product.productLine}`
+      `${BASE_URL}/product/undo-delete?productLine=${product.productLine}`
     );
   };
 
   const handleLockProduct = async () => {
     const response = await axios.delete(
-      `http://${API_ADDRESS}API_ADDRESS:8080/product/delete?productLine=${product.productLine}`
+      `${BASE_URL}/product/delete?productLine=${product.productLine}`
     );
   };
   return (
@@ -41,11 +42,11 @@ const ProductAdminStatus = (props: Props) => {
         <td className="dtr-control pd-20">
           <img
             style={{
-              width: "48px",
-              height: "48px",
-              marginRight: "10px",
+              width: '48px',
+              height: '48px',
+              marginRight: '10px',
             }}
-            src={`http://${API_ADDRESS}:8080/product/get-file?filePath=${product.thumbnailUri}`}
+            src={`${BASE_URL}/product/get-file?filePath=${product.thumbnailUri}`}
             alt=""
           />
           <p className="text-product-admin">{product.productName}</p>
@@ -74,7 +75,7 @@ const ProductAdminStatus = (props: Props) => {
           <IconEye
             onClick={() => {
               modals.open({
-                size: "xl",
+                size: 'xl',
                 title: "Product's Information",
                 children: (
                   <>
@@ -83,12 +84,12 @@ const ProductAdminStatus = (props: Props) => {
                 ),
               });
             }}
-            style={{ marginRight: "5px" }}
+            style={{ marginRight: '5px' }}
           />
           <IconPencil
             onClick={() => {
               modals.open({
-                size: "xl",
+                size: 'xl',
                 title: "Product's Information",
                 children: (
                   <>
@@ -97,13 +98,13 @@ const ProductAdminStatus = (props: Props) => {
                 ),
               });
             }}
-            style={{ marginRight: "5px" }}
+            style={{ marginRight: '5px' }}
           />
           <IconPlus
             onClick={() => {
               modals.open({
-                size: "xl",
-                title: "Add new product",
+                size: 'xl',
+                title: 'Add new product',
                 children: (
                   <>
                     <FormProductWarranty

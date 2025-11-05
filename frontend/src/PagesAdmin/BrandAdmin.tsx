@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
-import Breadcrumbs from "../Components/Breadcrumbs/Breadcrumbs";
-import ButtonAddBrands from "../Components/Button/button-add-brands";
-import BrandAdminStatus from "../Components/BrandAdminStatus/BrandAdminStatus";
-import axios from "axios";
-import { Category } from "../Pages/HomePage/Content";
-import API_ADDRESS from "../Api_Address";
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { BASE_URL } from '../App';
+import BrandAdminStatus from '../Components/BrandAdminStatus/BrandAdminStatus';
+import Breadcrumbs from '../Components/Breadcrumbs/Breadcrumbs';
+import ButtonAddBrands from '../Components/Button/button-add-brands';
+import { Category } from '../Pages/HomePage/Content';
+
 const BrandAdmin = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const fetchCategories = useCallback(async () => {
     const response = await axios.get(
-      `http://${API_ADDRESS}:8080/category/all/simple?active=false`
+      `${BASE_URL}/category/all/simple?active=false`
     );
     setCategories(response.data);
   }, []);
@@ -35,17 +36,17 @@ const BrandAdmin = () => {
                 <td
                   className="sorting"
                   colSpan={3}
-                  style={{ textAlign: "center" }}
+                  style={{ textAlign: 'center' }}
                 >
                   {category.name}
                 </td>
               </tr>
               <tr>
-                <th className="sorting" style={{ width: "150px" }}>
+                <th className="sorting" style={{ width: '150px' }}>
                   ID
                 </th>
                 <th className="sorting">Name Brand</th>
-                <th className="sorting" style={{ width: "150px" }}>
+                <th className="sorting" style={{ width: '150px' }}>
                   Action
                 </th>
               </tr>
