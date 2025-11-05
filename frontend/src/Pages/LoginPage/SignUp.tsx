@@ -3,13 +3,12 @@ import { Button, Flex, Input, PasswordInput } from '@mantine/core';
 import '@mantine/carousel/styles.css';
 import { notifications } from '@mantine/notifications';
 import { IconChecklist, IconLoader, IconX } from '@tabler/icons-react';
+import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../App';
 import { PATHS } from '../../Constants/path';
 import styled from './/LoginPage.module.css';
-import axios from 'axios';
-import API_ADDRESS from '../../Api_Address';
-import { BASE_URL } from '../../App';
 
 function SignUp() {
   const [username, setUsername] = useState('');
@@ -41,7 +40,7 @@ function SignUp() {
         className: 'my-notification-class',
         loading: true,
       });
-      await axios.post(`${BASE_URL}:8080/auth/register`, data);
+      await axios.post(`${BASE_URL}/auth/register`, data);
       setTimeout(() => {
         notifications.show({
           withCloseButton: true,
