@@ -1,10 +1,10 @@
 import { Switch } from '@mantine/core';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { BASE_URL } from '../../App';
 import { User } from '../../PagesAdmin/UserAdmin';
 import ButtonChangeUser from '../Button/button-change-user';
 import SeaparatorTable from '../Seaparator/SeaparatorTable';
-import { BASE_URL } from '../../App';
 
 const UserAdminStatus = (props: { user: User }) => {
   const { user } = props;
@@ -15,13 +15,11 @@ const UserAdminStatus = (props: { user: User }) => {
   }, [user]);
 
   const handleUnlockUser = async () => {
-    const response = await axios.patch(`${BASE_URL}/user/${user.id}/active`);
+    return await axios.patch(`${BASE_URL}/user/${user.id}/active`);
   };
 
   const handleLockUser = async () => {
-    const response = await axios.delete(
-      `${BASE_URL}/user/delete?id=${user.id}`
-    );
+    return await axios.delete(`${BASE_URL}/user/delete?id=${user.id}`);
   };
 
   return (

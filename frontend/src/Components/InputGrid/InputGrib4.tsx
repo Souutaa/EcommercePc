@@ -1,6 +1,7 @@
 import { ComboboxItem, Input, NativeSelect } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { UserInformation } from '../../Pages/InfoUser/InfoUser';
+import styled from './InpurGrid.module.css';
 import data from './provinces.json';
 
 type Districts = {

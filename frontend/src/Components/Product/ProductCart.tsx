@@ -1,10 +1,9 @@
 import { Button, Text, rem } from '@mantine/core';
 import { ModalsProvider, modals } from '@mantine/modals';
-import { IconMinus, IconPlus, IconX } from '@tabler/icons-react';
+import { IconMinus, IconPlus } from '@tabler/icons-react';
+import { BASE_URL } from '../../App';
 import { CartItem, useShopingContext } from '../../Context/ShoppingContext';
 import formatPrice from '../../Helper/formatPrice';
-import { notifications } from '@mantine/notifications';
-import { BASE_URL } from '../../App';
 
 function ProductCarts() {
   const { cartItems, increaseQty, decreaseQty, removeCartItem, checkCart } =

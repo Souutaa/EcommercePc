@@ -1,13 +1,12 @@
 import { Button, NativeSelect } from '@mantine/core';
-import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons-react';
-import Seaparator from '../Seaparator/Seaparator';
-import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-import { OrderInformation, OrderItem } from '../../Pages/InfoOrder/InfoOrder';
-import formatPrice from '../../Helper/formatPrice';
+import { useCallback, useEffect, useState } from 'react';
 import { BASE_URL } from '../../App';
+import formatPrice from '../../Helper/formatPrice';
+import { OrderInformation, OrderItem } from '../../Pages/InfoOrder/InfoOrder';
+import Seaparator from '../Seaparator/Seaparator';
 
 interface Order {
   orderItems: OrderItem[];
@@ -76,7 +75,7 @@ const FromChangeOrder = (props: { orderId: number }) => {
               style={{ marginBottom: '20px' }}
               mt="md"
               onClick={async () => {
-                await axios.patch('${BASE_URL}/order/update-status', {
+                await axios.patch(`${BASE_URL}/order/update-status`, {
                   orderId: order?.orderInformation.id,
                   orderStatus: orderStatus,
                 });

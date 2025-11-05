@@ -1,5 +1,4 @@
 import { Avatar, Button, Divider, Input, PinInput } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -48,7 +47,6 @@ const ChangeMailUser = () => {
     navigate(PATHS.USERINFO);
   };
 
-  const [visible, { toggle }] = useDisclosure(false);
   return (
     <div className="container">
       <Breadcrumbs />

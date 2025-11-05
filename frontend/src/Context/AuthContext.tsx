@@ -32,13 +32,6 @@ type ChildrenProps = {
   children: JSX.Element;
 };
 
-type Role = {
-  id: number;
-  username: string;
-  email: string;
-  role: string;
-};
-
 const AuthProvider = ({ children }: ChildrenProps) => {
   const [auth, setAuth] = useState<Auth>({
     aud: null,
@@ -170,6 +163,3 @@ export const useAuthContext = () => {
 };
 
 export default AuthProvider;
-function useCallBack(arg0: () => Promise<void>, arg1: never[]) {
-  throw new Error('Function not implemented.');
-}

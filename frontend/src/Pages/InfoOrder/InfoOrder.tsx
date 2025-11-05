@@ -1,19 +1,18 @@
 import { Avatar, Button, Flex } from '@mantine/core';
 
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { BASE_URL } from '../../App';
 import Breadcrumbs from '../../Components/Breadcrumbs/Breadcrumbs';
+import ChangeMail from '../../Components/ChangeMail/ChangePass';
+import ChangePass from '../../Components/ChangePass/ChangePass';
 import OrderWrapper from '../../Components/OrderWrapper/OrderWrapper';
 import ShipInfo from '../../Components/ShipInfo/ShipInfo';
-import ChangePass from '../../Components/ChangePass/ChangePass';
-import Total from '../../Components/Total/Total';
 import UserInfor from '../../Components/UserInfor/UserInfor';
 import UserOder from '../../Components/UserOrder/UserOrder';
-import { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
 import formatPrice from '../../Helper/formatPrice';
-import ChangeMail from '../../Components/ChangeMail/ChangePass';
-import { BASE_URL } from '../../App';
-import styled from './/InfoOrder.module.css';
+import styled from './InfoOrder.module.css';
 
 export interface OrderItem {
   productName: string;
@@ -75,7 +74,7 @@ function InfoOrder() {
   }, [orderId]);
 
   const handleCancelOrder = async () => {
-    await axios.patch('${BASE_URL}/order/update-status', {
+    await axios.patch(`${BASE_URL}/order/update-status`, {
       orderId,
       orderStatus: 'CANCELED',
     });

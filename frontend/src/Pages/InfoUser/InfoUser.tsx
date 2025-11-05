@@ -19,6 +19,7 @@ import InputGrib4 from '../../Components/InputGrid/InputGrib4';
 import UserInfor from '../../Components/UserInfor/UserInfor';
 import UserOder from '../../Components/UserOrder/UserOrder';
 import { PATHS } from '../../Constants/path';
+import styled from './InfoUser.module.css';
 
 export interface UserInformation {
   accountDetail: {
@@ -132,7 +133,7 @@ function InfoUser() {
     <>
       <div className="container">
         <Breadcrumbs />
-        <div className="infouser-content div-8-col" style={{ gap: "4rem" }}>
+        <div className="infouser-content div-8-col" style={{ gap: '4rem' }}>
           <div className="infouser-sidebar">
             <div className="infouser-avatar">
               <Avatar style={{ marginTop: '20px' }}></Avatar>
@@ -263,12 +264,12 @@ function InfoUser() {
                       </Input.Wrapper>
                     </div>
                   </div>
-                  <div className={styled["info-user__form-group"]}>
-                    <span className={styled["info-user__label"]}>Tên:</span>
+                  <div className={styled['info-user__form-group']}>
+                    <span className={styled['info-user__label']}>Tên:</span>
                     <Input.Wrapper>
                       <Input
                         size="lg"
-                        radius={"md"}
+                        radius={'md'}
                         placeholder="Lương"
                         value={userInfo?.accountDetail.lastName}
                         onChange={(e) => {
@@ -285,7 +286,7 @@ function InfoUser() {
                       />
                     </Input.Wrapper>
                   </div>
-                </div>
+                </>
                 <InputGrib4
                   provinceCode={userInfo?.accountDetail.city ?? ''}
                   districtCode={userInfo?.accountDetail.district ?? ''}
@@ -294,14 +295,14 @@ function InfoUser() {
                   userInfo={userInfo}
                   isEditing={isEditing}
                 />
-                <div className={styled["info-user__form-group"]}>
-                  <span className={styled["info-user__label"]}>
+                <div className={styled['info-user__form-group']}>
+                  <span className={styled['info-user__label']}>
                     Địa chỉ chi tiết:
                   </span>
                   <Input.Wrapper>
                     <Input
                       size="lg"
-                      radius={"md"}
+                      radius={'md'}
                       placeholder="208 Trần Bình Trọng"
                       value={userInfo?.accountDetail.detailedAddress}
                       disabled={isEditing ? false : true}

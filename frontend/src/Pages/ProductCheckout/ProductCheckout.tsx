@@ -1,6 +1,4 @@
 import {
-  ClassNames,
-  ClassNamesArray,
   ComboboxItem,
   Divider,
   Flex,
@@ -9,9 +7,12 @@ import {
   NativeSelect,
   Radio,
 } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconCross, IconLoader } from '@tabler/icons-react';
 import axios from 'axios';
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../App';
 import Breadcrumbs from '../../Components/Breadcrumbs/Breadcrumbs';
 import Btn from '../../Components/Button';
 import CheckoutContent from '../../Components/CheckoutContent/CheckoutContent';
@@ -19,12 +20,9 @@ import CheckoutText from '../../Components/CheckoutText/CheckoutText';
 import InputGrib4 from '../../Components/InputGrid/InputGrib4';
 import Total from '../../Components/Total/Total';
 import { PATHS } from '../../Constants/path';
+import { useAuthContext } from '../../Context/AuthContext';
 import { useShopingContext } from '../../Context/ShoppingContext';
 import { UserInformation } from '../InfoUser/InfoUser';
-import { useAuthContext } from '../../Context/AuthContext';
-import { IconCheck, IconCross, IconLoader } from '@tabler/icons-react';
-import { notifications } from '@mantine/notifications';
-import { BASE_URL } from '../../App';
 import styled from './/ProductCheckout.module.css';
 
 function ProductCheckout() {

@@ -1,10 +1,9 @@
 import { Button, Flex, Input, PasswordInput } from '@mantine/core';
 
 import '@mantine/carousel/styles.css';
-import { useState } from 'react';
-import axios from 'axios';
-import { IconChecklist, IconLoader, IconX } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
+import { IconChecklist, IconLoader, IconX } from '@tabler/icons-react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from '../../Constants/path';
 import styled from './/LoginPage.module.css';
@@ -21,12 +20,6 @@ function SignUp() {
   const [errorHandleInputMail, setErrorHandleInputMail] = useState('');
   const [errors, setErrors] = useState<string[]>([]);
   const navigate = useNavigate();
-  const data = {
-    username: username,
-    password: password,
-    confirmPassword: confirmPassword,
-    email: email,
-  };
 
   const handleCreateUser = async () => {
     try {

@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../App';
 import { PATHS } from '../../Constants/path';
+import styled from './LoginPage.module.css';
+
 function ChangePassword() {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');

@@ -1,16 +1,15 @@
+import { Switch } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { IconEye, IconPencil, IconPlus } from '@tabler/icons-react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { BASE_URL } from '../../App';
 import formatPrice from '../../Helper/formatPrice';
 import { AdminProductInformation } from '../../PagesAdmin/ProductAdmin';
-import ButtonDelete from '../Button/button-delete';
 import FormChange from '../FormChange/FormChange';
+import FormProductWarranty from '../FormProductWarranty/FormProductWarranty';
 import FormView from '../FormView/FormView';
 import SeaparatorTable from '../Seaparator/SeaparatorTable';
-import { Switch } from '@mantine/core';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import FormProductWarranty from '../FormProductWarranty/FormProductWarranty';
-import { BASE_URL } from '../../App';
 
 interface Props {
   product: AdminProductInformation;

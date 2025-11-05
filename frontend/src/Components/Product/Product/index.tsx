@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../../../App';
 import { PATHS } from '../../../Constants/path';
 import formatPrice from '../../../Helper/formatPrice';
 import { ProductItems } from '../../../Pages/HomePage/Content';
 import ButtonAdd from '../../Button/button-add-to-cart';
 import styled from './/Product.module.css';
-import APT_ADDRESS from '../../../Api_Address';
-import { BASE_URL } from '../../../App';
 export type ProductItem = {
   id: number;
   name?: string;

@@ -10,14 +10,13 @@ import {
 import axios from 'axios';
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../App';
+import Breadcrumbs from '../../Components/Breadcrumbs/Breadcrumbs';
 import Btn from '../../Components/Button';
 import { Division } from '../../Components/InputGrid/InputGrib4';
 import UserInfor from '../../Components/UserInfor/UserInfor';
 import UserOder from '../../Components/UserOrder/UserOrder';
 import { PATHS } from '../../Constants/path';
-import Breadcrumbs from '../../Components/Breadcrumbs/Breadcrumbs';
-import { UserInformation } from './InfoUser';
-import { BASE_URL } from '../../App';
 
 interface NewUserInfo {
   firstName: string;
