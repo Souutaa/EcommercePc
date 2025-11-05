@@ -15,6 +15,8 @@ WORKDIR /frontend
 RUN npm install -g serve
 # Chỉ copy thư mục 'build' từ giai đoạn 'builder'
 COPY --from=builder /frontend/build ./build
+ARG PORT=3000
+ENV PORT=$PORT
 EXPOSE 3000
 # Lệnh chạy server production
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["sh", "-c", "serve -s build -l $PORT"]
